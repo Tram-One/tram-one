@@ -1,0 +1,25 @@
+{
+  "name": "tram-1",
+  "version": "1.0.0",
+  "description": "🚋",
+  "main": "index.js",
+  "scripts": {
+    "dev": "budo examples/routes/index.js --pushstate --open --live --dir examples/routes"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bel": "^4.6.0",
+    "hyperx": "^2.3.0",
+    "minidux": "^1.0.1",
+    "nanorouter": "^2.0.0",
+    "pelo": "0.0.2",
+    "rbel": "^1.0.1",
+    "xtend": "^4.0.1",
+    "yo-yo": "^1.4.1"
+  },
+  "devDependencies": {
+    "browserify": "^14.1.0",
+    "budo": "^10.0.3"
+  }
+}

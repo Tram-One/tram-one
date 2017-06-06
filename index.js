@@ -29,11 +29,10 @@ class Tram {
 
 }
 
-const html = (registry) => (template) => {
-  const element = typeof(template) === 'string' ? template.trim() : template;
+const html = (registry) => {
   const render = rbelRegister(belCreateElement, registry || {});
 
-  return render(element);
+  return render;
 }
 
 module.exports = Tram;

@@ -4,7 +4,7 @@
   "description": "🚋",
   "main": "index.js",
   "scripts": {
-    "dev": "budo examples/custom-elements/index.js --pushstate --open --live --dir examples/custom-elements"
+    "dev": "budo examples/reducers/index.js --pushstate --open --live --dir examples/reducers"
   },
   "author": "",
   "license": "ISC",

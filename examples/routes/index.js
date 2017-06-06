@@ -79,4 +79,4 @@ app.addRoute('/page#2', page2);
 app.addRoute('/page/:id', pageN);
 app.addRoute('/404', nopath);
 
-app.start(document.body);
+app.start('.main');

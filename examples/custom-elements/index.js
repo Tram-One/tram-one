@@ -24,11 +24,11 @@ const home = (state) => {
       <a href="https://github.com/aaaristo">Andrea Gariboldi</a>
       for building rbel, which does the custom element magic.
       <br><br>
-      
+
     </chrome>
   `
 }
 
 app.addRoute('/', home);
 
-app.start(document.body);
+app.start('.main');

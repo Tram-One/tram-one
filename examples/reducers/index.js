@@ -14,18 +14,21 @@ const counterReducer = (state, action) => {
 
 const clicker = (state) => {
   const incrementCount = () => {
+    console.log("I've been clicked!");
     state.dispatch({type: 'click'});
   }
   return html`
-    <div onclick=${incrementCount}>
-      Tram-One uses minidux to handle state management.
+    <div>
+      Tram-One uses minidux and yo-yo to handle state management.
       <br><br>
 
-      This page has been clicked ${state.counter.clicks} times!
+      <button onclick=${incrementCount}>
+        This button has been clicked ${state.counter.clicks} times!
+      </button>
     </div>
   `
 }
 
 app.addReducer('counter', counterReducer, {clicks: 0});
 app.addRoute('/', clicker);
-app.start(document.body);
+app.start('.main');

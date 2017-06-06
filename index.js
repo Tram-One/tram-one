@@ -3,6 +3,7 @@ const nanorouter = require('nanorouter');
 const belCreateElement = require('bel').createElement;
 const rbelRegister = require('rbel');
 const minidux = require('minidux');
+const yoyoUpdate = require('yo-yo').update;
 
 class Tram {
   constructor() {
@@ -12,10 +13,9 @@ class Tram {
   }
 
   addRoute(path, page) {
-    this.router.on(path, (pathParams) => {
+    this.router.on(path, (pathParams) => (state) => {
       const completeState = xtend(
-        this.store.getState(),
-        {dispatch: this.store.dispatch},
+        state, {dispatch: this.store.dispatch},
         pathParams
       );
       return page(completeState);
@@ -27,19 +27,22 @@ class Tram {
     this.state[field] = state;
   }
 
-  start(target, pathName) {
+  start(selector, pathName) {
+    const target = document.querySelector(selector);
+
     const reducers = minidux.combineReducers(this.reducers);
-    console.log(this.state)
     this.store = minidux.createStore(reducers, this.state);
 
     this.store.subscribe( (state) => {
-      // USE YO-YO TO RE-RENDER
-      console.log(state);
+      const routePath = pathName || window.location.href.replace(window.location.origin, '');
+      const pageComponent = this.router(routePath);
+
+      yoyoUpdate(target, pageComponent(state));
     });
 
     const routePath = pathName || window.location.href.replace(window.location.origin, '');
     const pageComponent = this.router(routePath);
-    target.appendChild(pageComponent);
+    target.appendChild(pageComponent(this.store.getState()));
   }
 
 }

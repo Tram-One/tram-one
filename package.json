@@ -7,7 +7,8 @@
     "dev-custom": "budo examples/custom-elements/index.js --pushstate --open --live --dir examples/",
     "dev-reduce": "budo examples/reducers/index.js --pushstate --open --live --dir examples/",
     "dev-routes": "budo examples/routes/index.js --pushstate --open --live --dir examples/",
-    "dev-together": "budo examples/all-together/index.js --pushstate --open --live --dir examples/"
+    "dev-together": "budo examples/all-together/index.js --pushstate --open --live --dir examples/",
+    "dev-todo": "budo examples/todo/index.js --pushstate --open --live --dir examples/"
   },
   "author": "",
   "license": "ISC",

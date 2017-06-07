@@ -17,7 +17,7 @@ const home = (state) => {
       path params, hash routes, and wildcards.
       <br><br>
 
-      Note: in order to use dynamic routes, you'll need a server, or hosting to
+      Note: in order to use some dynamic routes, you'll need a server, or hosting to
       handle client side routing (like <a href="https://surge.sh/">surge.sh</a>)
 
       <br><br>
@@ -47,7 +47,7 @@ const page2 = (state) => {
 
       <a href="/">Go to the Home Page</a>
       <br>
-      <a href="/page/3">Go to page 3 (only dynamic routing)</a>
+      <a href="/3">Go to page 3</a>
     </div>
   `
 }
@@ -55,12 +55,12 @@ const page2 = (state) => {
 const pageN = (state) => {
   return html`
     <div>
-      This is Page ${state.id}!
+      This is Page ${state.page}!
       <br><br>
 
       <a href="/">Go to the Home Page</a>
       <br>
-      <a href="/page/${state.id + 1}">Go to page ${state.id + 1}</a>
+      <a href="/${parseInt(state.page) + 1}">Go to page ${parseInt(state.page) + 1}</a>
     </div>
   `
 }
@@ -76,7 +76,7 @@ const nopath = () => {
 app.addRoute('/', home);
 app.addRoute('/page1', page1);
 app.addRoute('/page#2', page2);
-app.addRoute('/page/:id', pageN);
+app.addRoute('/:page', pageN);
 app.addRoute('/404', nopath);
 
 app.start('.main');

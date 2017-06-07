@@ -4,10 +4,10 @@
   "description": "🚋",
   "main": "index.js",
   "scripts": {
-    "dev-custom": "budo examples/custom-elements/index.js --pushstate --open --live --dir examples/",
-    "dev-reduce": "budo examples/reducers/index.js --pushstate --open --live --dir examples/",
-    "dev-routes": "budo examples/routes/index.js --pushstate --open --live --dir examples/",
-    "dev-together": "budo examples/all-together/index.js --pushstate --open --live --dir examples/",
+    "dev-custom": "budo examples/using-custom-elements/index.js --pushstate --open --live --dir examples/",
+    "dev-reduce": "budo examples/using-reducers/index.js --pushstate --open --live --dir examples/",
+    "dev-routes": "budo examples/using-routes/index.js --pushstate --open --live --dir examples/",
+    "dev-together": "budo examples/using-everything/index.js --pushstate --open --live --dir examples/",
     "dev-todo": "budo examples/todo-app/index.js --pushstate --open --live --dir examples/"
   },
   "author": "",

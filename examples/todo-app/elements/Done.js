@@ -1,11 +1,11 @@
-const Tram = require('../../index');
+const Tram = require('../../../index');
 
 const html = Tram.html({});
 
 module.exports = (attrs, children) => {
   return html`
     <div>
-      <input type='checkbox' checked />
+      <input type='checkbox' checked disabled />
         <strike> ${attrs.value} </strike>
     </div>
   `

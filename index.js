@@ -42,7 +42,7 @@ class Tram {
 
     const routePath = pathName || window.location.href.replace(window.location.origin, '');
     const pageComponent = this.router(routePath);
-    target.appendChild(pageComponent(this.store.getState()));
+    yoyoUpdate(target, pageComponent(this.store.getState()));
   }
 
 }

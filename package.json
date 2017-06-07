@@ -8,7 +8,7 @@
     "dev-reduce": "budo examples/reducers/index.js --pushstate --open --live --dir examples/",
     "dev-routes": "budo examples/routes/index.js --pushstate --open --live --dir examples/",
     "dev-together": "budo examples/all-together/index.js --pushstate --open --live --dir examples/",
-    "dev-todo": "budo examples/todo/index.js --pushstate --open --live --dir examples/"
+    "dev-todo": "budo examples/todo-app/index.js --pushstate --open --live --dir examples/"
   },
   "author": "",
   "license": "ISC",
@@ -17,7 +17,6 @@
     "hyperx": "^2.3.0",
     "minidux": "^1.0.1",
     "nanorouter": "^2.0.0",
-    "pelo": "0.0.2",
     "rbel": "^1.0.1",
     "xtend": "^4.0.1",
     "yo-yo": "^1.4.1"

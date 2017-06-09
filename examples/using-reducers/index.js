@@ -1,21 +1,21 @@
-const Tram = require('../../index');
-const xtend = require('xtend');
+const Tram = require('../../index')
+const xtend = require('xtend')
 
-const app = new Tram();
+const app = new Tram()
 
-const html = Tram.html({});
+const html = Tram.html({})
 
 const counterReducer = (state, action) => {
   if (action.type === 'click') {
-    return xtend(state, { clicks: state.clicks+1 })
+    return xtend(state, { clicks: state.clicks + 1 })
   }
-  return state;
+  return state
 }
 
 const clicker = (state) => {
   const incrementCount = () => {
-    console.log("I've been clicked!");
-    state.dispatch({type: 'click'});
+    console.log("I've been clicked!")
+    state.dispatch({type: 'click'})
   }
   return html`
     <div>
@@ -29,6 +29,6 @@ const clicker = (state) => {
   `
 }
 
-app.addReducer('counter', counterReducer, {clicks: 0});
-app.addRoute('/', clicker);
-app.start('.main');
+app.addReducer('counter', counterReducer, {clicks: 0})
+app.addRoute('/', clicker)
+app.start('.main')

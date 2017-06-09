@@ -1,14 +1,13 @@
-const Tram = require('../../../index');
+const Tram = require('../../../index')
 
-const html = Tram.html({});
+const html = Tram.html({})
 
 module.exports = (attrs, children) => {
-
   const submitTodo = (event) => {
     if (event.key === 'Enter') {
-      event.currentTarget.blur();
-      attrs.onAddTodo();
-      event.currentTarget.focus();
+      event.currentTarget.blur()
+      attrs.onAddTodo()
+      event.currentTarget.focus()
     }
   }
 

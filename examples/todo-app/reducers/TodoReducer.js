@@ -4,7 +4,7 @@ const TodoReducer = (state, action) => {
       return Object.assign({}, state, {
         todos: [state.text].concat(state.todos),
         text: ''
-      });
+      })
     case 'COMPLETE_TODO':
       return Object.assign({}, state, {
         todos: state.todos.filter(
@@ -15,10 +15,10 @@ const TodoReducer = (state, action) => {
     case 'UPDATE_INPUT':
       return Object.assign({}, state, {
         text: action.text
-      });
+      })
     default:
-      return state;
+      return state
   }
 }
 
-module.exports = TodoReducer;
+module.exports = TodoReducer

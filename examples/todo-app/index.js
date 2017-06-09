@@ -1,32 +1,30 @@
-const Tram = require('../../index');
-const app = new Tram();
+const Tram = require('../../index')
+const app = new Tram()
 
-const Todos = require('./elements/Todos');
-const Dones = require('./elements/Dones');
-const NewTodo = require('./elements/NewTodo');
+const Todos = require('./elements/Todos')
+const Dones = require('./elements/Dones')
+const NewTodo = require('./elements/NewTodo')
 
-
-const TodoReducer = require('./reducers/TodoReducer');
+const TodoReducer = require('./reducers/TodoReducer')
 
 const html = Tram.html({
   NewTodo,
   Todos,
   Dones
-});
+})
 
 const home = (state) => {
-
-  const onUpdateInput = ({currentTarget : { value }}) => {
+  const onUpdateInput = ({currentTarget: { value }}) => {
     state.dispatch({
       type: 'UPDATE_INPUT',
       text: value
-    });
+    })
   }
 
   const onAddTodo = () => {
     state.dispatch({
       type: 'ADD_TODO'
-    });
+    })
   }
 
   const onCompleteTodo = (index) => () => {
@@ -55,7 +53,7 @@ const home = (state) => {
 
 app.addReducer('todos', TodoReducer, {
   todos: [], dones: [], text: ''
-});
-app.addRoute('/', home);
+})
+app.addRoute('/', home)
 
-app.start('.main');
+app.start('.main')

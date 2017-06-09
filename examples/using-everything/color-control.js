@@ -1,6 +1,6 @@
-const Tram = require('../../index');
+const Tram = require('../../index')
 
-const html = Tram.html();
+const html = Tram.html()
 
 const buttonStyle = color => `
   border: none;
@@ -11,7 +11,7 @@ const buttonStyle = color => `
   margin: 1em;
   cursor: pointer;
   font-size: .75em;
-`;
+`
 
 module.exports = (attrs, children) => {
   const colors = ['black', 'blue', 'red'].map(color => html`
@@ -24,5 +24,5 @@ module.exports = (attrs, children) => {
     <div>
       ${colors}
     </div>
-  `;
+  `
 }

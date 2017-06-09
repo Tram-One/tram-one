@@ -1,9 +1,9 @@
-const Tram = require('../../../index');
+const Tram = require('../../../index')
 
-const Todo = require('./Todo');
+const Todo = require('./Todo')
 const html = Tram.html({
   Todo
-});
+})
 
 module.exports = (attrs, children) => {
   const renderTodo = (todo, index) => {
@@ -14,7 +14,7 @@ module.exports = (attrs, children) => {
     `
   }
 
-  const todoItems = attrs.todos.map(renderTodo);
+  const todoItems = attrs.todos.map(renderTodo)
 
   return html`
     <div>

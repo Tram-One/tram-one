@@ -4,13 +4,19 @@
   "description": "🚋",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint ./",
     "dev-custom": "budo examples/using-custom-elements/index.js --pushstate --open --live --dir examples/",
     "dev-reduce": "budo examples/using-reducers/index.js --pushstate --open --live --dir examples/",
     "dev-routes": "budo examples/using-routes/index.js --pushstate --open --live --dir examples/",
     "dev-together": "budo examples/using-everything/index.js --pushstate --open --live --dir examples/",
     "dev-todo": "budo examples/todo-app/index.js --pushstate --open --live --dir examples/"
   },
-  "author": "",
+  "author": {
+    "name": "Jesse Jurman",
+    "email": "j.r.jurman@gmail.com",
+    "url": "https://github.com/jrjurman"
+  },
+  "repository": "https://github.com/jrjurman/tram-one",
   "license": "ISC",
   "dependencies": {
     "bel": "^4.6.0",
@@ -23,6 +29,10 @@
   },
   "devDependencies": {
     "browserify": "^14.1.0",
-    "budo": "^10.0.3"
+    "budo": "^10.0.3",
+    "eslint": "^3.19.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1"
   }
 }

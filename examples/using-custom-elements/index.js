@@ -1,11 +1,10 @@
-const Tram = require('../../index');
-const app = new Tram();
+const Tram = require('../../index')
+const app = new Tram()
 
-const chrome = require('./chrome');
-const footer = require('./footer');
+const chrome = require('./chrome')
 const html = Tram.html({
   chrome
-});
+})
 
 const home = (state) => {
   return html`
@@ -29,6 +28,6 @@ const home = (state) => {
   `
 }
 
-app.addRoute('/', home);
+app.addRoute('/', home)
 
-app.start('.main');
+app.start('.main')

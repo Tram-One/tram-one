@@ -1,12 +1,12 @@
-const Tram = require('../../index');
+const Tram = require('../../index')
 
-const html = Tram.html();
+const html = Tram.html()
 
-const inputStyle = 'font-size: inherit';
+const inputStyle = 'font-size: inherit'
 module.exports = (attrs, children) => {
   const triggerEvent = (event) => {
     if (event.key === 'Enter') {
-      attrs.onEnterColor(event.currentTarget.value);
+      attrs.onEnterColor(event.currentTarget.value)
     }
   }
   return html`
@@ -16,5 +16,5 @@ module.exports = (attrs, children) => {
               style=${inputStyle}
               value=${window.location.pathname} />
     </div>
-  `;
+  `
 }

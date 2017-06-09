@@ -1,7 +1,7 @@
-const Tram = require('../../index');
-const app = new Tram();
+const Tram = require('../../index')
+const app = new Tram()
 
-const html = Tram.html({});
+const html = Tram.html({})
 
 const home = (state) => {
   return html`
@@ -73,10 +73,10 @@ const nopath = () => {
   `
 }
 
-app.addRoute('/', home);
-app.addRoute('/page1', page1);
-app.addRoute('/page#2', page2);
-app.addRoute('/:page', pageN);
-app.addRoute('/404', nopath);
+app.addRoute('/', home)
+app.addRoute('/page1', page1)
+app.addRoute('/page#2', page2)
+app.addRoute('/:page', pageN)
+app.addRoute('/404', nopath)
 
-app.start('.main');
+app.start('.main')

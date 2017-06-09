@@ -1,12 +1,12 @@
-const Tram = require('../../index');
+const Tram = require('../../index')
 
-const footer = require('./footer');
+const footer = require('./footer')
 const html = Tram.html({
   footer
-});
+})
 
 module.exports = (attrs, children) => {
-  const style = 'padding-left: 2em';
+  const style = 'padding-left: 2em'
   return html`
     <div>
       <h1>Tram-One 🚋</h1>
@@ -15,5 +15,5 @@ module.exports = (attrs, children) => {
       </div>
       <footer></footer>
     </div>
-  `;
+  `
 }

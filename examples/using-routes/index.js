@@ -1,4 +1,4 @@
-const Tram = require('../../index')
+const Tram = require('../../tram-one')
 const app = new Tram()
 
 const html = Tram.html({})
@@ -47,7 +47,7 @@ const page2 = (state) => {
 
       <a href="/">Go to the Home Page</a>
       <br>
-      <a href="/3">Go to page 3</a>
+      <a href="/page/3">Go to page 3</a>
     </div>
   `
 }
@@ -60,7 +60,7 @@ const pageN = (state) => {
 
       <a href="/">Go to the Home Page</a>
       <br>
-      <a href="/${parseInt(state.page) + 1}">Go to page ${parseInt(state.page) + 1}</a>
+      <a href="/page/${parseInt(state.page) + 1}">Go to page ${parseInt(state.page) + 1}</a>
     </div>
   `
 }
@@ -76,7 +76,7 @@ const nopath = () => {
 app.addRoute('/', home)
 app.addRoute('/page1', page1)
 app.addRoute('/page#2', page2)
-app.addRoute('/:page', pageN)
+app.addRoute('/page/:page', pageN)
 app.addRoute('/404', nopath)
 
 app.start('.main')

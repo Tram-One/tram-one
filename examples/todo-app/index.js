@@ -1,4 +1,4 @@
-const Tram = require('../../index')
+const Tram = require('../../tram-one')
 const app = new Tram()
 
 const Todos = require('./elements/Todos')

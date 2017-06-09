@@ -1,4 +1,4 @@
-const Tram = require('../../../index')
+const Tram = require('../../../tram-one')
 
 const Todo = require('./Todo')
 const html = Tram.html({

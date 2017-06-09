@@ -1,4 +1,4 @@
-const Tram = require('../../index')
+const Tram = require('../../tram-one')
 const xtend = require('xtend')
 
 const app = new Tram()

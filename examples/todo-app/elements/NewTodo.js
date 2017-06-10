@@ -1,6 +1,6 @@
 const Tram = require('../../../tram-one')
 
-const html = Tram.html({})
+const html = Tram.html()
 
 module.exports = (attrs, children) => {
   const submitTodo = (event) => {

@@ -1,7 +1,7 @@
 const Tram = require('../../tram-one')
 const app = new Tram()
 
-const html = Tram.html({})
+const html = Tram.html()
 
 const home = (state) => {
   return html`

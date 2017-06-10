@@ -1,12 +1,14 @@
 {
   "name": "tram-one",
   "version": "1.0.0",
-  "description": "🚋",
+  "description": "🚋 Batteries included Web View Framework",
   "main": "index.js",
   "scripts": {
     "lint": "eslint ./",
     "example": "node dev-scripts/example-selector.js",
-    "build": "webpack"
+    "build": "webpack --config configs/webpack.config.js",
+    "test-dev": "testem -f configs/testem.yml",
+    "test": "testem ci -f configs/testem.yml"
   },
   "author": {
     "name": "Jesse Jurman",
@@ -25,11 +27,17 @@
     "yo-yo": "^1.4.1"
   },
   "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.0.0",
+    "babel-preset-env": "^1.5.2",
     "eslint": "^3.19.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
     "inquirer": "^3.1.0",
+    "internal-ip": "^1.2.0",
+    "opn": "^5.0.0",
+    "testem": "^1.16.2",
     "webpack": "^2.6.1",
     "webpack-dev-server": "^2.4.5"
   }

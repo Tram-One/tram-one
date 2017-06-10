@@ -29,5 +29,4 @@ const home = (state) => {
 }
 
 app.addRoute('/', home)
-
 app.start('.main')

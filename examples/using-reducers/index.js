@@ -3,7 +3,7 @@ const xtend = require('xtend')
 
 const app = new Tram()
 
-const html = Tram.html({})
+const html = Tram.html()
 
 const counterReducer = (state, action) => {
   if (action.type === 'click') {

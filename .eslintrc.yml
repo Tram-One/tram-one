@@ -4,6 +4,7 @@ plugins:
   - promise
 env:
   node: true
+  jasmine: true
 rules:
   block-scoped-var: 2
   class-methods-use-this: 2

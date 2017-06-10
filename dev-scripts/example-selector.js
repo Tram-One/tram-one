@@ -2,8 +2,8 @@ const inquirer = require('inquirer')
 const Webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
 const path = require('path')
-
-const port = 5000
+const opn = require('opn')
+const internalIp = require('internal-ip')
 
 const question = {
   type: 'list',
@@ -20,8 +20,7 @@ const question = {
   ]
 }
 
-inquirer.prompt([question])
-.then((answer) => {
+inquirer.prompt([question]).then((answer) => {
   console.log(`running ${answer.example}`)
 
   const webpackConfig = {
@@ -46,7 +45,11 @@ inquirer.prompt([question])
     }
   })
 
-  server.listen(port, '127.0.0.1', () => {
-    console.log(`Running ${answer.example} on http://localhost:${port}`)
+  const port = 5000
+  const ip = internalIp()
+
+  server.listen(port, ip, () => {
+    console.log(`Running ${answer.example} on http://${ip}:${port}`)
+    opn(`http://${ip}:${port}`)
   })
 })

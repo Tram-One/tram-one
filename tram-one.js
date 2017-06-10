@@ -6,10 +6,19 @@ const minidux = require('minidux')
 const yoyoUpdate = require('yo-yo').update
 
 class Tram {
-  constructor() {
-    this.router = nanorouter({ default: '/404' })
+  constructor(options) {
+    options = options || {}
+    const defaultRoute = options.defaultRoute || '/404'
+
+    this.router = nanorouter({ default: defaultRoute })
     this.reducers = {}
     this.state = {}
+    this.store = {}
+  }
+
+  addReducer(key, reducer, state) {
+    this.reducers[key] = reducer
+    this.state[key] = state
   }
 
   addRoute(path, page) {
@@ -22,27 +31,31 @@ class Tram {
     })
   }
 
-  addReducer(field, reducer, state) {
-    this.reducers[field] = reducer
-    this.state[field] = state
-  }
-
   start(selector, pathName) {
-    const target = document.querySelector(selector)
-
     const reducers = minidux.combineReducers(this.reducers)
     this.store = minidux.createStore(reducers, this.state)
 
     this.store.subscribe((state) => {
-      const routePath = pathName || window.location.href.replace(window.location.origin, '')
-      const pageComponent = this.router(routePath)
-
-      yoyoUpdate(target, pageComponent(state))
+      this.mount(selector, pathName, state)
     })
 
+    this.mount(selector, pathName, this.store.getState())
+  }
+
+  mount(selector, pathName, state) {
+    const target = (typeof selector) === 'string' ? document.querySelector(selector) : selector
     const routePath = pathName || window.location.href.replace(window.location.origin, '')
-    const pageComponent = this.router(routePath)
-    yoyoUpdate(target, pageComponent(this.store.getState()))
+    yoyoUpdate(target, this.toNode(routePath, state, pathName))
+  }
+
+  toNode(pathName, state) {
+    const pageComponent = this.router(pathName)
+    const pageState = state || this.state
+    return pageComponent(pageState)
+  }
+
+  toString(pathName, state) {
+    return this.toNode(pathName, state).outerHTML
   }
 
   static html(registry) {

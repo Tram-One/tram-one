@@ -94,7 +94,7 @@ describe('Tram', () => {
 
     afterEach(() => {
       const childDiv = document.getElementById('tram_container')
-      childDiv.remove()
+      document.body.removeChild(childDiv)
     })
 
     it('should mount the app to the target', () => {
@@ -128,7 +128,7 @@ describe('Tram', () => {
 
     afterEach(() => {
       const childDiv = document.getElementById('tram_container')
-      childDiv.remove()
+      document.body.removeChild(childDiv)
     })
 
     it('should attach the app to a node', () => {

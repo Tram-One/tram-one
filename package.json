@@ -7,6 +7,7 @@
     "lint": "eslint ./",
     "example": "node dev-scripts/example-selector.js",
     "build": "webpack --config configs/webpack.config.js",
+    "test-build": "webpack --config configs/webpack.config.js && webpack --config configs/webpack.testem.config.js",
     "test-dev": "testem -f configs/testem.yml",
     "test": "testem ci -f configs/testem.yml"
   },

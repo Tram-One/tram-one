@@ -1,9 +1,8 @@
 framework: jasmine
 launch_in_dev:
   - chrome
-skip: 'phantomjs'
 src_files:
   - tram-one.js
   - tests/specs/*.js
 test_page: tests/testem.html
-before_tests: npm run build
+before_tests: npm run test-build

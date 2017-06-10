@@ -1,6 +1,9 @@
 # Library Distributable
 dist
 
+# Transformed Spec Files
+tests/*.js
+
 # Logs
 logs
 *.log

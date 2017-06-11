@@ -44,8 +44,14 @@ class Tram {
 
   mount(selector, pathName, state) {
     const target = (typeof selector) === 'string' ? document.querySelector(selector) : selector
+    if (!target.firstElementChild) {
+      const targetChild = document.createElement('div')
+      target.appendChild(targetChild)
+    }
+    const targetChild = target.firstElementChild
+
     const routePath = pathName || window.location.href.replace(window.location.origin, '')
-    yoyoUpdate(target, this.toNode(routePath, state, pathName))
+    yoyoUpdate(targetChild, this.toNode(routePath, state))
   }
 
   toNode(pathName, state) {

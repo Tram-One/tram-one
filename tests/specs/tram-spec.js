@@ -88,12 +88,12 @@ describe('Tram', () => {
   describe('start', () => {
     beforeEach(() => {
       const childDiv = document.createElement('div')
-      childDiv.id = 'tram_container'
+      childDiv.id = 'tram_test_container'
       document.body.appendChild(childDiv)
     })
 
     afterEach(() => {
-      const childDiv = document.getElementById('tram_container')
+      const childDiv = document.getElementById('tram_test_container')
       document.body.removeChild(childDiv)
     })
 
@@ -101,7 +101,7 @@ describe('Tram', () => {
       app = new Tram()
       app.addReducer('counter', counterReducer, counterState)
       app.addRoute(testemPath, queryableCounterPage)
-      app.start(queryableSelector)
+      app.start('#tram_test_container')
       const mountedTarget = document.querySelector(queryableSelector)
 
       expect(mountedTarget.innerHTML).toEqual('2')
@@ -111,7 +111,7 @@ describe('Tram', () => {
       app = new Tram()
       app.addReducer('counter', counterReducer, counterState)
       app.addRoute(testemPath, queryableCounterPage)
-      app.start(queryableSelector)
+      app.start('#tram_test_container')
       app.store.dispatch({type: 'add'})
       const mountedTarget = document.querySelector(queryableSelector)
 
@@ -122,12 +122,12 @@ describe('Tram', () => {
   describe('mount', () => {
     beforeEach(() => {
       const childDiv = document.createElement('div')
-      childDiv.id = 'tram_container'
+      childDiv.id = 'tram_test_container'
       document.body.appendChild(childDiv)
     })
 
     afterEach(() => {
-      const childDiv = document.getElementById('tram_container')
+      const childDiv = document.getElementById('tram_test_container')
       document.body.removeChild(childDiv)
     })
 
@@ -135,17 +135,28 @@ describe('Tram', () => {
       app = new Tram()
 
       app.addRoute('/', queryablePage)
-      const target = document.getElementById('tram_container')
+      const target = document.getElementById('tram_test_container')
       app.mount(target, '/')
       const mountedTarget = document.querySelector(queryableSelector)
       expect(mountedTarget.outerHTML).toEqual(queryablePage().outerHTML)
+    })
+
+    it('should use the default route', () => {
+      app = new Tram()
+
+      app.addRoute('/', queryablePage)
+      app.addRoute(testemPath, queryablePage.bind(this, 200))
+      const target = document.getElementById('tram_test_container')
+      app.mount(target)
+      const mountedTarget = document.querySelector(queryableSelector)
+      expect(mountedTarget.outerHTML).toEqual(queryablePage(200).outerHTML)
     })
 
     it('should attach the app to a selector', () => {
       app = new Tram()
 
       app.addRoute('/', queryablePage)
-      app.mount(queryableSelector, '/')
+      app.mount('#tram_test_container', '/')
       const mountedTarget = document.querySelector(queryableSelector)
       expect(mountedTarget.outerHTML).toEqual(queryablePage().outerHTML)
     })
@@ -155,8 +166,8 @@ describe('Tram', () => {
 
       app.addRoute('/', queryablePage)
       app.addRoute('/200', queryablePage.bind(this, 200))
-      app.mount(queryableSelector, '/')
-      app.mount(queryableSelector, '/200')
+      app.mount('#tram_test_container', '/')
+      app.mount('#tram_test_container', '/200')
       const mountedTarget = document.querySelector(queryableSelector)
       expect(mountedTarget.outerHTML).toEqual(queryablePage(200).outerHTML)
     })

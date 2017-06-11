@@ -157,17 +157,17 @@ app.start('.main')
 Tram-One has a simple interface to help build your web app.
 
 ### `Tram.html([registry])`
-_Reference: [hyperx](https://github.com/substack/hyperx)_
-_Reference: [bel](https://github.com/shama/bel)_
-_Reference: [rbel](https://github.com/aaaristo/rbel)_
+_Reference: [hyperx](https://github.com/substack/hyperx),
+[bel](https://github.com/shama/bel),
+[rbel](https://github.com/aaaristo/rbel)_
 
 `Tram.html` returns a function that can be used to transform
 template literals into Node DOM trees.
-It can take in an optional registry, which is a mapping of tag
+It can take in an optional `registry`, which is a mapping of tag
 names to functions that render your custom tags.
 
-Because it is static, you call the function off of Tram, you
-do not need to have an instance of Tram to use this function.
+Because it is static, you call the function off of Tram-One, you
+do not need to have an instance of Tram-One to use this function.
 
 <details>
 <summary>
@@ -213,7 +213,7 @@ const home = (state) => {
 
 ### `Tram.constructor([options])`
 `new Tram()` returns an instance of the Tram. The constructor
-takes in an options object, which can have a `defaultRoute`.
+takes in an `options` object, which can have a `defaultRoute`.
 By default, this is `/404`, but you can set it to whatever path
 you want to load when path matching fails.
 
@@ -241,15 +241,16 @@ app.addRoute('/', home)
 _Reference: [minidux](https://github.com/freeman-lab/minidux)_
 
 `app.addReducer` adds a reducer onto the current instance of Tram.  
-It takes in three arguments, `key`, which is where the state will be
-exposed, `reducer`, the function that updates state, and finally `state`,
-the initial state of the reducer.
+It takes in three arguments:  
+`key`, which is where the state will be exposed,  
+`reducer`, the function that updates state,  
+`state`, the initial state of the reducer.
 
 Note, `state` here will be exposed in the views as `state[key]`.
 
-The `reducer` should be a function, that takes in `state`, and an `action`.  
-`state` can be anything you want, a number, object, whatever. At the end of
-the reducer, you should ALWAYS return this by default.  
+The `reducer` should be a function, that takes in `state`, and an `action`.   
+`state` can be anything you want, a number, object, whatever.  
+At the end of the reducer, you should ALWAYS return this by default.   
 `action` should be an object, with a `type` property.
 
 <details>
@@ -301,13 +302,13 @@ app.addReducer('votes', counterReducer, 0)
 ### `app.addRoute(path, page)`
 _Reference: [nanorouter](https://github.com/yoshuawuyts/nanorouter)_
 
-`app.addRoute` will associate a component with a route.
+`app.addRoute` will associate a component with a route.  
 `path` should be a matchable route for the application. Look up
 [nanorouter](https://github.com/yoshuawuyts/nanorouter)
-to see all the possible options here.
+to see all the possible options here.  
 `page` should be a function that takes in a `state` object for the entire app.
 
-The state passed into `page` will have any path parameters for the route.
+The state passed into `page` will have any path parameters for the route as well.
 
 <details>
 <summary>
@@ -397,12 +398,12 @@ and either creates a child div, or updates a child div under `selector`.
 This was created to clean up the code in the library, but may be useful for
 testing.
 
-**YOU SHOULD NEVER CALL THIS DIRECTLY**
+**YOU SHOULD NEVER CALL THIS DIRECTLY FOR YOUR APP**
 
 ### `app.toNode(pathName, [state])`
 
 `app.toNode` returns a HTMLNode of the app for a given route and state. The
-function matches a route from `pathName`, and either takes in a state, or
+function matches a route from `pathName`, and either takes in a `state`, or
 uses the default state (that's been created by adding reducers).
 
 While initially created to clean up the code in the library, this can be useful

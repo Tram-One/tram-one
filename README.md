@@ -13,7 +13,8 @@ not include a way to bundle and run your code. The obvious answers are
 [webpack](https://www.npmjs.com/package/webpack),
 [browserify](https://www.npmjs.com/package/browserify), etc...  
 
-If you want to quickly get started though, check out [budo](https://www.npmjs.com/package/budo)!
+If you want to quickly get started though, check out
+[budo](https://www.npmjs.com/package/budo)!
 
 ## Packages
 Tram-One is a collection of excellent packages.  
@@ -31,6 +32,12 @@ For State Management:
   - [yo-yo](https://github.com/maxogden/yo-yo)
   - [minidux](https://github.com/freeman-lab/minidux)
   - [xtend](https://github.com/Raynos/xtend)
+
+While not used in this project, Tram-One is heavily inspired by the
+[choo](https://github.com/yoshuawuyts/choo)
+view framework. Special thanks go out to the people on that project, and it's
+creator, [Yoshua Wuyts](https://github.com/yoshuawuyts).  
+If you like some of the things here, definitely go check out that project.
 
 ## Annotated Examples
 <details>
@@ -143,7 +150,7 @@ app.start('.main')
 
 </details>
 
-  
+
 You can find more examples in the
 [examples directory](https://github.com/JRJurman/tram-one/tree/development/examples).  
 You can run these examples by cloning the repo, and running

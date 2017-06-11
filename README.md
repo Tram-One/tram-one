@@ -9,13 +9,15 @@ Batteries Included!
 
 ### Builds and Deploys
 While Tram-One comes with several packages to help you on your way, it does
-not include a way to bundle and run your code.   
-The obvious answers are [webpack](https://www.npmjs.com/package/webpack), [browserify](https://www.npmjs.com/package/browserify), etc...  
+not include a way to bundle and run your code. The obvious answers are
+[webpack](https://www.npmjs.com/package/webpack),
+[browserify](https://www.npmjs.com/package/browserify), etc...  
 
 If you want to quickly get started though, check out [budo](https://www.npmjs.com/package/budo)!
 
 ## Packages
 <div>
+
   Tram-One is a collection of excellent packages.
   Here are the different package that make Tram-One possible...
   <br><br>
@@ -37,6 +39,7 @@ If you want to quickly get started though, check out [budo](https://www.npmjs.co
     <li><a style="color: #e6ebef;" href="https://github.com/freeman-lab/minidux">minidux</a></li>
     <li><a style="color: #e6ebef;" href="https://github.com/Raynos/xtend">xtend</a></li>
   </ul>
+
 </div>
 
 ## Annotated Examples
@@ -154,9 +157,9 @@ app.start('.main')
 Tram-One has a simple interface to help build your web app.
 
 ### `Tram.html([registry])`
-_Reference: (hyperx)[https://github.com/substack/hyperx]_
-_Reference: (bel)[https://github.com/shama/bel]_
-_Reference: (rbel)[https://github.com/aaaristo/rbel]_
+_Reference: [hyperx](https://github.com/substack/hyperx)_
+_Reference: [bel](https://github.com/shama/bel)_
+_Reference: [rbel](https://github.com/aaaristo/rbel)_
 
 `Tram.html` returns a function that can be used to transform
 template literals into Node DOM trees.
@@ -235,7 +238,7 @@ app.addRoute('/', home)
 </details>
 
 ### `app.addReducer(key, reducer, state)`
-_Reference: (minidux)[https://github.com/freeman-lab/minidux]_
+_Reference: [minidux](https://github.com/freeman-lab/minidux)_
 
 `app.addReducer` adds a reducer onto the current instance of Tram.  
 It takes in three arguments, `key`, which is where the state will be
@@ -296,11 +299,11 @@ app.addReducer('votes', counterReducer, 0)
 </details>
 
 ### `app.addRoute(path, page)`
-_Reference: (nanorouter)[https://github.com/yoshuawuyts/nanorouter]_
+_Reference: [nanorouter](https://github.com/yoshuawuyts/nanorouter)_
 
 `app.addRoute` will associate a component with a route.
 `path` should be a matchable route for the application. Look up
-(nanorouter)[https://github.com/yoshuawuyts/nanorouter]
+[nanorouter](https://github.com/yoshuawuyts/nanorouter)
 to see all the possible options here.
 `page` should be a function that takes in a `state` object for the entire app.
 

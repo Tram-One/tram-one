@@ -2,10 +2,11 @@
   "name": "tram-one",
   "version": "1.0.0",
   "description": "🚋 Batteries included Web View Framework",
-  "main": "index.js",
+  "main": "dist/tram-one.js",
   "scripts": {
     "lint": "eslint ./",
     "example": "node dev-scripts/example-selector.js",
+    "examples": "npm run example",
     "build": "webpack --config configs/webpack.config.js",
     "test-build": "webpack --config configs/webpack.config.js && webpack --config configs/webpack.testem.config.js",
     "test-dev": "testem -f configs/testem.yml",

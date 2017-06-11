@@ -1,6 +1,6 @@
 {
   "name": "tram-one",
-  "version": "1.0.0",
+  "version": "0.9.0",
   "description": "🚋 Batteries included Web View Framework",
   "main": "dist/tram-one.js",
   "scripts": {

@@ -16,31 +16,20 @@ not include a way to bundle and run your code. The obvious answers are
 If you want to quickly get started though, check out [budo](https://www.npmjs.com/package/budo)!
 
 ## Packages
-<div>
+Tram-One is a collection of excellent packages.
+Here are the different package that make Tram-One possible...
+For Rendering:
+  - [hyperx](https://github.com/substack/hyperx)
+  - [bel](https://github.com/shama/bel)
+  - [rbel](https://github.com/aaaristo/rbel)
 
-  Tram-One is a collection of excellent packages.
-  Here are the different package that make Tram-One possible...
-  <br><br>
-  For Rendering:
-  <ul style="margin-top: 0px">
-    <li><a style="color: #e6ebef;"href="https://github.com/substack/hyperx">hyperx</a></li>
-    <li><a style="color: #e6ebef;" href="https://github.com/shama/bel">bel</a></li>
-    <li><a style="color: #e6ebef;" href="https://github.com/aaaristo/rbel">rbel</a></li>
-  </ul>
+For Routing
+  - [nanorouter](https://github.com/yoshuawuyts/nanorouter)
 
-  For Routing
-  <ul style="margin-top: 0px">
-    <li><a style="color: #e6ebef;" href="https://github.com/yoshuawuyts/nanorouter">nanorouter</a></li>
-  </ul>
-
-  For State Management
-  <ul style="margin-top: 0px">
-    <li><a style="color: #e6ebef;" href="https://github.com/maxogden/yo-yo">yo-yo</a></li>
-    <li><a style="color: #e6ebef;" href="https://github.com/freeman-lab/minidux">minidux</a></li>
-    <li><a style="color: #e6ebef;" href="https://github.com/Raynos/xtend">xtend</a></li>
-  </ul>
-
-</div>
+For State Management
+  - [yo-yo](https://github.com/maxogden/yo-yo)
+  - [minidux](https://github.com/freeman-lab/minidux)
+  - [xtend](https://github.com/Raynos/xtend)
 
 ## Annotated Examples
 <details>
@@ -416,3 +405,15 @@ the same interface at `app.toNode`, and basically just calls `.outerHTML` on tha
 
 This can be useful if you want to do server-sider rendering. Note, this really
 hasn't been explored too much, so, milage may vary.
+
+## Development
+
+If you decide to clone this repo, there are several commands included in the
+`package.json` to help you develop.
+- `npm run lint`, runs eslint in the project
+- `npm run example`, kicks off one of the example apps in this repo
+- `npm run build`, builds the project and creates a distributable
+- `npm run test-dev`, hosts the tests to be launched in a browser
+- `npm run test`, runs tests against all available browsers on the machine
+
+## Todo

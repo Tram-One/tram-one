@@ -16,17 +16,18 @@ not include a way to bundle and run your code. The obvious answers are
 If you want to quickly get started though, check out [budo](https://www.npmjs.com/package/budo)!
 
 ## Packages
-Tram-One is a collection of excellent packages.
-Here are the different package that make Tram-One possible...
+Tram-One is a collection of excellent packages.  
+Here are the different package that make Tram-One possible...  
+
 For Rendering:
   - [hyperx](https://github.com/substack/hyperx)
   - [bel](https://github.com/shama/bel)
   - [rbel](https://github.com/aaaristo/rbel)
 
-For Routing
+For Routing:
   - [nanorouter](https://github.com/yoshuawuyts/nanorouter)
 
-For State Management
+For State Management:
   - [yo-yo](https://github.com/maxogden/yo-yo)
   - [minidux](https://github.com/freeman-lab/minidux)
   - [xtend](https://github.com/Raynos/xtend)
@@ -141,6 +142,14 @@ app.start('.main')
 ```
 
 </details>
+
+You can find more examples in the
+[examples directory](https://github.com/JRJurman/tram-one/tree/development/examples).  
+You can run these examples by cloning the repo, and running
+```sh
+npm install
+npm run example
+```
 
 ## API
 Tram-One has a simple interface to help build your web app.
@@ -417,3 +426,7 @@ If you decide to clone this repo, there are several commands included in the
 - `npm run test`, runs tests against all available browsers on the machine
 
 ## Todo
+
+- source maps
+- CI (probably with Circle-CI?)
+- List Repositories with Example Apps

@@ -1,8 +1,9 @@
 {
   "name": "tram-one",
-  "version": "0.9.0",
-  "description": "🚋 Batteries included Web View Framework",
+  "version": "0.9.3",
+  "description": "🚋 Batteries Included Web View Framework",
   "main": "dist/tram-one.js",
+  "files": ["dist/tram-one.js"],
   "scripts": {
     "lint": "eslint ./",
     "example": "node dev-scripts/example-selector.js",

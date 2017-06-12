@@ -451,6 +451,10 @@ If you decide to clone this repo, there are several commands included in the
 
 ## Todo
 
+PRs welcome!
+
+- badges on README
+- advertise build size
 - source maps
 - CI (probably with Circle-CI?)
 - List Repositories with Example Apps

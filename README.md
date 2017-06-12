@@ -35,8 +35,9 @@ For State Management:
 
 While not used in this project, Tram-One is heavily inspired by the
 [choo](https://github.com/yoshuawuyts/choo)
-view framework. Special thanks go out to the people on that project, and it's
-creator, [Yoshua Wuyts](https://github.com/yoshuawuyts).  
+view framework.  
+Special thanks go out to the people on that project, and its
+creator, [Yoshua Wuyts](https://github.com/yoshuawuyts).   
 If you like some of the things here, definitely go check out that project.
 
 ## Annotated Examples

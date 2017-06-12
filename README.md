@@ -1,6 +1,11 @@
 # Tram-One
 🚋 Batteries Included View Framework
 
+## Install
+```
+npm install tram-one --save
+```
+
 ## Summary
 Tram-One is a view framework for developers who want to jump straight into
 building on the web. At its core, Tram-One is a collection of a few packages

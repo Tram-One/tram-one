@@ -7,7 +7,17 @@ building on the web. At its core, Tram-One is a collection of a few packages
 that gives you the tools to start working right away. That is to say...
 Batteries Included!
 
-### Builds and Deploys
+### Why?
+Tram-One is a project built to make exposing custom elements easy, and to
+have redux-like state management, and basic routing by default. It was created
+out of  the frustration of having to scaffold the same dependencies over and over
+again.  
+
+Tram-One was also created to avoid a lot of the syntax that locks you into
+frameworks like Vue and React. The components written here can mimic the syntax
+you're already familiar, or help you create pure HTML friendly code.
+
+### Some Assembly Required
 While Tram-One comes with several packages to help you on your way, it does
 not include a way to bundle and run your code. The obvious answers are
 [webpack](https://www.npmjs.com/package/webpack),

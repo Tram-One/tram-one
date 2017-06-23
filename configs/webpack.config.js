@@ -2,6 +2,7 @@ const webpack = require('webpack')
 
 module.exports = {
   entry: './tram-one.js',
+  devtool: 'source-map',
   module: {
     rules: [{
       use: {

@@ -1,5 +1,6 @@
 module.exports = {
   entry: './tests/specs/tram-spec.js',
+  devtool: 'source-map',
   module: {
     rules: [
       {

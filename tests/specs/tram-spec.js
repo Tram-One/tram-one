@@ -1,5 +1,6 @@
-const Tram = window['tram-one']
-const testemPath = window.location.pathname
+const Tram = (typeof window !== 'undefined') ? window['tram-one'] : require('../../dist/tram-one')
+const testemPath = (typeof window !== 'undefined') ? window.location.pathname : '/'
+const document = (typeof window !== 'undefined') ? window.document : require('min-document')
 
 describe('Tram', () => {
   let app

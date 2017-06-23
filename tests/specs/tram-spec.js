@@ -145,7 +145,7 @@ describe('Tram', () => {
       app = new Tram()
 
       app.addRoute('/', queryablePage)
-      app.addRoute(testemPath, queryablePage.bind(this, 200))
+      app.addRoute(testemPath, queryablePage.bind(window, 200))
       const target = document.getElementById('tram_test_container')
       app.mount(target)
       const mountedTarget = document.querySelector(queryableSelector)
@@ -165,7 +165,7 @@ describe('Tram', () => {
       app = new Tram()
 
       app.addRoute('/', queryablePage)
-      app.addRoute('/200', queryablePage.bind(this, 200))
+      app.addRoute('/200', queryablePage.bind(window, 200))
       app.mount('#tram_test_container', '/')
       app.mount('#tram_test_container', '/200')
       const mountedTarget = document.querySelector(queryableSelector)

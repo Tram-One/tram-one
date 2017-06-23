@@ -2,7 +2,7 @@
 🚋 Batteries Included View Framework
 
 ## Install
-```
+```sh
 npm install tram-one --save
 ```
 

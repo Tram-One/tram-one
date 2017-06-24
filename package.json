@@ -27,7 +27,7 @@
   "repository": "https://github.com/jrjurman/tram-one",
   "license": "ISC",
   "dependencies": {
-    "bel": "^4.5.0",
+    "bel": "^4.6.0",
     "hyperx": "^2.3.0",
     "minidux": "^1.0.1",
     "nanorouter": "^2.0.0",

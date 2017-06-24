@@ -6,12 +6,13 @@ module.exports = {
   devtool: 'source-map',
   module: {
     rules: [
-      { test: /_test\.js$/, loader: 'webpack-unassert-loader' },
+      { loader: 'webpack-unassert-loader' },
       {
+        exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['env']
+            extends: './configs/.babelrc'
           }
         }
       }

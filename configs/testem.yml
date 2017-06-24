@@ -4,7 +4,7 @@ launch_in_dev:
   - Node
 launchers:
   Node:
-    command: jasmine tests/tram-spec.js
+    command: jasmine tests/specs/tram-spec.js
 src_files:
   - tram-one.js
   - tests/specs/*.js

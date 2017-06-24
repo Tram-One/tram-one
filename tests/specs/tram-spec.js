@@ -1,5 +1,6 @@
-const Tram = window['tram-one']
-const testemPath = window.location.pathname
+const Tram = (typeof window !== 'undefined') ? window['tram-one'] : require('../../dist/tram-one.esm')
+const testemPath = (typeof window !== 'undefined') ? window.location.pathname : '/'
+const document = (typeof window !== 'undefined') ? window.document : require('min-document')
 
 describe('Tram', () => {
   let app
@@ -23,14 +24,14 @@ describe('Tram', () => {
       app = new Tram()
 
       app.addRoute('/404', errorPage)
-      expect(app.toString('/')).toEqual(errorPage().outerHTML)
+      expect(app.toString('/')).toEqual(errorPage().toString())
     })
 
     it('should take in a default route', () => {
       app = new Tram({defaultRoute: '/200'})
 
       app.addRoute('/200', successPage)
-      expect(app.toString('/')).toEqual(successPage().outerHTML)
+      expect(app.toString('/')).toEqual(successPage().toString())
     })
 
     it('should not always go to the default', () => {
@@ -38,7 +39,7 @@ describe('Tram', () => {
 
       app.addRoute('/404', errorPage)
       app.addRoute('/200', successPage)
-      expect(app.toString('/200')).not.toEqual(errorPage().outerHTML)
+      expect(app.toString('/200')).not.toEqual(errorPage().toString())
     })
   })
 

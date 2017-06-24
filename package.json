@@ -18,6 +18,7 @@
     "postbuild-esm": "du -h dist/tram-one.esm.js",
     "test-build": "npm run build && rollup -c configs/rollup.testem.config.js",
     "test-dev": "testem -f configs/testem.yml",
+    "test-server": "jasmine tests/specs/tram-spec.js",
     "test": "testem ci -f configs/testem.yml"
   },
   "author": {
@@ -49,13 +50,19 @@
     "eslint-plugin-standard": "^3.0.1",
     "inquirer": "^3.1.0",
     "internal-ip": "^1.2.0",
+    "jasmine": "^2.6.0",
+    "min-document": "^2.19.0",
     "opn": "^5.0.0",
     "rollup": "^0.43.0",
     "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-commonjs": "^8.0.2",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-globals": "^1.1.0",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-uglify": "^2.0.1",
+    "rollup-plugin-unassert": "^0.1.0",
     "testem": "^1.16.2",
+    "unassertify": "^2.0.4",
     "webpack": "^2.6.1",
     "webpack-dev-server": "^2.4.5"
   }

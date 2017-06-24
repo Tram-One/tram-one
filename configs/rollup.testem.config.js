@@ -15,6 +15,7 @@ const plugins = [
 export default {
   entry: 'tests/specs/tram-spec.js',
   dest: 'tests/tram-spec.js',
+  moduleName: 'tramSpec',
   format: 'iife',
   plugins: plugins,
   sourceMap: true

@@ -148,7 +148,7 @@ describe('Tram', () => {
 
       app.addRoute('/', queryablePage)
       const target = document.getElementById('tram_test_container')
-      app.mount(target, '/', undefined, document)
+      app.mount(target, '/')
       const mountedTarget = document.querySelector(queryableSelector)
       expect(mountedTarget.outerHTML).toEqual(stringify(queryablePage()))
     })

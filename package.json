@@ -2,14 +2,20 @@
   "name": "tram-one",
   "version": "1.0.0",
   "description": "🚋 Batteries Included View Framework",
-  "main": "dist/tram-one.js",
-  "files": ["dist/tram-one.js"],
+  "main": "dist/tram-one.umd.js",
+  "module": "dist/tram-one.esm.js",
+  "files": [
+    "dist/tram-one.umd.js",
+    "dist/tram-one.esm.js"
+  ],
   "scripts": {
     "lint": "eslint ./",
     "example": "node dev-scripts/example-selector.js",
     "examples": "npm run example",
-    "build": "webpack --config configs/webpack.config.js",
-    "test-build": "webpack --config configs/webpack.config.js && webpack --config configs/webpack.testem.config.js",
+    "build": "npm run build-esm && npm run build-umd",
+    "build-esm": "node dev-scripts/build-esm.js",
+    "build-umd": "webpack --config configs/webpack.umd.config.js",
+    "test-build": "npm run build && webpack --config configs/webpack.testem.config.js",
     "test-dev": "testem -f configs/testem.yml",
     "test": "testem ci -f configs/testem.yml"
   },
@@ -35,13 +41,20 @@
     "babel-preset-env": "^1.5.2",
     "eslint": "^3.19.0",
     "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.6.0",
+    "eslint-plugin-node": "^5.0.0",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
     "inquirer": "^3.1.0",
     "internal-ip": "^1.2.0",
+    "jasmine": "^2.6.0",
+    "min-document": "^2.19.0",
     "opn": "^5.0.0",
     "testem": "^1.16.2",
+    "uglify-js": "^3.0.19",
+    "unassert": "^1.5.1",
     "webpack": "^2.6.1",
-    "webpack-dev-server": "^2.4.5"
+    "webpack-dev-server": "^2.4.5",
+    "webpack-unassert-loader": "^1.1.0"
   }
 }

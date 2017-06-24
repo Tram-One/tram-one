@@ -1,16 +1,22 @@
 const webpack = require('webpack')
+const pkg = require('../package.json')
 
 module.exports = {
   entry: './tram-one.js',
+  devtool: 'source-map',
   module: {
-    rules: [{
-      use: {
-        loader: 'babel-loader',
-        options: {
-          presets: ['env']
+    rules: [
+      { loader: 'webpack-unassert-loader' },
+      {
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            extends: './configs/.babelrc'
+          }
         }
       }
-    }]
+    ]
   },
   plugins: [
     new webpack.optimize.UglifyJsPlugin({
@@ -23,7 +29,7 @@ module.exports = {
     })
   ],
   output: {
-    filename: './dist/tram-one.js',
+    filename: pkg.main,
     // export to AMD, CommonJS, or window
     libraryTarget: 'umd',
     // the name exported to window

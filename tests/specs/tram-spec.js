@@ -1,5 +1,13 @@
-const Tram = window['tram-one']
-const testemPath = window.location.pathname
+const Tram = (typeof window !== 'undefined') ? window['tram-one'] : require('../../dist/tram-one.esm')
+const testemPath = (typeof window !== 'undefined') ? window.location.pathname : '/'
+const document = (typeof window !== 'undefined') ? window.document : require('min-document')
+
+const stringify = (node) => {
+  if (node.outerHTML !== undefined) {
+    return node.outerHTML
+  }
+  return node.toString()
+}
 
 describe('Tram', () => {
   let app
@@ -23,14 +31,14 @@ describe('Tram', () => {
       app = new Tram()
 
       app.addRoute('/404', errorPage)
-      expect(app.toString('/')).toEqual(errorPage().outerHTML)
+      expect(app.toString('/')).toEqual(stringify(errorPage()))
     })
 
     it('should take in a default route', () => {
       app = new Tram({defaultRoute: '/200'})
 
       app.addRoute('/200', successPage)
-      expect(app.toString('/')).toEqual(successPage().outerHTML)
+      expect(app.toString('/')).toEqual(stringify(successPage()))
     })
 
     it('should not always go to the default', () => {
@@ -38,7 +46,7 @@ describe('Tram', () => {
 
       app.addRoute('/404', errorPage)
       app.addRoute('/200', successPage)
-      expect(app.toString('/200')).not.toEqual(errorPage().outerHTML)
+      expect(app.toString('/200')).not.toEqual(stringify(errorPage()))
     })
   })
 
@@ -63,10 +71,10 @@ describe('Tram', () => {
       app.addRoute('/good', successPage)
       app.addRoute('/bad', errorPage)
       app.addRoute('/404', errorPage)
-      expect(app.toString('/')).toEqual(successPage().outerHTML)
-      expect(app.toString('/good')).toEqual(successPage().outerHTML)
-      expect(app.toString('/bad')).toEqual(errorPage().outerHTML)
-      expect(app.toString('/404')).toEqual(errorPage().outerHTML)
+      expect(app.toString('/')).toEqual(stringify(successPage()))
+      expect(app.toString('/good')).toEqual(stringify(successPage()))
+      expect(app.toString('/bad')).toEqual(stringify(errorPage()))
+      expect(app.toString('/404')).toEqual(stringify(errorPage()))
     })
 
     it('should include the default state in app', () => {
@@ -86,6 +94,8 @@ describe('Tram', () => {
   })
 
   describe('start', () => {
+    if (typeof window === 'undefined') { return }
+
     beforeEach(() => {
       const childDiv = document.createElement('div')
       childDiv.id = 'tram_test_container'
@@ -120,6 +130,8 @@ describe('Tram', () => {
   })
 
   describe('mount', () => {
+    if (typeof window === 'undefined') { return }
+
     beforeEach(() => {
       const childDiv = document.createElement('div')
       childDiv.id = 'tram_test_container'
@@ -138,7 +150,7 @@ describe('Tram', () => {
       const target = document.getElementById('tram_test_container')
       app.mount(target, '/')
       const mountedTarget = document.querySelector(queryableSelector)
-      expect(mountedTarget.outerHTML).toEqual(queryablePage().outerHTML)
+      expect(mountedTarget.outerHTML).toEqual(stringify(queryablePage()))
     })
 
     it('should use the default route', () => {
@@ -149,7 +161,7 @@ describe('Tram', () => {
       const target = document.getElementById('tram_test_container')
       app.mount(target)
       const mountedTarget = document.querySelector(queryableSelector)
-      expect(mountedTarget.outerHTML).toEqual(queryablePage(200).outerHTML)
+      expect(mountedTarget.outerHTML).toEqual(stringify(queryablePage(200)))
     })
 
     it('should attach the app to a selector', () => {
@@ -158,7 +170,7 @@ describe('Tram', () => {
       app.addRoute('/', queryablePage)
       app.mount('#tram_test_container', '/')
       const mountedTarget = document.querySelector(queryableSelector)
-      expect(mountedTarget.outerHTML).toEqual(queryablePage().outerHTML)
+      expect(mountedTarget.outerHTML).toEqual(stringify(queryablePage()))
     })
 
     it('should update the app on re-mount', () => {
@@ -169,7 +181,7 @@ describe('Tram', () => {
       app.mount('#tram_test_container', '/')
       app.mount('#tram_test_container', '/200')
       const mountedTarget = document.querySelector(queryableSelector)
-      expect(mountedTarget.outerHTML).toEqual(queryablePage(200).outerHTML)
+      expect(mountedTarget.outerHTML).toEqual(stringify(queryablePage(200)))
     })
   })
 
@@ -177,7 +189,7 @@ describe('Tram', () => {
     it('should resolve the path', () => {
       app = new Tram()
       app.addRoute('/', successPage)
-      expect(app.toNode('/').outerHTML).toEqual(successPage().outerHTML)
+      expect(stringify(app.toNode('/'))).toEqual(stringify(successPage()))
     })
 
     it('should have the default state', () => {
@@ -198,7 +210,7 @@ describe('Tram', () => {
     it('should return a string', () => {
       app = new Tram()
       app.addRoute('/404', errorPage)
-      expect(app.toString('/')).toEqual(errorPage().outerHTML)
+      expect(app.toString('/')).toEqual(stringify(errorPage()))
     })
   })
 

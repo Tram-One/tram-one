@@ -16,7 +16,7 @@
     "postbuild-umd": "du -h dist/tram-one.umd.js",
     "build-esm": "rollup -c configs/rollup.esm.config.js",
     "postbuild-esm": "du -h dist/tram-one.esm.js",
-    "test-build": "npm run build && rollup -c configs/rollup.testem.config.js",
+    "test-build": "npm run build && webpack --config configs/webpack.testem.config.js",
     "test-dev": "testem -f configs/testem.yml",
     "test-server": "jasmine tests/specs/tram-spec.js",
     "test": "testem ci -f configs/testem.yml"

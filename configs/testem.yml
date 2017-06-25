@@ -1,5 +1,6 @@
 framework: jasmine
 launch_in_dev:
+  - PhantomJS
   - Node
 launchers:
   Node:

@@ -3,6 +3,7 @@ dist
 
 # Transformed Spec Files
 tests/*.js
+tests/*.js.map
 
 # Logs
 logs

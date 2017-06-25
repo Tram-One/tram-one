@@ -12,7 +12,6 @@ const stringify = (node) => {
 }
 
 describe('Tram', () => {
-  let app
   const errorPage = () => Tram.html()`<div>Error</div>`
   const successPage = () => Tram.html()`<div>Noraml Page</div>`
   const queryablePage = (value) => Tram.html()`<div id="tram_container">${value}</div>`
@@ -30,21 +29,21 @@ describe('Tram', () => {
 
   describe('constructor', () => {
     it('should have a default route', () => {
-      app = new Tram()
+      const app = new Tram()
 
       app.addRoute('/404', errorPage)
       expect(app.toString('/')).toEqual(stringify(errorPage()))
     })
 
     it('should take in a default route', () => {
-      app = new Tram({defaultRoute: '/200'})
+      const app = new Tram({defaultRoute: '/200'})
 
       app.addRoute('/200', successPage)
       expect(app.toString('/')).toEqual(stringify(successPage()))
     })
 
     it('should not always go to the default', () => {
-      app = new Tram()
+      const app = new Tram()
 
       app.addRoute('/404', errorPage)
       app.addRoute('/200', successPage)
@@ -54,21 +53,30 @@ describe('Tram', () => {
 
   describe('addReducer', () => {
     it('should include reducer in app', () => {
-      app = new Tram()
+      const app = new Tram()
       app.addReducer('counter', counterReducer, {})
       expect(app.reducers['counter']).toEqual(counterReducer)
     })
 
     it('should include state in app', () => {
-      app = new Tram()
+      const app = new Tram()
       app.addReducer('counter', counterReducer, counterState)
       expect(app.state['counter']).toEqual(counterState)
+    })
+
+    it('should be chainable', () => {
+      const app = new Tram()
+        .addReducer('counter', counterReducer, counterState)
+        .addReducer('counter2', counterReducer, counterState)
+
+      expect(app.state['counter']).toEqual(counterState)
+      expect(app.state['counter2']).toEqual(counterState)
     })
   })
 
   describe('addRoute', () => {
     it('should handle new routes in the app', () => {
-      app = new Tram()
+      const app = new Tram()
       app.addRoute('/', successPage)
       app.addRoute('/good', successPage)
       app.addRoute('/bad', errorPage)
@@ -80,18 +88,27 @@ describe('Tram', () => {
     })
 
     it('should include the default state in app', () => {
-      app = new Tram()
+      const app = new Tram()
       app.addRoute('/', counterPage)
       app.addReducer('counter', counterReducer, counterState)
       expect(app.toNode('/')).toEqual(counterState)
     })
 
     it('should pass in path params in app', () => {
-      app = new Tram()
+      const app = new Tram()
       app.addRoute('/:path_param',
         (state) => Tram.html()`${state.path_param}`
       )
       expect(app.toNode('/foo')).toEqual('foo')
+    })
+
+    it('should be chainable', () => {
+      const app = new Tram()
+        .addRoute('/good', successPage)
+        .addRoute('/bad', errorPage)
+
+      expect(app.toString('/good')).toEqual(stringify(successPage()))
+      expect(app.toString('/bad')).toEqual(stringify(errorPage()))
     })
   })
 
@@ -110,7 +127,7 @@ describe('Tram', () => {
     })
 
     it('should mount the app to the target', () => {
-      app = new Tram()
+      const app = new Tram()
       app.addReducer('counter', counterReducer, counterState)
       app.addRoute(testemPath, queryableCounterPage)
       app.start('#tram_test_container')
@@ -120,7 +137,7 @@ describe('Tram', () => {
     })
 
     it('should update the app on state change', () => {
-      app = new Tram()
+      const app = new Tram()
       app.addReducer('counter', counterReducer, counterState)
       app.addRoute(testemPath, queryableCounterPage)
       app.start('#tram_test_container')
@@ -128,6 +145,17 @@ describe('Tram', () => {
       const mountedTarget = document.querySelector(queryableSelector)
 
       expect(mountedTarget.innerHTML).toEqual('3')
+    })
+
+    it('should be chainable', () => {
+      const pageNode = new Tram()
+        .addRoute(testemPath, queryablePage.bind(this, 5))
+        .start('#tram_test_container')
+        .toNode(testemPath)
+
+      const mountedTarget = document.querySelector(queryableSelector)
+      expect(mountedTarget.innerHTML).toEqual('5')
+      expect(pageNode.innerHTML).toEqual('5')
     })
   })
 
@@ -146,7 +174,7 @@ describe('Tram', () => {
     })
 
     it('should attach the app to a node', () => {
-      app = new Tram()
+      const app = new Tram()
 
       app.addRoute('/', queryablePage)
       const target = document.getElementById('tram_test_container')
@@ -156,7 +184,7 @@ describe('Tram', () => {
     })
 
     it('should use the default route', () => {
-      app = new Tram()
+      const app = new Tram()
 
       app.addRoute('/', queryablePage)
       app.addRoute(testemPath, queryablePage.bind(this, 200))
@@ -167,7 +195,7 @@ describe('Tram', () => {
     })
 
     it('should attach the app to a selector', () => {
-      app = new Tram()
+      const app = new Tram()
 
       app.addRoute('/', queryablePage)
       app.mount('#tram_test_container', '/')
@@ -176,7 +204,7 @@ describe('Tram', () => {
     })
 
     it('should update the app on re-mount', () => {
-      app = new Tram()
+      const app = new Tram()
 
       app.addRoute('/', queryablePage)
       app.addRoute('/200', queryablePage.bind(this, 200))
@@ -185,24 +213,35 @@ describe('Tram', () => {
       const mountedTarget = document.querySelector(queryableSelector)
       expect(mountedTarget.outerHTML).toEqual(stringify(queryablePage(200)))
     })
+
+    it('should be chainable', () => {
+      const pageNode = new Tram()
+        .addRoute('/', queryablePage.bind(this, 5))
+        .mount('#tram_test_container', '/')
+        .toNode('/')
+
+      const mountedTarget = document.querySelector(queryableSelector)
+      expect(mountedTarget.innerHTML).toEqual('5')
+      expect(pageNode.innerHTML).toEqual('5')
+    })
   })
 
   describe('toNode', () => {
     it('should resolve the path', () => {
-      app = new Tram()
+      const app = new Tram()
       app.addRoute('/', successPage)
       expect(stringify(app.toNode('/'))).toEqual(stringify(successPage()))
     })
 
     it('should have the default state', () => {
-      app = new Tram()
+      const app = new Tram()
       app.addRoute('/', counterPage)
       app.addReducer('counter', counterReducer, counterState)
       expect(app.toNode('/')).toEqual(counterState)
     })
 
     it('should take in a state', () => {
-      app = new Tram()
+      const app = new Tram()
       app.addRoute('/', counterPage)
       expect(app.toNode('/', {counter: counterState})).toEqual(counterState)
     })
@@ -210,7 +249,7 @@ describe('Tram', () => {
 
   describe('toString', () => {
     it('should return a string', () => {
-      app = new Tram()
+      const app = new Tram()
       app.addRoute('/404', errorPage)
       expect(app.toString('/')).toEqual(stringify(errorPage()))
     })

@@ -19,6 +19,8 @@ class Tram {
   addReducer(key, reducer, state) {
     this.reducers[key] = reducer
     this.state[key] = state
+
+    return this
   }
 
   addRoute(path, page) {
@@ -29,6 +31,8 @@ class Tram {
       )
       return page(completeState)
     })
+
+    return this
   }
 
   start(selector, pathName) {
@@ -40,6 +44,8 @@ class Tram {
     })
 
     this.mount(selector, pathName, this.store.getState())
+
+    return this
   }
 
   mount(selector, pathName, state) {
@@ -52,6 +58,8 @@ class Tram {
 
     const routePath = pathName || window.location.href.replace(window.location.origin, '')
     yoyoUpdate(targetChild, this.toNode(routePath, state))
+
+    return this
   }
 
   toNode(pathName, state) {

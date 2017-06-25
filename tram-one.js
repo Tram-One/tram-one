@@ -61,7 +61,10 @@ class Tram {
   }
 
   toString(pathName, state) {
-    return this.toNode(pathName, state).outerHTML
+    if (typeof window !== 'undefined') {
+      return this.toNode(pathName, state).outerHTML
+    }
+    return this.toNode(pathName, state).toString()
   }
 
   static html(registry) {

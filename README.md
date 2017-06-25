@@ -2,7 +2,7 @@
 🚋 Batteries Included View Framework
 
 ## Install
-```
+```sh
 npm install tram-one --save
 ```
 
@@ -375,6 +375,9 @@ are combined, and the app is mounted onto the `selector`.
 `pathName` can be an initial path, if you don't want to check the browser's
 current path.
 
+This method only works on the client. If you are running Tram on a server, then
+use `.toString()`.
+
 Note: setting `pathName` is great for testing, but prevents other routes from
 being reached on page reload.
 
@@ -434,10 +437,10 @@ if you want to manually attach the HTMLNode that Tram-One builds to whatever.
 ### `app.toString(pathName, [state])`
 
 `app.toString` returns a string of the app for a given route and state. It has
-the same interface at `app.toNode`, and basically just calls `.outerHTML` on that.
+the same interface at `app.toNode`, and basically just calls `.outerHTML` (or
+`toString` on the server) on the node.
 
-This can be useful if you want to do server-sider rendering. Note, this really
-hasn't been explored too much, so, milage may vary.
+This can be useful if you want to do server-sider rendering or testing.
 
 ## Development
 
@@ -451,10 +454,5 @@ If you decide to clone this repo, there are several commands included in the
 
 ## Todo
 
+Check out our [Issues on Github](https://github.com/JRJurman/tram-one/issues).
 PRs welcome!
-
-- badges on README
-- advertise build size
-- source maps
-- CI (probably with Circle-CI?)
-- List Repositories with Example Apps

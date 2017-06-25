@@ -1,6 +1,10 @@
 framework: jasmine
 launch_in_dev:
-  - phantomjs
+  - PhantomJS
+  - Node
+launchers:
+  Node:
+    command: npm run test-server
 src_files:
   - tram-one.js
   - tests/specs/*.js

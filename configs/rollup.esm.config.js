@@ -19,7 +19,7 @@ const plugins = [
 export default {
   entry: 'tram-one.js',
   external: external,
-  dest: pkg.module,
+  dest: pkg.main,
   format: 'es',
   plugins: plugins,
   sourceMap: true

@@ -27,7 +27,7 @@ const plugins = [
 export default {
   entry: 'tram-one.js',
   external: external,
-  dest: pkg.main,
+  dest: pkg.browser,
   format: 'umd',
   plugins: plugins,
   moduleName: 'tram-one',

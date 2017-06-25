@@ -8,7 +8,6 @@ const globals = require('rollup-plugin-node-globals')
 const filesize = require('rollup-plugin-filesize')
 
 const pkg = require('../package.json')
-const external = Object.keys(pkg.dependencies)
 
 const plugins = [
   resolve({ main: true, preferBuiltins: true }),
@@ -26,7 +25,6 @@ const plugins = [
 
 export default {
   entry: 'tram-one.js',
-  external: external,
   dest: pkg.browser,
   format: 'umd',
   plugins: plugins,

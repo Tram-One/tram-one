@@ -5,8 +5,8 @@
   "main": "dist/tram-one.esm.js",
   "browser": "dist/tram-one.umd.js",
   "files": [
-    "dist/tram-one.umd.js",
-    "dist/tram-one.esm.js"
+    "dist/tram-one.esm.js",
+    "dist/tram-one.umd.js"
   ],
   "scripts": {
     "lint": "eslint ./",

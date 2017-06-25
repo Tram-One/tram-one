@@ -48,6 +48,7 @@
     "eslint-plugin-node": "^5.0.0",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
+    "express": "^4.15.3",
     "inquirer": "^3.1.0",
     "internal-ip": "^1.2.0",
     "jasmine": "^2.6.0",

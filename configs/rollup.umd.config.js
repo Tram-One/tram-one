@@ -5,6 +5,7 @@ const resolve = require('rollup-plugin-node-resolve')
 const babel = require('rollup-plugin-babel')
 const builtins = require('rollup-plugin-node-builtins')
 const globals = require('rollup-plugin-node-globals')
+const filesize = require('rollup-plugin-filesize')
 
 const pkg = require('../package.json')
 const external = Object.keys(pkg.dependencies)
@@ -19,7 +20,8 @@ const plugins = [
       'es2015-rollup'
     ]
   }),
-  uglify()
+  uglify(),
+  filesize()
 ]
 
 export default {

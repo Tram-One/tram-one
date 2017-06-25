@@ -451,10 +451,5 @@ If you decide to clone this repo, there are several commands included in the
 
 ## Todo
 
+Check out our [Issues on Github](https://github.com/JRJurman/tram-one/issues).
 PRs welcome!
-
-- badges on README
-- advertise build size
-- source maps
-- CI (probably with Circle-CI?)
-- List Repositories with Example Apps

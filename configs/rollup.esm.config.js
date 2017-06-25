@@ -1,6 +1,7 @@
 import uglify from 'rollup-plugin-uglify'
 
 const babel = require('rollup-plugin-babel')
+const filesize = require('rollup-plugin-filesize')
 
 const pkg = require('../package.json')
 const external = Object.keys(pkg.dependencies)
@@ -11,7 +12,8 @@ const plugins = [
       'es2015-rollup'
     ]
   }),
-  uglify()
+  uglify(),
+  filesize()
 ]
 
 export default {

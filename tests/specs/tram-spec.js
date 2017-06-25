@@ -1,6 +1,8 @@
-const Tram = require('../../dist/tram-one.umd')
-const testemPath = (typeof window !== 'undefined') ? window.location.pathname : '/'
-const document = (typeof window !== 'undefined') ? window.document : require('min-document')
+const Tram = require('../../dist/tram-one.esm')
+
+const isBrowser = typeof window !== 'undefined'
+const testemPath = isBrowser ? window.location.pathname : '/'
+const document = isBrowser ? window.document : require('min-document')
 
 const stringify = (node) => {
   if (node.outerHTML !== undefined) {
@@ -94,7 +96,7 @@ describe('Tram', () => {
   })
 
   describe('start', () => {
-    if (typeof window === 'undefined') { return }
+    if (!isBrowser) { return }
 
     beforeEach(() => {
       const childDiv = document.createElement('div')
@@ -130,7 +132,7 @@ describe('Tram', () => {
   })
 
   describe('mount', () => {
-    if (typeof window === 'undefined') { return }
+    if (!isBrowser) { return }
 
     beforeEach(() => {
       const childDiv = document.createElement('div')

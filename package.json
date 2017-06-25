@@ -60,9 +60,7 @@
     "rollup-plugin-node-globals": "^1.1.0",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-uglify": "^2.0.1",
-    "rollup-plugin-unassert": "^0.1.0",
     "testem": "^1.16.2",
-    "unassertify": "^2.0.4",
     "webpack": "^2.6.1",
     "webpack-dev-server": "^2.4.5"
   }

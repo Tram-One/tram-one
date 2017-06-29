@@ -371,7 +371,7 @@ app.addRoute('/404', noPage)
 ### `app.dispatch(action)`
 _Reference: [minidux](https://github.com/freeman-lab/minidux)_
 
-**WARNING: EXPERIMENTAL METHOD**
+**WARNING: EXPERIMENTAL METHOD**  
 _This method is currently under discussion:
 https://github.com/JRJurman/tram-one/issues/8 ._
 

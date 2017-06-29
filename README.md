@@ -42,6 +42,7 @@ For Rendering:
 
 For Routing:
   - [nanorouter](https://github.com/yoshuawuyts/nanorouter)
+  - [url-listener](https://github.com/JRJurman/url-listener)
 
 For State Management:
   - [yo-yo](https://github.com/maxogden/yo-yo)
@@ -236,7 +237,8 @@ const home = (state) => {
 ### `Tram.constructor([options])`
 `new Tram()` returns an instance of the Tram. The constructor
 takes in an `options` object, which can have a `defaultRoute`.
-By default, this is `/404`, but you can set it to whatever path
+
+`defaultRoute` by default is `/404`, but you can set it to whatever path
 you want to load when path matching fails.
 
 <details>
@@ -365,6 +367,19 @@ app.addRoute('/404', noPage)
 ```
 
 </details>
+
+### `app.dispatch(action)`
+_Reference: [minidux](https://github.com/freeman-lab/minidux)_
+
+**WARNING: EXPERIMENTAL METHOD**
+_This method is currently under discussion:
+https://github.com/JRJurman/tram-one/issues/8 ._
+
+`app.dispatch` will dispatch an action to the combined reducers. This should
+**only be used outside of components**. When inside of a component, you have
+access to `state.dispatch`. `app.dispatch` should only be used when you need to
+dispatch an action in testing.
+`action` should be an object with a property `type`.
 
 ### `app.start(selector, [pathName])`
 

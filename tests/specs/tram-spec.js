@@ -114,44 +114,79 @@ describe('Tram', () => {
 
   describe('start', () => {
     if (!isBrowser) { return }
+    let containerId
+    let app
+    const originalPushState = window.history.pushState
 
     beforeEach(() => {
       const childDiv = document.createElement('div')
-      childDiv.id = 'tram_test_container'
+      containerId = `tram_test_container_${Math.ceil(Math.random() * 1000)}`
+      childDiv.id = containerId
       document.body.appendChild(childDiv)
     })
 
     afterEach(() => {
-      const childDiv = document.getElementById('tram_test_container')
+      const childDiv = document.getElementById(containerId)
+      window.history.pushState = originalPushState
+      app.mount = () => {}
       document.body.removeChild(childDiv)
     })
 
     it('should mount the app to the target', () => {
-      const app = new Tram()
+      app = new Tram()
+
       app.addReducer('counter', counterReducer, counterState)
       app.addRoute(testemPath, queryableCounterPage)
-      app.start('#tram_test_container')
+      app.start(`#${containerId}`)
       const mountedTarget = document.querySelector(queryableSelector)
 
       expect(mountedTarget.innerHTML).toEqual('2')
     })
 
     it('should update the app on state change', () => {
-      const app = new Tram()
+      app = new Tram()
+
       app.addReducer('counter', counterReducer, counterState)
       app.addRoute(testemPath, queryableCounterPage)
-      app.start('#tram_test_container')
-      app.store.dispatch({type: 'add'})
+      app.start(`#${containerId}`)
+      app.dispatch({type: 'add'})
       const mountedTarget = document.querySelector(queryableSelector)
 
       expect(mountedTarget.innerHTML).toEqual('3')
     })
 
+    it('should update on popstate', (done) => {
+      app = new Tram()
+
+      app.addRoute(testemPath, queryablePage.bind(this, 5))
+      app.addRoute(`${testemPath}#foo`, queryablePage.bind(this, 10))
+      app.start(`#${containerId}`)
+
+      const mountedTargetFirst = document.querySelector(queryableSelector)
+      window.history.pushState({}, '', `${testemPath}#foo`)
+      expect(mountedTargetFirst.innerHTML).toEqual('10')
+      window.addEventListener('popstate', () => {
+        const mountedTargetSecond = document.querySelector(queryableSelector)
+        expect(mountedTargetSecond.innerHTML).toEqual('5')
+        done()
+      })
+      window.history.back()
+    })
+
+    it('should take in a path', () => {
+      app = new Tram()
+
+      app.addRoute('/', queryablePage.bind(this, 5))
+      app.start(`#${containerId}`, '/')
+      const mountedTargetFirst = document.querySelector(queryableSelector)
+      expect(mountedTargetFirst.innerHTML).toEqual('5')
+    })
+
     it('should be chainable', () => {
-      const pageNode = new Tram()
+      app = new Tram()
         .addRoute(testemPath, queryablePage.bind(this, 5))
-        .start('#tram_test_container')
-        .toNode(testemPath)
+        .start(`#${containerId}`)
+      const pageNode = app.toNode(testemPath)
 
       const mountedTarget = document.querySelector(queryableSelector)
       expect(mountedTarget.innerHTML).toEqual('5')

@@ -6,6 +6,7 @@ const app = new Tram()
 const html = Tram.html()
 
 const counterReducer = (state, action) => {
+  console.log(action)
   if (action.type === 'click') {
     return xtend(state, { clicks: state.clicks + 1 })
   }

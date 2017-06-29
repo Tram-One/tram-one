@@ -4,6 +4,7 @@ const belCreateElement = require('bel').createElement
 const rbelRegister = require('rbel')
 const minidux = require('minidux')
 const yoyoUpdate = require('yo-yo').update
+const urlListener = require('url-listener')
 
 class Tram {
   constructor(options) {
@@ -35,12 +36,20 @@ class Tram {
     return this
   }
 
+  dispatch(action) {
+    this.store.dispatch(action)
+  }
+
   start(selector, pathName) {
     const reducers = minidux.combineReducers(this.reducers)
     this.store = minidux.createStore(reducers, this.state)
 
     this.store.subscribe((state) => {
       this.mount(selector, pathName, state)
+    })
+
+    urlListener(() => {
+      this.mount(selector, pathName)
     })
 
     this.mount(selector, pathName, this.store.getState())

@@ -1,5 +1,4 @@
-import uglify from 'rollup-plugin-uglify'
-
+const uglify = require('rollup-plugin-uglify')
 const babel = require('rollup-plugin-babel')
 const filesize = require('rollup-plugin-filesize')
 

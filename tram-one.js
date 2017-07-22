@@ -71,7 +71,7 @@ class Tram {
 
   mount(selector, pathName, state) {
     const target = (typeof selector) === 'string' ? document.querySelector(selector) : selector
-    if (target !== undefined) {
+    if (target === null) {
       console.warn('Tram-One: could not find target, is the element on the page yet?')
     }
     if (!target.firstElementChild) {

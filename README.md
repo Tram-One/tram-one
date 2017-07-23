@@ -32,7 +32,7 @@ If you want to quickly get started though, check out
 [budo](https://www.npmjs.com/package/budo)!
 
 ## Packages
-Tram-One is a collection of excellent packages.
+Tram-One is a collection of excellent packages.<br>
 Here are the different package that make Tram-One possible...
 
 For Rendering:
@@ -169,7 +169,7 @@ app.start('.main')
 
 
 You can find more examples in the
-[examples directory](https://github.com/JRJurman/tram-one/tree/master/examples).
+[examples directory](https://github.com/JRJurman/tram-one/tree/master/examples).<br>
 You can run these examples by cloning the repo, and running
 ```sh
 npm install
@@ -265,16 +265,16 @@ app.addRoute('/', home)
 _Reference: [minidux](https://github.com/freeman-lab/minidux)_
 
 `app.addReducer` adds a reducer onto the current instance of Tram.
-It takes in three arguments:
-`key`, which is where the state will be exposed,
-`reducer`, the function that updates state,
+It takes in three arguments:<br>
+`key`, which is where the state will be exposed,<br>
+`reducer`, the function that updates state,<br>
 `state`, the initial state of the reducer.
 
 Note, `state` here will be exposed in the views as `state[key]`.
 
-The `reducer` should be a function, that takes in `state`, and an `action`.
-`state` can be anything you want, a number, object, whatever.
-At the end of the reducer, you should ALWAYS return this by default.
+The `reducer` should be a function, that takes in `state`, and an `action`.<br>
+`state` can be anything you want, a number, object, whatever. At the end of the
+reducer, you should ALWAYS return this by default.<br>
 `action` should be an object, with a `type` property.
 
 <details>
@@ -326,10 +326,10 @@ app.addReducer('votes', counterReducer, 0)
 ### `app.addRoute(path, page)`
 _Reference: [nanorouter](https://github.com/yoshuawuyts/nanorouter)_
 
-`app.addRoute` will associate a component with a route.
+`app.addRoute` will associate a component with a route.<br>
 `path` should be a matchable route for the application. Look up
 [nanorouter](https://github.com/yoshuawuyts/nanorouter)
-to see all the possible options here.
+to see all the possible options here.<br>
 `page` should be a function that takes in a `state` object for the entire app.
 
 The state passed into `page` will have any path parameters for the route as well.
@@ -371,8 +371,8 @@ app.addRoute('/404', noPage)
 ### `app.dispatch(action)`
 _Reference: [minidux](https://github.com/freeman-lab/minidux)_
 
-**WARNING: EXPERIMENTAL METHOD**
-_This method is currently under discussion:
+**WARNING: EXPERIMENTAL METHOD**<br>
+_This method is currently under discussion:<br>
 https://github.com/JRJurman/tram-one/issues/8 ._
 
 `app.dispatch` will dispatch an action to the combined reducers. This should
@@ -384,9 +384,9 @@ dispatch an action in testing.
 ### `app.start(selector, [pathName])`
 
 `app.start` will kick off the app. Once this is called, all the reducers
-are combined, and the app is mounted onto the `selector`.
+are combined, and the app is mounted onto the `selector`.<br>
 `selector` can be a node or a css selector (which is fed into
-`document.querySelector`).
+`document.querySelector`).<br>
 `pathName` can be an initial path, if you don't want to check the browser's
 current path.
 

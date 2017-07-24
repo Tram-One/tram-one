@@ -15,10 +15,13 @@
     "build": "npm run build-esm && npm run build-umd",
     "build-esm": "rollup -c configs/rollup.esm.config.js",
     "build-umd": "rollup -c configs/rollup.umd.config.js",
+    "clean": "rm -rf dist && rm -rf node_modules",
+    "test": "testem ci -f configs/testem.yml",
     "test-build": "npm run build && webpack --config configs/webpack.testem.config.js",
     "test-dev": "testem -f configs/testem.yml",
     "test-server": "jasmine tests/specs/tram-spec.js",
-    "test": "testem ci -f configs/testem.yml"
+    "start": "npm i && npm run build",
+    "restart": "npm run clean && npm start"
   },
   "author": {
     "name": "Jesse Jurman",
@@ -28,11 +31,11 @@
   "repository": "https://github.com/jrjurman/tram-one",
   "license": "ISC",
   "dependencies": {
-    "bel": "^4.6.0",
+    "bel-create-element": "^1.0.1",
     "minidux": "^1.0.1",
     "nanomorph": "^5.1.2",
     "nanorouter": "^2.0.0",
-    "rbel": "^1.0.1",
+    "rbel": "jrjurman/rbel",
     "url-listener": "^1.2.0",
     "xtend": "^4.0.1"
   },
@@ -64,6 +67,7 @@
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-sizes": "^0.4.0",
     "rollup-plugin-uglify": "^2.0.1",
+    "rollup-plugin-unassert": "git+https://gitlab.com/JRJurman/rollup-plugin-unassert.git#346bb3b7",
     "testem": "^1.16.2",
     "webpack": "^3.3.0",
     "webpack-dev-server": "^2.4.5"

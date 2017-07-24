@@ -1,6 +1,7 @@
-const Tram = require('../../dist/tram-one.esm')
+const TramESM = require('../../dist/tram-one.esm')
 
 const isBrowser = typeof window !== 'undefined'
+const TramUMD = isBrowser ? window['tram-one'] : undefined
 const testemPath = isBrowser ? window.location.pathname : '/'
 const document = isBrowser ? window.document : require('min-document')
 
@@ -11,7 +12,7 @@ const stringify = (node) => {
   return node.toString()
 }
 
-describe('Tram', () => {
+const tests = (Tram) => describe('Tram', () => {
   const errorPage = () => Tram.html()`<div>Error</div>`
   const successPage = () => Tram.html()`<div>Noraml Page</div>`
   const queryablePage = (value) => Tram.html()`<div id="tram_container">${value}</div>`
@@ -117,6 +118,7 @@ describe('Tram', () => {
     let containerId
     let app
     const originalPushState = window.history.pushState
+    let popevent
 
     beforeEach(() => {
       const childDiv = document.createElement('div')
@@ -128,6 +130,7 @@ describe('Tram', () => {
     afterEach(() => {
       const childDiv = document.getElementById(containerId)
       window.history.pushState = originalPushState
+      window.removeEventListener('popstate', popevent)
       app.mount = () => {}
       document.body.removeChild(childDiv)
     })
@@ -165,11 +168,12 @@ describe('Tram', () => {
       const mountedTargetFirst = document.querySelector(queryableSelector)
       window.history.pushState({}, '', `${testemPath}#foo`)
       expect(mountedTargetFirst.innerHTML).toEqual('10')
-      window.addEventListener('popstate', () => {
+      popevent = () => {
         const mountedTargetSecond = document.querySelector(queryableSelector)
         expect(mountedTargetSecond.innerHTML).toEqual('5')
         done()
-      })
+      }
+      window.addEventListener('popstate', popevent)
       window.history.back()
     })
 
@@ -307,3 +311,6 @@ describe('Tram', () => {
     })
   })
 })
+
+tests(TramESM)
+if (isBrowser) { tests(TramUMD) }

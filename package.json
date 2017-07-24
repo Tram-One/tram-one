@@ -28,6 +28,11 @@
     "email": "j.r.jurman@gmail.com",
     "url": "https://github.com/jrjurman"
   },
+  "keywords": [
+    "frontend", "framework",
+    "client", "server", "ssr", "browser",
+    "tram-one", "tram", "one"
+  ],
   "repository": "https://github.com/jrjurman/tram-one",
   "license": "ISC",
   "dependencies": {

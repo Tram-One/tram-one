@@ -16,7 +16,7 @@ Batteries Included!
 Tram-One is a project built to make exposing custom elements easy, and to
 have redux-like state management, and basic routing by default. It was created
 out of  the frustration of having to scaffold the same dependencies over and over
-again.  
+again.
 
 Tram-One was also created to avoid a lot of the syntax that locks you into
 frameworks like Vue and React. The components written here can mimic the syntax
@@ -26,14 +26,16 @@ you're already familiar, or help you create pure HTML friendly code.
 While Tram-One comes with several packages to help you on your way, it does
 not include a way to bundle and run your code. The obvious answers are
 [webpack](https://www.npmjs.com/package/webpack),
-[browserify](https://www.npmjs.com/package/browserify), etc...  
+[browserify](https://www.npmjs.com/package/browserify), etc...
 
 If you want to quickly get started though, check out
 [budo](https://www.npmjs.com/package/budo)!
 
 ## Packages
-Tram-One is a collection of excellent packages.  
-Here are the different package that make Tram-One possible...  
+Tram-One is a collection of excellent packages (and
+[some](https://github.com/JRJurman/rbel)
+[forks](https://github.com/JRJurman/bel-create-element)).<br>
+Here are the different package that make Tram-One possible...
 
 For Rendering:
   - [hyperx](https://github.com/substack/hyperx)
@@ -41,20 +43,20 @@ For Rendering:
   - [rbel](https://github.com/aaaristo/rbel)
 
 For Routing:
-  - [nanorouter](https://github.com/yoshuawuyts/nanorouter)
+  - [nanorouter](https://github.com/choojs/nanorouter)
   - [url-listener](https://github.com/JRJurman/url-listener)
 
 For State Management:
-  - [yo-yo](https://github.com/maxogden/yo-yo)
+  - [nanomorph](https://github.com/choojs/nanomorph)
   - [minidux](https://github.com/freeman-lab/minidux)
   - [xtend](https://github.com/Raynos/xtend)
 
 While not used in this project, Tram-One is heavily inspired by the
-[choo](https://github.com/yoshuawuyts/choo)
-view framework.  
+[choo](https://github.com/choojs/choo) view framework.
 Special thanks go out to the people on that project, and its
-creator, [Yoshua Wuyts](https://github.com/yoshuawuyts).   
-If you like some of the things here, definitely go check out that project.
+creator, [Yoshua Wuyts](https://github.com/yoshuawuyts).
+If you like some of the things here, definitely
+[go check out that project](https://github.com/choojs).
 
 ## Annotated Examples
 <details>
@@ -169,7 +171,7 @@ app.start('.main')
 
 
 You can find more examples in the
-[examples directory](https://github.com/JRJurman/tram-one/tree/development/examples).  
+[examples directory](https://github.com/JRJurman/tram-one/tree/master/examples).<br>
 You can run these examples by cloning the repo, and running
 ```sh
 npm install
@@ -264,17 +266,17 @@ app.addRoute('/', home)
 ### `app.addReducer(key, reducer, state)`
 _Reference: [minidux](https://github.com/freeman-lab/minidux)_
 
-`app.addReducer` adds a reducer onto the current instance of Tram.  
-It takes in three arguments:  
-`key`, which is where the state will be exposed,  
-`reducer`, the function that updates state,  
+`app.addReducer` adds a reducer onto the current instance of Tram.
+It takes in three arguments:<br>
+`key`, which is where the state will be exposed,<br>
+`reducer`, the function that updates state,<br>
 `state`, the initial state of the reducer.
 
 Note, `state` here will be exposed in the views as `state[key]`.
 
-The `reducer` should be a function, that takes in `state`, and an `action`.   
-`state` can be anything you want, a number, object, whatever.  
-At the end of the reducer, you should ALWAYS return this by default.   
+The `reducer` should be a function, that takes in `state`, and an `action`.<br>
+`state` can be anything you want, a number, object, whatever. At the end of the
+reducer, you should ALWAYS return this by default.<br>
 `action` should be an object, with a `type` property.
 
 <details>
@@ -326,10 +328,10 @@ app.addReducer('votes', counterReducer, 0)
 ### `app.addRoute(path, page)`
 _Reference: [nanorouter](https://github.com/yoshuawuyts/nanorouter)_
 
-`app.addRoute` will associate a component with a route.  
+`app.addRoute` will associate a component with a route.<br>
 `path` should be a matchable route for the application. Look up
 [nanorouter](https://github.com/yoshuawuyts/nanorouter)
-to see all the possible options here.  
+to see all the possible options here.<br>
 `page` should be a function that takes in a `state` object for the entire app.
 
 The state passed into `page` will have any path parameters for the route as well.
@@ -371,8 +373,8 @@ app.addRoute('/404', noPage)
 ### `app.dispatch(action)`
 _Reference: [minidux](https://github.com/freeman-lab/minidux)_
 
-**WARNING: EXPERIMENTAL METHOD**  
-_This method is currently under discussion:
+**WARNING: EXPERIMENTAL METHOD**<br>
+_This method is currently under discussion:<br>
 https://github.com/JRJurman/tram-one/issues/8 ._
 
 `app.dispatch` will dispatch an action to the combined reducers. This should
@@ -384,9 +386,9 @@ dispatch an action in testing.
 ### `app.start(selector, [pathName])`
 
 `app.start` will kick off the app. Once this is called, all the reducers
-are combined, and the app is mounted onto the `selector`.  
+are combined, and the app is mounted onto the `selector`.<br>
 `selector` can be a node or a css selector (which is fed into
-`document.querySelector`).  
+`document.querySelector`).<br>
 `pathName` can be an initial path, if you don't want to check the browser's
 current path.
 

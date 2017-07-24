@@ -1,10 +1,10 @@
 const xtend = require('xtend')
 const assert = require('assert')
 const nanorouter = require('nanorouter')
-const belCreateElement = require('bel').createElement
+const belCreateElement = require('bel-create-element')
 const rbelRegister = require('rbel')
 const minidux = require('minidux')
-const yoyoUpdate = require('yo-yo').update
+const morph = require('nanomorph')
 const urlListener = require('url-listener')
 
 class Tram {
@@ -81,7 +81,7 @@ class Tram {
     const targetChild = target.firstElementChild
 
     const routePath = pathName || window.location.href.replace(window.location.origin, '')
-    yoyoUpdate(targetChild, this.toNode(routePath, state))
+    morph(targetChild, this.toNode(routePath, state))
 
     return this
   }

@@ -15,7 +15,7 @@
     "build": "npm run build-esm && npm run build-umd",
     "build-esm": "rollup -c configs/rollup.esm.config.js",
     "build-umd": "rollup -c configs/rollup.umd.config.js",
-    "clean": "rm -rf dist && rm -rf node_modules",
+    "clean": "git clean -Xdf",
     "test": "testem ci -f configs/testem.yml",
     "test-build": "npm run build && webpack --config configs/webpack.testem.config.js",
     "test-dev": "testem -f configs/testem.yml",

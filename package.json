@@ -1,6 +1,6 @@
 {
   "name": "tram-one",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "🚋 Batteries Included View Framework",
   "main": "dist/tram-one.esm.js",
   "browser": "dist/tram-one.umd.js",
@@ -29,9 +29,15 @@
     "url": "https://github.com/jrjurman"
   },
   "keywords": [
-    "frontend", "framework",
-    "client", "server", "ssr", "browser",
-    "tram-one", "tram", "one"
+    "frontend",
+    "framework",
+    "client",
+    "server",
+    "ssr",
+    "browser",
+    "tram-one",
+    "tram",
+    "one"
   ],
   "repository": "https://github.com/jrjurman/tram-one",
   "license": "ISC",
@@ -40,7 +46,7 @@
     "minidux": "^1.0.1",
     "nanomorph": "^5.1.2",
     "nanorouter": "^2.0.0",
-    "rbel": "jrjurman/rbel",
+    "rbel": "^1.0.2",
     "url-listener": "^1.2.0",
     "xtend": "^4.0.1"
   },

@@ -57,6 +57,15 @@ creator, [Yoshua Wuyts](https://github.com/yoshuawuyts).
 If you like some of the things here, definitely
 [go check out that project](https://github.com/choojs).
 
+## Video Tutorial
+This video tutorial goes through the process of build a Tram-One web app
+from start to finish.
+
+While it does not go into depth on all the things you can do with Tram-One,
+it's a great introduction to help you get started building a Tram-One app.
+
+Link: https://youtu.be/mgHJbqls-wk
+
 ## Annotated Examples
 <details>
 <summary>

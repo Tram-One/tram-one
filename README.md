@@ -26,10 +26,20 @@ you're already familiar, or help you create pure HTML friendly code.
 While Tram-One comes with several packages to help you on your way, it does
 not include a way to bundle and run your code. The obvious answers are
 [webpack](https://www.npmjs.com/package/webpack),
-[browserify](https://www.npmjs.com/package/browserify), etc...
+[browserify](https://www.npmjs.com/package/browserify),
+[budo](https://www.npmjs.com/package/budo), etc...
 
-If you want to quickly get started though, check out
-[budo](https://www.npmjs.com/package/budo)!
+If you want to quickly get started though, use
+[tram-one express](https://www.npmjs.com/package/tram-one-express)!
+
+```
+$ npm install -g tram-one-express
+$ tram-one-express app-name
+```
+
+Tram-One Express builds a local project with everything you need to get started
+developing! It includes all the dependencies and some example code to help you
+get familiar with Tram-One.
 
 ## Packages
 Tram-One is a collection of excellent packages (and

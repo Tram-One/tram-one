@@ -1,11 +1,11 @@
-const xtend = require('xtend')
 const assert = require('assert')
-const nanorouter = require('nanorouter')
 const belCreateElement = require('bel-create-element')
-const rbelRegister = require('rbel')
 const minidux = require('minidux')
 const morph = require('nanomorph')
+const nanorouter = require('nanorouter')
+const rbelRegister = require('rbel')
 const urlListener = require('url-listener')
+const xtend = require('xtend')
 
 class Tram {
   constructor(options) {
@@ -16,7 +16,7 @@ class Tram {
     options = options || {}
     const defaultRoute = options.defaultRoute || '/404'
 
-    this.router = nanorouter({ default: defaultRoute })
+    this.router = nanorouter({default: defaultRoute})
     this.reducers = {}
     this.state = {}
     this.store = {}
@@ -102,7 +102,7 @@ class Tram {
   static html(registry) {
     if (registry) {
       assert.equal(typeof registry, 'object', 'Tram-One: registry should be an object')
-      assert.ok(!(registry instanceof Array), 'Tram-One: registry should be an object')
+      assert.ok(!(Array.isArray(registry)), 'Tram-One: registry should be an object')
     }
 
     return rbelRegister(belCreateElement, registry || {})

@@ -1,32 +1,21 @@
 const Tram = require('../../tram-one')
 const app = new Tram()
 
-const chrome = require('./chrome')
-const colorControl = require('./color-control')
-const colorInput = require('./color-input')
-
 const html = Tram.html({
-  chrome,
-  'color-control': colorControl,
-  'color-input': colorInput
+  chrome: require('./chrome'),
+  'color-control': require('./color-control'),
+  'color-input': require('./color-input')
 })
 
-const colorReducer = (state, action) => {
-  if (action.type === 'SELECT_COLOR') {
-    return action.color
-  }
-  return state
-}
-
-const home = (state) => {
+const home = (state, actions) => {
   const onSelectColor = (color) => {
-    state.dispatch({ type: 'SELECT_COLOR', color: color })
+    actions.selectColor(color)
   }
 
   const onEnterColor = (color) => {
     window.location.pathname = color
   }
-  const color = state.color || state.path_color || 'black'
+  const color = state.color || state.url.path_color || 'black'
   return html`
     <chrome>
       <div style='color: ${color}'>
@@ -44,7 +33,11 @@ const home = (state) => {
   `
 }
 
-app.addReducer('color', colorReducer, undefined)
+// app.addReducer('color', colorReducer, undefined)
+app.addActions({color: {
+  init: () => '',
+  selectColor: (color, newColor) => newColor
+}})
 app.addRoute('/', home)
 app.addRoute('/:path_color', home)
 

@@ -1,11 +1,10 @@
 const assert = require('assert')
 const belCreateElement = require('bel-create-element')
-const minidux = require('minidux')
+const HoverEngine = require('hover-engine')
 const morph = require('nanomorph')
 const nanorouter = require('nanorouter')
 const rbelRegister = require('rbel')
 const urlListener = require('url-listener')
-const xtend = require('xtend')
 
 class Tram {
   constructor(options) {
@@ -17,16 +16,16 @@ class Tram {
     const defaultRoute = options.defaultRoute || '/404'
 
     this.router = nanorouter({default: defaultRoute})
-    this.reducers = {}
-    this.state = {}
-    this.store = {}
+    this.engine = new HoverEngine()
   }
 
-  addReducer(key, reducer, state) {
-    assert.equal(typeof reducer, 'function', 'Tram-One: reducer should be a function')
+  addActions(actionGroups) {
+    assert.equal(
+      typeof actionGroups, 'object',
+      'Tram-One: ActionGroups should be { store-key: { action-name: action-function } }'
+    )
 
-    this.reducers[key] = reducer
-    this.state[key] = state
+    this.engine.addActions(actionGroups)
 
     return this
   }
@@ -35,41 +34,29 @@ class Tram {
     assert.equal(typeof path, 'string', 'Tram-One: path should be a string')
     assert.equal(typeof page, 'function', 'Tram-One: page should be a function')
 
-    this.router.on(path, (pathParams) => (state) => {
-      const completeState = xtend(
-        state, {dispatch: this.store.dispatch},
-        pathParams
-      )
-      return page(completeState)
+    this.router.on(path, (pathParams) => (store, actions) => {
+      const completeState = Object.assign({}, store, {url: pathParams})
+      return page(completeState, actions)
     })
 
     return this
   }
 
-  dispatch(action) {
-    assert.equal(typeof action, 'object', 'Tram-One: action should be an object')
-
-    this.store.dispatch(action)
-  }
-
   start(selector, pathName) {
-    const reducers = minidux.combineReducers(this.reducers)
-    this.store = minidux.createStore(reducers, this.state)
-
-    this.store.subscribe((state) => {
-      this.mount(selector, pathName, state)
+    this.engine.addListener((store, actions) => {
+      this.mount(selector, pathName, store, actions)
     })
 
     urlListener(() => {
       this.mount(selector, pathName)
     })
 
-    this.mount(selector, pathName, this.store.getState())
+    this.mount(selector, pathName)
 
     return this
   }
 
-  mount(selector, pathName, state) {
+  mount(selector, pathName, store, actions) {
     const target = (typeof selector) === 'string' ? document.querySelector(selector) : selector
     if (target === null) {
       console.warn('Tram-One: could not find target, is the element on the page yet?')
@@ -81,15 +68,16 @@ class Tram {
     const targetChild = target.firstElementChild
 
     const routePath = pathName || window.location.href.replace(window.location.origin, '')
-    morph(targetChild, this.toNode(routePath, state))
+    morph(targetChild, this.toNode(routePath, store, actions))
 
     return this
   }
 
-  toNode(pathName, state) {
+  toNode(pathName, state, actions) {
     const pageComponent = this.router(pathName)
-    const pageState = state || this.state
-    return pageComponent(pageState)
+    const pageState = state || this.engine.store
+    const pageActions = actions || this.engine.actions
+    return pageComponent(pageState, pageActions)
   }
 
   toString(pathName, state) {

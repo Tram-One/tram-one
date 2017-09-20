@@ -3,11 +3,10 @@ const app = new Tram()
 
 const html = Tram.html()
 
-const home = (state) => {
+const home = () => {
   return html`
     <div>
-      This is the routes example!
-      <br><br>
+      <h1>This is the routes example!</h1>
 
       Tram-One uses
       <a href="https://github.com/yoshuawuyts/nanorouter">nanorouter</a>
@@ -26,11 +25,10 @@ const home = (state) => {
   `
 }
 
-const page1 = (state) => {
+const page1 = () => {
   return html`
     <div>
-      This is the First Page!
-      <br><br>
+      <h2>This is the First Page!</h2>
 
       <a href="/">Go to the Home Page</a>
       <br>
@@ -39,11 +37,10 @@ const page1 = (state) => {
   `
 }
 
-const page2 = (state) => {
+const page2 = () => {
   return html`
     <div>
-      This is the Second Page!
-      <br><br>
+      <h2>This is the Second Page!</h2>
 
       <a href="/">Go to the Home Page</a>
       <br>
@@ -55,12 +52,11 @@ const page2 = (state) => {
 const pageN = (state) => {
   return html`
     <div>
-      This is Page ${state.page}!
-      <br><br>
+      <h2>This is Page ${state.url.page}!</h2>
 
       <a href="/">Go to the Home Page</a>
       <br>
-      <a href="/page/${parseInt(state.page) + 1}">Go to page ${parseInt(state.page) + 1}</a>
+      <a href="/page/${parseInt(state.url.page, 10) + 1}">Go to page ${parseInt(state.url.page, 10) + 1}</a>
     </div>
   `
 }
@@ -68,7 +64,7 @@ const pageN = (state) => {
 const nopath = () => {
   return html`
     <div>
-      404!
+      <h2>404!</h2>
     </div>
   `
 }

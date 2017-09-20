@@ -36,6 +36,7 @@
     "ssr",
     "browser",
     "tram-one",
+    "hover-engine",
     "tram",
     "one"
   ],
@@ -43,14 +44,11 @@
   "license": "MIT",
   "dependencies": {
     "bel-create-element": "^1.0.1",
-    "hover": "^3.0.0-alpha.6",
-    "minidux": "^1.0.1",
+    "hover-engine": "^1.0.1",
     "nanomorph": "^5.1.2",
     "nanorouter": "^2.0.0",
     "rbel": "^1.0.2",
-    "rlite-router": "^2.0.3",
-    "url-listener": "^1.2.0",
-    "xtend": "^4.0.1"
+    "url-listener": "^1.2.0"
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
@@ -87,6 +85,9 @@
     "semicolon": false,
     "space": 2,
     "rules": {
+      "import/newline-after-import": [
+        "off"
+      ],
       "capitalized-comments": [
         "error",
         "never"

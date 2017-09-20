@@ -1,3 +1,7 @@
+/* eslint-disable max-statements-per-line */
+/* eslint-disable import/order */
+/* eslint-disable brace-style */
+
 const TramESM = require('../../dist/tram-one.esm')
 
 const isBrowser = typeof window !== 'undefined'

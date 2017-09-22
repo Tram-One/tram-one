@@ -10,9 +10,12 @@ const plugins = [
     presets: [
       ['env', {
         modules: false,
-        plugins: ['external-helpers']
+        targets: {
+          node: '4'
+        }
       }]
-    ]
+    ],
+    plugins: ['external-helpers']
   }),
   uglify(),
   filesize()
@@ -21,7 +24,7 @@ const plugins = [
 export default {
   entry: 'tram-one.js',
   external: external,
-  dest: pkg.main,
+  dest: pkg.module,
   format: 'es',
   plugins: plugins,
   sourceMap: true

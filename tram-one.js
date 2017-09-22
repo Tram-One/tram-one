@@ -35,8 +35,8 @@ class Tram {
     assert.equal(typeof page, 'function', 'Tram-One: page should be a function')
 
     this.router.on(path, (pathParams) => (store, actions) => {
-      const completeState = Object.assign({}, store, {url: pathParams})
-      return page(completeState, actions)
+      const storeWithPath = Object.assign({}, store, {path: pathParams})
+      return page(storeWithPath, actions)
     })
 
     return this

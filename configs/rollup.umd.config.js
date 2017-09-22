@@ -12,6 +12,7 @@ const pkg = require('../package.json')
 
 const plugins = [
   resolve({main: true, preferBuiltins: true}),
+  builtins(),
   unassert(),
   commonjs(),
   globals(),
@@ -19,10 +20,14 @@ const plugins = [
   babel({
     presets: [
       ['env', {
-        modules: false,
-        plugins: ['external-helpers']
+        targets: {
+          node: '6.10',
+          browsers: ['last 2 versions', 'safari >= 10', 'ie 11']
+        },
+        modules: false
       }]
-    ]
+    ],
+    plugins: ['external-helpers', 'babel-plugin-transform-object-assign']
   }),
   uglify(),
   // sizes(), // useful for finding large dependencies
@@ -31,7 +36,7 @@ const plugins = [
 
 export default {
   entry: 'tram-one.js',
-  dest: pkg.browser,
+  dest: pkg.main,
   format: 'umd',
   plugins: plugins,
   moduleName: 'tram-one'

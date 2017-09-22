@@ -52,11 +52,11 @@ const page2 = () => {
 const pageN = (state) => {
   return html`
     <div>
-      <h2>This is Page ${state.url.page}!</h2>
+      <h2>This is Page ${state.path.page}!</h2>
 
       <a href="/">Go to the Home Page</a>
       <br>
-      <a href="/page/${parseInt(state.url.page, 10) + 1}">Go to page ${parseInt(state.url.page, 10) + 1}</a>
+      <a href="/page/${parseInt(state.path.page, 10) + 1}">Go to page ${parseInt(state.path.page, 10) + 1}</a>
     </div>
   `
 }

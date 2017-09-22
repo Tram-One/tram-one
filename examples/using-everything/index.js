@@ -15,7 +15,7 @@ const home = (state, actions) => {
   const onEnterColor = (color) => {
     window.location.pathname = color
   }
-  const color = state.color || state.url.path_color || 'black'
+  const color = state.color || state.path.path_color || 'black'
   return html`
     <chrome>
       <div style='color: ${color}'>
@@ -33,7 +33,6 @@ const home = (state, actions) => {
   `
 }
 
-// app.addReducer('color', colorReducer, undefined)
 app.addActions({color: {
   init: () => '',
   selectColor: (color, newColor) => newColor

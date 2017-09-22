@@ -4,7 +4,7 @@ const html = Tram.html()
 
 // pages
 const homePage = () => html`<div>HOME</div>`
-const numberPage = (state) => html`<div>${state.url.number}</div>`
+const numberPage = (state) => html`<div>${state.path.number}</div>`
 
 app.addRoute('/', homePage)
 app.addRoute('/:number', numberPage)

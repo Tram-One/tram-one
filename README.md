@@ -48,17 +48,16 @@ Here are the different package that make Tram-One possible...
 
 For Rendering:
   - [hyperx](https://github.com/substack/hyperx)
-  - [bel](https://github.com/shama/bel)
+  - [bel-create-element](https://github.com/JRJurman/bel-create-element)
   - [rbel](https://github.com/aaaristo/rbel)
+  - [nanomorph](https://github.com/choojs/nanomorph)
 
 For Routing:
   - [nanorouter](https://github.com/choojs/nanorouter)
   - [url-listener](https://github.com/JRJurman/url-listener)
 
 For State Management:
-  - [nanomorph](https://github.com/choojs/nanomorph)
-  - [minidux](https://github.com/freeman-lab/minidux)
-  - [xtend](https://github.com/Raynos/xtend)
+  - [hover-engine](https://github.com/JRJurman/hover-engine)
 
 While not used in this project, Tram-One is heavily inspired by the
 [choo](https://github.com/choojs/choo) view framework.
@@ -66,6 +65,19 @@ Special thanks go out to the people on that project, and its
 creator, [Yoshua Wuyts](https://github.com/yoshuawuyts).
 If you like some of the things here, definitely
 [go check out that project](https://github.com/choojs).
+
+## Size
+```
+┌────────────────────────────────────────────────┐
+│                                                │
+│   Destination: dist/tram-one.esm.js            │
+│   Bundle size: 2.32 KB, Gzipped size: 992 B    │
+│                                                │
+│   Destination: dist/tram-one.umd.js            │
+│   Bundle size: 24.4 KB, Gzipped size: 8.1 KB   │
+│                                                │
+└────────────────────────────────────────────────┘
+```
 
 ## Video Tutorial
 This video tutorial goes through the process of build a Tram-One web app
@@ -136,28 +148,24 @@ const cHtml = Tram.html({
   'color-button': colorElement
 })
 
-// create a reducer, that handles changing the color of the app
-const colorReducer = (state, action) => {
-  switch(action.type) {
-    case('SET_COLOR'):
-      return action.color
-    default:
-      return state            // you must ALWAYS return the state by default
-  }
+// create a set of actions, that handles changing the color of the app
+const colorActions = {
+  init: () => 'blue',
+  setColor: (currentColor, newColor) => newColor
 }
 
 // home page to load on the main route
-const home = (state) => {
+const home = (store, actions) => {
 
   // actionCreator that dispatches to the reducer
   const onSetColor = (color) => () => {
-    state.dispatch({type: 'SET_COLOR', color})
+    actions.setColor(color)
   }
 
   // we use cHtml so that we have color-button available in the template
   return cHtml`
     <div>
-      I think the best color for this wall is... ${state.color}!
+      I think the best color for this wall is... ${store.color}!
       or maybe it's...
       <color-button onclick=${onSetColor('blue')}>blue</color-button>
       <color-button onclick=${onSetColor('red')}>red</color-button>
@@ -166,22 +174,12 @@ const home = (state) => {
   `
 }
 
-// page to render on the unmatched routes (which by default go to 404)
-const noPage = (state) => {
-  return cHtml`
-    <div>
-      <h1>404!</h1>
-      Sorry pal, no page here...
-    </div>
-  `
-}
-
 // add routes, by using path matchers with function components
 app.addRoute('/', home)
 app.addRoute('/404', noPage)
 
-// add reducer, map all state values to 'color', and set the initial value to 'blue'
-app.addReducer('color', colorReducer, 'blue')
+// add actions and save the state as `color` on the store
+app.addActions({color: colorActions})
 app.start('.main')
 ```
 
@@ -201,7 +199,7 @@ Tram-One has a simple interface to help build your web app.
 
 ### `Tram.html([registry])`
 _Reference: [hyperx](https://github.com/substack/hyperx),
-[bel](https://github.com/shama/bel),
+[bel-create-element](https://github.com/JRJurman/bel-create-element),
 [rbel](https://github.com/aaaristo/rbel)_
 
 `Tram.html` returns a function that can be used to transform
@@ -281,21 +279,13 @@ app.addRoute('/', home)
 
 </details>
 
-### `app.addReducer(key, reducer, state)`
-_Reference: [minidux](https://github.com/freeman-lab/minidux)_
+### `app.addActions(actionGroups)`
+_Reference: [hover-engine](https://github.com/JRJurman/hover-engine)_
 
-`app.addReducer` adds a reducer onto the current instance of Tram.
-It takes in three arguments:<br>
-`key`, which is where the state will be exposed,<br>
-`reducer`, the function that updates state,<br>
-`state`, the initial state of the reducer.
-
-Note, `state` here will be exposed in the views as `state[key]`.
-
-The `reducer` should be a function, that takes in `state`, and an `action`.<br>
-`state` can be anything you want, a number, object, whatever. At the end of the
-reducer, you should ALWAYS return this by default.<br>
-`action` should be an object, with a `type` property.
+`app.addActions` adds a set of actions that can be triggered in the instance of Tram-One.
+It takes in one argument, an object where:<br>
+the keys are values that can be pulled in the view<br>
+the values are actions that can be triggered in the view<br>
 
 <details>
 <summary>
@@ -307,26 +297,21 @@ Example:
 const app = new Tram()
 const html = Tram.html()
 
-// in this example, state is a number (the votes)
+// in this example, `vote` is a number
 // but in a larger app, this could be an object
 // with multiple key-value pairs
-const counterReducer = (state, action) => {
-  switch(action.type) {
-    case('UP'):
-      return state + 1
-    case('DOWN'):
-      return state - 1
-    default:
-      return state
-  }
+const voteActions = {
+  init: () => 0,
+  up: (vote) => vote + 1,
+  down: (vote) => vote - 1
 }
 
-const home = (state) => {
+const home = (state, actions) => {
   const upvote = () => {
-    state.dispatch({type: 'UP'})
+    actions.up()
   }
   const downvote = () => {
-    state.dispatch({type: 'DOWN'})
+    actions.down()
   }
 
   return html`
@@ -338,7 +323,7 @@ const home = (state) => {
   `
 }
 
-app.addReducer('votes', counterReducer, 0)
+app.addActions({votes: voteActions})
 ```
 
 </details>
@@ -388,23 +373,10 @@ app.addRoute('/404', noPage)
 
 </details>
 
-### `app.dispatch(action)`
-_Reference: [minidux](https://github.com/freeman-lab/minidux)_
-
-**WARNING: EXPERIMENTAL METHOD**<br>
-_This method is currently under discussion:<br>
-https://github.com/JRJurman/tram-one/issues/8 ._
-
-`app.dispatch` will dispatch an action to the combined reducers. This should
-**only be used outside of components**. When inside of a component, you have
-access to `state.dispatch`. `app.dispatch` should only be used when you need to
-dispatch an action in testing.
-`action` should be an object with a property `type`.
-
 ### `app.start(selector, [pathName])`
 
-`app.start` will kick off the app. Once this is called, all the reducers
-are combined, and the app is mounted onto the `selector`.<br>
+`app.start` will kick off the app. Once this is called the app is mounted onto the
+`selector`.<br>
 `selector` can be a node or a css selector (which is fed into
 `document.querySelector`).<br>
 `pathName` can be an initial path, if you don't want to check the browser's
@@ -449,10 +421,10 @@ app.start('.main')
 
 </details>
 
-### `app.mount(selector, pathName, state)`
+### `app.mount(selector, pathName, state, actions)`
 **WARNING: INTENDED FOR INTERNAL USE ONLY**
 
-`app.mount` matches a route from `pathName`, passes in a `state` object,
+`app.mount` matches a route from `pathName`, passes in a `state` and `actions` object,
 and either creates a child div, or updates a child div under `selector`.
 
 This was created to clean up the code in the library, but may be useful for
@@ -460,7 +432,7 @@ testing.
 
 **YOU SHOULD NEVER CALL THIS DIRECTLY FOR YOUR APP**
 
-### `app.toNode(pathName, [state])`
+### `app.toNode(pathName[, state, actions])`
 
 `app.toNode` returns a HTMLNode of the app for a given route and state. The
 function matches a route from `pathName`, and either takes in a `state`, or
@@ -469,7 +441,7 @@ uses the default state (that's been created by adding reducers).
 While initially created to clean up the code in the library, this can be useful
 if you want to manually attach the HTMLNode that Tram-One builds to whatever.
 
-### `app.toString(pathName, [state])`
+### `app.toString(pathName[, state])`
 
 `app.toString` returns a string of the app for a given route and state. It has
 the same interface at `app.toNode`, and basically just calls `.outerHTML` (or

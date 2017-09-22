@@ -2,8 +2,8 @@
   "name": "tram-one",
   "version": "1.4.1",
   "description": "🚋 Batteries Included View Framework",
-  "main": "dist/tram-one.esm.js",
-  "browser": "dist/tram-one.umd.js",
+  "main": "dist/tram-one.umd.js",
+  "module": "dist/tram-one.esm.js",
   "files": [
     "dist/tram-one.esm.js",
     "dist/tram-one.umd.js"
@@ -44,17 +44,20 @@
   "license": "MIT",
   "dependencies": {
     "bel-create-element": "^1.0.1",
-    "hover-engine": "^1.0.1",
+    "hover-engine": "^1.2.0",
     "nanomorph": "^5.1.2",
     "nanorouter": "^2.0.0",
     "rbel": "^1.0.2",
     "url-listener": "^1.2.0"
   },
   "devDependencies": {
-    "babel-core": "^6.25.0",
+    "babel-core": "^6.26.0",
     "babel-loader": "^7.0.0",
     "babel-plugin-external-helpers": "^6.22.0",
-    "babel-preset-env": "^1.5.2",
+    "babel-plugin-transform-object-assign": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
     "express": "^4.15.3",
     "inquirer": "^3.1.0",
     "internal-ip": "^1.2.0",

@@ -22,10 +22,12 @@ const plugins = [
 ]
 
 export default {
-  entry: 'tram-one.js',
+  input: 'tram-one.js',
   external: external,
-  dest: pkg.module,
-  format: 'es',
   plugins: plugins,
-  sourceMap: true
+  output: {
+    sourcemap: true,
+    format: 'es',
+    file: pkg.module
+  }
 }

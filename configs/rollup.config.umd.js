@@ -35,9 +35,11 @@ const plugins = [
 ]
 
 export default {
-  entry: 'tram-one.js',
-  dest: pkg.main,
-  format: 'umd',
+  input: 'tram-one.js',
+  output: {
+    file: pkg.main,
+    format: 'umd'
+  },
   plugins: plugins,
-  moduleName: 'tram-one'
+  name: 'tram-one'
 }

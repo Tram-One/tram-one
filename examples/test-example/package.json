@@ -1,11 +1,10 @@
 {
   "scripts": {
     "start": "budo index.js --pushstate",
-    "test": "testem -f ./testem.yml"
+    "test": "jasmine ./specs.js"
   },
   "dependencies": {
-    "browserify": "^14.4.0",
     "budo": "^10.0.3",
-    "testem": "^1.16.2"
+    "jasmine": "^2.8.0"
   }
 }

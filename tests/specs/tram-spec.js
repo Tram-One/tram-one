@@ -1,3 +1,7 @@
+/* eslint-disable max-statements-per-line */
+/* eslint-disable import/order */
+/* eslint-disable brace-style */
+
 const TramESM = require('../../dist/tram-one.esm')
 
 const isBrowser = typeof window !== 'undefined'
@@ -18,15 +22,13 @@ const tests = (Tram) => describe('Tram', () => {
   const queryablePage = (value) => Tram.html()`<div id="tram_container">${value}</div>`
   const queryableSelector = '#tram_container'
 
-  const counterReducer = (state, action) => {
-    if (action.type === 'add') {
-      return state + 1
-    }
-    return state
+  const initCounter = 2
+  const counterActions = {
+    init: () => initCounter,
+    add: (counter) => counter + 1
   }
-  const counterPage = (state) => Tram.html()`${state.counter}`
-  const queryableCounterPage = (state) => Tram.html()`<div id="tram_container">${state.counter}</div>`
-  const counterState = 2
+  const counterPage = (store) => Tram.html()`${store.counter}`
+  const queryableCounterPage = (store) => Tram.html()`<div id="tram_container">${store.counter}</div>`
 
   describe('constructor', () => {
     it('should have a default route', () => {
@@ -52,26 +54,20 @@ const tests = (Tram) => describe('Tram', () => {
     })
   })
 
-  describe('addReducer', () => {
-    it('should include reducer in app', () => {
+  describe('addActions', () => {
+    it('should update engine with new store', () => {
       const app = new Tram()
-      app.addReducer('counter', counterReducer, {})
-      expect(app.reducers['counter']).toEqual(counterReducer)
-    })
-
-    it('should include state in app', () => {
-      const app = new Tram()
-      app.addReducer('counter', counterReducer, counterState)
-      expect(app.state['counter']).toEqual(counterState)
+      app.addActions({counter: counterActions})
+      expect(app.engine.store.counter).toEqual(initCounter)
     })
 
     it('should be chainable', () => {
       const app = new Tram()
-        .addReducer('counter', counterReducer, counterState)
-        .addReducer('counter2', counterReducer, counterState)
+        .addActions({counter: counterActions})
+        .addActions({counter2: counterActions})
 
-      expect(app.state['counter']).toEqual(counterState)
-      expect(app.state['counter2']).toEqual(counterState)
+      expect(app.engine.store.counter).toEqual(initCounter)
+      expect(app.engine.store.counter2).toEqual(initCounter)
     })
   })
 
@@ -91,14 +87,14 @@ const tests = (Tram) => describe('Tram', () => {
     it('should include the default state in app', () => {
       const app = new Tram()
       app.addRoute('/', counterPage)
-      app.addReducer('counter', counterReducer, counterState)
-      expect(app.toNode('/')).toEqual(counterState)
+      app.addActions({counter: counterActions})
+      expect(app.toNode('/')).toEqual(initCounter)
     })
 
     it('should pass in path params in app', () => {
       const app = new Tram()
       app.addRoute('/:path_param',
-        (state) => Tram.html()`${state.path_param}`
+        (store, actions, params) => Tram.html()`${params.path_param}`
       )
       expect(app.toNode('/foo')).toEqual('foo')
     })
@@ -138,21 +134,21 @@ const tests = (Tram) => describe('Tram', () => {
     it('should mount the app to the target', () => {
       app = new Tram()
 
-      app.addReducer('counter', counterReducer, counterState)
+      app.addActions({counter: counterActions})
       app.addRoute(testemPath, queryableCounterPage)
       app.start(`#${containerId}`)
       const mountedTarget = document.querySelector(queryableSelector)
 
-      expect(mountedTarget.innerHTML).toEqual('2')
+      expect(mountedTarget.innerHTML).toEqual(initCounter.toString())
     })
 
     it('should update the app on state change', () => {
       app = new Tram()
 
-      app.addReducer('counter', counterReducer, counterState)
+      app.addActions({counter: counterActions})
       app.addRoute(testemPath, queryableCounterPage)
       app.start(`#${containerId}`)
-      app.dispatch({type: 'add'})
+      app.engine.actions.add()
       const mountedTarget = document.querySelector(queryableSelector)
 
       expect(mountedTarget.innerHTML).toEqual('3')
@@ -275,14 +271,14 @@ const tests = (Tram) => describe('Tram', () => {
     it('should have the default state', () => {
       const app = new Tram()
       app.addRoute('/', counterPage)
-      app.addReducer('counter', counterReducer, counterState)
-      expect(app.toNode('/')).toEqual(counterState)
+      app.addActions({counter: counterActions})
+      expect(app.toNode('/')).toEqual(initCounter)
     })
 
-    it('should take in a state', () => {
+    it('should take in a store', () => {
       const app = new Tram()
       app.addRoute('/', counterPage)
-      expect(app.toNode('/', {counter: counterState})).toEqual(counterState)
+      expect(app.toNode('/', {counter: initCounter})).toEqual(initCounter)
     })
   })
 
@@ -312,5 +308,8 @@ const tests = (Tram) => describe('Tram', () => {
   })
 })
 
-tests(TramESM)
-if (isBrowser) { tests(TramUMD) }
+if (isBrowser) {
+  tests(TramUMD)
+} else {
+  tests(TramESM)
+}

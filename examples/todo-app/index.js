@@ -5,7 +5,7 @@ const Todos = require('./elements/Todos')
 const Dones = require('./elements/Dones')
 const NewTodo = require('./elements/NewTodo')
 
-const TodoReducer = require('./reducers/TodoReducer')
+const TodoActions = require('./reducers/TodoActions')
 
 const html = Tram.html({
   NewTodo,
@@ -13,47 +13,37 @@ const html = Tram.html({
   Dones
 })
 
-const home = (state) => {
+const home = (store, actions) => {
   const onUpdateInput = ({currentTarget: { value }}) => {
-    state.dispatch({
-      type: 'UPDATE_INPUT',
-      text: value
-    })
+    actions.updateInput(value)
   }
 
   const onAddTodo = () => {
-    state.dispatch({
-      type: 'ADD_TODO'
-    })
+    actions.addTodo()
   }
 
   const onCompleteTodo = (index) => () => {
-    state.dispatch({
-      type: 'COMPLETE_TODO',
-      index: index
-    })
+    actions.completeTodo(index)
   }
 
   return html`
     <div>
       <h1> Tram-One Todos 🚋 </h1>
-      <NewTodo  value=${state.todos.text}
+      <NewTodo  value=${store.todos.text}
                 onUpdateInput=${onUpdateInput}
                 onAddTodo=${onAddTodo}>
       </NewTodo>
-      <Todos todos=${state.todos.todos}
+      <Todos todos=${store.todos.todos}
              onCompleteTodo=${onCompleteTodo}>
       </Todos>
       <hr />
-      <Dones dones=${state.todos.dones}>
+      <Dones dones=${store.todos.dones}>
       </Dones>
     </div>
   `
 }
 
-app.addReducer('todos', TodoReducer, {
-  todos: [], dones: [], text: ''
-})
+app.addActions({todos: TodoActions})
 app.addRoute('/', home)
 
 app.start('.main')

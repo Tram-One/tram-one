@@ -11,7 +11,7 @@ const question = {
   message: 'What example would you like to run?',
   choices: [
     new inquirer.Separator('-- Simple Examples --'),
-    'using-reducers',
+    'using-actions',
     'using-routes',
     'using-custom-elements',
     'using-everything',

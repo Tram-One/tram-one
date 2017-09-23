@@ -1,6 +1,7 @@
+// to run this example, run `node examples/ssr-example/server.js`
+
 const express = require('express')
 const server = express()
-
 const app = require('./index')
 
 server.get('/', (req, res) => {

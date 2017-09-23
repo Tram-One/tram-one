@@ -1,29 +1,31 @@
+// to run these specs, run `npm install` and `npm test` in this directory
+
 const numberExample = require('./app')
 
 describe('Number Example', () => {
-  describe('reducer', () => {
-    it('should increment the current value', () => {
-      const state = 2
-      const nextState = numberExample.reducer(state, {type: 'INCREMENT'})
-      expect(nextState).toEqual(3)
-    })
-    it('should decrement the current value', () => {
-      const state = 2
-      const nextState = numberExample.reducer(state, {type: 'DECREMENT'})
-      expect(nextState).toEqual(1)
-    })
-  })
   describe('home page', () => {
     it('should have some text', () => {
       const page = numberExample.pages.homePage()
-      expect(page.innerHTML).toEqual('HOME')
+      expect(page.toString()).toMatch('HOME')
     })
   })
   describe('number page', () => {
     it('should have some numbers', () => {
-      const state = {number: 2}
+      const state = {url: {number: 2}}
       const page = numberExample.pages.numberPage(state)
-      expect(page.innerHTML).toContain('2')
+      expect(page.toString()).toContain('2')
+    })
+  })
+  describe('home route in the app', () => {
+    it('should have some text', () => {
+      const page = numberExample.app.toNode('/')
+      expect(page.toString()).toMatch('HOME')
+    })
+  })
+  describe('number route in the app', () => {
+    it('should have some numbers', () => {
+      const page = numberExample.app.toNode('/5')
+      expect(page.toString()).toMatch('5')
     })
   })
 })

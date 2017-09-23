@@ -7,7 +7,7 @@ const html = Tram.html({
   'color-input': require('./color-input')
 })
 
-const home = (state, actions) => {
+const home = (state, actions, params) => {
   const onSelectColor = (color) => {
     actions.selectColor(color)
   }
@@ -15,7 +15,7 @@ const home = (state, actions) => {
   const onEnterColor = (color) => {
     window.location.pathname = color
   }
-  const color = state.color || state.path.path_color || 'black'
+  const color = state.color || params.path_color || 'black'
   return html`
     <chrome>
       <div style='color: ${color}'>

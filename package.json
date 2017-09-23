@@ -46,8 +46,8 @@
     "bel-create-element": "^1.0.1",
     "hover-engine": "^1.2.0",
     "nanomorph": "^5.1.2",
-    "nanorouter": "^2.0.0",
     "rbel": "^1.0.2",
+    "rlite-router": "^2.0.3",
     "url-listener": "^1.2.0"
   },
   "devDependencies": {

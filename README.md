@@ -53,7 +53,7 @@ For Rendering:
   - [nanomorph](https://github.com/choojs/nanomorph)
 
 For Routing:
-  - [nanorouter](https://github.com/choojs/nanorouter)
+  - [rlite](https://github.com/chrisdavies/rlite)
   - [url-listener](https://github.com/JRJurman/url-listener)
 
 For State Management:
@@ -68,15 +68,13 @@ If you like some of the things here, definitely
 
 ## Size
 ```
-┌────────────────────────────────────────────────┐
-│                                                │
-│   Destination: dist/tram-one.esm.js            │
-│   Bundle size: 2.32 KB, Gzipped size: 992 B    │
-│                                                │
-│   Destination: dist/tram-one.umd.js            │
-│   Bundle size: 24.4 KB, Gzipped size: 8.1 KB   │
-│                                                │
-└────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────┐
+│                                                  │
+│   Module size: 3.42 KB, Gzipped size: 1.34 KB    │
+│                                                  │
+│    UMD size: 23.75 KB, Gzipped size: 7.96 KB     │
+│                                                  │
+└──────────────────────────────────────────────────┘
 ```
 
 ## Video Tutorial
@@ -241,7 +239,7 @@ const html = Tram.html({
   'wrap': pageWraper
 })
 
-const home = (state) => {
+const home = () => {
   return html`
     <wrap>
       This is my shiny app!
@@ -329,15 +327,15 @@ app.addActions({votes: voteActions})
 </details>
 
 ### `app.addRoute(path, page)`
-_Reference: [nanorouter](https://github.com/yoshuawuyts/nanorouter)_
+_Reference: [rlite](https://github.com/chrisdavies/rlite)_
 
 `app.addRoute` will associate a component with a route.<br>
 `path` should be a matchable route for the application. Look up
-[nanorouter](https://github.com/yoshuawuyts/nanorouter)
+[rlite](https://github.com/chrisdavies/rlite)
 to see all the possible options here.<br>
-`page` should be a function that takes in a `state` object for the entire app.
+`page` should be a function that takes in a `store`, `actions` and `params`.
 
-The state passed into `page` will have any path parameters for the route as well.
+The `params` object passed into the `page` function will have any path parameters and query params.
 
 <details>
 <summary>
@@ -349,20 +347,20 @@ Example:
 const app = new Tram()
 const html = Tram.html()
 
-const homePage = (state) => {
+const homePage = () => {
   return html`<div>This is my shiny app!</div>`
 }
 
-const colorPage = (state) => {
+const colorPage = (store, actions, params) => {
   const style = `
-    background: ${state.color};
+    background: ${params.color};
     width: 100px;
     height: 100px;
   `
   return html`<div style=${style}></div>`
 }
 
-const noPage = (state) => {
+const noPage = () => {
   return html`<div>Oh no! We couldn't find what you were looking for</div>`
 }
 
@@ -421,10 +419,10 @@ app.start('.main')
 
 </details>
 
-### `app.mount(selector, pathName, state, actions)`
+### `app.mount(selector, pathName, store, actions)`
 **WARNING: INTENDED FOR INTERNAL USE ONLY**
 
-`app.mount` matches a route from `pathName`, passes in a `state` and `actions` object,
+`app.mount` matches a route from `pathName`, passes in a `store` and `actions` object,
 and either creates a child div, or updates a child div under `selector`.
 
 This was created to clean up the code in the library, but may be useful for
@@ -432,18 +430,18 @@ testing.
 
 **YOU SHOULD NEVER CALL THIS DIRECTLY FOR YOUR APP**
 
-### `app.toNode(pathName[, state, actions])`
+### `app.toNode(pathName[, store, actions])`
 
-`app.toNode` returns a HTMLNode of the app for a given route and state. The
-function matches a route from `pathName`, and either takes in a `state`, or
-uses the default state (that's been created by adding reducers).
+`app.toNode` returns a HTMLNode of the app for a given route and store. The
+function matches a route from `pathName`, and either takes in a `store`, or
+uses the default store (that's been created by adding reducers).
 
 While initially created to clean up the code in the library, this can be useful
 if you want to manually attach the HTMLNode that Tram-One builds to whatever.
 
-### `app.toString(pathName[, state])`
+### `app.toString(pathName[, store])`
 
-`app.toString` returns a string of the app for a given route and state. It has
+`app.toString` returns a string of the app for a given route and store. It has
 the same interface at `app.toNode`, and basically just calls `.outerHTML` (or
 `toString` on the server) on the node.
 

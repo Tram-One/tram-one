@@ -2,7 +2,7 @@ const assert = require('assert')
 const belCreateElement = require('bel-create-element')
 const HoverEngine = require('hover-engine')
 const morph = require('nanomorph')
-const nanorouter = require('nanorouter')
+const rlite = require('rlite-router')
 const rbelRegister = require('rbel')
 const urlListener = require('url-listener')
 
@@ -13,9 +13,10 @@ class Tram {
     }
 
     options = options || {}
-    const defaultRoute = options.defaultRoute || '/404'
+    this.defaultRoute = options.defaultRoute || '/404'
 
-    this.router = nanorouter({default: defaultRoute})
+    this.router = rlite()
+    this.internalRouter = {}
     this.engine = new HoverEngine()
   }
 
@@ -34,10 +35,8 @@ class Tram {
     assert.equal(typeof path, 'string', 'Tram-One: path should be a string')
     assert.equal(typeof page, 'function', 'Tram-One: page should be a function')
 
-    this.router.on(path, (pathParams) => (store, actions) => {
-      const storeWithPath = Object.assign({}, store, {path: pathParams})
-      return page(storeWithPath, actions)
-    })
+    this.internalRouter[path] = (params) => (store, actions) => page(store, actions, params)
+    this.router = rlite(this.internalRouter[this.defaultRoute], this.internalRouter)
 
     return this
   }

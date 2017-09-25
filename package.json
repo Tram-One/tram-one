@@ -1,6 +1,6 @@
 {
   "name": "tram-one",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "🚋 Batteries Included View Framework",
   "main": "dist/tram-one.umd.js",
   "module": "dist/tram-one.esm.js",

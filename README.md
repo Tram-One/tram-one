@@ -314,7 +314,7 @@ const home = (state, actions) => {
 
   return html`
     <div>
-      <h1> Votes: ${state.votes}
+      <h1> Votes: ${state.votes} </h1>
       <button onclick=${upvote}>UPVOTE</button>
       <button onclick=${downvote}>DOWNVOTE</button>
     </div>

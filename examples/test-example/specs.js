@@ -11,8 +11,8 @@ describe('Number Example', () => {
   })
   describe('number page', () => {
     it('should have some numbers', () => {
-      const state = {url: {number: 2}}
-      const page = numberExample.pages.numberPage(state)
+      const params = {number: 2}
+      const page = numberExample.pages.numberPage(null, null, params)
       expect(page.toString()).toContain('2')
     })
   })

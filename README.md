@@ -1,4 +1,6 @@
 # Tram-One
+
+<img src="https://raw.github.com/Tram-One/tram-logo/master/logo.svg?sanitize=true" width="100%" height="128" align="right">
 🚋 Batteries Included View Framework
 
 ## Install

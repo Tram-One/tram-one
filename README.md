@@ -86,7 +86,9 @@ it's a great introduction to help you get started building a Tram-One app.
 
 Link: https://youtu.be/mgHJbqls-wk
 
-## Annotated Examples
+## Examples
+
+### Annotated Examples
 <details>
 <summary>
 Here is a tiny example, the bare-minimum for
@@ -183,7 +185,7 @@ app.start('.main')
 
 </details>
 
-
+### Internal Examples
 You can find more examples in the
 [examples directory](https://github.com/JRJurman/tram-one/tree/master/examples).<br>
 You can run these examples by cloning the repo, and running
@@ -191,6 +193,11 @@ You can run these examples by cloning the repo, and running
 npm install
 npm run example
 ```
+
+### Real Projects out in the world!
+Here are some most bodacious examples out in the real world
+* [Point-Cards](https://github.com/JRJurman/point-cards) - A planning poker web app that uses websockets (Tram-One v1.0.0)
+* [Hacktober & Tram-One](https://github.com/Tram-One/hacktoberfest) - A static github pages app that pulls github issues for Hacktoberfest (Tram-One v2.0.0)
 
 ## API
 Tram-One has a simple interface to help build your web app.

@@ -1,5 +1,10 @@
+<img src="https://raw.githubusercontent.com/Tram-One/tram-logo/master/v3/tram.svg?sanitize=true" height="128" align="right">
+
 # Tram-One
-🚋 Batteries Included View Framework
+
+Batteries Included View Framework
+<br>
+<br>
 
 ## Install
 ```sh

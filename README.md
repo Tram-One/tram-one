@@ -1,7 +1,8 @@
 # Tram-One
 
-<img src="https://raw.github.com/Tram-One/tram-logo/master/v3/tram.svg?sanitize=true" width="100%" height="128" align="right">
-🚋 Batteries Included View Framework
+<img src="https://raw.github.com/Tram-One/tram-logo/master/v3/tram.svg?sanitize=true" height="128" align="right">
+
+<g-emoji alias="train" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f68b.png" ios-version="6.0"><img class="emoji" alt=":train:" height="20" width="20" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f68b.png"></g-emoji> Batteries Included View Framework
 
 ## Install
 ```sh

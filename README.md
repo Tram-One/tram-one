@@ -12,6 +12,17 @@ Batteries Included View Framework
 <br>
 <br>
 
+## Size
+```
+┌──────────────────────────────────────────────────┐
+│                                                  │
+│   Module size: 3.42 KB, Gzipped size: 1.34 KB    │
+│                                                  │
+│    UMD size: 23.09 KB, Gzipped size: 7.83 KB     │
+│                                                  │
+└──────────────────────────────────────────────────┘
+```
+
 ## Install
 ```sh
 npm install tram-one --save
@@ -76,17 +87,6 @@ Special thanks go out to the people on that project, and its
 creator, [Yoshua Wuyts](https://github.com/yoshuawuyts).
 If you like some of the things here, definitely
 [go check out that project](https://github.com/choojs).
-
-## Size
-```
-┌──────────────────────────────────────────────────┐
-│                                                  │
-│   Module size: 3.42 KB, Gzipped size: 1.34 KB    │
-│                                                  │
-│    UMD size: 23.75 KB, Gzipped size: 7.96 KB     │
-│                                                  │
-└──────────────────────────────────────────────────┘
-```
 
 ## Video Tutorial
 This video tutorial goes through the process of build a Tram-One web app

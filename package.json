@@ -1,6 +1,6 @@
 {
   "name": "tram-one",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "🚋 Batteries Included View Framework",
   "main": "dist/tram-one.umd.js",
   "module": "dist/tram-one.esm.js",
@@ -45,6 +45,7 @@
   "dependencies": {
     "bel-create-element": "^1.0.1",
     "hover-engine": "^1.2.0",
+    "hyperx": "Tram-One/hyperx",
     "nanomorph": "^5.1.2",
     "rbel": "^1.0.2",
     "rlite-router": "^2.0.3",

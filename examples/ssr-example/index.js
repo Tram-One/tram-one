@@ -5,7 +5,7 @@ const home = () => html`
   <div>
     <h1>This is the Home Page</h1>
     <div> This is rendered on a server, and then served up to you! </div>
-    <div> We also have a number page here: <a href="/num">/num</a>
+    <div> We also have a number page here: <a href="/num">/num</a> </div>
   </div>
 `
 const num = (state) => html`

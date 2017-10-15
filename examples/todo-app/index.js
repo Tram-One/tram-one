@@ -31,14 +31,11 @@ const home = (store, actions) => {
       <h1> Tram-One Todos 🚋 </h1>
       <NewTodo  value=${store.todos.text}
                 onUpdateInput=${onUpdateInput}
-                onAddTodo=${onAddTodo}>
-      </NewTodo>
+                onAddTodo=${onAddTodo}/>
       <Todos todos=${store.todos.todos}
-             onCompleteTodo=${onCompleteTodo}>
-      </Todos>
+             onCompleteTodo=${onCompleteTodo}/>
       <hr />
-      <Dones dones=${store.todos.dones}>
-      </Dones>
+      <Dones dones=${store.todos.dones}/>
     </div>
   `
 }

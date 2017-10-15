@@ -8,7 +8,7 @@ const html = Tram.html({
 module.exports = (attrs, children) => {
   const renderDone = (done) => {
     return html`
-      <Done value=${done}></Done>
+      <Done value=${done}/>
     `
   }
 

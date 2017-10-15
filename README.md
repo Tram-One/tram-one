@@ -149,7 +149,7 @@ const html = Tram.html()
 // create a custom element to display a color option
 const colorElement = (attrs, children) => {
   return html`
-    <button onclick=${attrs.onclick}>${children} />
+    <button onclick=${attrs.onclick}>${children}</button>
   `
 }
 

@@ -13,7 +13,7 @@ module.exports = (attrs, children) => {
       <div style=${style}>
         ${children}
       </div>
-      <footer></footer>
+      <footer> </footer>
     </div>
   `
 }

@@ -20,15 +20,13 @@ const home = (state, actions, params) => {
     <chrome>
       <div style='color: ${color}'>
         This is an example that uses custom elements, routes, and reducers!
-        <br>
+        <br />
         <em>Oh My!</em>
-        <br><br>
+        <br />
       </div>
-      <color-control onSelectColor=${onSelectColor}>
-      </color-control>
-      <br>
-      <color-input onEnterColor=${onEnterColor}>
-      </color-input>
+      <color-control onSelectColor=${onSelectColor}/>
+      <br />
+      <color-input onEnterColor=${onEnterColor}/>
     </chrome>
   `
 }

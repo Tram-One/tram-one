@@ -17,7 +17,7 @@ const divStyle = `
 module.exports = (attrs, children) => {
   return html`
     <div style=${divStyle}>
-      <abbr title=${attrs.value.alt}><img style=${imgStyle} src=${attrs.value.image} alt=${attrs.value.alt} onclick=${attrs.onSelect}/></abbr>
+      <img style=${imgStyle} src=${attrs.value.image} alt=${attrs.value.alt} onclick=${attrs.onSelect}/>
     </div>
   `
 }

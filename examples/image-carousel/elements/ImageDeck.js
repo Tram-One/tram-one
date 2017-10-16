@@ -14,9 +14,9 @@ const divStyle = `
 `
 
 module.exports = (attrs, children) => {
-  const renderImageTile = (value,index) => {
+  const renderImageTile = (value, index) => {
     return html`
-      <ImageTile value=${value} index=${index} onSelect=${attrs.onSelect(index)}></ImageTile>
+      <ImageTile value=${value} index=${index} onSelect=${attrs.onSelect(index)} />
     `
   }
 

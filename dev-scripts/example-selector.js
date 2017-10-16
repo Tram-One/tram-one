@@ -16,7 +16,8 @@ const question = {
     'using-custom-elements',
     'using-everything',
     new inquirer.Separator('-- Tiny Apps --'),
-    'todo-app'
+    'todo-app',
+    'image-carousel'
   ]
 }
 

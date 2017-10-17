@@ -15,8 +15,7 @@ module.exports = (attrs, children) => {
     <div>
       <input  onkeyup=${submitTodo}
               onchange=${attrs.onUpdateInput}
-              value=${attrs.value}>
-      </input>
+              value=${attrs.value}/>
       <button onclick=${attrs.onAddTodo}>
         Add Todo
       </button>

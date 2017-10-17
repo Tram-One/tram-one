@@ -1,5 +1,27 @@
+<p align="center"><a href="http://tram-one.io/" target="_blank"><img src="https://raw.githubusercontent.com/Tram-One/tram-logo/master/v3/tram.svg?sanitize=true" height="128"></a></p>
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/tram-one"><img src="https://img.shields.io/npm/dm/tram-one.svg" alt="Downloads"></a>
+  <a href="https://www.npmjs.com/package/tram-one"><img src="https://img.shields.io/npm/v/tram-one.svg" alt="Version"></a>
+  <a href="https://www.npmjs.com/package/tram-one"><img src="https://img.shields.io/npm/l/tram-one.svg" alt="License"></a>
+</p>
+
 # Tram-One
-🚋 Batteries Included View Framework
+
+Batteries Included View Framework
+<br>
+<br>
+
+## Size
+```
+┌──────────────────────────────────────────────────┐
+│                                                  │
+│   Module size: 3.42 KB, Gzipped size: 1.34 KB    │
+│                                                  │
+│    UMD size: 23.09 KB, Gzipped size: 7.83 KB     │
+│                                                  │
+└──────────────────────────────────────────────────┘
+```
 
 ## Install
 ```sh
@@ -66,17 +88,6 @@ creator, [Yoshua Wuyts](https://github.com/yoshuawuyts).
 If you like some of the things here, definitely
 [go check out that project](https://github.com/choojs).
 
-## Size
-```
-┌──────────────────────────────────────────────────┐
-│                                                  │
-│   Module size: 3.42 KB, Gzipped size: 1.34 KB    │
-│                                                  │
-│    UMD size: 23.75 KB, Gzipped size: 7.96 KB     │
-│                                                  │
-└──────────────────────────────────────────────────┘
-```
-
 ## Video Tutorial
 This video tutorial goes through the process of build a Tram-One web app
 from start to finish.
@@ -86,7 +97,9 @@ it's a great introduction to help you get started building a Tram-One app.
 
 Link: https://youtu.be/mgHJbqls-wk
 
-## Annotated Examples
+## Examples
+
+### Annotated Examples
 <details>
 <summary>
 Here is a tiny example, the bare-minimum for
@@ -183,7 +196,7 @@ app.start('.main')
 
 </details>
 
-
+### Internal Examples
 You can find more examples in the
 [examples directory](https://github.com/JRJurman/tram-one/tree/master/examples).<br>
 You can run these examples by cloning the repo, and running
@@ -191,6 +204,11 @@ You can run these examples by cloning the repo, and running
 npm install
 npm run example
 ```
+
+### Real Projects out in the world!
+Here are some most bodacious examples out in the real world
+* [Point-Cards](https://github.com/JRJurman/point-cards) - A planning poker web app that uses websockets (Tram-One v1.0.0)
+* [Hacktober & Tram-One](https://github.com/Tram-One/hacktoberfest) - A static github pages app that pulls github issues for Hacktoberfest (Tram-One v2.0.0)
 
 ## API
 Tram-One has a simple interface to help build your web app.
@@ -357,7 +375,7 @@ const colorPage = (store, actions, params) => {
     width: 100px;
     height: 100px;
   `
-  return html`<div style=${style}></div>`
+  return html`<div style=${style} />`
 }
 
 const noPage = () => {

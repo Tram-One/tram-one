@@ -18,8 +18,7 @@ const clicker = (state, actions) => {
       <a href="https://github.com/JRJurman/hover-engine">Hover-Engine</a> and
       <a href="https://github.com/choojs/nanomorph">nanomorph</a>
       to handle state management and DOM diffing.
-      <br><br>
-
+      <br />
       <button onclick=${incrementCount}>
         This button has been clicked ${state.counter} times!
       </button>

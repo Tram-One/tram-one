@@ -26,17 +26,17 @@ const home = () => {
       <a href="https://github.com/chrisdavies/rlite">rlite</a> and
       <a href="https://github.com/JRJurman/url-listener">url-listener</a>
       to handle routing.
-      <br>
+      <br />
       With rlite-router, Tram-One supports routes,
       path params, query-params, hash routes, and wildcards.
-      <br><br>
+      <br />
       With url-listener, Tram-One supports can update on pushState, without doing a page reload.
-      <br><br>
+      <br />
 
       Note: in order to use some dynamic routes, you'll need a server, or hosting to
       handle client side routing (like <a href="https://surge.sh/">surge.sh</a>)
 
-      <br><br>
+      <br />
       <a href="/page1">Go to Page 1</a>
       or <fake-link href="/page1">Soft Load Page 1</fake-link>
     </div>

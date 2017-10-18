@@ -9,8 +9,7 @@ module.exports = (attrs, children) => {
   const renderTodo = (todo, index) => {
     return html`
       <Todo index=${index} value=${todo}
-        onComplete=${attrs.onCompleteTodo(index)}>
-      </Todo>
+        onComplete=${attrs.onCompleteTodo(index)}/>
     `
   }
 

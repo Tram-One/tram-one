@@ -30,6 +30,7 @@ const tests = (Tram) => describe('Tram', () => {
   const counterPage = (store) => Tram.html()`${store.counter}`
   const queryableCounterPage = (store) => Tram.html()`<div id="tram_container">${store.counter}</div>`
 
+  
   describe('constructor', () => {
     it('should have a default route', () => {
       const app = new Tram()
@@ -68,6 +69,18 @@ const tests = (Tram) => describe('Tram', () => {
 
       expect(app.engine.store.counter).toEqual(initCounter)
       expect(app.engine.store.counter2).toEqual(initCounter)
+    })
+  })
+
+  describe('addListener', () => {
+    it('should call single listener', () => {
+      const spy = jasmine.createSpy('listener')
+      const app = new Tram()
+      app.addActions({counter: counterActions})
+      app.engine.addListener(spy)
+      app.engine.notifyListeners()
+
+      expect(spy).toHaveBeenCalled()
     })
   })
 

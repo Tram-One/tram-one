@@ -6,7 +6,7 @@ const html = Tram.html({
 })
 
 module.exports = (attrs, children) => {
-  const style = 'padding-left: 2em'
+  const style = 'padding: 2em'
   return html`
     <div>
       <h1>Tram-One 🚋</h1>

@@ -22,21 +22,21 @@ const home = () => {
     <div>
       <h1>This is the routes example!</h1>
 
-      Tram-One uses
-      <a href="https://github.com/chrisdavies/rlite">rlite</a> and
-      <a href="https://github.com/JRJurman/url-listener">url-listener</a>
+      Tram-One
+      uses <a href="https://github.com/chrisdavies/rlite">rlite</a>
+      and <a href="https://github.com/JRJurman/url-listener">url-listener</a>
       to handle routing.
-      <br />
+      <br /><br />
       With rlite-router, Tram-One supports routes,
       path params, query-params, hash routes, and wildcards.
-      <br />
+      <br /><br />
       With url-listener, Tram-One supports can update on pushState, without doing a page reload.
-      <br />
+      <br /><br />
 
       Note: in order to use some dynamic routes, you'll need a server, or hosting to
       handle client side routing (like <a href="https://surge.sh/">surge.sh</a>)
 
-      <br />
+      <br /><br />
       <a href="/page1">Go to Page 1</a>
       or <fake-link href="/page1">Soft Load Page 1</fake-link>
     </div>
@@ -49,10 +49,9 @@ const page1 = () => {
       <h2>This is the First Page!</h2>
 
       <a href="/">Go to the Home Page</a>
-      <br>
+      <br /><br />
       <a href="/page#2">Go to page 2</a>
-      or
-      <fake-link href="/page#2">Soft Load Page 2</fake-link>
+      or <fake-link href="/page#2">Soft Load Page 2</fake-link>
     </div>
   `
 }
@@ -63,10 +62,9 @@ const page2 = () => {
       <h2>This is the Second Page!</h2>
 
       <a href="/">Go to the Home Page</a>
-      <br>
+      <br /><br />
       <a href="/page/3">Go to page 3</a>
-      or
-      <fake-link href="/page/3">Soft Load Page 3</fake-link>
+      or <fake-link href="/page/3">Soft Load Page 3</fake-link>
     </div>
   `
 }
@@ -78,10 +76,9 @@ const pageN = (store, actions, params) => {
       <h2>This is Page ${params.page}!</h2>
 
       <a href="/">Go to the Home Page</a>
-      <br>
+      <br /><br />
       <a href="/page/${nextPage}">Go to page ${nextPage}</a>
-      or
-      <fake-link href="/page/${nextPage}">Soft Load page ${nextPage}</fake-link>
+      or <fake-link href="/page/${nextPage}">Soft Load page ${nextPage}</fake-link>
     </div>
   `
 }

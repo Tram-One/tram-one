@@ -32,11 +32,7 @@ class Tram {
   }
 
   addListener(listener) {
-    assert.equal(
-      typeof listener, 'object',
-      'Tram-One: listener should be { store-key: { listener-name: listener-function } }'
-    )
-
+    assert.equal(typeof listener, 'function', 'Tram-One: page should be a function')
     this.engine.addListener(listener)
 
     return this

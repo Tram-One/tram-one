@@ -43,7 +43,7 @@
   "repository": "https://github.com/jrjurman/tram-one",
   "license": "MIT",
   "dependencies": {
-    "bel-create-element": "^1.0.1",
+    "bel-create-element": "^2.0.1",
     "hover-engine": "^1.2.0",
     "hyperx": "Tram-One/hyperx",
     "nanomorph": "^5.1.2",

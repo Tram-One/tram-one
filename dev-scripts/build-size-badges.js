@@ -39,4 +39,4 @@ function generateBadge(label, value) {
 }
 
 generateBadge('esm-size', getSize('tram-one.esm.js'));
-generateBadge('umd-size', getSize('tram-one.esm.js'));
+generateBadge('umd-size', getSize('tram-one.umd.js'));

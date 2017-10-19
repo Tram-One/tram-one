@@ -4,6 +4,8 @@
   <a href="https://www.npmjs.com/package/tram-one"><img src="https://img.shields.io/npm/dm/tram-one.svg" alt="Downloads"></a>
   <a href="https://www.npmjs.com/package/tram-one"><img src="https://img.shields.io/npm/v/tram-one.svg" alt="Version"></a>
   <a href="https://www.npmjs.com/package/tram-one"><img src="https://img.shields.io/npm/l/tram-one.svg" alt="License"></a>
+  <img src="./docs/images/esm-size.svg" alt="ESM build size">
+  <img src="./docs/images/umd-size.svg" alt="UMD build size">
 </p>
 
 # Tram-One
@@ -11,17 +13,6 @@
 Batteries Included View Framework
 <br>
 <br>
-
-## Size
-```
-┌──────────────────────────────────────────────────┐
-│                                                  │
-│   Module size: 3.42 KB, Gzipped size: 1.34 KB    │
-│                                                  │
-│    UMD size: 23.09 KB, Gzipped size: 7.83 KB     │
-│                                                  │
-└──────────────────────────────────────────────────┘
-```
 
 ## Install
 ```sh

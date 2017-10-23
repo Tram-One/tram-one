@@ -9,7 +9,7 @@
     "dist/tram-one.umd.js"
   ],
   "scripts": {
-    "lint": "xo generator.js configs/",
+    "lint": "xo tram-one.js dev-scripts/*.js configs/*.js tests/specs/*.js",
     "example": "node dev-scripts/example-selector.js",
     "examples": "npm run example",
     "build": "npm run build-esm && npm run build-umd",
@@ -59,6 +59,7 @@
     "babel-plugin-transform-object-assign": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.0",
+    "eslint-config-tram-one": "^1.1.0",
     "express": "^4.15.3",
     "gh-badges": "^1.3.0",
     "inquirer": "^3.1.0",
@@ -82,28 +83,8 @@
     "xo": "^0.18.2"
   },
   "xo": {
-    "envs": [
-      "node",
-      "browser",
-      "jasmine"
-    ],
-    "semicolon": false,
-    "space": 2,
-    "rules": {
-      "import/newline-after-import": [
-        "off"
-      ],
-      "capitalized-comments": [
-        "error",
-        "never"
-      ],
-      "arrow-parens": [
-        "off"
-      ],
-      "object-shorthand": [
-        "error",
-        "consistent"
-      ]
-    }
+    "extends": [
+      "tram-one"
+    ]
   }
 }

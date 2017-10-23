@@ -2,6 +2,8 @@
 /* eslint-disable import/order */
 /* eslint-disable brace-style */
 
+// we won't always have this file built, so don't depend on it to pass lint
+// eslint-disable-next-line import/no-unresolved
 const TramESM = require('../../dist/tram-one.esm')
 
 const isBrowser = typeof window !== 'undefined'

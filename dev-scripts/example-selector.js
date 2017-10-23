@@ -1,7 +1,7 @@
-const inquirer = require('inquirer')
-const Webpack = require('webpack')
-const WebpackDevServer = require('webpack-dev-server')
 const path = require('path')
+const inquirer = require('inquirer')
+const webpack = require('webpack')
+const WebpackDevServer = require('webpack-dev-server')
 const opn = require('opn')
 const internalIp = require('internal-ip')
 
@@ -35,7 +35,7 @@ inquirer.prompt([question]).then((answer) => {
     }
   }
 
-  const compiler = Webpack(webpackConfig)
+  const compiler = webpack(webpackConfig)
   const server = new WebpackDevServer(compiler, {
     stats: {
       colors: true

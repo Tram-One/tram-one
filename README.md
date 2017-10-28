@@ -210,8 +210,9 @@ npm run example
 
 ### Real Projects out in the world!
 Here are some most bodacious examples out in the real world
-* [Point-Cards](https://github.com/JRJurman/point-cards) - A planning poker web app that uses websockets (Tram-One v1.0.0)
-* [Hacktober & Tram-One](https://github.com/Tram-One/hacktoberfest) - A static github pages app that pulls github issues for Hacktoberfest (Tram-One v2.0.0)
+* [Point-Cards](https://github.com/JRJurman/point-cards) - A planning poker web app that uses websockets (Tram-One v1)
+* [Hacktober & Tram-One](https://github.com/Tram-One/hacktoberfest) - A static github pages app that pulls github issues for Hacktoberfest (Tram-One v2)
+* [Cocktail-Curator](https://github.com/chtinahow/cocktail-curator) - A mixing drinks app that is powered by a server and external API (Tram-One v2)
 
 ## API
 Tram-One has a simple interface to help build your web app.

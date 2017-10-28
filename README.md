@@ -18,6 +18,9 @@
   <a href="https://unpkg.com/tram-one">
     <img src="./docs/images/umd-size.svg" alt="UMD build size">
   </a>
+  <a href="https://join.slack.com/t/tram-one/shared_invite/enQtMjY0NDA3OTg2MzQyLWUyMGIyZTYwNzZkNDJiNWNmNzdiOTMzYjg0YzMzZTkzZDE4MTlmN2Q2YjE0NDIwMGI3ODEzYzQ4ODdlMzQ2ODM">
+    <img src="https://img.shields.io/badge/slack-join-83ded3.svg?style=flat" alt="Join Slack">
+  </a>
 </div>
 
 # Tram-One
@@ -470,6 +473,12 @@ This can be useful if you want to do server-sider rendering or testing.
 
 ## Development
 
+### Slack
+
+If you want to start contributing, need help, or would just like to say hi, [join our slack channel](https://join.slack.com/t/tram-one/shared_invite/enQtMjY0NDA3OTg2MzQyLWUyMGIyZTYwNzZkNDJiNWNmNzdiOTMzYjg0YzMzZTkzZDE4MTlmN2Q2YjE0NDIwMGI3ODEzYzQ4ODdlMzQ2ODM)!
+
+### Commands
+
 If you decide to clone this repo, there are several commands included in the
 `package.json` to help you develop.
 - `npm run lint`, runs eslint in the project
@@ -478,7 +487,7 @@ If you decide to clone this repo, there are several commands included in the
 - `npm run test-dev`, hosts the tests to be launched in a browser
 - `npm run test`, runs tests against all available browsers on the machine
 
-## Todo
+### Todo
 
 Check out our [Issues on Github](https://github.com/JRJurman/tram-one/issues).
 PRs welcome!

@@ -1,6 +1,6 @@
 {
   "name": "tram-one",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "🚋 Batteries Included View Framework",
   "main": "dist/tram-one.umd.js",
   "module": "dist/tram-one.esm.js",
@@ -44,7 +44,7 @@
   "repository": "https://github.com/jrjurman/tram-one",
   "license": "MIT",
   "dependencies": {
-    "bel-create-element": "^2.0.1",
+    "bel-create-element": "^2.0.2",
     "hover-engine": "^1.2.0",
     "hyperx": "Tram-One/hyperx",
     "nanomorph": "^5.1.2",

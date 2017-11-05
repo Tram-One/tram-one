@@ -1,15 +1,6 @@
-module.exports = {
-  init: () => Object({
-    selected: 0
-  }),
-
-  onSelectImage: (state, slectedNumber) => Object.assign({}, state, {
-    selected: slectedNumber
-  }),
-  onPreviousSelect: (state, size) => Object.assign({}, state, {
-    selected: state.selected - 1 < 0 ? size - 1 : state.selected - 1
-  }),
-  onNextImage: (state, size) => Object.assign({}, state, {
-    selected: (state.selected + 1 ) % size
-  })
-}
+module.exports = (size) => Object({
+  init: () => 0,
+  onSelectImage: (selected, newSelection) => newSelection,
+  onPreviousSelect: (selected) => selected - 1 < 0 ? size - 1 : selected - 1,
+  onNextImage: (selected) => (selected + 1) % size
+})

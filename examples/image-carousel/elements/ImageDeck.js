@@ -5,7 +5,6 @@ const html = Tram.html({
   ImageTile
 })
 
-
 const divStyle = `
   width : 100%;
   border : 2px black solid;
@@ -16,7 +15,7 @@ const divStyle = `
 module.exports = (attrs, children) => {
   const renderImageTile = (value, index) => {
     return html`
-      <ImageTile value=${value} index=${index} onSelect=${attrs.onSelect(index)} />
+      <ImageTile value=${value} onSelect=${attrs.onSelect(index)} />
     `
   }
 

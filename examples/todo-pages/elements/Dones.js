@@ -1,8 +1,7 @@
 const Tram = require('../../../tram-one')
 
-const Done = require('./Done')
 const html = Tram.html({
-  Done
+  Done: require('./Done')
 })
 
 module.exports = (attrs, children) => {

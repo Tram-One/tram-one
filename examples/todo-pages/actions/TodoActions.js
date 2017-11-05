@@ -1,9 +1,7 @@
 module.exports = {
-  init: () => {
-    let todos = localStorage.getItem('todos')
-    todos = todos ? JSON.parse(todos) : {todos: [], dones: [], text: ''}
-    return Object(todos)
-  },
+  init: () => Object({
+    todos: [], dones: [], text: ''
+  }),
   addTodo: (state) => Object.assign({}, state, {
     todos: [state.text].concat(state.todos),
     text: ''

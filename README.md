@@ -349,6 +349,64 @@ const home = (state, actions) => {
 app.addActions({votes: voteActions})
 ```
 
+### `app.addListener(listener)`
+_Reference: [hover-engine](https://github.com/JRJurman/hover-engine)_
+
+`app.addListener` adds a function that triggers on every action call Tram-One. This can be used to
+save state in localstorage, or to debug the state of the store as actions are called. This should
+not be used to update the DOM, only trigger side-effects.
+
+It takes in one argument, a function, which provides 2 arguements, the store and actions:<br>
+the store contains the key-value pair that you get as the first parameter for pages<br>
+the actions is an object of callable functions that you get as the second parameter for pages<br>
+
+In many ways it is the same values you are provided when building a Page with `addRoute`.
+
+<details>
+<summary>
+Example:
+</summary>
+
+```js
+/* index.js */
+const app = new Tram()
+const html = Tram.html()
+
+// in this example, `vote` is a number
+// but in a larger app, this could be an object
+// with multiple key-value pairs
+const voteActions = {
+  init: () => 0,
+  up: (vote) => vote + 1,
+  down: (vote) => vote - 1
+}
+
+const home = (state, actions) => {
+  const upvote = () => {
+    actions.up()
+  }
+  const downvote = () => {
+    actions.down()
+  }
+
+  return html`
+    <div>
+      <h1> Votes: ${state.votes} </h1>
+      <button onclick=${upvote}>UPVOTE</button>
+      <button onclick=${downvote}>DOWNVOTE</button>
+    </div>
+  `
+}
+
+// we want to debug the store as votes come in
+const debug = (store, actions) => {
+  console.log(store)
+}
+
+app.addListener(debug)
+app.addActions({votes: voteActions})
+```
+
 </details>
 
 ### `app.addRoute(path, page)`

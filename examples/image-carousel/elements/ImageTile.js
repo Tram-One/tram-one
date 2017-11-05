@@ -3,21 +3,19 @@ const Tram = require('../../../tram-one')
 const html = Tram.html()
 
 const imgStyle = `
-  width : 200px;
   height : 150px;
-  margin : auto;
-  display : block;
 `
 const divStyle = `
-  padding : 20px;
-  display: flex;
-  cursor : pointer;
+  padding-right: 200px;
+  cursor: pointer;
+  overflow: hidden;
+  margin: 20px;
 `
 
 module.exports = (attrs, children) => {
   return html`
     <div style=${divStyle}>
-      <img style=${imgStyle} src=${attrs.value.image} alt=${attrs.value.alt} onclick=${attrs.onSelect}/>
+      <img style=${imgStyle} src=${attrs.value} onclick=${attrs.onSelect}/>
     </div>
   `
 }

@@ -71,11 +71,11 @@ get familiar with Tram-One.
 
 ## Packages
 Tram-One is a collection of excellent packages (and
-[some forks](https://github.com/JRJurman/bel-create-element)).<br>
+[some](https://github.com/Tram-One/hyperx) [forks](https://github.com/JRJurman/bel-create-element)).<br>
 Here are the different package that make Tram-One possible...
 
 For Rendering:
-  - [hyperx](https://github.com/substack/hyperx)
+  - [hyperx](https://github.com/Tram-One/hyperx)
   - [bel-create-element](https://github.com/JRJurman/bel-create-element)
   - [rbel](https://github.com/aaaristo/rbel)
   - [nanomorph](https://github.com/choojs/nanomorph)

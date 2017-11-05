@@ -41,7 +41,7 @@
     "tram",
     "one"
   ],
-  "repository": "https://github.com/jrjurman/tram-one",
+  "repository": "https://github.com/Tram-One/tram-one",
   "license": "MIT",
   "dependencies": {
     "bel-create-element": "^2.0.2",

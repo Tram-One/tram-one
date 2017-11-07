@@ -349,6 +349,8 @@ const home = (state, actions) => {
 app.addActions({votes: voteActions})
 ```
 
+</details>
+
 ### `app.addListener(listener)`
 _Reference: [hover-engine](https://github.com/JRJurman/hover-engine)_
 

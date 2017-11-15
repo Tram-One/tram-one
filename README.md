@@ -13,10 +13,10 @@
 </div>
 <div align="center">
   <a href="https://www.npmjs.com/package/tram-one">
-    <img src="./docs/images/esm-size.svg" alt="ESM build size">
+    <img src="./docs/images/esm.svg" alt="ESM build size">
   </a>
   <a href="https://unpkg.com/tram-one">
-    <img src="./docs/images/umd-size.svg" alt="UMD build size">
+    <img src="./docs/images/umd.svg" alt="UMD build size">
   </a>
   <a href="https://join.slack.com/t/tram-one/shared_invite/enQtMjY0NDA3OTg2MzQyLWUyMGIyZTYwNzZkNDJiNWNmNzdiOTMzYjg0YzMzZTkzZDE4MTlmN2Q2YjE0NDIwMGI3ODEzYzQ4ODdlMzQ2ODM">
     <img src="https://img.shields.io/badge/slack-join-83ded3.svg?style=flat" alt="Join Slack">

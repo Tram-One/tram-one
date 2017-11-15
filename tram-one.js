@@ -31,6 +31,14 @@ class Tram {
     return this
   }
 
+  addListener(listener) {
+    assert.equal(typeof listener, 'function', 'Tram-One: Listener should be a function')
+
+    this.engine.addListener(listener)
+
+    return this
+  }
+
   addRoute(path, page) {
     assert.equal(typeof path, 'string', 'Tram-One: path should be a string')
     assert.equal(typeof page, 'function', 'Tram-One: page should be a function')

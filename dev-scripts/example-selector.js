@@ -15,6 +15,7 @@ const question = {
     'using-routes',
     'using-custom-elements',
     'using-everything',
+    'using-listeners',
     new inquirer.Separator('-- Tiny Apps --'),
     'todo-pages',
     'todo-app',

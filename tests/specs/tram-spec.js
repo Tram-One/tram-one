@@ -73,6 +73,28 @@ const tests = (Tram) => describe('Tram', () => {
     })
   })
 
+  describe('addListener', () => {
+    it('should call listener when calling an action', () => {
+      const app = new Tram()
+      const spy = jasmine.createSpy('listener')
+      app.addListener(spy)
+      app.engine.notifyListeners()
+      expect(spy).toHaveBeenCalled()
+    })
+
+    it('should be chainable', () => {
+      const spy = jasmine.createSpy('listener')
+      const spy2 = jasmine.createSpy('listener2')
+      const app = new Tram()
+        .addListener(spy)
+        .addListener(spy2)
+
+      app.engine.notifyListeners()
+      expect(spy).toHaveBeenCalled()
+      expect(spy2).toHaveBeenCalled()
+    })
+  })
+
   describe('addRoute', () => {
     it('should handle new routes in the app', () => {
       const app = new Tram()

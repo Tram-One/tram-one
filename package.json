@@ -45,7 +45,7 @@
   "license": "MIT",
   "dependencies": {
     "bel-create-element": "^2.0.2",
-    "hover-engine": "^1.2.0",
+    "hover-engine": "^1.3.0",
     "hyperx": "Tram-One/hyperx",
     "nanomorph": "^5.1.2",
     "rbel": "^1.0.2",

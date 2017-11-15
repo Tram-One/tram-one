@@ -358,11 +358,13 @@ _Reference: [hover-engine](https://github.com/JRJurman/hover-engine)_
 save state in localstorage, or to debug the state of the store as actions are called. This should
 not be used to update the DOM, only trigger side-effects.
 
-It takes in one argument, a function, which provides 2 arguements, the store and actions:<br>
+It takes in one argument, a function, which provides 4 arguements, the store, the actions, the action name, and the action argument:<br>
 the store contains the key-value pair that you get as the first parameter for pages<br>
 the actions is an object of callable functions that you get as the second parameter for pages<br>
+the action name is the last action that triggered the listener (may be undefined)<br>
+the actin argument was anything that was passed into the action call (may be undefined)<br>
 
-In many ways it is the same values you are provided when building a Page with `addRoute`.
+In the store and actions here are actually identical to the store and actions you recieve in routes.
 
 <details>
 <summary>

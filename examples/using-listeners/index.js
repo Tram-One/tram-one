@@ -35,10 +35,16 @@ const clicker = (store, actions) => {
   `
 }
 
+// log what is happening on the store
+app.addListener((store, actions, actionName) => {
+  console.log(actionName, '->', store.counter)
+})
+
+// save what is happening in localstorage
 app.addListener(store => {
-  console.log('Current Value', store.counter)
   localStorage.count = store.counter
 })
+
 app.addActions({counter: countActions})
 app.addRoute('/', clicker)
 app.start('.main')

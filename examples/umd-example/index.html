@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <script src="https://unpkg.com/tram-one"></script>
+  </head>
+  <body>
+    <div class="main"></div>
+    <script>
+      const Tram = window['tram-one']
+      const html = Tram.html()
+      const app = new Tram()
+
+      const page = () => {
+        return html`
+          <div>
+            <h2>UMD Page Example</h2>
+            <div>
+              This Page uses the umd hosted on <a href="https://unpkg.com/tram-one">unpkg.com/tram-one</a>
+              <br />
+              Note: You can find these umd builds in the <a href="https://github.com/Tram-One/tram-one/releases">releases on github</a> and the
+              npm release when you run npm install (node_modules/tram-one/dist/tram-one.umd.js)
+            </div>
+          </div>
+        `
+      }
+
+      app.addRoute('/page', page)
+      app.start('.main', '/page')
+    </script>
+  </body>
+</html>

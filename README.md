@@ -30,8 +30,18 @@ Batteries Included View Framework
 <br>
 
 ## Install
+
+You can include Tram One as a Node Dependency:
 ```sh
 npm install tram-one --save
+```
+
+Or, you can use the Universal Module Definition (UMD) in a script tag:
+
+```html
+<head>
+  <script src="https://unpkg.com/tram-one"></script>
+</head>
 ```
 
 ## Summary

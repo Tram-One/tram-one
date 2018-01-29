@@ -81,21 +81,21 @@ get familiar with Tram-One.
 
 ## Packages
 Tram-One is a collection of excellent packages (and
-[some](https://github.com/Tram-One/hyperx) [forks](https://github.com/JRJurman/bel-create-element)).<br>
+[some](https://github.com/Tram-One/hyperx) [forks](https://github.com/Tram-One/belit)).<br>
 Here are the different package that make Tram-One possible...
 
 For Rendering:
   - [hyperx](https://github.com/Tram-One/hyperx)
-  - [bel-create-element](https://github.com/JRJurman/bel-create-element)
+  - [belit](https://github.com/Tram-One/belit)
   - [rbel](https://github.com/aaaristo/rbel)
   - [nanomorph](https://github.com/choojs/nanomorph)
 
 For Routing:
   - [rlite](https://github.com/chrisdavies/rlite)
-  - [url-listener](https://github.com/JRJurman/url-listener)
+  - [url-listener](https://github.com/Tram-One/url-listener)
 
 For State Management:
-  - [hover-engine](https://github.com/JRJurman/hover-engine)
+  - [hover-engine](https://github.com/Tram-One/hover-engine)
 
 While not used in this project, Tram-One is heavily inspired by the
 [choo](https://github.com/choojs/choo) view framework.
@@ -214,7 +214,7 @@ app.start('.main')
 
 ### Internal Examples
 You can find more examples in the
-[examples directory](https://github.com/JRJurman/tram-one/tree/master/examples).<br>
+[examples directory](https://github.com/Tram-One/tram-one/tree/master/examples).<br>
 You can run these examples by cloning the repo, and running
 ```sh
 npm install
@@ -232,7 +232,7 @@ Tram-One has a simple interface to help build your web app.
 
 ### `Tram.html([registry])`
 _Reference: [hyperx](https://github.com/substack/hyperx),
-[bel-create-element](https://github.com/JRJurman/bel-create-element),
+[belit](https://github.com/JRJurman/belit),
 [rbel](https://github.com/aaaristo/rbel)_
 
 `Tram.html` returns a function that can be used to transform

@@ -308,6 +308,9 @@ const tests = (Tram) => describe('Tram', () => {
   })
 
   describe('dom', () => {
+    const HTMLNS = 'http://www.w3.org/1999/xhtml'
+    const SVGNS = 'http://www.w3.org/2000/svg'
+
     it('should generate a dom tree', () => {
       const tramTree = Tram.dom()`<div><span></span></div>`
       const docTree = document.createElement('div')
@@ -324,14 +327,12 @@ const tests = (Tram) => describe('Tram', () => {
     })
 
     it('should default to the html namespace', () => {
-      const HTMLNS = 'http://www.w3.org/1999/xhtml'
       const tramTree = Tram.dom()`<div><span></span></div>`
       expect(tramTree.namespaceURI).toBe(HTMLNS)
       expect(tramTree.getElementsByTagName('span')[0].namespaceURI).toBe(HTMLNS)
     })
 
     it('should take in a namespace', () => {
-      const SVGNS = 'http://www.w3.org/2000/svg'
       const tramTree = Tram.dom(SVGNS)`<svg><circle /></svg>`
 
       const docTree = document.createElementNS(SVGNS, 'svg')
@@ -343,6 +344,16 @@ const tests = (Tram) => describe('Tram', () => {
       const tramCircle = tramTree.getElementsByTagName('circle')[0]
       expect(tramCircle.namespaceURI).toBe(SVGNS)
       expect(tramCircle.tagName).toBe('circle')
+    })
+
+    it('should not conflict containing namespaces', () => {
+      const svgcircle = () => Tram.dom(SVGNS)`<svg><circle /></svg>`
+      const htmlTree = Tram.dom(null, {svgcircle})`<div><svgcircle /></div>`
+      expect(htmlTree.namespaceURI).toBe(HTMLNS)
+      expect(htmlTree.getElementsByTagName('svg')[0].namespaceURI).toBe(SVGNS)
+      expect(htmlTree.getElementsByTagName('svg')[0].tagName).toBe('svg')
+      expect(htmlTree.getElementsByTagName('circle')[0].namespaceURI).toBe(SVGNS)
+      expect(htmlTree.getElementsByTagName('circle')[0].tagName).toBe('circle')
     })
   })
 

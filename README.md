@@ -285,6 +285,25 @@ const home = () => {
 
 </details>
 
+### `Tram.svg([registry])`
+_Reference: [hyperx](https://github.com/substack/hyperx),
+[belit](https://github.com/JRJurman/belit),
+[rbel](https://github.com/aaaristo/rbel)_
+
+`Tram.svg` is the same as `Tram.html`, but will create elements
+in the appropriate SVG namespace. Use this method if you're building
+components that are SVG.
+
+### `Tram.dom([namespace, registry])`
+_Reference: [hyperx](https://github.com/substack/hyperx),
+[belit](https://github.com/JRJurman/belit),
+[rbel](https://github.com/aaaristo/rbel)_
+
+`Tram.dom` is the generic version of `Tram.html` and `Tram.svg`.
+It is the driving function that builds document trees, and can be
+used whenever you need to use a namespace other than XHTML and SVG.
+
+
 ### `Tram.constructor([options])`
 `new Tram()` returns an instance of the Tram. The constructor
 takes in an `options` object, which can have a `defaultRoute`.

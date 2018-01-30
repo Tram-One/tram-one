@@ -307,20 +307,60 @@ const tests = (Tram) => describe('Tram', () => {
     })
   })
 
-  describe('html', () => {
+  describe('dom', () => {
     it('should generate a dom tree', () => {
-      const tramTree = Tram.html()`<div><span></span></div>`
+      const tramTree = Tram.dom()`<div><span></span></div>`
       const docTree = document.createElement('div')
       docTree.appendChild(document.createElement('span'))
       expect(tramTree.outerHTML).toBe(docTree.outerHTML)
     })
 
     it('should take in a registry', () => {
-      const foo = () => Tram.html()`<div><span></span></div>`
-      const tramTree = Tram.html({foo})`<foo></foo>`
+      const foo = () => Tram.dom()`<div><span></span></div>`
+      const tramTree = Tram.dom(null, {foo})`<foo></foo>`
       const docTree = document.createElement('div')
       docTree.appendChild(document.createElement('span'))
       expect(tramTree.outerHTML).toBe(docTree.outerHTML)
+    })
+
+    it('should default to the html namespace', () => {
+      const HTMLNS = 'http://www.w3.org/1999/xhtml'
+      const tramTree = Tram.dom()`<div><span></span></div>`
+      expect(tramTree.namespaceURI).toBe(HTMLNS)
+      expect(tramTree.getElementsByTagName('span')[0].namespaceURI).toBe(HTMLNS)
+    })
+
+    it('should take in a namespace', () => {
+      const SVGNS = 'http://www.w3.org/2000/svg'
+      const tramTree = Tram.dom(SVGNS)`<svg><circle /></svg>`
+
+      const docTree = document.createElementNS(SVGNS, 'svg')
+      docTree.appendChild(document.createElementNS(SVGNS, 'circle'))
+
+      expect(tramTree.outerHTML).toBe(docTree.outerHTML)
+      expect(tramTree.namespaceURI).toBe(SVGNS)
+      expect(tramTree.tagName).toBe('svg')
+      const tramCircle = tramTree.getElementsByTagName('circle')[0]
+      expect(tramCircle.namespaceURI).toBe(SVGNS)
+      expect(tramCircle.tagName).toBe('circle')
+    })
+  })
+
+  describe('html', () => {
+    it('should use to the html namespace', () => {
+      const HTMLNS = 'http://www.w3.org/1999/xhtml'
+      const tramTree = Tram.html()`<div><span></span></div>`
+      expect(tramTree.namespaceURI).toBe(HTMLNS)
+      expect(tramTree.getElementsByTagName('span')[0].namespaceURI).toBe(HTMLNS)
+    })
+  })
+
+  describe('svg', () => {
+    const SVGNS = 'http://www.w3.org/2000/svg'
+    it('should use the svg namespace', () => {
+      const tramTree = Tram.svg()`<svg><circle /></svg>`
+      expect(tramTree.namespaceURI).toBe(SVGNS)
+      expect(tramTree.getElementsByTagName('circle')[0].namespaceURI).toBe(SVGNS)
     })
   })
 })

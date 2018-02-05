@@ -19,7 +19,8 @@ const question = {
     new inquirer.Separator('-- Tiny Apps --'),
     'todo-pages',
     'todo-app',
-    'image-carousel'
+    'image-carousel',
+    'clock-example'
   ]
 }
 
@@ -53,6 +54,6 @@ inquirer.prompt([question]).then((answer) => {
 
   server.listen(port, ip, () => {
     console.log(`Running ${answer.example} on http://${ip}:${port}`)
-    opn(`http://${ip}:${port}`)
+    // opn(`http://${ip}:${port}`)
   })
 })

@@ -113,7 +113,7 @@ const tests = (Tram) => describe('Tram', () => {
       app.addRoute('/:path_param',
         (store, actions, params) => Tram.html()`${params.path_param}`
       )
-      expect(app.toNode('/foo')).toEqual('foo')
+      expect(app.toNode('/route_variable')).toEqual('route_variable')
     })
 
     it('should be chainable', () => {
@@ -175,11 +175,11 @@ const tests = (Tram) => describe('Tram', () => {
       app = new Tram()
 
       app.addRoute(testemPath, queryablePage.bind(this, 5))
-      app.addRoute(`${testemPath}#foo`, queryablePage.bind(this, 10))
+      app.addRoute(`${testemPath}#prop_value`, queryablePage.bind(this, 10))
       app.start(`#${containerId}`)
 
       const mountedTargetFirst = document.querySelector(queryableSelector)
-      window.history.pushState({}, '', `${testemPath}#foo`)
+      window.history.pushState({}, '', `${testemPath}#prop_value`)
       expect(mountedTargetFirst.innerHTML).toEqual('10')
       popevent = () => {
         const mountedTargetSecond = document.querySelector(queryableSelector)
@@ -319,8 +319,8 @@ const tests = (Tram) => describe('Tram', () => {
     })
 
     it('should take in a registry', () => {
-      const foo = () => Tram.dom()`<div><span></span></div>`
-      const tramTree = Tram.dom(null, {foo})`<foo></foo>`
+      const customDIV = () => Tram.dom()`<div><span></span></div>`
+      const tramTree = Tram.dom(null, {customDIV})`<customDIV></customDIV>`
       const docTree = document.createElement('div')
       docTree.appendChild(document.createElement('span'))
       expect(tramTree.outerHTML).toBe(docTree.outerHTML)

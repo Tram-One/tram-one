@@ -54,6 +54,6 @@ inquirer.prompt([question]).then((answer) => {
 
   server.listen(port, ip, () => {
     console.log(`Running ${answer.example} on http://${ip}:${port}`)
-    // opn(`http://${ip}:${port}`)
+    opn(`http://${ip}:${port}`)
   })
 })

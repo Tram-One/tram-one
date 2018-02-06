@@ -12,9 +12,9 @@ const degreesFromAttrs = (attrs) => {
   return 360 * (attrs['value'] / attrs['max-value'])
 }
 
-const halfHand = svg`
+const halfFillDefinition = svg`
   <defs>
-    <linearGradient id="halfhand" x1=0 x2=0 y1=0 y2=1>
+    <linearGradient id="halfFill" x1=0 x2=0 y1=0 y2=1>
       <stop offset="0%" />
       <stop offset="50%" />
       <stop offset="50%" stop-opacity="0" />
@@ -25,9 +25,9 @@ const halfHand = svg`
 
 module.exports = (attrs) => svg`
   <g>
-    ${halfHand}
+    ${halfFillDefinition}
     <rect
-      fill="url(#halfhand)"
+      fill="url(#halfFill)"
       x=${50 - (attrs.width/2)} y=${50 - (attrs.radius)}
       width=${attrs.width} height=${attrs.radius*2}
       style=${handStyle(degreesFromAttrs(attrs))}

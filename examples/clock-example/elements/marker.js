@@ -11,9 +11,9 @@ const markerStyle = (degrees) => `
   transform: rotate(${degrees}deg);
 `
 
-const markerEdges = svg`
+const edgeOnlyDefinition = svg`
   <defs>
-    <linearGradient id="markerEdges" x1=0 x2=0 y1=0 y2=1>
+    <linearGradient id="edgeOnly" x1=0 x2=0 y1=0 y2=1>
       <stop offset="0%" />
       <stop offset="5%" />
       <stop offset="5%" stop-opacity="0" />
@@ -26,10 +26,10 @@ const markerEdges = svg`
 
 module.exports = (attrs) => svg`
   <g>
-    ${markerEdges}
+    ${edgeOnlyDefinition}
     <rect x=${50 - attrs.width} y=10 width=${attrs.width} height=80
           style=${markerStyle(degreesFromAttrs(attrs))}
-          fill="url(#markerEdges)"
+          fill="url(#edgeOnly)"
     />
   </g>
 `

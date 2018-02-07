@@ -19,7 +19,8 @@ const question = {
     new inquirer.Separator('-- Tiny Apps --'),
     'todo-pages',
     'todo-app',
-    'image-carousel'
+    'image-carousel',
+    'clock-example'
   ]
 }
 

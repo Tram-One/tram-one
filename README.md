@@ -81,21 +81,21 @@ get familiar with Tram-One.
 
 ## Packages
 Tram-One is a collection of excellent packages (and
-[some](https://github.com/Tram-One/hyperx) [forks](https://github.com/JRJurman/bel-create-element)).<br>
+[some](https://github.com/Tram-One/hyperx) [forks](https://github.com/Tram-One/belit)).<br>
 Here are the different package that make Tram-One possible...
 
 For Rendering:
   - [hyperx](https://github.com/Tram-One/hyperx)
-  - [bel-create-element](https://github.com/JRJurman/bel-create-element)
+  - [belit](https://github.com/Tram-One/belit)
   - [rbel](https://github.com/aaaristo/rbel)
   - [nanomorph](https://github.com/choojs/nanomorph)
 
 For Routing:
   - [rlite](https://github.com/chrisdavies/rlite)
-  - [url-listener](https://github.com/JRJurman/url-listener)
+  - [url-listener](https://github.com/Tram-One/url-listener)
 
 For State Management:
-  - [hover-engine](https://github.com/JRJurman/hover-engine)
+  - [hover-engine](https://github.com/Tram-One/hover-engine)
 
 While not used in this project, Tram-One is heavily inspired by the
 [choo](https://github.com/choojs/choo) view framework.
@@ -214,7 +214,7 @@ app.start('.main')
 
 ### Internal Examples
 You can find more examples in the
-[examples directory](https://github.com/JRJurman/tram-one/tree/master/examples).<br>
+[examples directory](https://github.com/Tram-One/tram-one/tree/master/examples).<br>
 You can run these examples by cloning the repo, and running
 ```sh
 npm install
@@ -232,7 +232,7 @@ Tram-One has a simple interface to help build your web app.
 
 ### `Tram.html([registry])`
 _Reference: [hyperx](https://github.com/substack/hyperx),
-[bel-create-element](https://github.com/JRJurman/bel-create-element),
+[belit](https://github.com/Tram-One/belit),
 [rbel](https://github.com/aaaristo/rbel)_
 
 `Tram.html` returns a function that can be used to transform
@@ -285,6 +285,25 @@ const home = () => {
 
 </details>
 
+### `Tram.svg([registry])`
+_Reference: [hyperx](https://github.com/substack/hyperx),
+[belit](https://github.com/Tram-One/belit),
+[rbel](https://github.com/aaaristo/rbel)_
+
+`Tram.svg` is the same as `Tram.html`, but will create elements
+in the appropriate SVG namespace. Use this method if you're building
+components that are SVG.
+
+### `Tram.dom([namespace, registry])`
+_Reference: [hyperx](https://github.com/substack/hyperx),
+[belit](https://github.com/Tram-One/belit),
+[rbel](https://github.com/aaaristo/rbel)_
+
+`Tram.dom` is the generic version of `Tram.html` and `Tram.svg`.
+It is the driving function that builds document trees, and can be
+used whenever you need to use a namespace other than XHTML and SVG.
+
+
 ### `Tram.constructor([options])`
 `new Tram()` returns an instance of the Tram. The constructor
 takes in an `options` object, which can have a `defaultRoute`.
@@ -313,7 +332,7 @@ app.addRoute('/', home)
 </details>
 
 ### `app.addActions(actionGroups)`
-_Reference: [hover-engine](https://github.com/JRJurman/hover-engine)_
+_Reference: [hover-engine](https://github.com/Tram-One/hover-engine)_
 
 `app.addActions` adds a set of actions that can be triggered in the instance of Tram-One.
 It takes in one argument, an object where:<br>
@@ -362,7 +381,7 @@ app.addActions({votes: voteActions})
 </details>
 
 ### `app.addListener(listener)`
-_Reference: [hover-engine](https://github.com/JRJurman/hover-engine)_
+_Reference: [hover-engine](https://github.com/Tram-One/hover-engine)_
 
 `app.addListener` adds a function that triggers on every action call Tram-One. This can be used to
 save state in localstorage, or to debug the state of the store as actions are called. This should
@@ -562,5 +581,5 @@ If you decide to clone this repo, there are several commands included in the
 
 ### Todo
 
-Check out our [Issues on Github](https://github.com/JRJurman/tram-one/issues).
+Check out our [Issues on Github](https://github.com/Tram-One/tram-one/issues).
 PRs welcome!

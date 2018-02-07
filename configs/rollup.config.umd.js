@@ -36,6 +36,8 @@ const plugins = [
 
 export default {
   input: 'tram-one.js',
+  external: ['domino'],
+  globals: {domino: 'domino'},
   output: {
     file: pkg.main,
     format: 'umd'

@@ -1,5 +1,5 @@
 const assert = require('assert')
-const belCreateElement = require('bel-create-element')
+const belit = require('belit')
 const HoverEngine = require('hover-engine')
 const morph = require('nanomorph')
 const rlite = require('rlite-router')
@@ -88,19 +88,24 @@ class Tram {
   }
 
   toString(pathName, state) {
-    if (typeof window !== 'undefined') {
-      return this.toNode(pathName, state).outerHTML
-    }
-    return this.toNode(pathName, state).toString()
+    return this.toNode(pathName, state).outerHTML
   }
 
-  static html(registry) {
+  static dom(namespace, registry) {
     if (registry) {
       assert.equal(typeof registry, 'object', 'Tram-One: registry should be an object')
       assert.ok(!(Array.isArray(registry)), 'Tram-One: registry should be an object')
     }
 
-    return rbelRegister(belCreateElement, registry || {})
+    return rbelRegister(belit(namespace), registry || {})
+  }
+
+  static html(registry) {
+    return Tram.dom(null, registry)
+  }
+
+  static svg(registry) {
+    return Tram.dom('http://www.w3.org/2000/svg', registry)
   }
 }
 

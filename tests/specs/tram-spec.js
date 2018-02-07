@@ -9,14 +9,7 @@ const TramESM = require('../../dist/tram-one.esm')
 const isBrowser = typeof window !== 'undefined'
 const TramUMD = isBrowser ? window['tram-one'] : undefined
 const testemPath = isBrowser ? window.location.pathname : '/'
-const document = isBrowser ? window.document : require('min-document')
-
-const stringify = (node) => {
-  if (node.outerHTML !== undefined) {
-    return node.outerHTML
-  }
-  return node.toString()
-}
+const document = isBrowser ? window.document : require('domino').createWindow().document
 
 const tests = (Tram) => describe('Tram', () => {
   const errorPage = () => Tram.html()`<div>Error</div>`
@@ -37,14 +30,14 @@ const tests = (Tram) => describe('Tram', () => {
       const app = new Tram()
 
       app.addRoute('/404', errorPage)
-      expect(app.toString('/')).toEqual(stringify(errorPage()))
+      expect(app.toString('/')).toEqual(errorPage().outerHTML)
     })
 
     it('should take in a default route', () => {
       const app = new Tram({defaultRoute: '/200'})
 
       app.addRoute('/200', successPage)
-      expect(app.toString('/')).toEqual(stringify(successPage()))
+      expect(app.toString('/')).toEqual(successPage().outerHTML)
     })
 
     it('should not always go to the default', () => {
@@ -52,7 +45,7 @@ const tests = (Tram) => describe('Tram', () => {
 
       app.addRoute('/404', errorPage)
       app.addRoute('/200', successPage)
-      expect(app.toString('/200')).not.toEqual(stringify(errorPage()))
+      expect(app.toString('/200')).not.toEqual(errorPage().outerHTML)
     })
   })
 
@@ -102,10 +95,10 @@ const tests = (Tram) => describe('Tram', () => {
       app.addRoute('/good', successPage)
       app.addRoute('/bad', errorPage)
       app.addRoute('/404', errorPage)
-      expect(app.toString('/')).toEqual(stringify(successPage()))
-      expect(app.toString('/good')).toEqual(stringify(successPage()))
-      expect(app.toString('/bad')).toEqual(stringify(errorPage()))
-      expect(app.toString('/404')).toEqual(stringify(errorPage()))
+      expect(app.toString('/')).toEqual(successPage().outerHTML)
+      expect(app.toString('/good')).toEqual(successPage().outerHTML)
+      expect(app.toString('/bad')).toEqual(errorPage().outerHTML)
+      expect(app.toString('/404')).toEqual(errorPage().outerHTML)
     })
 
     it('should include the default state in app', () => {
@@ -120,7 +113,7 @@ const tests = (Tram) => describe('Tram', () => {
       app.addRoute('/:path_param',
         (store, actions, params) => Tram.html()`${params.path_param}`
       )
-      expect(app.toNode('/foo')).toEqual('foo')
+      expect(app.toNode('/route_variable')).toEqual('route_variable')
     })
 
     it('should be chainable', () => {
@@ -128,8 +121,8 @@ const tests = (Tram) => describe('Tram', () => {
         .addRoute('/good', successPage)
         .addRoute('/bad', errorPage)
 
-      expect(app.toString('/good')).toEqual(stringify(successPage()))
-      expect(app.toString('/bad')).toEqual(stringify(errorPage()))
+      expect(app.toString('/good')).toEqual(successPage().outerHTML)
+      expect(app.toString('/bad')).toEqual(errorPage().outerHTML)
     })
   })
 
@@ -182,11 +175,11 @@ const tests = (Tram) => describe('Tram', () => {
       app = new Tram()
 
       app.addRoute(testemPath, queryablePage.bind(this, 5))
-      app.addRoute(`${testemPath}#foo`, queryablePage.bind(this, 10))
+      app.addRoute(`${testemPath}#prop_value`, queryablePage.bind(this, 10))
       app.start(`#${containerId}`)
 
       const mountedTargetFirst = document.querySelector(queryableSelector)
-      window.history.pushState({}, '', `${testemPath}#foo`)
+      window.history.pushState({}, '', `${testemPath}#prop_value`)
       expect(mountedTargetFirst.innerHTML).toEqual('10')
       popevent = () => {
         const mountedTargetSecond = document.querySelector(queryableSelector)
@@ -239,7 +232,7 @@ const tests = (Tram) => describe('Tram', () => {
       const target = document.getElementById('tram_test_container')
       app.mount(target, '/', undefined, document)
       const mountedTarget = document.querySelector(queryableSelector)
-      expect(mountedTarget.outerHTML).toEqual(stringify(queryablePage()))
+      expect(mountedTarget.outerHTML).toEqual(queryablePage().outerHTML)
     })
 
     it('should use the default route', () => {
@@ -250,7 +243,7 @@ const tests = (Tram) => describe('Tram', () => {
       const target = document.getElementById('tram_test_container')
       app.mount(target)
       const mountedTarget = document.querySelector(queryableSelector)
-      expect(mountedTarget.outerHTML).toEqual(stringify(queryablePage(200)))
+      expect(mountedTarget.outerHTML).toEqual(queryablePage(200).outerHTML)
     })
 
     it('should attach the app to a selector', () => {
@@ -259,7 +252,7 @@ const tests = (Tram) => describe('Tram', () => {
       app.addRoute('/', queryablePage)
       app.mount('#tram_test_container', '/')
       const mountedTarget = document.querySelector(queryableSelector)
-      expect(mountedTarget.outerHTML).toEqual(stringify(queryablePage()))
+      expect(mountedTarget.outerHTML).toEqual(queryablePage().outerHTML)
     })
 
     it('should update the app on re-mount', () => {
@@ -270,7 +263,7 @@ const tests = (Tram) => describe('Tram', () => {
       app.mount('#tram_test_container', '/')
       app.mount('#tram_test_container', '/200')
       const mountedTarget = document.querySelector(queryableSelector)
-      expect(mountedTarget.outerHTML).toEqual(stringify(queryablePage(200)))
+      expect(mountedTarget.outerHTML).toEqual(queryablePage(200).outerHTML)
     })
 
     it('should be chainable', () => {
@@ -289,7 +282,7 @@ const tests = (Tram) => describe('Tram', () => {
     it('should resolve the path', () => {
       const app = new Tram()
       app.addRoute('/', successPage)
-      expect(stringify(app.toNode('/'))).toEqual(stringify(successPage()))
+      expect(app.toNode('/').outerHTML).toEqual(successPage().outerHTML)
     })
 
     it('should have the default state', () => {
@@ -310,24 +303,75 @@ const tests = (Tram) => describe('Tram', () => {
     it('should return a string', () => {
       const app = new Tram()
       app.addRoute('/404', errorPage)
-      expect(app.toString('/')).toEqual(stringify(errorPage()))
+      expect(app.toString('/')).toEqual(errorPage().outerHTML)
     })
   })
 
-  describe('html', () => {
+  describe('dom', () => {
+    const HTMLNS = 'http://www.w3.org/1999/xhtml'
+    const SVGNS = 'http://www.w3.org/2000/svg'
+
     it('should generate a dom tree', () => {
-      const tramTree = Tram.html()`<div><span></span></div>`
+      const tramTree = Tram.dom()`<div><span></span></div>`
       const docTree = document.createElement('div')
       docTree.appendChild(document.createElement('span'))
       expect(tramTree.outerHTML).toBe(docTree.outerHTML)
     })
 
     it('should take in a registry', () => {
-      const foo = () => Tram.html()`<div><span></span></div>`
-      const tramTree = Tram.html({foo})`<foo></foo>`
+      const customDIV = () => Tram.dom()`<div><span></span></div>`
+      const tramTree = Tram.dom(null, {customDIV})`<customDIV></customDIV>`
       const docTree = document.createElement('div')
       docTree.appendChild(document.createElement('span'))
       expect(tramTree.outerHTML).toBe(docTree.outerHTML)
+    })
+
+    it('should default to the html namespace', () => {
+      const tramTree = Tram.dom()`<div><span></span></div>`
+      expect(tramTree.namespaceURI).toBe(HTMLNS)
+      expect(tramTree.getElementsByTagName('span')[0].namespaceURI).toBe(HTMLNS)
+    })
+
+    it('should take in a namespace', () => {
+      const tramTree = Tram.dom(SVGNS)`<svg><circle /></svg>`
+
+      const docTree = document.createElementNS(SVGNS, 'svg')
+      docTree.appendChild(document.createElementNS(SVGNS, 'circle'))
+
+      expect(tramTree.outerHTML).toBe(docTree.outerHTML)
+      expect(tramTree.namespaceURI).toBe(SVGNS)
+      expect(tramTree.tagName).toBe('svg')
+      const tramCircle = tramTree.getElementsByTagName('circle')[0]
+      expect(tramCircle.namespaceURI).toBe(SVGNS)
+      expect(tramCircle.tagName).toBe('circle')
+    })
+
+    it('should not conflict containing namespaces', () => {
+      const svgcircle = () => Tram.dom(SVGNS)`<svg><circle /></svg>`
+      const htmlTree = Tram.dom(null, {svgcircle})`<div><svgcircle /></div>`
+      expect(htmlTree.namespaceURI).toBe(HTMLNS)
+      expect(htmlTree.getElementsByTagName('svg')[0].namespaceURI).toBe(SVGNS)
+      expect(htmlTree.getElementsByTagName('svg')[0].tagName).toBe('svg')
+      expect(htmlTree.getElementsByTagName('circle')[0].namespaceURI).toBe(SVGNS)
+      expect(htmlTree.getElementsByTagName('circle')[0].tagName).toBe('circle')
+    })
+  })
+
+  describe('html', () => {
+    it('should use to the html namespace', () => {
+      const HTMLNS = 'http://www.w3.org/1999/xhtml'
+      const tramTree = Tram.html()`<div><span></span></div>`
+      expect(tramTree.namespaceURI).toBe(HTMLNS)
+      expect(tramTree.getElementsByTagName('span')[0].namespaceURI).toBe(HTMLNS)
+    })
+  })
+
+  describe('svg', () => {
+    const SVGNS = 'http://www.w3.org/2000/svg'
+    it('should use the svg namespace', () => {
+      const tramTree = Tram.svg()`<svg><circle /></svg>`
+      expect(tramTree.namespaceURI).toBe(SVGNS)
+      expect(tramTree.getElementsByTagName('circle')[0].namespaceURI).toBe(SVGNS)
     })
   })
 })

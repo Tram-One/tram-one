@@ -14,6 +14,11 @@ class Tram {
 
     options = options || {}
     this.defaultRoute = options.defaultRoute || '/404'
+    this.windowed = options.windowed || false
+
+    if (this.windowed) {
+      window.app = this
+    }
 
     this.router = rlite()
     this.internalRouter = {}
@@ -39,9 +44,20 @@ class Tram {
     return this
   }
 
-  addRoute(path, page) {
+  addRoute(path, page, subroutes) {
     assert.equal(typeof path, 'string', 'Tram-One: path should be a string')
     assert.equal(typeof page, 'function', 'Tram-One: page should be a function')
+    
+    if (subroutes) {
+      subroutes.reduce((tram, subroute) => {
+        const newPath = path + subroute.path
+        const newPage = (store, actions, params, children) => {
+          const newComponent = subroute.component(store, actions, params, children)
+          return page(store, actions, params, newComponent)
+        }
+        return tram.addRoute(newPath, newPage, subroute.children)
+      }, this)
+    }
 
     this.internalRouter[path] = (params) => (store, actions) => page(store, actions, params)
     this.router = rlite(this.internalRouter[this.defaultRoute], this.internalRouter)
@@ -106,6 +122,10 @@ class Tram {
 
   static svg(registry) {
     return Tram.dom('http://www.w3.org/2000/svg', registry)
+  }
+  
+  static route() {
+    return (path, component, children) => ({path, component, children})
   }
 }
 

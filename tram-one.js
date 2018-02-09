@@ -47,7 +47,7 @@ class Tram {
   addRoute(path, page, subroutes) {
     assert.equal(typeof path, 'string', 'Tram-One: path should be a string')
     assert.equal(typeof page, 'function', 'Tram-One: page should be a function')
-    
+
     if (subroutes) {
       subroutes.reduce((tram, subroute) => {
         const newPath = path + subroute.path
@@ -123,7 +123,7 @@ class Tram {
   static svg(registry) {
     return Tram.dom('http://www.w3.org/2000/svg', registry)
   }
-  
+
   static route() {
     return (path, component, children) => ({path, component, children})
   }

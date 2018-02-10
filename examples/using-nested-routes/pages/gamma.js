@@ -7,7 +7,7 @@ module.exports = (state, actions, params, children) => {
   const childView = children ? children : html`
     <div>Our child pages can even have their own child pages!</div>
   `
-  
+
   return html`
     <div>
       <h2>Gamma γ</h2>

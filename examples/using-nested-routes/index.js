@@ -10,7 +10,7 @@ const chrome = (state, actions, params, children) => {
   const childView = children ? children : html`
     <div>Tram-One also supports composing views based on routes!</div>
   `
-  
+
   return html`
     <div style="text-align: center; max-width: 600px; margin: auto;">
       <h1>Top Page</h1>

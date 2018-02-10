@@ -14,11 +14,6 @@ class Tram {
 
     options = options || {}
     this.defaultRoute = options.defaultRoute || '/404'
-    this.windowed = options.windowed || false
-
-    if (this.windowed) {
-      window.app = this
-    }
 
     this.router = rlite()
     this.internalRouter = {}

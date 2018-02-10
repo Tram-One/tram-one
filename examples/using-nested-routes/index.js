@@ -1,5 +1,5 @@
 const Tram = require('../../tram-one')
-const app = new Tram({windowed: true})
+const app = new Tram()
 
 const html = Tram.html({
   selection: require('./elements/selection')

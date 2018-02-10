@@ -49,14 +49,14 @@ class Tram {
     assert.equal(typeof page, 'function', 'Tram-One: page should be a function')
 
     if (subroutes) {
-      subroutes.reduce((tram, subroute) => {
+      subroutes.forEach(subroute => {
         const newPath = path + subroute.path
         const newPage = (store, actions, params, children) => {
-          const newComponent = subroute.component(store, actions, params, children)
-          return page(store, actions, params, newComponent)
+          const newChildren = subroute.component(store, actions, params, children)
+          return page(store, actions, params, newChildren)
         }
-        return tram.addRoute(newPath, newPage, subroute.children)
-      }, this)
+        this.addRoute(newPath, newPage, subroute.children)
+      })
     }
 
     this.internalRouter[path] = (params) => (store, actions) => page(store, actions, params)

@@ -1,7 +1,7 @@
 const Tram = require('../../../tram-one')
 const html = Tram.html()
 
-module.exports = (state, actions, params) => html`
+module.exports = () => html`
   <div>
     <h2>Alpha α</h2>
     <div>

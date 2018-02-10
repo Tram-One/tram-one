@@ -26,7 +26,7 @@ const chrome = (state, actions, params, children) => {
   `
 }
 
-app.addRoute('', chrome, [
+app.addRoute('/', chrome, [
   route('alpha', require('./pages/alpha')),
   route('beta', require('./pages/beta')),
   route('gamma', require('./pages/gamma'), [

@@ -6,8 +6,8 @@ const html = Tram.html({
 })
 const route = Tram.route()
 
-const chrome = (state, actions, params, children) => {
-  const childView = children ? children : html`
+const chrome = (state, actions, params, child) => {
+  const childView = child ? child : html`
     <div>Tram-One also supports composing views based on routes!</div>
   `
 

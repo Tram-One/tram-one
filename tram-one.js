@@ -46,11 +46,11 @@ class Tram {
     if (subroutes) {
       subroutes.forEach(subroute => {
         const newPath = path + subroute.path
-        const newPage = (store, actions, params, children) => {
-          const newChildren = subroute.component(store, actions, params, children)
-          return page(store, actions, params, newChildren)
+        const newPage = (store, actions, params, child) => {
+          const newChild = subroute.component(store, actions, params, child)
+          return page(store, actions, params, newChild)
         }
-        this.addRoute(newPath, newPage, subroute.children)
+        this.addRoute(newPath, newPage, subroute.subroutes)
       })
     }
 
@@ -92,6 +92,8 @@ class Tram {
   }
 
   toNode(pathName, state, actions) {
+    assert.equal(typeof pathName, 'string', 'Tram-One: pathName should be a string')
+
     const pageComponent = this.router(pathName)
     const pageState = state || this.engine.store
     const pageActions = actions || this.engine.actions
@@ -120,7 +122,7 @@ class Tram {
   }
 
   static route() {
-    return (path, component, children) => ({path, component, children})
+    return (path, component, subroutes) => ({path, component, subroutes})
   }
 }
 

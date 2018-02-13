@@ -5,6 +5,7 @@ const morph = require('nanomorph')
 const rlite = require('rlite-router')
 const rbelRegister = require('rbel')
 const urlListener = require('url-listener')
+require('es6-object-assign').polyfill()
 
 class Tram {
   constructor(options) {

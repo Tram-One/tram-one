@@ -17,7 +17,7 @@
     "build-esm": "rollup -c configs/rollup.config.esm.js",
     "build-umd": "rollup -c configs/rollup.config.umd.js",
     "clean": "git clean -Xdf",
-    "test": "testem ci -f configs/testem.yml",
+    "test": "testem ci -f configs/testem.yml --skip PhantomJS,IE",
     "test-build": "npm run build && webpack --config configs/webpack.config.testem.js",
     "test-dev": "testem -f configs/testem.yml",
     "test-server": "jasmine tests/specs/tram-spec.js",

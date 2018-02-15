@@ -1,21 +1,11 @@
-const babel = require('rollup-plugin-babel')
+const buble = require('rollup-plugin-buble')
 const filesize = require('rollup-plugin-filesize')
 const pkg = require('../package.json')
 
 const external = Object.keys(pkg.dependencies)
 
 const plugins = [
-  babel({
-    presets: [
-      ['env', {
-        modules: false,
-        targets: {
-          node: '6'
-        }
-      }]
-    ],
-    plugins: ['external-helpers']
-  }),
+  buble({target: {node: 6}}),
   filesize()
 ]
 

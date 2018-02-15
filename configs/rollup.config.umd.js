@@ -1,4 +1,4 @@
-const babel = require('rollup-plugin-babel')
+const buble = require('rollup-plugin-buble')
 const builtins = require('rollup-plugin-node-builtins')
 const commonjs = require('rollup-plugin-commonjs')
 const filesize = require('rollup-plugin-filesize')
@@ -11,22 +11,19 @@ const unassert = require('rollup-plugin-unassert')
 const pkg = require('../package.json')
 
 const plugins = [
-  resolve({main: true, preferBuiltins: true}),
+  resolve({
+    main: true,
+    preferBuiltins: true,
+    browser: true
+  }),
   builtins(),
   unassert(),
   commonjs(),
   globals(),
   builtins(),
-  babel({
-    presets: [
-      ['env', {
-        targets: {
-          browsers: ['last 2 versions', 'safari >= 10', 'ie 11']
-        },
-        modules: false
-      }]
-    ],
-    plugins: ['external-helpers', 'babel-plugin-transform-object-assign']
+  buble({
+    transforms: {modules: false},
+    targets: {ie: 10}
   }),
   uglify(),
   // sizes(), // useful for finding large dependencies

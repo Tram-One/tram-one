@@ -1,7 +1,8 @@
 framework: jasmine
+host: 127.0.0.1
 launch_in_dev:
-  - PhantomJS
   - Chrome
+  - Firefox
   - Node
 browser_args:
   Chrome:
@@ -11,6 +12,10 @@ browser_args:
       - --disable-gpu
       - --remote-debugging-port=9222
       - --no-sandbox
+  Firefox:
+    mode: dev
+    args:
+      - --headless
 launchers:
   Node:
     command: npm run test-server

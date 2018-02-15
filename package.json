@@ -1,6 +1,6 @@
 {
   "name": "tram-one",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "🚋 Batteries Included View Framework",
   "main": "dist/tram-one.umd.js",
   "module": "dist/tram-one.esm.js",
@@ -17,7 +17,7 @@
     "build-esm": "rollup -c configs/rollup.config.esm.js",
     "build-umd": "rollup -c configs/rollup.config.umd.js",
     "clean": "git clean -Xdf",
-    "test": "testem ci -f configs/testem.yml",
+    "test": "testem ci -f configs/testem.yml --skip PhantomJS,IE",
     "test-build": "npm run build && webpack --config configs/webpack.config.testem.js",
     "test-dev": "testem -f configs/testem.yml",
     "test-server": "jasmine tests/specs/tram-spec.js",

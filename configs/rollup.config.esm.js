@@ -14,7 +14,6 @@ export default {
   external: external,
   plugins: plugins,
   output: {
-    sourcemap: true,
     format: 'es',
     file: pkg.module
   }

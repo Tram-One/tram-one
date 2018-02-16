@@ -53,30 +53,28 @@
     "url-listener": "^1.2.0"
   },
   "devDependencies": {
-    "buble": "^0.19.2",
     "buble-loader": "^0.4.1",
-    "domino": "^2.0.0",
-    "es6-object-assign": "^1.1.0",
+    "domino": "^2.0.1",
     "eslint-config-tram-one": "^1.1.1",
     "express": "^4.15.3",
-    "inquirer": "^3.1.0",
+    "inquirer": "^5.1.0",
     "internal-ip": "^1.2.0",
-    "jasmine": "^2.6.0",
+    "jasmine": "^3.0.0",
     "opn": "^5.0.0",
     "rollup": "^0.50.0",
-    "rollup-plugin-buble": "^0.19.1",
+    "rollup-plugin-buble": "^0.19.2",
     "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-filesize": "^1.4.2",
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-globals": "^1.1.0",
-    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-node-resolve": "^3.0.3",
     "rollup-plugin-sizes": "^0.4.0",
-    "rollup-plugin-uglify": "^2.0.1",
+    "rollup-plugin-uglify": "^3.0.0",
     "rollup-plugin-unassert": "git+https://gitlab.com/JRJurman/rollup-plugin-unassert.git#346bb3b7",
     "testem": "^2.0.0",
-    "webpack": "^3.3.0",
+    "webpack": "^3.11.0",
     "webpack-dev-server": "^2.4.5",
-    "xo": "^0.18.2"
+    "xo": "^0.20.2"
   },
   "xo": {
     "extends": [

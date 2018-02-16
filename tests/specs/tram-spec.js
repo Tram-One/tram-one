@@ -116,6 +116,40 @@ const tests = (Tram) => describe('Tram', () => {
       expect(app.toNode('/route_variable')).toEqual('route_variable')
     })
 
+    it('should handle no resolved child routes', () => {
+      const app = new Tram()
+      const top = (s, a, p, child) => Tram.html()`<div>${child}</div>`
+      app.addRoute('/', top, [
+        Tram.route()('a', Tram.html()`<span>child</span>`)
+      ])
+      expect(app.toString('/')).toEqual(Tram.html()`<div></div>`.outerHTML)
+    })
+
+    it('should inject child on correct route', () => {
+      const app = new Tram()
+      const top = (s, a, p, child) => Tram.html()`<div>${child}</div>`
+      const child = () => Tram.html()`<span>child</span>`
+      app.addRoute('/', top, [
+        Tram.route()('a', child)
+      ])
+      expect(app.toString('/a'))
+        .toEqual(Tram.html()`<div><span>child</span></div>`.outerHTML)
+    })
+
+    it('should inject child of child route', () => {
+      const app = new Tram()
+      const top = (s, a, p, child) => Tram.html()`<div>${child}</div>`
+      const child = (s, a, p, child) => Tram.html()`<span>${child}</span>`
+      const grandchild = () => Tram.html()`<p>grandchild</p>`
+      app.addRoute('/', top, [
+        Tram.route()('a/', child, [
+          Tram.route()('b', grandchild)
+        ])
+      ])
+      expect(app.toString('/a/b'))
+        .toEqual(Tram.html()`<div><span><p>grandchild</p></span></div>`.outerHTML)
+    })
+
     it('should be chainable', () => {
       const app = new Tram()
         .addRoute('/good', successPage)
@@ -372,6 +406,18 @@ const tests = (Tram) => describe('Tram', () => {
       const tramTree = Tram.svg()`<svg><circle /></svg>`
       expect(tramTree.namespaceURI).toBe(SVGNS)
       expect(tramTree.getElementsByTagName('circle')[0].namespaceURI).toBe(SVGNS)
+    })
+  })
+
+  describe('route', () => {
+    it('should make a function that builds objects', () => {
+      const route = Tram.route()
+      const mockComponent = () => {}
+      const mockSubroutes = []
+      const routeObject = route('/home', mockComponent, mockSubroutes)
+      expect(routeObject.path).toBe('/home')
+      expect(routeObject.component).toBe(mockComponent)
+      expect(routeObject.subroutes).toBe(mockSubroutes)
     })
   })
 })

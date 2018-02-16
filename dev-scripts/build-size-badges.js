@@ -7,7 +7,7 @@ const destPath = 'docs/images'
 const units = ['B', 'kB', 'MB', 'GB']
 
 // get filesize and transform to correct unit
-function getSize(fileName) {
+const getSize = (fileName) => {
   const bytes = fs.statSync(path.resolve(buildPath, fileName)).size
   const n = Math.floor(Math.log(bytes) / Math.log(1024))
   const formatted = (bytes / Math.pow(1024, n)).toFixed(2)
@@ -15,7 +15,7 @@ function getSize(fileName) {
 }
 
 // generate an SVG string and write it to dest
-function generateBadge(label) {
+const generateBadge = (label) => {
   const value = getSize(`tram-one.${label}.js`)
   const svg = badge(label, value)
   const dest = path.resolve(destPath, `${label}.svg`)

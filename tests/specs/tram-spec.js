@@ -110,7 +110,8 @@ const tests = (Tram) => describe('Tram', () => {
 
     it('should pass in path params in app', () => {
       const app = new Tram()
-      app.addRoute('/:path_param',
+      app.addRoute(
+        '/:path_param',
         (store, actions, params) => Tram.html()`${params.path_param}`
       )
       expect(app.toNode('/route_variable')).toEqual('route_variable')

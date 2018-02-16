@@ -1,10 +1,9 @@
-// generate svgs badges for build sizes
 const path = require('path')
 const fs = require('fs')
-const badge = require('gh-badges')
+const badge = require('./badge')
 
-const buildPath = 'dist' // where to find the badges
-const destPath = 'docs/images' // where to story badges
+const buildPath = 'dist'
+const destPath = 'docs/images'
 const units = ['B', 'kB', 'MB', 'GB']
 
 // get filesize and transform to correct unit
@@ -15,28 +14,13 @@ function getSize(fileName) {
   return `${formatted} ${units[n]}`
 }
 
-// replace old svg
-function save(svg, name) {
-  const dest = path.resolve(destPath, `${name}.svg`)
-  fs.writeFile(dest, String(svg), err => err && process.stdout.write(err))
+// generate an SVG string and write it to dest
+function generateBadge(label) {
+  const value = getSize(`tram-one.${label}.js`)
+  const svg = badge(label, value)
+  const dest = path.resolve(destPath, `${label}.svg`)
+  fs.writeFile(dest, svg, err => err && process.stdout.write(err))
 }
 
-// generate an SVG string
-function generateBadge(label, value) {
-  const format = {
-    text: [label, value],
-    colorscheme: 'red',
-    template: 'flat'
-  }
-
-  badge(format, (svg, err) => {
-    if (err) {
-      process.stdout.write('Error generating build size badge', err)
-    } else {
-      save(svg, label)
-    }
-  })
-}
-
-generateBadge('esm', getSize('tram-one.esm.js'))
-generateBadge('umd', getSize('tram-one.umd.js'))
+generateBadge('esm')
+generateBadge('umd')

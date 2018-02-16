@@ -303,6 +303,13 @@ _Reference: [hyperx](https://github.com/substack/hyperx),
 It is the driving function that builds document trees, and can be
 used whenever you need to use a namespace other than XHTML and SVG.
 
+### `Tram.route()`
+`Tram.route` is a static method which is a shorthand for creating
+the subroutes for the `app.addRoute` method (detailed below).
+The resulting function takes in `path`, `component`, and `subroutes`,
+mimicking the interface used in `addRoute`.
+
+See `app.addRoute` for a an example of nested routes using `Tram.route`.
 
 ### `Tram.constructor([options])`
 `new Tram()` returns an instance of the Tram. The constructor
@@ -442,14 +449,18 @@ app.addActions({votes: voteActions})
 
 </details>
 
-### `app.addRoute(path, page)`
+### `app.addRoute(path, page[, subroutes])`
 _Reference: [rlite](https://github.com/chrisdavies/rlite)_
 
 `app.addRoute` will associate a component with a route.<br>
 `path` should be a matchable route for the application. Look up
 [rlite](https://github.com/chrisdavies/rlite)
 to see all the possible options here.<br>
-`page` should be a function that takes in a `store`, `actions` and `params`.
+`page` should be a function that takes in a `store`, `actions`, `params`, and `child`.<br>
+`subroutes` should be a list of route objects (see `Tram.route`). Subroutes allow
+you to have pages that act as containers for other pages (like a surrounding header
+and footer tag for a page). The `child` parameter for the `page` function is filled
+in when a subroute is resolved.
 
 The `params` object passed into the `page` function will have any path parameters and query params.
 
@@ -487,7 +498,51 @@ app.addRoute('/404', noPage)
 
 </details>
 
-### `app.start(selector, [pathName])`
+<details>
+<summary>
+Nested Routes Example:
+</summary>
+
+```js
+/* index.js */
+const app = new Tram()
+const html = Tram.html()
+const route = Tram.route()
+
+const homePage = (store, actions, params, child) => {
+  return html`
+    <div>
+      <h1>This is my shiny new app!</h1>
+      ${child}
+    </div>
+  `
+}
+
+const animalsPage = (store, actions, params, child) => {
+  return html`
+    <div>
+      <h2>Animals Rule</h2>
+      ${child}
+    </div>
+  `
+}
+
+const dogPage = () => html`<div>Dogs are the best!</div>
+const catPage = () => html`<div>Cats are the best!</div>
+
+app.addRoute('/', homePage, [
+  route('animals/', colorPage, [
+    route('dogs', dogPage),
+    route('cats', catPage)
+  ])
+])
+app.addRoute('/:color', colorPage)
+app.addRoute('/404', noPage)
+```
+
+</details>
+
+### `app.start(selector[, pathName])`
 
 `app.start` will kick off the app. Once this is called the app is mounted onto the
 `selector`.<br>

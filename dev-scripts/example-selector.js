@@ -13,6 +13,7 @@ const question = {
     new inquirer.Separator('-- Simple Examples --'),
     'using-actions',
     'using-routes',
+    'using-nested-routes',
     'using-custom-elements',
     'using-everything',
     'using-listeners',

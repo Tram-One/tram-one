@@ -40,9 +40,20 @@ class Tram {
     return this
   }
 
-  addRoute(path, page) {
+  addRoute(path, page, subroutes) {
     assert.equal(typeof path, 'string', 'Tram-One: path should be a string')
     assert.equal(typeof page, 'function', 'Tram-One: page should be a function')
+
+    if (subroutes) {
+      subroutes.forEach(subroute => {
+        const newPath = path + subroute.path
+        const newPage = (store, actions, params, child) => {
+          const newChild = subroute.component(store, actions, params, child)
+          return page(store, actions, params, newChild)
+        }
+        this.addRoute(newPath, newPage, subroute.subroutes)
+      })
+    }
 
     this.internalRouter[path] = (params) => (store, actions) => page(store, actions, params)
     this.router = rlite(this.internalRouter[this.defaultRoute], this.internalRouter)
@@ -82,6 +93,8 @@ class Tram {
   }
 
   toNode(pathName, state, actions) {
+    assert.equal(typeof pathName, 'string', 'Tram-One: pathName should be a string')
+
     const pageComponent = this.router(pathName)
     const pageState = state || this.engine.store
     const pageActions = actions || this.engine.actions
@@ -107,6 +120,10 @@ class Tram {
 
   static svg(registry) {
     return Tram.dom('http://www.w3.org/2000/svg', registry)
+  }
+
+  static route() {
+    return (path, component, subroutes) => ({path, component, subroutes})
   }
 }
 

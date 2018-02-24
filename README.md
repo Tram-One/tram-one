@@ -299,7 +299,8 @@ _Reference: [hyperx](https://github.com/substack/hyperx),
 [belit](https://github.com/Tram-One/belit),
 [rbel](https://github.com/aaaristo/rbel)_
 
-`Tram.dom` is the generic version of `Tram.html` and `Tram.svg`.
+`Tram.dom` is the generic version of [`Tram.html`](#tramhtmlregistry) and
+[`Tram.svg`](#tramsvgregistry).
 It is the driving function that builds document trees, and can be
 used whenever you need to use a namespace other than XHTML and SVG.
 
@@ -339,6 +340,7 @@ app.addRoute('/', home)
 
 #### Constructor Options
 Below are a list of options that can be set when making a Tram-One app.
+
 |option      |description                                      |default value|
 |------------|-------------------------------------------------|-------------|
 |defaultRoute|if we fail to find a route, which route we should render|'/404'|
@@ -347,7 +349,7 @@ Below are a list of options that can be set when making a Tram-One app.
 _Reference: [hover-engine](https://github.com/Tram-One/hover-engine)_
 
 `app.addActions` adds a set of actions that can be triggered in the instance
-of Tram-One. It takes in one argument, [`actionGroups`](actiongroups)
+of Tram-One. It takes in one argument, [`actionGroups`](#action-group)
 
 <details>
 <summary>
@@ -710,7 +712,6 @@ pages.
 `subroute` is the [subroute](#subroute) view, if one is resolved. It is
 another top level component to render inside the view.
 
-
 <details>
 <summary>Example</summary>
 
@@ -730,7 +731,6 @@ const page = (store, actions, params, subroute) => {
 
 </details>
 
-
 ### Element
 An element is a function which takes in `attributes` and `children`. They are
 supposed to mimic the interface for a normal html element as much as possible.
@@ -738,9 +738,10 @@ They are included in the `registry` when setting up an
 [`html`](#tramhtmlregistry) function.
 
 ### Action Group
-An action group is a mapping of a store name (string) to a list of actions
-(functions) which keep track of a single value. Usually a single app has
-multiple action groups, which together makes the entire state.
+An action group is a mapping of action names (string) to functions which return
+a new value for a single store. Action Groups refer to a map of store names
+(strings) to an action group. Usually a single app has multiple action groups,
+which together makes the entire state.
 
 You see more examples and details in the
 [`hover-engine`](https://github.com/Tram-one/hover-engine) project.

@@ -46,9 +46,9 @@ class Tram {
     if (subroutes) {
       subroutes.forEach(subroute => {
         const newPath = path + subroute.path
-        const newPage = (store, actions, params, child) => {
-          const newChild = subroute.component(store, actions, params, child)
-          return page(store, actions, params, newChild)
+        const newPage = (store, actions, params, resolvedSubroute) => {
+          const newSubroute = subroute.component(store, actions, params, resolvedSubroute)
+          return page(store, actions, params, newSubroute)
         }
         this.addRoute(newPath, newPage, subroute.subroutes)
       })

@@ -427,7 +427,7 @@ const voteActions = {
   down: (vote) => vote - 1
 }
 
-const home = (state, actions) => {
+const home = (store, actions) => {
   const upvote = () => {
     actions.up()
   }
@@ -437,7 +437,7 @@ const home = (state, actions) => {
 
   return html`
     <div>
-      <h1> Votes: ${state.votes} </h1>
+      <h1> Votes: ${store.votes} </h1>
       <button onclick=${upvote}>UPVOTE</button>
       <button onclick=${downvote}>DOWNVOTE</button>
     </div>
@@ -585,7 +585,7 @@ Example:
 const app = new Tram()
 const html = Tram.html()
 
-const homePage = (state) => {
+const homePage = () => {
   return html`<div>This is my shiny app!</div>`
 }
 
@@ -632,9 +632,9 @@ Below is a list of definitions for objects used when making a Tram-One app.
 { actionName: (state, value, actions) => newState }
 ```
 An action group is a mapping of action names (string) to functions which return
-a new value for a single store. Action Groups refer to a map of [store](#store)
-names (strings) to an action group. Usually a single app has multiple action
-groups, which together makes the entire app state.
+a new value for a single state. Action Groups refer to a [store](#store) of
+state names (strings) to action groups. Usually a single app has multiple
+action groups, which together makes the entire app state.
 
 You see more examples and details in the
 [`hover-engine`](https://github.com/Tram-one/hover-engine#addactionsactiongroups) project.
@@ -780,7 +780,7 @@ const app2 = (store, actions, params, subroute) => html`
   </div>
 `
 
-const pageWrapper = (state, actions, params, subroute) => html`
+const pageWrapper = (store, actions, params, subroute) => html`
   <div>
     <h1>My Cool App</h1>
     ${subroute}

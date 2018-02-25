@@ -53,8 +53,8 @@ Batteries Included!
 ### Why?
 Tram-One is a project built to make exposing custom elements easy, and to
 have redux-like state management, and basic routing by default. It was created
-out of  the frustration of having to scaffold the same dependencies over and over
-again.
+out of  the frustration of having to scaffold the same dependencies over and
+over again.
 
 Tram-One was also created to avoid a lot of the syntax that locks you into
 frameworks like Vue and React. The components written here can mimic the syntax
@@ -230,7 +230,12 @@ Here are some most bodacious examples out in the real world
 ## API
 Tram-One has a simple interface to help build your web app.
 
-### `Tram.html([registry])`
+### Static Functions
+Because the following functions are static, you call the function off of
+Tram-One dependency, you do not need to have an instance of a Tram-One app to
+use these functions.
+
+#### `Tram.html([registry])`
 _Reference: [hyperx](https://github.com/substack/hyperx),
 [belit](https://github.com/Tram-One/belit),
 [rbel](https://github.com/aaaristo/rbel)_
@@ -239,9 +244,6 @@ _Reference: [hyperx](https://github.com/substack/hyperx),
 template literals into Node DOM trees.
 It can take in an optional [`registry`](#registry), which is a mapping of tag
 names to functions that render your custom tags.
-
-Because it is static, you call the function off of Tram-One, you
-do not need to have an instance of Tram-One to use this function.
 
 <details>
 <summary>
@@ -285,7 +287,7 @@ const home = () => {
 
 </details>
 
-### `Tram.svg([registry])`
+#### `Tram.svg([registry])`
 _Reference: [hyperx](https://github.com/substack/hyperx),
 [belit](https://github.com/Tram-One/belit),
 [rbel](https://github.com/aaaristo/rbel)_
@@ -294,7 +296,7 @@ _Reference: [hyperx](https://github.com/substack/hyperx),
 elements in the appropriate SVG namespace. Use this method if you're building
 components that are SVG.
 
-### `Tram.dom([namespace, registry])`
+#### `Tram.dom([namespace, registry])`
 _Reference: [hyperx](https://github.com/substack/hyperx),
 [belit](https://github.com/Tram-One/belit),
 [rbel](https://github.com/aaaristo/rbel)_
@@ -304,7 +306,7 @@ _Reference: [hyperx](https://github.com/substack/hyperx),
 It is the driving function that builds document trees, and can be
 used whenever you need to use a namespace other than XHTML and SVG.
 
-### `Tram.route()`
+#### `Tram.route()`
 `Tram.route` is a static method which is a shorthand for creating
 the subroutes for the [`app.addRoute`](#appaddroutepath-page-subroutes)
 method. The resulting function takes in [`path`](#path), [`component`](#top-level-component), and
@@ -314,7 +316,7 @@ method. The resulting function takes in [`path`](#path), [`component`](#top-leve
 See [`app.addRoute`](#appaddroutepath-page-subroutes) for a an example of
 nested routes using `Tram.route`.
 
-### `Tram.constructor([options])`
+#### `Tram.constructor([options])`
 `new Tram()` returns an instance of a Tram-One app. The constructor
 takes in an [`options`](#constructor-options) object.
 
@@ -338,14 +340,18 @@ app.addRoute('/', home)
 
 </details>
 
-#### Constructor Options
+##### Constructor Options
 Below are a list of options that can be set when making a Tram-One app.
 
-|option      |description                                      |default value|
-|------------|-------------------------------------------------|-------------|
-|defaultRoute|if we fail to find a route, which route we should render|'/404'|
+|option        |description                                             |default value|type   |
+|--------------|--------------------------------------------------------|-------------|-------|
+|`defaultRoute`|if we fail to find a route, which route we should render|'/404'       |string |
 
-### `app.addActions(actionGroups)`
+### App Functions
+The following functions should be called on an instance of a Tram-One app (see
+the app [constructor](#tramconstructoroptions) above).
+
+#### `app.addActions(actionGroups)`
 _Reference: [hover-engine](https://github.com/Tram-One/hover-engine)_
 
 `app.addActions` adds a set of actions that can be triggered in the instance
@@ -392,7 +398,7 @@ app.addActions({votes: voteActions})
 
 </details>
 
-### `app.addListener(listener)`
+#### `app.addListener(listener)`
 _Reference: [hover-engine](https://github.com/Tram-One/hover-engine)_
 
 `app.addListener` adds a function that triggers on every action call Tram-One.
@@ -400,18 +406,7 @@ This can be used to save state in localstorage, or to debug the state of the
 store as actions are called. This should not be used to update the DOM, only
 trigger side-effects.
 
-It takes in one argument, a function, which provides 4 arguements, the store,
-the actions, the action name, and the action argument:<br>
-the store contains the key-value pair that you get as the first parameter for
-pages<br>
-the actions is an object of callable functions that you get as the second
-parameter for pages<br>
-the action name is the last action that triggered the listener (may be
-undefined)<br>
-the actin argument was anything that was passed into the action call (may be
-undefined)<br>
-
-In the store and actions here are actually identical to the store and actions you recieve in routes.
+It takes in one argument, a [listener](#listener).
 
 <details>
 <summary>
@@ -460,7 +455,7 @@ app.addActions({votes: voteActions})
 
 </details>
 
-### `app.addRoute(path, page[, subroutes])`
+#### `app.addRoute(path, page[, subroutes])`
 _Reference: [rlite](https://github.com/chrisdavies/rlite)_
 
 `app.addRoute` will associate a [path](#path) with a
@@ -552,7 +547,7 @@ app.addRoute('/404', noPage)
 
 </details>
 
-### `app.start(selector[, pathName])`
+#### `app.start(selector[, pathName])`
 
 `app.start` will kick off the app. Once this is called the app is mounted onto the
 `selector`.<br>
@@ -600,7 +595,7 @@ app.start('.main')
 
 </details>
 
-### `app.mount(selector, pathName, store, actions)`
+#### `app.mount(selector, pathName, store, actions)`
 **WARNING: INTENDED FOR INTERNAL USE ONLY**
 
 `app.mount` matches a route from `pathName`, passes in a `store` and `actions`
@@ -612,7 +607,7 @@ testing.
 
 **YOU SHOULD NEVER CALL THIS DIRECTLY FOR YOUR APP**
 
-### `app.toNode(pathName[, store, actions])`
+#### `app.toNode(pathName[, store, actions])`
 
 `app.toNode` returns a HTMLNode of the app for a given route and store. The
 function matches a route from `pathName`, and either takes in a `store`, or
@@ -621,7 +616,7 @@ uses the default store (that's been created by adding reducers).
 While initially created to clean up the code in the library, this can be useful
 if you want to manually attach the HTMLNode that Tram-One builds to whatever.
 
-### `app.toString(pathName[, store])`
+#### `app.toString(pathName[, store])`
 
 `app.toString` returns a string of the app for a given route and store. It has
 the same interface at `app.toNode`, and basically just calls `.outerHTML` on
@@ -632,7 +627,89 @@ This can be useful if you want to do server-sider rendering or testing.
 ## Terminology
 Below is a list of definitions for objects used when making a Tram-One app.
 
-### registry
+### Action Group
+```js
+{ actionName: (state, value, actions) => newState }
+```
+An action group is a mapping of action names (string) to functions which return
+a new value for a single store. Action Groups refer to a map of [store](#store)
+names (strings) to an action group. Usually a single app has multiple action
+groups, which together makes the entire app state.
+
+You see more examples and details in the
+[`hover-engine`](https://github.com/Tram-one/hover-engine#addactionsactiongroups) project.
+
+<details>
+<summary>Example</summary>
+
+```javascript
+const actionGroup = {
+  counter: {
+    init: () => 0,
+    up: (state) => state + 1
+  }
+}
+```
+
+</details>
+
+### Element
+```js
+(attributes, children) => DOM
+```
+An element is a function which takes in `attributes` and `children`. They are
+supposed to mimic the interface for a normal html element as much as possible.
+They are included in the `registry` when setting up an
+[`html`](#tramhtmlregistry) function.
+
+<details>
+<summary>Example</summary>
+
+```javascript
+/* usage: <CustomList title="Sale">
+            <li>Radio</li>
+            <li>TV</li>
+          </CustomList>
+ */
+const CustomList = (attrs, children) => html`
+  <div>
+    <h3>${attrs.title}</h3>
+    <ul>
+      ${children}
+    </ul>
+  </div>
+`
+```
+
+</details>
+
+### Listener
+```js
+(store, actions, actionName, actionArguments) => side-effect
+```
+
+A listener is a function which can be used to debug an application, or trigger
+certain side-effects when the state is updated. Many of the properties passed
+into a listener are the same as the ones used in
+[top level componenets](#top-level-components).
+
+For details on the listener object,
+[read here on the hover-engine project](https://github.com/Tram-One/hover-engine#addlistenerlistener).
+
+### Path
+```js
+'/path/with/:path/:params/and?query=variables'
+```
+A path is a string that describes how to get to different [routes](#route) in
+a Tram-One app. It can include path variables, query params, and hash values.
+
+You can see more examples and details on the types of routes in the
+[rlite](https://github.com/chrisdavies/rlite) project.
+
+### Registry
+```js
+{ tagName: element }
+```
 A registry is a mapping of tags to elements. A registry is usually passed into
 the static functions that build DOM elements (
 [`html`](#tramhtmlregistry), [`svg`](#tramsvgregistry), or
@@ -657,14 +734,10 @@ const html = Tram.html({
 
 </details>
 
-### Path
-A path is a string that describes how to get to different [routes](#route) in
-a Tram-One app. It can include path variables, query params, and hash values.
-
-You can see more examples and details on the types of routes in the
-[rlite](https://github.com/chrisdavies/rlite) project.
-
 ### Route
+```js
+{ path, component, subroutes }
+```
 A Route is the association between a [path](#path), a
 [top level component](#top-level-component), and any [subroutes](#subroute)
 that may exist under that route (if a different top level component would
@@ -673,7 +746,18 @@ render as a result).
 When building [subroutes](#subroute), you should use the static method
 [`Tram.route`](#tramroute) to build route objects.
 
+### Store
+```js
+{ state: value }
+```
+A store is a collection of values. It is updated by calling
+[`actions`](#actions), and passed into the [top level components]
+(#top-level-component).
+
 ### Subroute
+```js
+[route(path, topLevelComponent, subroutes), ...]
+```
 A subroute is a [top level component](#top-level-component) that should render
 inside of another top level component based on the [path](#path). Subroutes let
 you describe your views as containers of other views based on the path. This is
@@ -684,20 +768,37 @@ and footer for every page.
 <summary>Example</summary>
 
 ```js
+const app1 = (store, actions, params, subroute) => html`
+  <div>
+    <div>My First App</div>
+  </div>
+`
 
-pageWrapper = (state, actions, params, subroute) => html`
+const app2 = (store, actions, params, subroute) => html`
+  <div>
+    <div>My Better App</div>
+  </div>
+`
+
+const pageWrapper = (state, actions, params, subroute) => html`
   <div>
     <h1>My Cool App</h1>
     ${subroute}
     <footer>Copyright 2018</footer>
   </div>
 `
-app.addRoute('/', pageWrapper)
+app.addRoute('/', pageWrapper, [
+  route('first', app1),
+  route('second', app2)
+])
 ```
 
 </details>
 
 ### Top Level Component
+```js
+(store, actions, params, subroute) => DOM
+```
 Top level components are functions that take in `store`, `actions`, `params`,
 and `subroute`. Top level components are passed in the
 [`app.addRoute`](#appaddroutepath-page-subroutes) function, and
@@ -706,7 +807,7 @@ views. Since you usually have one per route, it is fair to also call these
 pages.
 
 `store` is a mapping of the different reducers (strings) to their value
-(see addAction).
+(see [store](#store)).
 `actions` is an object with methods from the defined reducers.
 `params` are any path or query variable that is inherited from the route.
 `subroute` is the [subroute](#subroute) view, if one is resolved. It is
@@ -726,35 +827,6 @@ const page = (store, actions, params, subroute) => {
       <a href="/book/${params.bookId}/pages/${nextPage}">Next Page</a>
     </div>
   `
-}
-```
-
-</details>
-
-### Element
-An element is a function which takes in `attributes` and `children`. They are
-supposed to mimic the interface for a normal html element as much as possible.
-They are included in the `registry` when setting up an
-[`html`](#tramhtmlregistry) function.
-
-### Action Group
-An action group is a mapping of action names (string) to functions which return
-a new value for a single store. Action Groups refer to a map of store names
-(strings) to an action group. Usually a single app has multiple action groups,
-which together makes the entire state.
-
-You see more examples and details in the
-[`hover-engine`](https://github.com/Tram-one/hover-engine) project.
-
-<details>
-<summary>Example</summary>
-
-```javascript
-const actionGroup = {
-  counter: {
-    init: () => 0,
-    up: (state) => state + 1
-  }
 }
 ```
 

@@ -647,7 +647,7 @@ state names (strings) to action groups. Usually a single app has multiple
 action groups, which together makes the entire app state.
 
 You see more examples and details in the
-[`hover-engine`](https://github.com/Tram-one/hover-engine#addactionsactiongroups) project.
+[hover-engine](https://github.com/Tram-one/hover-engine#addactionsactiongroups) project.
 
 <details>
 <summary>Example</summary>

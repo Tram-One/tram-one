@@ -35,7 +35,7 @@ export default {
   external: ['domino'],
   globals: {domino: 'domino'},
   output: {
-    file: pkg.main,
+    file: pkg.umd,
     format: 'umd'
   },
   plugins: plugins,

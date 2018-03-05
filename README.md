@@ -15,7 +15,7 @@
   <a href="https://www.npmjs.com/package/tram-one">
     <img src="https://github.com/Tram-One/tram-one/raw/master/docs/images/esm.svg?sanitize=true" alt="ESM build size">
   </a>
-  <a href="https://unpkg.com/tram-one">
+  <a href="https://unpkg.com/tram-one/dist/tram-one.umd.js">
     <img src="https://github.com/Tram-One/tram-one/raw/master/docs/images/umd.svg?sanitize=true" alt="UMD build size">
   </a>
   <a href="https://join.slack.com/t/tram-one/shared_invite/enQtMjY0NDA3OTg2MzQyLWUyMGIyZTYwNzZkNDJiNWNmNzdiOTMzYjg0YzMzZTkzZDE4MTlmN2Q2YjE0NDIwMGI3ODEzYzQ4ODdlMzQ2ODM">
@@ -40,7 +40,7 @@ Or, you can use the Universal Module Definition (UMD) in a script tag:
 
 ```html
 <head>
-  <script src="https://unpkg.com/tram-one"></script>
+  <script src="https://unpkg.com/tram-one/dist/tram-one.umd.js"></script>
 </head>
 ```
 

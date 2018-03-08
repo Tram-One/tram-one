@@ -45,7 +45,8 @@ class Tram {
 
     if (subroutes) {
       subroutes.forEach(subroute => {
-        const newPath = path + subroute.path
+        assert.equal(typeof subroute, 'object', 'Tram-One: subroute should be an object, use Tram.route to make subroutes')
+        const newPath = (path + subroute.path).split('//').join('/')
         const newPage = (store, actions, params, resolvedSubroute) => {
           const newSubroute = subroute.component(store, actions, params, resolvedSubroute)
           return page(store, actions, params, newSubroute)
@@ -75,6 +76,8 @@ class Tram {
   }
 
   mount(selector, pathName, store, actions) {
+    assert.ok(selector !== undefined, 'Tram-One: selector should be a DOM element or CSS selection string')
+
     const target = (typeof selector) === 'string' ? document.querySelector(selector) : selector
     if (target === null) {
       console.warn('Tram-One: could not find target, is the element on the page yet?')

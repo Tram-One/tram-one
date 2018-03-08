@@ -151,6 +151,20 @@ const tests = (Tram) => describe('Tram', () => {
         .toEqual(Tram.html()`<div><span><p>grandchild</p></span></div>`.outerHTML)
     })
 
+    it('should handle redundant slashes', () => {
+      const app = new Tram()
+      const top = (s, a, p, child) => Tram.html()`<div>${child}</div>`
+      const child = (s, a, p, child) => Tram.html()`<span>${child}</span>`
+      const grandchild = () => Tram.html()`<p>grandchild</p>`
+      app.addRoute('/', top, [
+        Tram.route()('/a/', child, [
+          Tram.route()('/b', grandchild)
+        ])
+      ])
+      expect(app.toString('/a/b'))
+        .toEqual(Tram.html()`<div><span><p>grandchild</p></span></div>`.outerHTML)
+    })
+
     it('should be chainable', () => {
       const app = new Tram()
         .addRoute('/good', successPage)

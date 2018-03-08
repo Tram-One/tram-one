@@ -151,7 +151,7 @@ const tests = (Tram) => describe('Tram', () => {
         .toEqual(Tram.html()`<div><span><p>grandchild</p></span></div>`.outerHTML)
     })
 
-    it('should handle redundent slashes', () => {
+    it('should handle redundant slashes', () => {
       const app = new Tram()
       const top = (s, a, p, child) => Tram.html()`<div>${child}</div>`
       const child = (s, a, p, child) => Tram.html()`<span>${child}</span>`

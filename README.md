@@ -348,9 +348,10 @@ app.addRoute('/', home)
 #### Constructor Options
 Below are a list of options that can be set when making a Tram-One app.
 
-|option        |description                                             |default value|type   |
-|--------------|--------------------------------------------------------|-------------|-------|
-|`defaultRoute`|if we fail to find a route, which route we should render|'/404'       |string |
+|option        |description                                             |default value |type   |
+|--------------|--------------------------------------------------------|--------------|-------|
+|`defaultRoute`|if we fail to find a route, which route we should render|'/404'        |string |
+|`webStorage`  |where to persist the store between page loads           |sessionStorage|object |
 
 ### App Functions
 The following functions should be called on an instance of a Tram-One app (see

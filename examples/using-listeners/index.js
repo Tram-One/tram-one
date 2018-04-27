@@ -3,7 +3,7 @@ const app = new Tram()
 const html = Tram.html()
 
 const countActions = {
-  init: () => parseInt(localStorage.count, 10) ? parseInt(localStorage.count, 10) : 0,
+  init: () => 0,
   up: (count) => count + 1,
   down: (count) => count - 1
 }
@@ -20,7 +20,9 @@ const clicker = (store, actions) => {
     <div>
       You can use Tram-One's
       <a href="https://github.com/JRJurman/hover-engine">Hover-Engine</a>
-      to listen for state change, and debug or save whatever the current state is.
+      to listen for state changes and debug whatever the current state is.
+
+      Open the console window to see logging.
       <br />
       <div>
         Current Value: ${store.counter}
@@ -38,11 +40,6 @@ const clicker = (store, actions) => {
 // log what is happening on the store
 app.addListener((store, actions, actionName) => {
   console.log(actionName, '->', store.counter)
-})
-
-// save what is happening in localstorage
-app.addListener(store => {
-  localStorage.count = store.counter
 })
 
 app.addActions({counter: countActions})

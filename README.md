@@ -96,6 +96,7 @@ For Routing:
 
 For State Management:
   - [hover-engine](https://github.com/Tram-One/hover-engine)
+  - [hover-battery](https://github.com/Tram-One/hover-battery)
 
 While not used in this project, Tram-One is heavily inspired by the
 [choo](https://github.com/choojs/choo) view framework.
@@ -409,9 +410,8 @@ app.addActions({votes: voteActions})
 _Reference: [hover-engine](https://github.com/Tram-One/hover-engine)_
 
 `app.addListener` adds a function that triggers on every action call. This can
-be used to save state in localstorage, or to debug the state of the store as
-actions are called. This should not be used to update the DOM, only trigger
-side-effects.
+be used to debug the state of the store as actions are called. This should not
+be used to update the DOM, only trigger side-effects.
 
 It takes in one argument, a [`listener`](#listener).
 

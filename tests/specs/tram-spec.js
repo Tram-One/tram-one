@@ -40,7 +40,7 @@ const tests = (Tram) => describe('Tram', () => {
       expect(app.toString('/')).toEqual(successPage().outerHTML)
     })
 
-    it('should not always go to the default', () => {
+    it('should not always go to the default route', () => {
       const app = new Tram()
 
       app.addRoute('/404', errorPage)
@@ -193,6 +193,7 @@ const tests = (Tram) => describe('Tram', () => {
       const childDiv = document.getElementById(containerId)
       window.history.pushState = originalPushState
       window.removeEventListener('popstate', popevent)
+      sessionStorage.clear()
       app.mount = () => {}
       document.body.removeChild(childDiv)
     })
@@ -237,6 +238,42 @@ const tests = (Tram) => describe('Tram', () => {
       }
       window.addEventListener('popstate', popevent)
       window.history.back()
+    })
+
+    it('should update default webStorage', () => {
+      app = new Tram()
+
+      app.addActions({counter: counterActions})
+      app.addRoute(testemPath, queryableCounterPage)
+      app.start(`#${containerId}`)
+      app.engine.actions.add()
+
+      expect(sessionStorage.getItem('counter')).toEqual('3')
+    })
+
+    it('should update defined webStorage', () => {
+      const mockStorage = {}
+      app = new Tram({webStorage: mockStorage})
+
+      app.addActions({counter: counterActions})
+      app.addRoute(testemPath, queryableCounterPage)
+      app.start(`#${containerId}`)
+      app.engine.actions.add()
+
+      expect(sessionStorage.getItem('counter')).toEqual(null)
+      expect(mockStorage.counter).toEqual('3')
+    })
+
+    it('should pull from webStorage', () => {
+      sessionStorage.setItem('counter', 8)
+      app = new Tram()
+
+      app.addActions({counter: counterActions})
+      app.addRoute(testemPath, queryableCounterPage)
+      app.start(`#${containerId}`)
+
+      const mountedTargetFirst = document.querySelector(queryableSelector)
+      expect(mountedTargetFirst.innerHTML).toEqual('8')
     })
 
     it('should take in a path', () => {

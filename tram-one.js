@@ -1,5 +1,6 @@
 const assert = require('assert')
 const belit = require('belit')
+const battery = require('hover-battery')
 const HoverEngine = require('hover-engine')
 const morph = require('nanomorph')
 const rlite = require('rlite-router')
@@ -14,6 +15,9 @@ class Tram {
 
     options = options || {}
     this.defaultRoute = options.defaultRoute || '/404'
+
+    const webSession = (typeof sessionStorage === 'object') ? sessionStorage : {}
+    this.webStorage = (options.webStorage === undefined) ? webSession : options.webStorage
 
     this.router = rlite()
     this.internalRouter = {}
@@ -65,6 +69,11 @@ class Tram {
     this.engine.addListener((store, actions) => {
       this.mount(selector, pathName, store, actions)
     })
+
+    if (this.webStorage) {
+      this.engine.addActions(battery(this.webStorage).actions)
+      this.engine.addListener(battery(this.webStorage).listener)
+    }
 
     urlListener(() => {
       this.mount(selector, pathName)

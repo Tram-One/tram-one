@@ -31,10 +31,10 @@ Batteries Included View Framework
 
 ## Installation, Docs, and API
 
-You can visit the website <a href="tram-one.io">tram-one.io</a> to read
+You can visit the website <a href="http://tram-one.io/">tram-one.io</a> to read
 installation instructions, feature documentation, and the complete API.
 
-<a href="tram-one.io">
+<a href="http://tram-one.io/">
   <img src="http://tram-one.io/preview.png" alt="Website">
 </a>
 

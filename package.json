@@ -1,6 +1,6 @@
 {
   "name": "tram-one",
-  "version": "5.2.1",
+  "version": "6.0.0",
   "description": "🚋 Batteries Included View Framework",
   "main": "dist/tram-one.esm.js",
   "module": "dist/tram-one.esm.js",
@@ -55,6 +55,7 @@
     "url-listener": "^2.0.0"
   },
   "devDependencies": {
+    "buble": "^0.19.3",
     "buble-loader": "^0.5.0",
     "domino": "^2.0.1",
     "eslint-config-tram-one": "^2.0.0",

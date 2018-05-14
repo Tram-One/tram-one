@@ -240,7 +240,7 @@ const tests = (Tram) => describe('Tram', () => {
       window.history.back()
     })
 
-    it('should update default webStorage', () => {
+    it('should not write to undefined webStorage', () => {
       app = new Tram()
 
       app.addActions({counter: counterActions})
@@ -248,7 +248,8 @@ const tests = (Tram) => describe('Tram', () => {
       app.start(`#${containerId}`)
       app.engine.actions.add()
 
-      expect(sessionStorage.getItem('counter')).toEqual('3')
+      expect(sessionStorage.getItem('counter')).toBeNull()
+      expect(localStorage.getItem('counter')).toBeNull()
     })
 
     it('should update defined webStorage', () => {
@@ -264,9 +265,9 @@ const tests = (Tram) => describe('Tram', () => {
       expect(mockStorage.counter).toEqual('3')
     })
 
-    it('should pull from webStorage', () => {
+    it('should pull from defined webStorage', () => {
       sessionStorage.setItem('counter', 8)
-      app = new Tram()
+      app = new Tram({webStorage: sessionStorage})
 
       app.addActions({counter: counterActions})
       app.addRoute(testemPath, queryableCounterPage)

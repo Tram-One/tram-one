@@ -15,9 +15,7 @@ class Tram {
 
     options = options || {}
     this.defaultRoute = options.defaultRoute || '/404'
-
-    const webSession = (typeof sessionStorage === 'object') ? sessionStorage : {}
-    this.webStorage = (options.webStorage === undefined) ? webSession : options.webStorage
+    this.webStorage = options.webStorage
 
     this.router = rlite()
     this.internalRouter = {}

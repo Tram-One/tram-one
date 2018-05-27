@@ -1,6 +1,14 @@
 const Tram = require('../../tram-one')
 const app = new Tram()
 const html = Tram.html()
+
+const numberActions = {
+  init: () => (Math.random() * 100).toFixed(2),
+  newNumber: () => (Math.random() * 100).toFixed(2)
+}
+
+app.addActions({number: numberActions})
+
 const home = () => html`
   <div>
     <h1>This is the Home Page</h1>
@@ -8,6 +16,9 @@ const home = () => html`
     <div> We also have a number page here: <a href="/number">/number</a> </div>
   </div>
 `
+
+app.addRoute('/', home)
+
 const num = (state, actions) => {
   const onNewNumber = () => {
     actions.newNumber()
@@ -22,7 +33,6 @@ const num = (state, actions) => {
   `
 }
 
-app.addRoute('/', home)
 app.addRoute('/number', num)
 
 module.exports = app

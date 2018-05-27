@@ -18,7 +18,8 @@ server.use(express.static('dist'))
 // serve the home page, with no bundle
 // because it needs no hydration
 server.get('/', (req, res) => {
-  res.send(app.toString('/'))
+  const page = app.toString('/')
+  res.send(page)
 })
 
 // serve the number page with a bundle

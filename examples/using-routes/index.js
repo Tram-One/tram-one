@@ -8,7 +8,6 @@ const fakeLink = (attrs, children) => {
     user-select: none;
   `
   const nav = () => window.history.pushState({}, '', attrs.href)
-  console.log(attrs.href)
   return Tram.html()`
     <span style=${linkStyle} onclick=${nav}>${children}</span>
   `

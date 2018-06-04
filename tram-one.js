@@ -96,7 +96,10 @@ class Tram {
     const targetChild = target.firstElementChild
 
     const routePath = pathName || window.location.href.replace(window.location.origin, '')
-    morph(targetChild, this.toNode(routePath, store, actions))
+    const getEvents = (newNode, oldNode) => {
+      return [].concat(newNode.events).concat(oldNode.events)
+    }
+    morph(targetChild, this.toNode(routePath, store, actions), getEvents)
 
     return this
   }

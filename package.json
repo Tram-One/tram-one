@@ -45,11 +45,11 @@
   "repository": "https://github.com/Tram-One/tram-one",
   "license": "MIT",
   "dependencies": {
-    "belit": "^4.0.0",
+    "belit": "^4.1.0",
     "hover-battery": "^1.1.0",
     "hover-engine": "^2.0.2",
     "hyperx": "Tram-One/hyperx",
-    "nanomorph": "^5.1.2",
+    "nanomorph": "Tram-One/nanomorph",
     "rbel": "^1.0.2",
     "rlite-router": "^2.0.3",
     "url-listener": "^2.0.0"

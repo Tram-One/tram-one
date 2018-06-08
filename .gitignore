@@ -2,7 +2,7 @@
 dist
 
 # Transformed Spec Files
-tests/*.js
+tests/bundled-spec.js
 
 # Logs
 logs

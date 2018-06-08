@@ -2,16 +2,7 @@
 /* eslint-disable import/order */
 /* eslint-disable brace-style */
 
-// we won't always have this file built, so don't depend on it to pass lint
-// eslint-disable-next-line import/no-unresolved
-const TramESM = require('../../dist/tram-one.esm')
-
-const isBrowser = typeof window !== 'undefined'
-const TramUMD = isBrowser ? window['tram-one'] : undefined
-const testemPath = isBrowser ? window.location.pathname : '/'
-const document = isBrowser ? window.document : require('domino').createWindow().document
-
-const tests = (Tram) => describe('Tram', () => {
+module.exports = (Tram, isBrowser, testemPath, document) => describe('Tram', () => {
   const errorPage = () => Tram.html()`<div>Error</div>`
   const successPage = () => Tram.html()`<div>Noraml Page</div>`
   const queryablePage = (value) => Tram.html()`<div id="tram_container">${value}</div>`
@@ -474,9 +465,3 @@ const tests = (Tram) => describe('Tram', () => {
     })
   })
 })
-
-if (isBrowser) {
-  tests(TramUMD)
-} else {
-  tests(TramESM)
-}

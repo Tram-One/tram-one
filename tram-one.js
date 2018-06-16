@@ -4,7 +4,8 @@ const battery = require('hover-battery')
 const HoverEngine = require('hover-engine')
 const morph = require('tatermorph')
 const rlite = require('rlite-router')
-const rbelRegister = require('rbel')
+const ninlil = require('ninlil')
+const hyperz = require('hyperz')
 const urlListener = require('url-listener')
 
 class Tram {
@@ -123,7 +124,7 @@ class Tram {
       assert.ok(!(Array.isArray(registry)), 'Tram-One: registry should be an object')
     }
 
-    return rbelRegister(belit(namespace), registry || {})
+    return ninlil(hyperz, belit(namespace), registry || {})
   }
 
   static html(registry) {

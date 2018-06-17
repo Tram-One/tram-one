@@ -1,19 +1,13 @@
 module.exports = {
-  entry: './tests/specs/tram-spec.js',
+  entry: './tests/browser-runner.js',
   module: {
     rules: [
       {
-        exclude: /domino/,
-        use: {
-          loader: 'buble-loader',
-          options: {
-            transforms: {templateString: false}
-          }
-        }
+        exclude: /domino/
       }
     ]
   },
   output: {
-    filename: './tests/tram-spec.js'
+    filename: './tests/bundled-spec.js'
   }
 }

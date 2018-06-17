@@ -2,9 +2,10 @@ const assert = require('assert')
 const belit = require('belit')
 const battery = require('hover-battery')
 const HoverEngine = require('hover-engine')
-const morph = require('nanomorph')
+const morph = require('tatermorph')
 const rlite = require('rlite-router')
-const rbelRegister = require('rbel')
+const ninlil = require('ninlil')
+const hyperz = require('hyperz')
 const urlListener = require('url-listener')
 
 class Tram {
@@ -96,7 +97,10 @@ class Tram {
     const targetChild = target.firstElementChild
 
     const routePath = pathName || window.location.href.replace(window.location.origin, '')
-    morph(targetChild, this.toNode(routePath, store, actions))
+    const getEvents = (newNode, oldNode) => {
+      return [].concat(newNode.events).concat(oldNode.events)
+    }
+    morph(targetChild, this.toNode(routePath, store, actions), getEvents)
 
     return this
   }
@@ -120,7 +124,7 @@ class Tram {
       assert.ok(!(Array.isArray(registry)), 'Tram-One: registry should be an object')
     }
 
-    return rbelRegister(belit(namespace), registry || {})
+    return ninlil(hyperz, belit(namespace), registry || {})
   }
 
   static html(registry) {

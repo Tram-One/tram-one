@@ -1,4 +1,3 @@
-const buble = require('rollup-plugin-buble')
 const builtins = require('rollup-plugin-node-builtins')
 const commonjs = require('rollup-plugin-commonjs')
 const filesize = require('rollup-plugin-filesize')
@@ -21,10 +20,6 @@ const plugins = [
   commonjs(),
   globals(),
   builtins(),
-  buble({
-    transforms: {modules: false},
-    targets: {ie: 10}
-  }),
   uglify(),
   // sizes(), // useful for finding large dependencies
   filesize()

@@ -1,5 +1,5 @@
 const Tram = require('../../tram-one')
-const app = new Tram()
+const app = new Tram({webStorage: sessionStorage})
 const html = Tram.html()
 
 const countActions = {

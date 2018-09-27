@@ -9,14 +9,14 @@ const hyperz = require('hyperz')
 const urlListener = require('url-listener')
 
 /**
- * Tram-One
+ * tram-one
  *
- * A Framework for Building Web-Apps - http://tram-one.io/
+ * a framework for building web-apps - http://tram-one.io/
  */
 class Tram {
   /**
-   * Create an instance of a Tram-One App
-   * - For complete documentation, please refer to http://tram-one.io/#constructor
+   * create an instance of a Tram-One app
+   * - for complete documentation, please refer to http://tram-one.io/#constructor
    *
    * @param {{defaultRoute: string, webStorage: object, webEngine: object}} [options]
    * @param {string} options.defaultRoute
@@ -46,7 +46,7 @@ class Tram {
 
   /**
    * add actions and store values
-   * - For complete documentation, please refer to http://tram-one.io/#app-add-actions
+   * - for complete documentation, please refer to http://tram-one.io/#app-add-actions
    *
    * @param {object} actionGroups
    */
@@ -63,7 +63,7 @@ class Tram {
 
   /**
    * add callback to call whenever an action is triggered
-   * - For complete documentation, please refer tohttp://tram-one.io/#app-add-listener
+   * - for complete documentation, please refer tohttp://tram-one.io/#app-add-listener
    *
    * @param {(store, actions, actionName, actionArguement) => {}} listener
    */
@@ -77,7 +77,7 @@ class Tram {
 
   /**
    * add route(s) and subroutes
-   * - For complete documentation, please refer to http://tram-one.io/#app-add-route
+   * - for complete documentation, please refer to http://tram-one.io/#app-add-route
    *
    * @param {string} path
    * @param {function} page
@@ -112,13 +112,12 @@ class Tram {
 
   /**
    * start the app by mounting a path on some DOM or css selector
-   * - For complete documentation, please refer to http://tram-one.io/#app-start
+   * - for complete documentation, please refer to http://tram-one.io/#app-start
    *
    * @param {*} selector
    * @param {string} [pathName]
    */
   start(selector, pathName) {
-
     // add a listener that will re-mount the app everytime an action is triggered
     this.engine.addListener((store, actions) => {
       this.mount(selector, pathName, store, actions)
@@ -156,7 +155,7 @@ class Tram {
   /**
    * internal method for building and updating / creating the app
    * - do not call this to start your app
-   * - For complete documentation, please refer to http://tram-one.io/#app-mount
+   * - for complete documentation, please refer to http://tram-one.io/#app-mount
    *
    * @param {*} selector
    * @param {string} [pathName]
@@ -184,8 +183,8 @@ class Tram {
     // use the pathname provided, or pull the url from the window object
     const routePath = pathName || window.location.href.replace(window.location.origin, '')
 
-    // collect all the DOM events that we should be keeping track of
-    // These events are provided by belit and consumed by tatermorph
+    // collect all the DOM events that we should be keeping track of.
+    // these events are provided by belit and consumed by tatermorph.
     // (events are strange and actually aren't natively stored on Nodes,
     // but we have to keep track of them so we can know to add or
     // remove them between renders)
@@ -202,13 +201,13 @@ class Tram {
 
   /**
    * generate a DOM Node Tree based on a path and a store
-   * - For complete documentation, please refer to http://tram-one.io/#app-toNode
+   * - for complete documentation, please refer to http://tram-one.io/#app-toNode
    *
    * @param {string} pathName
    * @param {object} [store]
    * @param {object} [actions]
    *
-   * @return {​​​​​HTMLDivElement}
+   * @return {HTMLDivElement}
    */
   toNode(pathName, store, actions) {
     assert.equal(typeof pathName, 'string', 'Tram-One: pathName should be a string')
@@ -221,7 +220,7 @@ class Tram {
 
   /**
    * generate a stringified DOM Tree based on a path and a store
-   * - For complete documentation, please refer to http://tram-one.io/#app-toString
+   * - for complete documentation, please refer to http://tram-one.io/#app-toString
    *
    * @param {string} pathName
    * @param {object} [store]
@@ -234,7 +233,7 @@ class Tram {
 
   /**
    * function to generate a tagged template function for any namespace
-   * - For complete documentation, please refer to http://tram-one.io/#tram-dom
+   * - for complete documentation, please refer to http://tram-one.io/#tram-dom
    *
    * @param {string} namespace
    * @param {object} registry
@@ -252,7 +251,7 @@ class Tram {
 
   /**
    * function to generate a tagged template function for XHTML
-   * - For complete documentation, please refer to http://tram-one.io/#tram-html
+   * - for complete documentation, please refer to http://tram-one.io/#tram-html
    *
    * @param {object} registry
    * @return {function}
@@ -263,7 +262,7 @@ class Tram {
 
   /**
    * function to generate a tagged template function for SVG
-   * - For complete documentation, please refer to http://tram-one.io/#tram-svg
+   * - for complete documentation, please refer to http://tram-one.io/#tram-svg
    *
    * @param {object} registry
    * @return {function}
@@ -274,7 +273,7 @@ class Tram {
 
   /**
    * function to create a subroute generator
-   * - For complete documentation, please refer to http://tram-one.io/#tram-route
+   * - for complete documentation, please refer to http://tram-one.io/#tram-route
    *
    * @return {(path: string, component: function, subroutes?: Array) => {path, component, subroutes}}
    */

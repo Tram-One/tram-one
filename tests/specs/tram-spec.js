@@ -291,7 +291,7 @@ module.exports = (Tram, isBrowser, testemPath, document) => describe('Tram', () 
       app.start(`#${containerId}`)
 
       mockEngine.actions.add()
-      expect(mockEngine.counter).toBe(3)
+      expect(mockEngine.store.counter).toBe(3)
     })
 
     it('should take in a path', () => {

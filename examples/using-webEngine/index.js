@@ -4,7 +4,8 @@ const app = new Tram({
   webEngine: window.engine
 })
 const html = Tram.html({
-  'counter-button': require('./counter-button')
+  'counter-button': require('./counter-button'),
+  'mapped-counter-button': require('./mapped-counter-button')
 })
 
 const countActions = {
@@ -19,6 +20,7 @@ const clicker = (state, actions) => {
       in the state of an element without passing props explicitly.
       <br />
       <counter-button />
+      <mapped-counter-button />
     </div>
   `
 }

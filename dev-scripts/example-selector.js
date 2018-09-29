@@ -17,6 +17,7 @@ const question = {
     'using-custom-elements',
     'using-everything',
     'using-listeners',
+    'using-webEngine',
     new inquirer.Separator('-- Tiny Apps --'),
     'todo-pages',
     'todo-app',

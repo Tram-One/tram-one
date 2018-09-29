@@ -118,6 +118,17 @@ class Tram {
    * @param {string} [pathName]
    */
   start(selector, pathName) {
+    // if webEngine is defined, write the inital values and create a listener to update them
+    if (this.webEngine) {
+      this.webEngine.store = this.engine.store
+      this.webEngine.actions = this.engine.actions
+
+      this.engine.addListener((store, actions) => {
+        this.webEngine.store = store
+        this.webEngine.actions = actions
+      })
+    }
+
     // add a listener that will re-mount the app everytime an action is triggered
     this.engine.addListener((store, actions) => {
       this.mount(selector, pathName, store, actions)
@@ -128,17 +139,6 @@ class Tram {
     if (this.webStorage) {
       this.engine.addActions(battery(this.webStorage).actions)
       this.engine.addListener(battery(this.webStorage).listener)
-    }
-
-    // if webEngine is defined, write the inital values and create a listener to update them
-    if (this.webEngine) {
-      this.webEngine.store = this.engine.store
-      this.webEngine.actions = this.engine.actions
-
-      this.engine.addListener((store, actions) => {
-        this.webEngine.store = store
-        this.webEngine.actions = actions
-      })
     }
 
     // wire up urlListener so that we remount whenever the url changes

@@ -119,6 +119,7 @@ class Tram {
    */
   start(selector, pathName) {
     // if webEngine is defined, write the inital values and create a listener to update them
+    // it is important that we update this before trying to re-mount the app
     if (this.webEngine) {
       this.webEngine.store = this.engine.store
       this.webEngine.actions = this.engine.actions

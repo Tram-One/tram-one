@@ -268,6 +268,32 @@ module.exports = (Tram, isBrowser, testemPath, document) => describe('Tram', () 
       expect(mountedTargetFirst.innerHTML).toEqual('8')
     })
 
+    it('should update defined webEngine', () => {
+      const mockEngine = {}
+      app = new Tram({webEngine: mockEngine})
+
+      app.addActions({counter: counterActions})
+      app.addRoute(testemPath, queryableCounterPage)
+      app.start(`#${containerId}`)
+
+      expect(mockEngine.store).toBeDefined()
+      expect(mockEngine.actions).toBeDefined()
+      expect(mockEngine.store.counter).toBe(2)
+      expect(mockEngine.actions.add).toBeDefined()
+    })
+
+    it('should call actions from webEngine', () => {
+      const mockEngine = {}
+      app = new Tram({webEngine: mockEngine})
+
+      app.addActions({counter: counterActions})
+      app.addRoute(testemPath, queryableCounterPage)
+      app.start(`#${containerId}`)
+
+      mockEngine.actions.add()
+      expect(mockEngine.store.counter).toBe(3)
+    })
+
     it('should take in a path', () => {
       app = new Tram()
 

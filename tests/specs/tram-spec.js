@@ -156,6 +156,17 @@ module.exports = (Tram, isBrowser, testemPath, document) => describe('Tram', () 
         .toEqual(Tram.html()`<div><span><p>grandchild</p></span></div>`.outerHTML)
     })
 
+    it('should inject child on default route (if using just slashes)', () => {
+      const app = new Tram()
+      const top = (s, a, p, child) => Tram.html()`<div>${child}</div>`
+      const child = () => Tram.html()`<span>child</span>`
+      app.addRoute('/', top, [
+        Tram.route()('/', child)
+      ])
+      expect(app.toString('/'))
+        .toEqual(Tram.html()`<div><span>child</span></div>`.outerHTML)
+    })
+
     it('should be chainable', () => {
       const app = new Tram()
         .addRoute('/good', successPage)

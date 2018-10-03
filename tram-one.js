@@ -103,6 +103,12 @@ class Tram {
       })
     }
 
+    // don't overwrite a route if one already exists
+    // this is important because empty subroutes will match their parent
+    if (this.internalRouter[path]) {
+      console.warn(`Tram-One: path ${path} already exists (this is fine if using empty subroutes)`)
+      return this
+    }
     // update our internal router, and if this happens to be the last call update the rlite router
     this.internalRouter[path] = (params) => (store, actions) => page(store, actions, params)
     this.router = rlite(this.internalRouter[this.defaultRoute], this.internalRouter)

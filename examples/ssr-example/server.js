@@ -1,4 +1,4 @@
-// to run this example, run `node examples/ssr-example/server.js`
+// to run this example, run `cd examples/ssr-example; node server.js`
 
 const express = require('express')
 const server = express()

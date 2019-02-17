@@ -47,6 +47,12 @@ module.exports = (Tram, isBrowser, testemPath, document) => describe('Tram', () 
       expect(app.engine.store.counter).toEqual(initCounter)
     })
 
+    it('should update the webEngine with new store', () => {
+      const app = new Tram({webEngine: {}})
+      app.addActions({counter: counterActions})
+      expect(app.webEngine.store.counter).toEqual(initCounter)
+    })
+
     it('should be chainable', () => {
       const app = new Tram()
         .addActions({counter: counterActions})

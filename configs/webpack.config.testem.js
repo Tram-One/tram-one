@@ -1,5 +1,6 @@
 module.exports = {
   entry: './tests/browser-runner.js',
+  mode: 'development',
   module: {
     rules: [
       {

@@ -58,6 +58,12 @@ class Tram {
 
     this.engine.addActions(actionGroups)
 
+    // if webEngine exists update it with the latest store and actions
+    if (this.webEngine) {
+      this.webEngine.store = this.engine.store
+      this.webEngine.actions = this.engine.actions
+    }
+
     return this
   }
 
@@ -124,12 +130,9 @@ class Tram {
    * @param {string} [pathName]
    */
   start(selector, pathName) {
-    // if webEngine is defined, write the inital values and create a listener to update them
+    // if webEngine is defined create a listener to update them
     // it is important that we update this before trying to re-mount the app
     if (this.webEngine) {
-      this.webEngine.store = this.engine.store
-      this.webEngine.actions = this.engine.actions
-
       this.engine.addListener((store, actions) => {
         this.webEngine.store = store
         this.webEngine.actions = actions

@@ -10,19 +10,13 @@ const question = {
   name: 'example',
   message: 'What example would you like to run?',
   choices: [
-    new inquirer.Separator('-- Simple Examples --'),
     'using-actions',
     'using-routes',
     'using-nested-routes',
     'using-custom-elements',
     'using-everything',
     'using-listeners',
-    'using-webEngine',
-    new inquirer.Separator('-- Tiny Apps --'),
-    'todo-pages',
-    'todo-app',
-    'image-carousel',
-    'clock-example'
+    'using-webEngine'
   ]
 }
 
@@ -40,6 +34,7 @@ inquirer.prompt([question]).then((answer) => {
   }
 
   const compiler = webpack(webpackConfig)
+  console.log(compiler)
   const server = new WebpackDevServer(compiler, {
     stats: {
       colors: true

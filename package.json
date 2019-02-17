@@ -72,9 +72,9 @@
     "rollup-plugin-uglify": "^3.0.0",
     "rollup-plugin-unassert": "git+https://gitlab.com/JRJurman/rollup-plugin-unassert.git#346bb3b7",
     "testem": "^2.0.0",
-    "webpack": "^3.11.0",
-    "webpack-dev-server": "^2.4.5",
-    "xo": "^0.20.2"
+    "webpack": "^4.29.0",
+    "webpack-dev-server": "^3.1.14",
+    "xo": "0.20.2"
   },
   "xo": {
     "extends": [

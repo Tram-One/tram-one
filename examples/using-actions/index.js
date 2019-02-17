@@ -16,7 +16,7 @@ const clicker = (state, actions) => {
     <div>
       Tram-One
       uses <a href="https://github.com/JRJurman/hover-engine">Hover-Engine</a>
-      and <a href="https://github.com/choojs/nanomorph">nanomorph</a>
+      and <a href="https://github.com/Tram-One/tatermorph">tatermorph</a> (a fork of nanomorph)
       to handle state management and DOM diffing.
       <br />
       <button onclick=${incrementCount}>

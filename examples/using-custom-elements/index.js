@@ -13,8 +13,8 @@ const home = () => {
       <br />
 
       Tram-One
-      uses <a href="https://github.com/aaaristo/rbel">rbel</a>, <a href="https://github.com/Tram-One/belit">belit</a>,
-      and <a href="https://github.com/substack/hyperx">hyperx</a>, to render tagged and custom elements.
+      uses <a href="https://github.com/Tram-One/ninlil">ninlil</a> (a fork of rbel), <a href="https://github.com/Tram-One/belit">belit</a> (a fork of nanohtml),
+      and <a href="https://github.com/Tram-One/hyperz">hyperz</a> (a fork of hyperx), to render tagged and custom elements.
       <br /><br />
 
       Honestly though, special thanks goes out

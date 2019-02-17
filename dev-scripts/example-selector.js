@@ -34,7 +34,6 @@ inquirer.prompt([question]).then((answer) => {
   }
 
   const compiler = webpack(webpackConfig)
-  console.log(compiler)
   const server = new WebpackDevServer(compiler, {
     stats: {
       colors: true

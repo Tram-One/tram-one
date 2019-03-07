@@ -33,9 +33,13 @@ class Tram {
     this.defaultRoute = options.defaultRoute || '/404'
     this.webStorage = options.webStorage
     this.webEngine = options.webEngine
+    this.globalSpace = options.globalSpace || window
 
     // setup dedicated engine for component state
-    this.setupWatch()
+    Tram.setupEngine(this.globalSpace, 'stateEngine')
+
+    // setup dedicated engine for app state management
+    Tram.setupEngine(this.globalSpace, 'appEngine')
 
     // setup router
     // rlite is the route resolver
@@ -44,7 +48,7 @@ class Tram {
     this.internalRouter = {}
 
     // setup state-management with HoverEngine
-    this.engine = new HoverEngine()
+    // this.engine = new HoverEngine()
   }
 
   /**
@@ -142,14 +146,14 @@ class Tram {
       })
     }
 
-    // if we have a watchEngine, re-mount the app when an action is triggered
-    Tram.getWatch().addListener(() => {
+    // re-mount the app when a state action is triggered
+    Tram.getEngine(this.globalSpace, 'stateEngine').addListener(() => {
       this.mount(selector, pathName)
     })
 
-    // add a listener that will re-mount the app everytime an action is triggered
-    this.engine.addListener((store, actions) => {
-      this.mount(selector, pathName, store, actions)
+    // re-mount the app when an app action is triggered
+    Tram.getEngine(this.globalSpace, 'appEngine').addListener(() => {
+      this.mount(selector, pathName)
     })
 
     // if webStorage is defined, wire it into hover-engine with hover-battery
@@ -231,8 +235,8 @@ class Tram {
     assert.equal(typeof pathName, 'string', 'Tram-One: pathName should be a string')
 
     const pageComponent = this.router(pathName)
-    const pageState = store || this.engine.store
-    const pageActions = actions || this.engine.actions
+    const pageState = store || Tram.getEngine(this.globalSpace, 'appEngine').store
+    const pageActions = actions || Tram.getEngine(this.globalSpace, 'appEngine').actions
     return pageComponent(pageState, pageActions)
   }
 
@@ -249,36 +253,36 @@ class Tram {
     return this.toNode(pathName, store).outerHTML
   }
 
-  setupWatch(globalSpace = window) {
-    // we do not have a space to put our watch
+  static setupEngine(globalSpace = window, engineName) {
+    // we do not have a space to put our engine
     if (!globalSpace) return false
 
-    // we already have a global watch, return that one
-    if (globalSpace.watchEngine) return globalSpace.watchEngine
+    // we already have an engine, return that one
+    if (globalSpace[engineName]) return globalSpace[engineName]
 
-    // we do not have a global watch, make a new one
-    globalSpace.watchEngine = new HoverEngine()
-    return globalSpace.watchEngine
+    // we do not have a engine, make a new one
+    globalSpace[engineName] = new HoverEngine()
+    return globalSpace[engineName]
   }
 
-  static getWatch(globalSpace = window) {
-    return globalSpace && globalSpace.watchEngine
+  static getEngine(globalSpace = window, engineName) {
+    return globalSpace && globalSpace[engineName]
   }
 
-  static useState() {
-    return (value) => {
-      // get (or create) a watch engine
-      const watchEngine = Tram.getWatch()
+  static useState(globalSpace = window, engineName = 'stateEngine') {
+    return (value, keyPrefix) => {
+      // get a state engine
+      const stateEngine = Tram.getEngine(globalSpace, engineName)
 
       // if we couldn't, just return whatever value we got
-      if (!watchEngine) return [value, () => {}]
+      if (!stateEngine) return [value, () => {}]
 
       // generate key using the stack trace
-      const key = (new Error()).stack.match(/(\d+:\d+)/g).slice(0, 5).join('|')
+      const key = keyPrefix + (new Error()).stack.match(/(\d+:\d+)/g).slice(0, 5).join('|')
 
-      // save this value in our watchEngine if we haven't
-      if (!watchEngine.store[key]) {
-        watchEngine.addActions({
+      // save this value in our stateEngine if we haven't
+      if (!stateEngine.store[key]) {
+        stateEngine.addActions({
           [key]: {
             init: () => value,
             [`set${key}`]: (oldValue, newValue) => newValue
@@ -287,12 +291,29 @@ class Tram {
       }
 
       // generate getter for key
-      const keyGetter =  watchEngine.store[key]
+      const keyGetter =  stateEngine.store[key]
 
       // generate setter for key
-      const keySetter = watchEngine.actions[`set${key}`]
+      const keySetter = stateEngine.actions[`set${key}`]
 
       return [keyGetter, keySetter]
+    }
+  }
+
+  static useStore(globalSpace = window, engineName = 'appEngine') {
+    return Tram.getEngine(globalSpace, engineName)
+  }
+
+  static addActions(globalSpace = window, engineName = 'appEngine') {
+    return (actionGroups) => {
+      assert.equal(
+        typeof actionGroups, 'object',
+        'Tram-One: ActionGroups should be { store-key: { action-name: action-function } }'
+      )
+
+      Tram.getEngine(globalSpace, engineName).addActions(actionGroups)
+
+      return Tram
     }
   }
 

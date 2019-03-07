@@ -34,6 +34,9 @@ class Tram {
     this.webStorage = options.webStorage
     this.webEngine = options.webEngine
 
+    // setup dedicated engine for component state
+    this.setupWatch()
+
     // setup router
     // rlite is the route resolver
     // the internalRouter lets us build a router configuration over multiple calls
@@ -139,6 +142,11 @@ class Tram {
       })
     }
 
+    // if we have a watchEngine, re-mount the app when an action is triggered
+    Tram.getWatch().addListener(() => {
+      this.mount(selector, pathName)
+    })
+
     // add a listener that will re-mount the app everytime an action is triggered
     this.engine.addListener((store, actions) => {
       this.mount(selector, pathName, store, actions)
@@ -239,6 +247,53 @@ class Tram {
    */
   toString(pathName, store) {
     return this.toNode(pathName, store).outerHTML
+  }
+
+  setupWatch(globalSpace = window) {
+    // we do not have a space to put our watch
+    if (!globalSpace) return false
+
+    // we already have a global watch, return that one
+    if (globalSpace.watchEngine) return globalSpace.watchEngine
+
+    // we do not have a global watch, make a new one
+    globalSpace.watchEngine = new HoverEngine()
+    return globalSpace.watchEngine
+  }
+
+  static getWatch(globalSpace = window) {
+    return globalSpace && globalSpace.watchEngine
+  }
+
+  static useState() {
+    return (value) => {
+      // get (or create) a watch engine
+      const watchEngine = Tram.getWatch()
+
+      // if we couldn't, just return whatever value we got
+      if (!watchEngine) return [value, () => {}]
+
+      // generate key using the stack trace
+      const key = (new Error()).stack.match(/(\d+:\d+)/g).slice(0, 5).join('|')
+
+      // save this value in our watchEngine if we haven't
+      if (!watchEngine.store[key]) {
+        watchEngine.addActions({
+          [key]: {
+            init: () => value,
+            [`set${key}`]: (oldValue, newValue) => newValue
+          }
+        })
+      }
+
+      // generate getter for key
+      const keyGetter =  watchEngine.store[key]
+
+      // generate setter for key
+      const keySetter = watchEngine.actions[`set${key}`]
+
+      return [keyGetter, keySetter]
+    }
   }
 
   /**

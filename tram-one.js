@@ -43,6 +43,7 @@ class Tram {
 
     // setup dedicated object for mount effects
     Tram.setupLog(this.globalSpace, 'mountStore')
+    Tram.setupLog(this.globalSpace, 'unmountStore')
 
     // setup router
     // rlite is the route resolver
@@ -217,9 +218,51 @@ class Tram {
       return [].concat(newNode.events).concat(oldNode.events)
     }
 
+    // save all the mount effects that have happened
+    const mountStore = Tram.getLog(this.globalSpace, 'mountStore')
+    const mountEffects = {
+      ...mountStore
+    }
+    // Tram.clearLog(this.globalSpace, 'mountStore')
+
+    // save all the unmount effects that might happen
+    const unmountStore = Tram.getLog(this.globalSpace, 'unmountStore')
+    const unmountEffects = {
+      ...unmountStore
+    }
+    Tram.clearLog(this.globalSpace, 'unmountStore')
+
     // update our child element with a new version of the app
     // tatermorph knows how to intelligently trigger only diffs that matter
     morph(targetChild, this.toNode(routePath, store, actions), getEvents)
+
+    // get the new set of mount effects
+    const newMountEffects = {
+      ...Tram.getLog(this.globalSpace, 'mountStore')
+    }
+
+    // set all the old effects to no-ops
+    Object.keys(mountEffects).forEach(key => mountEffects[key] = () => {})
+
+    // build a set of effects
+    const mountEffectsToRun = {...newMountEffects, ...mountEffects}
+
+    // run all unmount effects
+    Object.keys(mountEffectsToRun).forEach(key => mountEffectsToRun[key]())
+
+    // get the new set of unmount effects
+    const newUnmountEffects = {
+      ...Tram.getLog(this.globalSpace, 'unmountStore')
+    }
+
+    // set all the new effects to no-ops
+    Object.keys(newUnmountEffects).forEach(key => newUnmountEffects[key] = () => {})
+
+    // build a set of effects (if any are still around, they are no ops now)
+    const unmountEffectsToRun = {...unmountEffects, ...newUnmountEffects}
+
+    // run all unmount effects
+    Object.keys(unmountEffectsToRun).forEach(key => unmountEffectsToRun[key]())
 
     return this
   }
@@ -284,6 +327,19 @@ class Tram {
     return globalSpace && globalSpace[engineName]
   }
 
+  static getLog(globalSpace = window, logName) {
+    return Tram.getEngine(globalSpace, logName)
+  }
+
+  static clearLog(globalSpace = window, logName) {
+    const logStore = Tram.getLog(globalSpace, logName)
+
+    // if there is no log store, return an empty object
+    if (!logStore) return {}
+
+    Object.keys(logStore).forEach(key => delete logStore[key])
+  }
+
   static useState(globalSpace = window, engineName = 'stateEngine') {
     return (value, keyPrefix) => {
       // get a state engine
@@ -296,7 +352,8 @@ class Tram {
       const key = keyPrefix + (new Error()).stack.match(/(\d+:\d+)/g).slice(0, 5).join('|')
 
       // save this value in our stateEngine if we haven't
-      if (!stateEngine.store[key]) {
+      // check if we have the action (the store value could be falsy)
+      if (!stateEngine.actions[`set${key}`]) {
         stateEngine.addActions({
           [key]: {
             init: () => value,
@@ -322,7 +379,7 @@ class Tram {
   static onMount(globalSpace = window) {
     return (onMount, keyPrefix) => {
       // get the store of mount effects
-      const mountStore = Tram.getEngine(globalSpace, 'mountStore')
+      const mountStore = Tram.getLog(globalSpace, 'mountStore')
 
       // if there is no mount store, call and return
       if (!mountStore) return onMount()
@@ -330,9 +387,22 @@ class Tram {
       // generate key using the stack trace
       const key = keyPrefix + (new Error()).stack.match(/(\d+:\d+)/g).slice(0, 5).join('|')
 
-      // if we don't have this key, call the function
-      if (!mountStore[key]) onMount()
-      mountStore[key] = true
+      mountStore[key] = onMount
+    }
+  }
+
+  static onUnmount(globalSpace = window) {
+    return (onUnmount, keyPrefix) => {
+      // get the store of unmount effects
+      const unmountStore = Tram.getEngine(globalSpace, 'unmountStore')
+
+      // if there is no unmount store, call and return
+      if (!unmountStore) return onUnmount()
+
+      // generate key using the stack trace
+      const key = keyPrefix + (new Error()).stack.match(/(\d+:\d+)/g).slice(0, 5).join('|')
+
+      unmountStore[key] = onUnmount
     }
   }
 

@@ -3,7 +3,7 @@ const commonjs = require('rollup-plugin-commonjs')
 const filesize = require('rollup-plugin-filesize')
 const globals = require('rollup-plugin-node-globals')
 const resolve = require('rollup-plugin-node-resolve')
-const uglify = require('rollup-plugin-uglify')
+const uglify = require('rollup-plugin-uglify').uglify
 const unassert = require('rollup-plugin-unassert')
 // const sizes = require('rollup-plugin-sizes')
 

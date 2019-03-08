@@ -41,6 +41,9 @@ class Tram {
     // setup dedicated engine for app state management
     Tram.setupEngine(this.globalSpace, 'appEngine')
 
+    // setup dedicated object for mount effects
+    Tram.setupLog(this.globalSpace, 'mountStore')
+
     // setup router
     // rlite is the route resolver
     // the internalRouter lets us build a router configuration over multiple calls
@@ -265,6 +268,18 @@ class Tram {
     return globalSpace[engineName]
   }
 
+  static setupLog(globalSpace = window, logName) {
+    // we do not have a space to put our engine
+    if (!globalSpace) return false
+
+    // we already have a log, return that one
+    if (globalSpace[logName]) return globalSpace[logName]
+
+    // we do not have a log, make a new one
+    globalSpace[logName] = {}
+    return globalSpace[logName]
+  }
+
   static getEngine(globalSpace = window, engineName) {
     return globalSpace && globalSpace[engineName]
   }
@@ -302,6 +317,23 @@ class Tram {
 
   static useStore(globalSpace = window, engineName = 'appEngine') {
     return Tram.getEngine(globalSpace, engineName)
+  }
+
+  static onMount(globalSpace = window) {
+    return (onMount, keyPrefix) => {
+      // get the store of mount effects
+      const mountStore = Tram.getEngine(globalSpace, 'mountStore')
+
+      // if there is no mount store, call and return
+      if (!mountStore) return onMount()
+
+      // generate key using the stack trace
+      const key = keyPrefix + (new Error()).stack.match(/(\d+:\d+)/g).slice(0, 5).join('|')
+
+      // if we don't have this key, call the function
+      if (!mountStore[key]) onMount()
+      mountStore[key] = true
+    }
   }
 
   static addActions(globalSpace = window, engineName = 'appEngine') {

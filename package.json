@@ -51,6 +51,7 @@
     "hyperz": "^4.0.1",
     "ninlil": "^2.0.0",
     "rlite-router": "^2.0.3",
+    "rollup-plugin-terser": "^4.0.4",
     "tatermorph": "^7.0.0",
     "url-listener": "^2.0.0"
   },
@@ -69,7 +70,6 @@
     "rollup-plugin-node-globals": "^1.4.0",
     "rollup-plugin-node-resolve": "^4.0.1",
     "rollup-plugin-sizes": "^0.5.1",
-    "rollup-plugin-uglify": "^6.0.2",
     "rollup-plugin-unassert": "git+https://gitlab.com/JRJurman/rollup-plugin-unassert.git#346bb3b7",
     "testem": "^2.14.0",
     "webpack": "^4.29.0",

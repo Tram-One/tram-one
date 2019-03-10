@@ -44,6 +44,7 @@ class Tram {
     // setup dedicated object for mount effects
     Tram.setupLog(this.globalSpace, 'mountStore')
     Tram.setupLog(this.globalSpace, 'unmountStore')
+    Tram.setupLog(this.globalSpace, 'effectStore')
 
     // setup router
     // rlite is the route resolver
@@ -218,51 +219,35 @@ class Tram {
       return [].concat(newNode.events).concat(oldNode.events)
     }
 
-    // save all the mount effects that have happened
-    const mountStore = Tram.getLog(this.globalSpace, 'mountStore')
-    const mountEffects = {
-      ...mountStore
-    }
-    // Tram.clearLog(this.globalSpace, 'mountStore')
-
-    // save all the unmount effects that might happen
-    const unmountStore = Tram.getLog(this.globalSpace, 'unmountStore')
-    const unmountEffects = {
-      ...unmountStore
-    }
-    Tram.clearLog(this.globalSpace, 'unmountStore')
+    // save all the mount effects that have happened, and wipe the effectStore
+    const existingEffects = Object.assign({}, Tram.getLog(this.globalSpace, 'effectStore'))
+    Tram.clearLog(this.globalSpace, 'effectStore')
 
     // update our child element with a new version of the app
     // tatermorph knows how to intelligently trigger only diffs that matter
     morph(targetChild, this.toNode(routePath, store, actions), getEvents)
 
-    // get the new set of mount effects
-    const newMountEffects = {
-      ...Tram.getLog(this.globalSpace, 'mountStore')
-    }
+    // get the effects that are new
+    const allNewEffects = Object.assign({}, Tram.getLog(this.globalSpace, 'effectStore'))
 
-    // set all the old effects to no-ops
-    Object.keys(mountEffects).forEach(key => mountEffects[key] = () => {})
+    // split out effects between existing, new and removed
+    const existingEffectKeys = Object.keys(allNewEffects).filter(effect => (effect in existingEffects))
+    const newEffectKeys = Object.keys(allNewEffects).filter(effect => !(effect in existingEffects))
+    const removedEffectKeys = Object.keys(existingEffects).filter(effect => !(effect in allNewEffects))
 
-    // build a set of effects
-    const mountEffectsToRun = {...newMountEffects, ...mountEffects}
+    // run all clean up effects if the effect was removed
+    removedEffectKeys.forEach(effectKey => existingEffects[effectKey]())
 
-    // run all unmount effects
-    Object.keys(mountEffectsToRun).forEach(key => mountEffectsToRun[key]())
+    // add any effects that should be in the store back in
+    existingEffectKeys.forEach(effectKey => {
+      Tram.getLog(this.globalSpace, 'effectStore')[effectKey] = existingEffects[effectKey]
+    })
 
-    // get the new set of unmount effects
-    const newUnmountEffects = {
-      ...Tram.getLog(this.globalSpace, 'unmountStore')
-    }
-
-    // set all the new effects to no-ops
-    Object.keys(newUnmountEffects).forEach(key => newUnmountEffects[key] = () => {})
-
-    // build a set of effects (if any are still around, they are no ops now)
-    const unmountEffectsToRun = {...unmountEffects, ...newUnmountEffects}
-
-    // run all unmount effects
-    Object.keys(unmountEffectsToRun).forEach(key => unmountEffectsToRun[key]())
+    // run all new effects that we haven't seen before
+    // save any cleanup effects in the effectStore
+    newEffectKeys.forEach(effectKey =>
+      Tram.getLog(this.globalSpace, 'effectStore')[effectKey] = allNewEffects[effectKey]()
+    )
 
     return this
   }
@@ -373,7 +358,8 @@ class Tram {
   }
 
   static useStore(globalSpace = window, engineName = 'appEngine') {
-    return Tram.getEngine(globalSpace, engineName)
+    const engine = Tram.getEngine(globalSpace, engineName)
+    return () => [engine.store, engine.actions]
   }
 
   static onMount(globalSpace = window) {
@@ -403,6 +389,21 @@ class Tram {
       const key = keyPrefix + (new Error()).stack.match(/(\d+:\d+)/g).slice(0, 5).join('|')
 
       unmountStore[key] = onUnmount
+    }
+  }
+
+  static useEffect(globalSpace = window, engineName = 'effectStore') {
+    return (onEffect, keyPrefix = '') => {
+      // get the store of effects
+      const effectStore = Tram.getEngine(globalSpace, 'effectStore')
+
+      // if there is no store, call and return
+      if (!effectStore) return onEffect()
+
+      // generate key using the stack trace
+      const key = keyPrefix + (new Error()).stack.match(/(\d+:\d+)/g).slice(0, 5).join('|')
+
+      effectStore[key] = onEffect
     }
   }
 

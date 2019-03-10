@@ -18,10 +18,9 @@ class Tram {
    * create an instance of a Tram-One app
    * - for complete documentation, please refer to http://tram-one.io/#constructor
    *
-   * @param {{defaultRoute: string, webStorage: object, webEngine: object}} [options]
+   * @param {{defaultRoute: string, webStorage: object}} [options]
    * @param {string} options.defaultRoute
    * @param {object} options.webStorage
-   * @param {object} options.webEngine
    */
   constructor(options) {
     if (options) {
@@ -32,7 +31,6 @@ class Tram {
     options = options || {}
     this.defaultRoute = options.defaultRoute || '/404'
     this.webStorage = options.webStorage
-    this.webEngine = options.webEngine
     this.globalSpace = options.globalSpace || window
 
     // setup dedicated engine for component state
@@ -67,12 +65,6 @@ class Tram {
     )
 
     this.engine.addActions(actionGroups)
-
-    // if webEngine exists update it with the latest store and actions
-    if (this.webEngine) {
-      this.webEngine.store = this.engine.store
-      this.webEngine.actions = this.engine.actions
-    }
 
     return this
   }
@@ -140,15 +132,6 @@ class Tram {
    * @param {string} [pathName]
    */
   start(selector, pathName) {
-    // if webEngine is defined create a listener to update them
-    // it is important that we update this before trying to re-mount the app
-    if (this.webEngine) {
-      this.engine.addListener((store, actions) => {
-        this.webEngine.store = store
-        this.webEngine.actions = actions
-      })
-    }
-
     // re-mount the app when a state action is triggered
     Tram.getEngine(this.globalSpace, 'stateEngine').addListener(() => {
       this.mount(selector, pathName)
@@ -355,11 +338,6 @@ class Tram {
     }
   }
 
-  static useStore(globalSpace = window, engineName = 'appEngine') {
-    const engine = Tram.getEngine(globalSpace, engineName)
-    return () => [engine.store, engine.actions]
-  }
-
   static useEffect(globalSpace = window, engineName = 'effectStore') {
     return (onEffect, keyPrefix = '') => {
       // get the store of effects
@@ -375,6 +353,11 @@ class Tram {
     }
   }
 
+  static useStore(globalSpace = window, engineName = 'appEngine') {
+    const engine = Tram.getEngine(globalSpace, engineName)
+    return () => [engine.store, engine.actions]
+  }
+
   static addActions(globalSpace = window, engineName = 'appEngine') {
     return (actionGroups) => {
       assert.equal(
@@ -385,6 +368,20 @@ class Tram {
       Tram.getEngine(globalSpace, engineName).addActions(actionGroups)
 
       return Tram
+    }
+  }
+
+  static route(getPath = () => window.location.href.replace(window.location.origin, '')) {
+    return (attrs, children) => {
+      return rlite(() => '', {
+        [attrs.path]: (params) => attrs.component({params, path: attrs.path}, children)
+      })(getPath())
+    }
+  }
+
+  static switch(getPath = () => window.location.href.replace(window.location.origin, '')) {
+    return (attrs, children) => {
+      return children.filter(child => typeof child === 'object')[0]
     }
   }
 
@@ -434,9 +431,9 @@ class Tram {
    *
    * @return {(path: string, component: function, subroutes?: Array) => {path, component, subroutes}}
    */
-  static route() {
-    return (path, component, subroutes) => ({path, component, subroutes})
-  }
+  // static route() {
+  //   return (path, component, subroutes) => ({path, component, subroutes})
+  // }
 }
 
 module.exports = Tram

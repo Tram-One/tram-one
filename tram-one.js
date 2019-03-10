@@ -41,9 +41,7 @@ class Tram {
     // setup dedicated engine for app state management
     Tram.setupEngine(this.globalSpace, 'appEngine')
 
-    // setup dedicated object for mount effects
-    Tram.setupLog(this.globalSpace, 'mountStore')
-    Tram.setupLog(this.globalSpace, 'unmountStore')
+    // setup store for effects
     Tram.setupLog(this.globalSpace, 'effectStore')
 
     // setup router
@@ -360,36 +358,6 @@ class Tram {
   static useStore(globalSpace = window, engineName = 'appEngine') {
     const engine = Tram.getEngine(globalSpace, engineName)
     return () => [engine.store, engine.actions]
-  }
-
-  static onMount(globalSpace = window) {
-    return (onMount, keyPrefix) => {
-      // get the store of mount effects
-      const mountStore = Tram.getLog(globalSpace, 'mountStore')
-
-      // if there is no mount store, call and return
-      if (!mountStore) return onMount()
-
-      // generate key using the stack trace
-      const key = keyPrefix + (new Error()).stack.match(/(\d+:\d+)/g).slice(0, 5).join('|')
-
-      mountStore[key] = onMount
-    }
-  }
-
-  static onUnmount(globalSpace = window) {
-    return (onUnmount, keyPrefix) => {
-      // get the store of unmount effects
-      const unmountStore = Tram.getEngine(globalSpace, 'unmountStore')
-
-      // if there is no unmount store, call and return
-      if (!unmountStore) return onUnmount()
-
-      // generate key using the stack trace
-      const key = keyPrefix + (new Error()).stack.match(/(\d+:\d+)/g).slice(0, 5).join('|')
-
-      unmountStore[key] = onUnmount
-    }
   }
 
   static useEffect(globalSpace = window, engineName = 'effectStore') {

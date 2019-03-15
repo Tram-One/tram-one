@@ -32,9 +32,6 @@ class Tram {
     // setup store for effects
     Tram.setupLog(globalSpace, 'effectStore')
 
-    // setup working key to match state and effects to components
-    Tram.setupWorkingKey(globalSpace, 'componentKey')
-
     return (selector, component, webStorage) => {
       const mount = Tram.mount(globalSpace)
       // re-mount the app when a state action is triggered
@@ -154,24 +151,12 @@ class Tram {
     return globalSpace[logName]
   }
 
-  static setupWorkingKey(globalSpace = window, keyName) {
-    // we do not have a space to put our working key
-    if (!globalSpace) return false
-
-    globalSpace[keyName] = []
-    return globalSpace[keyName]
-  }
-
   static getEngine(globalSpace = window, engineName) {
     return globalSpace && globalSpace[engineName]
   }
 
   static getLog(globalSpace = window, logName) {
     return Tram.getEngine(globalSpace, logName)
-  }
-
-  static getWorkingKey(globalSpace = window, keyName) {
-    return Tram.getEngine(globalSpace, keyName)
   }
 
   static clearLog(globalSpace = window, logName) {

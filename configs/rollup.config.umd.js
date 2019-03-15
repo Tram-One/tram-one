@@ -11,8 +11,6 @@ const pkg = require('../package.json')
 
 const plugins = [
   resolve({
-    main: true,
-    preferBuiltins: true,
     browser: true
   }),
   builtins(),
@@ -26,7 +24,7 @@ const plugins = [
 ]
 
 export default {
-  input: 'tram-one.js',
+  input: 'src/tram-one/index.js',
   external: ['domino'],
   output: {
     name: 'tram-one',

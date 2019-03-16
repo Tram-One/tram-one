@@ -3,7 +3,7 @@ const belit = require('belit')
 const ninlil = require('ninlil')
 const hyperz = require('hyperz')
 
-const { } = require('../working-key')
+const { pushWorkingKeyBranch, popWorkingKeyBranch } = require('../working-key')
 
 /**
  * function to generate a tagged template function for any namespace
@@ -14,19 +14,17 @@ const { } = require('../working-key')
  *
  * @return {function}
  */
-const dom = (globalSpace = window) => {
-  return (namespace, registry) => {
-    if (registry) {
-      assert.equal(typeof registry, 'object', 'Tram-One: registry should be an object')
-      assert.ok(!(Array.isArray(registry)), 'Tram-One: registry should be an object')
-    }
+const registerDom = (globalSpace = window) => {
+  return (namespace, registry = {}) => {
+    assert.equal(typeof registry, 'object', 'Tram-One: registry should be an object')
+    assert.ok(!(Array.isArray(registry)), 'Tram-One: registry should be an object')
 
     const hookedRegistry = Object.keys(registry).reduce((newRegistry, tagName) => {
       const tagFunction = registry[tagName]
       const hookedTagFunction = (...args) => {
-        getKey(globalSpace, 'hookKey').push(tagName)
+        pushWorkingKeyBranch(globalSpace, 'hookKey')(tagName)
         const tagResult = tagFunction(...args)
-        getKey(globalSpace, 'hookKey').pop()
+        popWorkingKeyBranch(globalSpace, 'hookKey')()
         return tagResult
       }
 
@@ -44,8 +42,8 @@ const dom = (globalSpace = window) => {
  * @param {object} registry
  * @return {function}
  */
-const html = (globalSpace = window) => (registry) => {
-  return dom(null, registry)
+const registerHtml = (globalSpace = window) => (registry) => {
+  return registerDom(globalSpace)(null, registry)
 }
 
 /**
@@ -55,8 +53,8 @@ const html = (globalSpace = window) => (registry) => {
  * @param {object} registry
  * @return {function}
  */
-const svg = (globalSpace = window) => (registry) => {
-  return dom('http://www.w3.org/2000/svg', registry)
+const registerSvg = (globalSpace = window) => (registry) => {
+  return registerDom(globalSpace)('http://www.w3.org/2000/svg', registry)
 }
 
-module.exports = { dom, html, svg }
+module.exports = { registerDom, registerHtml, registerSvg }

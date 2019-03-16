@@ -1,2 +1,2 @@
-const { registerDom, registerHtml, registerSvg } = require('./dom')
-module.exports = { registerDom, registerHtml, registerSvg }
+// module.exports = require('./dom')
+module.exports = require('./gdom')

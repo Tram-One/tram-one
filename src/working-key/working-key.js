@@ -29,17 +29,22 @@ const pushWorkingKeyBranch = (globalSpace = window, keyName) => {
   }
 }
 
-const incrementWorkingKeyBranch = (globalSpace = window, keyName) => {
-  return (branch) => {
+const popWorkingKeyBranch = (globalSpace = window, keyName) => {
+  return () => {
     const workingKey = getWorkingKey(globalSpace, keyName)
-    workingKey.branchIndices[getWorkingBranch(globalSpace, keyName)] += 1
+    workingKey.branch.pop()
   }
+}
+
+const incrementWorkingKeyBranch = (globalSpace = window, keyName) => {
+  const workingKey = getWorkingKey(globalSpace, keyName)
+  workingKey.branchIndices[getWorkingBranch(globalSpace, keyName)] += 1
 }
 
 const getWorkingKeyValue = (globalSpace = window, keyName) => {
   const workingKey = getWorkingKey(globalSpace, keyName)
   const index = workingKey.branchIndices[getWorkingBranch(globalSpace, keyName)]
-  return getWorkingBranch() + `${[index]}`
+  return getWorkingBranch(globalSpace, keyName) + `${[index]}`
 }
 
 const resetIndicies = (globalSpace = window, keyName) => {
@@ -50,4 +55,4 @@ const resetIndicies = (globalSpace = window, keyName) => {
     })
 }
 
-module.exports = { setupWorkingKey, pushWorkingKeyBranch, incrementWorkingKeyBranch, getWorkingKeyValue, resetIndicies }
+module.exports = { setupWorkingKey, pushWorkingKeyBranch, popWorkingKeyBranch, incrementWorkingKeyBranch, getWorkingKeyValue, resetIndicies }

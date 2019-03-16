@@ -5,6 +5,7 @@ const urlListener = require('url-listener')
 const { setupEngine, getEngine } = require('../engine')
 const { setupLog } = require('../log')
 const { mount } = require('../mount')
+const { setupWorkingKey } = require('../working-key')
 
 /**
  * start the app by mounting a component on some DOM or css selector
@@ -24,6 +25,9 @@ const start = (globalSpace = window) => {
 
     // setup store for effects
     setupLog(globalSpace, 'effectStore')
+
+    // setup working key for hooks
+    setupWorkingKey(globalSpace, 'hookKey')
 
     const appMount = mount(globalSpace)
     // re-mount the app when a state action is triggered

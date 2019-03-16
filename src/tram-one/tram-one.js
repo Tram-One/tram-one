@@ -7,7 +7,9 @@ const { routeElement, switchElement } = require('../routing')
 const { start } = require('../start')
 
 module.exports = (globalSpace = window) => ({
-  registerDom, registerHtml, registerSvg,
+  registerDom: registerDom(globalSpace),
+  registerHtml: registerHtml(globalSpace),
+  registerSvg: registerSvg(globalSpace),
   addActions: addActions(globalSpace),
   addListener: addListener(globalSpace),
   useEffect: useEffect(globalSpace),

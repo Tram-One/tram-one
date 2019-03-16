@@ -1,2 +1,1 @@
-const { mount } = require('./mount')
-module.exports = { mount }
+module.exports = require('./mount')

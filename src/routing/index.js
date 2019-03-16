@@ -1,2 +1,1 @@
-const { routeElement, switchElement } = require('./routing')
-module.exports = { routeElement, switchElement }
+module.exports = require('./routing')

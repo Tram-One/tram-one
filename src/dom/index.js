@@ -1,2 +1,1 @@
-// module.exports = require('./dom')
-module.exports = require('./gdom')
+module.exports = require('./dom')

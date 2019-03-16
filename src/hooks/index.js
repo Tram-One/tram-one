@@ -1,2 +1,1 @@
-const { useEffect, useState, useStore } = require('./hooks')
-module.exports = { useEffect, useState, useStore }
+module.exports = require('./hooks')

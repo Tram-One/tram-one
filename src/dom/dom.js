@@ -12,7 +12,7 @@ const hyperz = require('hyperz')
  *
  * @return {function}
  */
-const dom = (namespace, registry) => {
+const registerDom = (namespace, registry) => {
   if (registry) {
     assert.equal(typeof registry, 'object', 'Tram-One: registry should be an object')
     assert.ok(!(Array.isArray(registry)), 'Tram-One: registry should be an object')
@@ -28,8 +28,8 @@ const dom = (namespace, registry) => {
  * @param {object} registry
  * @return {function}
  */
-const html = (registry) => {
-  return dom(null, registry)
+const registerHtml = (registry) => {
+  return registerDom(null, registry)
 }
 
 /**
@@ -39,8 +39,8 @@ const html = (registry) => {
  * @param {object} registry
  * @return {function}
  */
-const svg = (registry) => {
-  return dom('http://www.w3.org/2000/svg', registry)
+const registerSvg = (registry) => {
+  return registerDom('http://www.w3.org/2000/svg', registry)
 }
 
-module.exports = { dom, html, svg }
+module.exports = { registerDom, registerHtml, registerSvg }

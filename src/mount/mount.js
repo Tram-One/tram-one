@@ -70,8 +70,6 @@ const mount = (globalSpace = window) => {
     newEffectKeys.forEach(effectKey =>
       getLog(globalSpace, 'effectStore')[effectKey] = allNewEffects[effectKey]()
     )
-
-    return Tram
   }
 }
 

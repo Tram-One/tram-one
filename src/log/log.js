@@ -1,4 +1,4 @@
-const getEngine = require('../engine')
+const { getEngine } = require('../engine')
 
 const setupLog = (globalSpace = window, logName) => {
   // we do not have a space to put our log

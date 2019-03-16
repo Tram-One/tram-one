@@ -13,7 +13,7 @@
 </div>
 <div align="center">
   <a href="https://www.npmjs.com/package/tram-one">
-    <img src="https://github.com/Tram-One/tram-one/raw/master/docs/images/esm.svg?sanitize=true" alt="ESM build size">
+    <img src="https://github.com/Tram-One/tram-one/raw/master/docs/images/cjs.svg?sanitize=true" alt="Common JS build size">
   </a>
   <a href="https://unpkg.com/tram-one/dist/tram-one.umd.js">
     <img src="https://github.com/Tram-One/tram-one/raw/master/docs/images/umd.svg?sanitize=true" alt="UMD build size">

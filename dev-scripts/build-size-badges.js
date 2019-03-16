@@ -22,5 +22,5 @@ const generateBadge = (label) => {
   fs.writeFile(dest, svg, err => err && process.stdout.write(err))
 }
 
-generateBadge('esm')
+generateBadge('cjs')
 generateBadge('umd')

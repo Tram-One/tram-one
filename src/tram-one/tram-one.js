@@ -1,4 +1,4 @@
-const { dom, html, svg } = require('../dom')
+const { registerDom, registerHtml, registerSvg } = require('../dom')
 const { setupEngine, getEngine, addActions, addListener } = require('../engine')
 const { useEffect, useState, useStore } = require('../hooks')
 const { setupLog, getLog, clearLog } = require('../log')
@@ -7,7 +7,7 @@ const { routeElement, switchElement } = require('../routing')
 const { start } = require('../start')
 
 module.exports = (globalSpace = window) => ({
-  dom, html, svg,
+  registerDom, registerHtml, registerSvg,
   addActions: addActions(globalSpace),
   addListener: addListener(globalSpace),
   useEffect: useEffect(globalSpace),
@@ -19,7 +19,7 @@ module.exports = (globalSpace = window) => ({
 })
 
 module.exports.pantograph = {
-  dom, html, svg,
+  registerDom, registerHtml, registerSvg,
   setupEngine, getEngine, addActions, addListener,
   useEffect, useState, useStore,
   setupLog, getLog, clearLog,

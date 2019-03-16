@@ -21,8 +21,6 @@ const addActions = (globalSpace = window, engineName = 'appEngine') => {
     )
 
     getEngine(globalSpace, engineName).addActions(actionGroups)
-
-    return Tram
   }
 }
 
@@ -31,8 +29,6 @@ const addListener = (globalSpace = window, engineName = 'appEngine') => {
     assert.equal(typeof listener, 'function', 'Tram-One: Listener should be a function')
 
     getEngine(globalSpace, engineName).addListener(listener)
-
-    return Tram
   }
 }
 

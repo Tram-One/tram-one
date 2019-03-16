@@ -4,7 +4,7 @@ const urlListener = require('url-listener')
 
 const { setupEngine, getEngine } = require('../engine')
 const { setupLog } = require('../log')
-const mount = require('../mount')
+const { mount } = require('../mount')
 
 /**
  * start the app by mounting a component on some DOM or css selector

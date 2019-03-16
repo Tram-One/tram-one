@@ -1,14 +1,10 @@
 const filesize = require('rollup-plugin-filesize')
-const resolve = require('rollup-plugin-node-resolve')
 const commonjs = require('rollup-plugin-commonjs')
 const pkg = require('../package.json')
 
 const external = Object.keys(pkg.dependencies)
 
 const plugins = [
-  resolve({
-    preferBuiltins: true
-  }),
   commonjs(),
   filesize()
 ]
@@ -18,7 +14,8 @@ export default {
   external: external,
   plugins: plugins,
   output: {
-    file: pkg.module,
-    format: 'esm'
+    file: pkg.commonjs,
+    format: 'cjs',
+    interop: false
   }
 }

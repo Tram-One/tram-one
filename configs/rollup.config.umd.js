@@ -11,6 +11,7 @@ const pkg = require('../package.json')
 
 const plugins = [
   resolve({
+    preferBuiltins: true,
     browser: true
   }),
   builtins(),

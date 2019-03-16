@@ -3,8 +3,7 @@ const belit = require('belit')
 const ninlil = require('ninlil')
 const hyperz = require('hyperz')
 
-const { getWorkingState, pushStateValue, pushStateKey, popStateKey }
-= require('../state')
+const { } = require('../working-key')
 
 /**
  * function to generate a tagged template function for any namespace

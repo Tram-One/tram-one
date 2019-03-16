@@ -12,9 +12,9 @@
     <path fill="url(#b)" d="M0 0h90v20H0z"/>
   </g>
   <g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11">
-    <text x="16.5" y="15" fill="#010101" fill-opacity=".3">esm</text>
-    <text x="16.5" y="14">esm</text>
-    <text x="59" y="15" fill="#010101" fill-opacity=".3">12.56 kB</text>
-    <text x="59" y="14">12.56 kB</text>
+    <text x="16.5" y="15" fill="#010101" fill-opacity=".3">cjs</text>
+    <text x="16.5" y="14">cjs</text>
+    <text x="59" y="15" fill="#010101" fill-opacity=".3">12.92 kB</text>
+    <text x="59" y="14">12.92 kB</text>
   </g>
 </svg>

@@ -2,6 +2,7 @@ const assert = require('assert')
 const morph = require('tatermorph')
 
 const { getLog, clearLog } = require('../log')
+const { resetIndicies } = require('../working-key')
 
 /**
  * internal method for building and updating / creating the app
@@ -70,6 +71,9 @@ const mount = (globalSpace = window) => {
     newEffectKeys.forEach(effectKey =>
       getLog(globalSpace, 'effectStore')[effectKey] = allNewEffects[effectKey]()
     )
+
+    // if we used any working keys for hooks, clear them out now
+    resetIndicies(globalSpace, 'hookKey')
   }
 }
 

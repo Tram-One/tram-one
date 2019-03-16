@@ -2,18 +2,15 @@ const { getEngine } = require('../engine')
 const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('../working-key')
 
 const useState = (globalSpace = window, engineName = 'stateEngine') => {
-  return (value, keyPrefix = '') => {
+  return (value) => {
     // get a state engine
     const stateEngine = getEngine(globalSpace, engineName)
 
     // if we couldn't, just return whatever value we got
     if (!stateEngine) return [value, () => {}]
 
-    // generate key using the stack trace
-    // const key = keyPrefix + (new Error()).stack.match(/(\d+:\d+)/g).slice(0, 5).join('|')
-
     // get the key value from working-key
-    const key = keyPrefix + getWorkingKeyValue(globalSpace, 'hookKey')
+    const key = getWorkingKeyValue(globalSpace, 'hookKey')
     incrementWorkingKeyBranch(globalSpace, 'hookKey')
 
     // save this value in our stateEngine if we haven't

@@ -25,7 +25,9 @@ const pushWorkingKeyBranch = (globalSpace = window, keyName) => {
   return (branch) => {
     const workingKey = getWorkingKey(globalSpace, keyName)
     workingKey.branch.push(branch)
-    workingKey.branchIndices[getWorkingBranch(globalSpace, keyName)] = 0
+    if (!workingKey.branchIndices[getWorkingBranch(globalSpace, keyName)]) {
+      workingKey.branchIndices[getWorkingBranch(globalSpace, keyName)] = 0
+    }
   }
 }
 

@@ -1,8 +1,8 @@
-const assert = require('assert')
 const morph = require('tatermorph')
 
 const { getLog, clearLog } = require('../log')
 const { resetIndicies } = require('../working-key')
+const { assertIsObject, assertIsDefined } = require('../asserts')
 
 /**
  * internal method for building and updating / creating the app
@@ -15,8 +15,10 @@ const { resetIndicies } = require('../working-key')
  * @param {object} actions
  */
 const mount = (globalSpace = window) => {
+  assertIsObject(globalSpace, 'globalSpace', true)
+
   return (selector, component) => {
-    assert.ok(selector !== undefined, 'Tram-One: selector should be a DOM element or CSS selection string')
+    assertIsDefined(selector, 'selector', 'a DOM element or CSS selection string')
 
     // if the selector is a string, try to find the element,
     // otherwise it's probably DOM that we should write directly to

@@ -1,7 +1,7 @@
-const assert = require('assert')
 const belit = require('belit')
 const ninlil = require('ninlil')
 const hyperz = require('hyperz')
+const { assertIsObject, assertIsString } = require('../asserts')
 
 const { pushWorkingKeyBranch, popWorkingKeyBranch } = require('../working-key')
 
@@ -15,9 +15,10 @@ const { pushWorkingKeyBranch, popWorkingKeyBranch } = require('../working-key')
  * @return {function}
  */
 const registerDom = (globalSpace = window) => {
+  assertIsObject(globalSpace, 'globalSpace', true)
   return (namespace, registry = {}) => {
-    assert.equal(typeof registry, 'object', 'Tram-One: registry should be an object')
-    assert.ok(!(Array.isArray(registry)), 'Tram-One: registry should be an object')
+    assertIsString(namespace, 'namespace', true)
+    assertIsObject(registry, 'registry')
 
     // modify the registry so that each component function updates the hook working key
     const hookedRegistry = Object.keys(registry).reduce((newRegistry, tagName) => {

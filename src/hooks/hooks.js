@@ -1,7 +1,10 @@
 const { getEngine } = require('../engine')
 const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('../working-key')
+const { assertGlobalSpaceAndEngine, assertIsFunction } = require('../asserts')
 
 const useState = (globalSpace = window, engineName = 'stateEngine') => {
+  assertGlobalSpaceAndEngine('stateEngine')(globalSpace, engineName)
+
   return (value) => {
     // get a state engine
     const stateEngine = getEngine(globalSpace, engineName)
@@ -35,22 +38,33 @@ const useState = (globalSpace = window, engineName = 'stateEngine') => {
 }
 
 const useEffect = (globalSpace = window, engineName = 'effectStore') => {
-  return (onEffect, keyPrefix = '') => {
+  assertGlobalSpaceAndEngine('effectStore')(globalSpace, engineName)
+
+  return (onEffect) => {
+    assertIsFunction(onEffect, 'effect')
+
     // get the store of effects
     const effectStore = getEngine(globalSpace, 'effectStore')
 
     // if there is no store, call and return
     if (!effectStore) return onEffect()
 
-    // generate key using the stack trace
-    const key = keyPrefix + (new Error()).stack.match(/(\d+:\d+)/g).slice(0, 5).join('|')
+    // get the key value from working-key
+    const key = getWorkingKeyValue(globalSpace, 'hookKey')
+    incrementWorkingKeyBranch(globalSpace, 'hookKey')
 
     effectStore[key] = onEffect
   }
 }
 
 const useStore = (globalSpace = window, engineName = 'appEngine') => {
+  assertGlobalSpaceAndEngine('appEngine')(globalSpace, engineName)
+
   const engine = getEngine(globalSpace, engineName)
+
+  // if there is no store, return false
+  if (!engine) return false
+
   return () => [engine.store, engine.actions]
 }
 

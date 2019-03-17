@@ -1,4 +1,3 @@
-const assert = require('assert')
 const battery = require('hover-battery')
 const urlListener = require('url-listener')
 
@@ -6,6 +5,7 @@ const { setupEngine, getEngine } = require('../engine')
 const { setupLog } = require('../log')
 const { mount } = require('../mount')
 const { setupWorkingKey } = require('../working-key')
+const { assertIsObject, assertIsDefined, assertIsFunction } = require('../asserts')
 
 /**
  * start the app by mounting a component on some DOM or css selector
@@ -15,7 +15,12 @@ const { setupWorkingKey } = require('../working-key')
  * @param {object} component
  */
 const start = (globalSpace = window) => {
+  assertIsObject(globalSpace, 'globalSpace', true)
+
   return (selector, component, webStorage) => {
+    assertIsDefined(selector, 'selector', 'a DOM element or CSS selection string')
+    assertIsFunction(component, 'component')
+    assertIsObject(webStorage, 'webStorage', true)
 
     // setup dedicated engine for component state
     setupEngine(globalSpace, 'stateEngine')

@@ -1,5 +1,5 @@
 const HoverEngine = require('hover-engine')
-const { assertGlobalSpaceAndEngine, assertIsFunction } = require('../asserts')
+const { assertGlobalSpaceAndEngine, assertIsObject, assertIsFunction } = require('../asserts')
 
 const assertEngine = assertGlobalSpaceAndEngine('engineName')
 

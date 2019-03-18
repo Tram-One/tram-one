@@ -1,5 +1,6 @@
 const morph = require('tatermorph')
 
+const { TRAM_EFFECT_STORE, TRAM_HOOK_KEY } = require('../engineNames')
 const { getLog, clearLog } = require('../log')
 const { resetIndicies } = require('../working-key')
 const { assertIsObject, assertIsDefined } = require('../asserts')
@@ -45,15 +46,15 @@ const mount = (globalSpace = window) => {
     }
 
     // save all the mount effects that have happened, and wipe the effectStore
-    const existingEffects = Object.assign({}, getLog(globalSpace, 'effectStore'))
-    clearLog(globalSpace, 'effectStore')
+    const existingEffects = Object.assign({}, getLog(globalSpace, TRAM_EFFECT_STORE))
+    clearLog(globalSpace, TRAM_EFFECT_STORE)
 
     // update our child element with a new version of the app
     // tatermorph knows how to intelligently trigger only diffs that matter on the page
     morph(targetChild, component(), getEvents)
 
     // get the effects that are new
-    const allNewEffects = Object.assign({}, getLog(globalSpace, 'effectStore'))
+    const allNewEffects = Object.assign({}, getLog(globalSpace, TRAM_EFFECT_STORE))
 
     // split out effects between existing, new and removed
     const existingEffectKeys = Object.keys(allNewEffects).filter(effect => (effect in existingEffects))
@@ -65,17 +66,17 @@ const mount = (globalSpace = window) => {
 
     // add any effects that should be in the store back in
     existingEffectKeys.forEach(effectKey => {
-      getLog(globalSpace, 'effectStore')[effectKey] = existingEffects[effectKey]
+      getLog(globalSpace, TRAM_EFFECT_STORE)[effectKey] = existingEffects[effectKey]
     })
 
     // run all new effects that we haven't seen before
     // save any cleanup effects in the effectStore
     newEffectKeys.forEach(effectKey =>
-      getLog(globalSpace, 'effectStore')[effectKey] = allNewEffects[effectKey]()
+      getLog(globalSpace, TRAM_EFFECT_STORE)[effectKey] = allNewEffects[effectKey]()
     )
 
     // if we used any working keys for hooks, clear them out now
-    resetIndicies(globalSpace, 'hookKey')
+    resetIndicies(globalSpace, TRAM_HOOK_KEY)
   }
 }
 

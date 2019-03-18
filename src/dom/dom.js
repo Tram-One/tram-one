@@ -1,8 +1,9 @@
 const belit = require('belit')
 const ninlil = require('ninlil')
 const hyperz = require('hyperz')
-const { assertIsObject, assertIsString } = require('../asserts')
 
+const { TRAM_HOOK_KEY } = require('../engineNames')
+const { assertIsObject, assertIsString } = require('../asserts')
 const { pushWorkingKeyBranch, popWorkingKeyBranch } = require('../working-key')
 
 /**
@@ -24,9 +25,9 @@ const registerDom = (globalSpace = window) => {
     const hookedRegistry = Object.keys(registry).reduce((newRegistry, tagName) => {
       const tagFunction = registry[tagName]
       const hookedTagFunction = (...args) => {
-        pushWorkingKeyBranch(globalSpace, 'hookKey')(tagName)
+        pushWorkingKeyBranch(globalSpace, TRAM_HOOK_KEY)(tagName)
         const tagResult = tagFunction(...args)
-        popWorkingKeyBranch(globalSpace, 'hookKey')()
+        popWorkingKeyBranch(globalSpace, TRAM_HOOK_KEY)()
         return tagResult
       }
 

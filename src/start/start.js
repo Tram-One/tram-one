@@ -1,6 +1,7 @@
 const battery = require('hover-battery')
 const urlListener = require('url-listener')
 
+const { TRAM_STATE_ENGINE, TRAM_APP_ENGINE, TRAM_EFFECT_STORE, TRAM_HOOK_KEY } = require('../engineNames')
 const { setupEngine, getEngine } = require('../engine')
 const { setupLog } = require('../log')
 const { mount } = require('../mount')
@@ -23,33 +24,33 @@ const start = (globalSpace = window) => {
     assertIsObject(webStorage, 'webStorage', true)
 
     // setup dedicated engine for component state
-    setupEngine(globalSpace, 'stateEngine')
+    setupEngine(globalSpace, TRAM_STATE_ENGINE)
 
     // setup dedicated engine for app state management
-    setupEngine(globalSpace, 'appEngine')
+    setupEngine(globalSpace, TRAM_APP_ENGINE)
 
     // setup store for effects
-    setupLog(globalSpace, 'effectStore')
+    setupLog(globalSpace, TRAM_EFFECT_STORE)
 
     // setup working key for hooks
-    setupWorkingKey(globalSpace, 'hookKey')
+    setupWorkingKey(globalSpace, TRAM_HOOK_KEY)
 
     const appMount = mount(globalSpace)
     // re-mount the app when a state action is triggered
-    getEngine(globalSpace, 'stateEngine').addListener(() => {
+    getEngine(globalSpace, TRAM_STATE_ENGINE).addListener(() => {
       appMount(selector, component)
     })
 
     // re-mount the app when an app action is triggered
-    getEngine(globalSpace, 'appEngine').addListener(() => {
+    getEngine(globalSpace, TRAM_APP_ENGINE).addListener(() => {
       appMount(selector, component)
     })
 
     // if webStorage is defined, wire it into hover-engine with hover-battery
     // (effectively, set up the initial store values and add appropriate listeners to write to webStorage)
     if (webStorage) {
-      getEngine(globalSpace, 'appEngine').addActions(battery(webStorage).actions)
-      getEngine(globalSpace, 'appEngine').addListener(battery(webStorage).listener)
+      getEngine(globalSpace, TRAM_APP_ENGINE).addActions(battery(webStorage).actions)
+      getEngine(globalSpace, TRAM_APP_ENGINE).addListener(battery(webStorage).listener)
     }
 
     // wire up urlListener so that we remount whenever the url changes

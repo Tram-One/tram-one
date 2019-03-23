@@ -27,7 +27,8 @@ const addActions = (globalSpace = window, engineName = TRAM_APP_ENGINE) => {
   assertEngine(globalSpace, engineName)
   return (actionGroups) => {
     assertIsObject(actionGroups, 'actionGroups', false, '{ store-key: { action-name: action-function } }')
-    getEngine(globalSpace, engineName).addActions(actionGroups)
+    const engine = getEngine(globalSpace, engineName)
+    engine && engine.addActions(actionGroups)
   }
 }
 
@@ -35,7 +36,8 @@ const addListener = (globalSpace = window, engineName = TRAM_APP_ENGINE) => {
   assertEngine(globalSpace, engineName)
   return (listener) => {
     assertIsFunction(listener, 'listener')
-    getEngine(globalSpace, engineName).addListener(listener)
+    const engine = getEngine(globalSpace, engineName)
+    engine && engine.addListener(listener)
   }
 }
 

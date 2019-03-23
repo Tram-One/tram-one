@@ -1,4 +1,3 @@
-const { getEngine } = require('../engine')
 const { assertGlobalSpaceAndEngine } = require('../asserts')
 
 const assertEngine = assertGlobalSpaceAndEngine('logName')
@@ -18,8 +17,7 @@ const setupLog = (globalSpace = window, logName) => {
 
 const getLog = (globalSpace = window, logName) => {
   assertEngine(globalSpace, logName)
-
-  return getEngine(globalSpace, logName)
+  return globalSpace && globalSpace[logName]
 }
 
 const clearLog = (globalSpace = window, logName) => {

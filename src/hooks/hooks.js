@@ -1,5 +1,6 @@
 const { TRAM_HOOK_KEY, TRAM_EFFECT_STORE, TRAM_APP_ENGINE, TRAM_STATE_ENGINE } = require('../engineNames')
 const { getEngine } = require('../engine')
+const { getLog } = require('../log')
 const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('../working-key')
 const { assertGlobalSpaceAndEngine, assertIsFunction } = require('../asserts')
 
@@ -45,7 +46,7 @@ const useEffect = (globalSpace = window, engineName = TRAM_EFFECT_STORE) => {
     assertIsFunction(onEffect, 'effect')
 
     // get the store of effects
-    const effectStore = getEngine(globalSpace, TRAM_EFFECT_STORE)
+    const effectStore = getLog(globalSpace, TRAM_EFFECT_STORE)
 
     // if there is no store, call and return
     if (!effectStore) return onEffect()

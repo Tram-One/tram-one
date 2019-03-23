@@ -19,7 +19,7 @@ const assertIsFunction = (value, variable, orUndefined = false, shape = 'a funct
 }
 
 const assertIsDefined = (value, variable, shape = 'defined') => {
-  assert.ok(value !== undefined, `Tram-One: ${variable} should be ${shape}`)
+  assert.ok(!undefinedCheck(value), `Tram-One: ${variable} should be ${shape}`)
 }
 
 const assertGlobalSpaceAndEngine = (engineName) => (globalSpace, engineValue) => {

@@ -9,6 +9,9 @@ const setupWorkingKey = (globalSpace = window, keyName) => {
   // we do not have a space to put our key
   if (!globalSpace) return false
 
+  // if one already exists, return it
+  if (globalSpace[keyName]) return globalSpace[keyName]
+
   globalSpace[keyName] = {
     branch: [],
     branchIndices: {

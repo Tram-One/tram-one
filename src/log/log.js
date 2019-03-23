@@ -9,6 +9,9 @@ const setupLog = (globalSpace = window, logName) => {
   // we do not have a space to put our log
   if (!globalSpace) return false
 
+  // if one already exists, return it
+  if (globalSpace[logName]) return globalSpace[logName]
+
   globalSpace[logName] = {}
   return globalSpace[logName]
 }

@@ -11,6 +11,9 @@ const setupEngine = (globalSpace = window, engineName) => {
   // we do not have a space to put our engine
   if (!globalSpace) return false
 
+  // if one already exists, return existing one
+  if (globalSpace[engineName]) return globalSpace[engineName]
+
   globalSpace[engineName] = new HoverEngine()
   return globalSpace[engineName]
 }

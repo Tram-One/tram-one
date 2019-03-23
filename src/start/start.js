@@ -18,22 +18,22 @@ const { assertIsObject, assertIsDefined, assertIsFunction } = require('../assert
 const start = (globalSpace = window) => {
   assertIsObject(globalSpace, 'globalSpace', true)
 
+  // setup dedicated engine for component state
+  setupEngine(globalSpace, TRAM_STATE_ENGINE)
+
+  // setup dedicated engine for app state management
+  setupEngine(globalSpace, TRAM_APP_ENGINE)
+
+  // setup store for effects
+  setupLog(globalSpace, TRAM_EFFECT_STORE)
+
+  // setup working key for hooks
+  setupWorkingKey(globalSpace, TRAM_HOOK_KEY)
+
   return (selector, component, webStorage) => {
     assertIsDefined(selector, 'selector', 'a DOM element or CSS selection string')
     assertIsFunction(component, 'component')
     assertIsObject(webStorage, 'webStorage', true)
-
-    // setup dedicated engine for component state
-    setupEngine(globalSpace, TRAM_STATE_ENGINE)
-
-    // setup dedicated engine for app state management
-    setupEngine(globalSpace, TRAM_APP_ENGINE)
-
-    // setup store for effects
-    setupLog(globalSpace, TRAM_EFFECT_STORE)
-
-    // setup working key for hooks
-    setupWorkingKey(globalSpace, TRAM_HOOK_KEY)
 
     const appMount = mount(globalSpace)
     // re-mount the app when a state action is triggered

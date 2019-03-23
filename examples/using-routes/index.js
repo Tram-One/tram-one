@@ -1,100 +1,57 @@
-const Tram = require('../../tram-one')
-const app = new Tram()
+// in reality, this should be either:
+// const { ... } = require('tram-one')()
+// or
+// import Tram from 'tram-one'
+// const { ... } = Tram()
 
-const fakeLink = (attrs, children) => {
-  const linkStyle = `
-    text-decoration: underline;
-    cursor: pointer;
-    user-select: none;
-  `
-  const nav = () => window.history.pushState({}, '', attrs.href)
-  return Tram.html()`
-    <span style=${linkStyle} onclick=${nav}>${children}</span>
+const { registerHtml, /* routeElement, switchElement, */ start } = window['tram-one']()
+
+// here we are pulling from the pantograph (which includes raw functions)
+// usually you are safe to use the tram-one function like above, however
+// since the page is loaded locally, we need to modify how the "getPath" works.
+// this is / will be document in a set of pages for the pantograph on the website
+const { routeElement, switchElement } = window['tram-one'].pantograph
+
+const html = registerHtml({
+  route: routeElement(() => window.location.hash.slice(1)),
+  switch: switchElement(() => window.location.hash.slice(1))
+})
+
+const color = (attrs) => {
+  const routeColor = attrs.params.color
+  return html`
+    <div style="color: ${routeColor}">${routeColor}</div>
   `
 }
-
-const html = Tram.html({
-  'fake-link': fakeLink
-})
 
 const home = () => {
   return html`
     <div>
-      <h1>This is the routes example!</h1>
-
       Tram-One
       uses <a href="https://github.com/chrisdavies/rlite">rlite</a>
       and <a href="https://github.com/JRJurman/url-listener">url-listener</a>
       to handle routing.
-      <br /><br />
+      <br/><br/>
       With rlite-router, Tram-One supports routes,
       path params, query-params, hash routes, and wildcards.
-      <br /><br />
+      <br/><br/>
       With url-listener, Tram-One supports can update on pushState, without doing a page reload.
-      <br /><br />
+      <br/><br/>
 
-      Note: in order to use some dynamic routes, you'll need a server, or hosting to
-      handle client side routing (like <a href="https://surge.sh/">surge.sh</a>)
+      How these tools are actually delivered are by Switch and Route tags.
+      These tags are surfaced from Tram-One as special components.
 
-      <br /><br />
-      <a href="/page1">Go to Page 1</a>
-      or <fake-link href="/page1">Soft Load Page 1</fake-link>
+      <br/><br/>
+
+      <div><a href="#blue">Go to Blue</a></div>
+      <div><a href="#red">Go to Red</a></div>
+      <div><a href="#green">Go to Green</a></div>
+
+      <br/>
+
+      <route path=":color" component=${color} />
     </div>
   `
 }
 
-const page1 = () => {
-  return html`
-    <div>
-      <h2>This is the First Page!</h2>
-
-      <a href="/">Go to the Home Page</a>
-      <br /><br />
-      <a href="/page#2">Go to page 2</a>
-      or <fake-link href="/page#2">Soft Load Page 2</fake-link>
-    </div>
-  `
-}
-
-const page2 = () => {
-  return html`
-    <div>
-      <h2>This is the Second Page!</h2>
-
-      <a href="/">Go to the Home Page</a>
-      <br /><br />
-      <a href="/page/3">Go to page 3</a>
-      or <fake-link href="/page/3">Soft Load Page 3</fake-link>
-    </div>
-  `
-}
-
-const pageN = (store, actions, params) => {
-  const nextPage = parseInt(params.page, 10) + 1
-  return html`
-    <div>
-      <h2>This is Page ${params.page}!</h2>
-
-      <a href="/">Go to the Home Page</a>
-      <br /><br />
-      <a href="/page/${nextPage}">Go to page ${nextPage}</a>
-      or <fake-link href="/page/${nextPage}">Soft Load page ${nextPage}</fake-link>
-    </div>
-  `
-}
-
-const nopath = () => {
-  return html`
-    <div>
-      <h2>404!</h2>
-    </div>
-  `
-}
-
-app.addRoute('/', home)
-app.addRoute('/page1', page1)
-app.addRoute('/page#2', page2)
-app.addRoute('/page/:page', pageN)
-app.addRoute('/404', nopath)
-
-app.start('.main')
+start('.main', home)

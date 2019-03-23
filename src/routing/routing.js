@@ -7,6 +7,7 @@ const routeElement = (getPath = defaultGetPath) => {
   assertIsFunction(getPath, 'getPath', false)
 
   return (attrs, children) => {
+    if (!attrs.path) return attrs.component({}, children)
     return rlite(() => '', {
       [attrs.path]: (params) => attrs.component({params, path: attrs.path}, children)
     })(getPath())

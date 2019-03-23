@@ -61,12 +61,14 @@ const useEffect = (globalSpace = window, engineName = TRAM_EFFECT_STORE) => {
 const useStore = (globalSpace = window, engineName = TRAM_APP_ENGINE) => {
   assertGlobalSpaceAndEngine(TRAM_APP_ENGINE)(globalSpace, engineName)
 
-  const engine = getEngine(globalSpace, engineName)
+  return () => {
+    const engine = getEngine(globalSpace, engineName)
 
-  // if there is no store, return false
-  if (!engine) return false
+    // if there is no store, return false
+    if (!engine) return []
 
-  return () => [engine.store, engine.actions]
+    return [engine.store, engine.actions]
+  }
 }
 
 module.exports = { useEffect, useState, useStore }

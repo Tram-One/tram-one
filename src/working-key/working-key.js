@@ -1,5 +1,5 @@
 const { getEngine } = require('../engine')
-const { assertGlobalSpaceAndEngine, assertIsString } = require('../asserts')
+const { assertGlobalSpaceAndEngine, assertIsString, assertIsDefined } = require('../asserts')
 
 const assertEngine = assertGlobalSpaceAndEngine('keyName')
 
@@ -39,6 +39,7 @@ const pushWorkingKeyBranch = (globalSpace = window, keyName) => {
   return (branch) => {
     assertIsString(branch)
     const workingKey = getWorkingKey(globalSpace, keyName)
+    assertIsDefined(workingKey, 'workingKey', 'setup, use setupWorkingKey')
     workingKey.branch.push(branch)
     if (!workingKey.branchIndices[getWorkingBranch(globalSpace, keyName)]) {
       workingKey.branchIndices[getWorkingBranch(globalSpace, keyName)] = 0
@@ -80,4 +81,4 @@ const resetIndicies = (globalSpace = window, keyName) => {
     })
 }
 
-module.exports = { setupWorkingKey, pushWorkingKeyBranch, popWorkingKeyBranch, incrementWorkingKeyBranch, getWorkingKeyValue, resetIndicies }
+module.exports = { setupWorkingKey, pushWorkingKeyBranch, popWorkingKeyBranch, incrementWorkingKeyBranch, getWorkingKey, getWorkingKeyValue, resetIndicies }

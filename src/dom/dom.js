@@ -4,7 +4,7 @@ const hyperz = require('hyperz')
 
 const { TRAM_HOOK_KEY } = require('../engineNames')
 const { assertIsObject, assertIsString } = require('../asserts')
-const { pushWorkingKeyBranch, popWorkingKeyBranch } = require('../working-key')
+const { getWorkingKey, pushWorkingKeyBranch, popWorkingKeyBranch } = require('../working-key')
 
 /**
  * function to generate a tagged template function for any namespace
@@ -22,42 +22,21 @@ const registerDom = (globalSpace = window) => {
     assertIsObject(registry, 'registry')
 
     // modify the registry so that each component function updates the hook working key
-    const hookedRegistry = Object.keys(registry).reduce((newRegistry, tagName) => {
+    const hookedRegistry = globalSpace && Object.keys(registry).reduce((newRegistry, tagName) => {
       const tagFunction = registry[tagName]
       const hookedTagFunction = (...args) => {
-        pushWorkingKeyBranch(globalSpace, TRAM_HOOK_KEY)(tagName)
+        const workingKey = getWorkingKey(globalSpace, TRAM_HOOK_KEY)
+        workingKey && pushWorkingKeyBranch(globalSpace, TRAM_HOOK_KEY)(tagName)
         const tagResult = tagFunction(...args)
-        popWorkingKeyBranch(globalSpace, TRAM_HOOK_KEY)()
+        workingKey && popWorkingKeyBranch(globalSpace, TRAM_HOOK_KEY)()
         return tagResult
       }
 
       return Object.assign({}, newRegistry, {[tagName]: hookedTagFunction})
     }, {})
 
-    return ninlil(hyperz, belit(namespace), hookedRegistry || {})
+    return ninlil(hyperz, belit(namespace), hookedRegistry || registry || {})
   }
 }
 
-/**
- * function to generate a tagged template function for XHTML
- * - for complete documentation, please refer to http://tram-one.io/#tram-html
- *
- * @param {object} registry
- * @return {function}
- */
-const registerHtml = (globalSpace = window) => (registry) => {
-  return registerDom(globalSpace)(null, registry)
-}
-
-/**
- * function to generate a tagged template function for SVG
- * - for complete documentation, please refer to http://tram-one.io/#tram-svg
- *
- * @param {object} registry
- * @return {function}
- */
-const registerSvg = (globalSpace = window) => (registry) => {
-  return registerDom(globalSpace)('http://www.w3.org/2000/svg', registry)
-}
-
-module.exports = { registerDom, registerHtml, registerSvg }
+module.exports = { registerDom }

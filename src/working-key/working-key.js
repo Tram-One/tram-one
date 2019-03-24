@@ -67,6 +67,8 @@ const getWorkingKeyValue = (globalSpace = window, keyName) => {
   assertEngine(globalSpace, keyName)
 
   const workingKey = getWorkingKey(globalSpace, keyName)
+  if (!workingKey) return workingKey
+
   const index = workingKey.branchIndices[getWorkingBranch(globalSpace, keyName)]
   return getWorkingBranch(globalSpace, keyName) + `${[index]}`
 }

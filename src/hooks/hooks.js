@@ -4,19 +4,22 @@ const { getLog } = require('../log')
 const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('../working-key')
 const { assertGlobalSpaceAndEngine, assertIsFunction } = require('../asserts')
 
-const useState = (globalSpace = window, engineName = TRAM_STATE_ENGINE) => {
+const useState = (globalSpace = window, engineName = TRAM_STATE_ENGINE, workingKeyName = TRAM_HOOK_KEY) => {
   assertGlobalSpaceAndEngine(TRAM_STATE_ENGINE)(globalSpace, engineName)
 
   return (value) => {
     // get a state engine
     const stateEngine = getEngine(globalSpace, engineName)
 
-    // if we couldn't, just return whatever value we got
-    if (!stateEngine) return [value, () => {}]
-
     // get the key value from working-key
-    const key = getWorkingKeyValue(globalSpace, TRAM_HOOK_KEY)
-    incrementWorkingKeyBranch(globalSpace, TRAM_HOOK_KEY)
+    const key = getWorkingKeyValue(globalSpace, workingKeyName)
+
+    // if we couldn't get an engine or working key, just return whatever value we got
+    if (!stateEngine || !key) return [value, () => {}]
+
+    // increment the working key branch value
+    // this makes successive useState calls unique (until we reset the key)
+    incrementWorkingKeyBranch(globalSpace, workingKeyName)
 
     // save this value in our stateEngine if we haven't
     // check if we have the action (the store value could be falsy)
@@ -39,21 +42,24 @@ const useState = (globalSpace = window, engineName = TRAM_STATE_ENGINE) => {
   }
 }
 
-const useEffect = (globalSpace = window, engineName = TRAM_EFFECT_STORE) => {
-  assertGlobalSpaceAndEngine(TRAM_EFFECT_STORE)(globalSpace, engineName)
+const useEffect = (globalSpace = window, storeName = TRAM_EFFECT_STORE, workingKeyName = TRAM_HOOK_KEY) => {
+  assertGlobalSpaceAndEngine(TRAM_EFFECT_STORE)(globalSpace, storeName)
 
   return (onEffect) => {
     assertIsFunction(onEffect, 'effect')
 
     // get the store of effects
-    const effectStore = getLog(globalSpace, TRAM_EFFECT_STORE)
-
-    // if there is no store, call and return
-    if (!effectStore) return onEffect()
+    const effectStore = getLog(globalSpace, storeName)
 
     // get the key value from working-key
-    const key = getWorkingKeyValue(globalSpace, TRAM_HOOK_KEY)
-    incrementWorkingKeyBranch(globalSpace, TRAM_HOOK_KEY)
+    const key = getWorkingKeyValue(globalSpace, workingKeyName)
+
+    // if there is no store, call and return
+    if (!effectStore || !key) return onEffect()
+
+    // increment the working key branch value
+    // this makes successive useEffects calls unique (until we reset the key)
+    incrementWorkingKeyBranch(globalSpace, workingKeyName)
 
     effectStore[key] = onEffect
   }
@@ -65,7 +71,7 @@ const useStore = (globalSpace = window, engineName = TRAM_APP_ENGINE) => {
   return () => {
     const engine = getEngine(globalSpace, engineName)
 
-    // if there is no store, return false
+    // if there is no store, return empty array
     if (!engine) return []
 
     return [engine.store, engine.actions]

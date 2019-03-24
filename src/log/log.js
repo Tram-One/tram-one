@@ -5,7 +5,7 @@ const assertEngine = assertGlobalSpaceAndEngine('logName')
 const setupLog = (globalSpace = window, logName) => {
   assertEngine(globalSpace, logName)
 
-  // we do not have a space to put our log
+  // we do not have a space to put our log, return empty object
   if (!globalSpace) return false
 
   // if one already exists, return it
@@ -29,6 +29,8 @@ const clearLog = (globalSpace = window, logName) => {
   if (!logStore) return {}
 
   Object.keys(logStore).forEach(key => delete logStore[key])
+
+  return logStore
 }
 
 module.exports = { setupLog, getLog, clearLog }

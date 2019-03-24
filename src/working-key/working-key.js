@@ -76,7 +76,9 @@ const getWorkingKeyValue = (globalSpace = window, keyName) => {
 const resetIndicies = (globalSpace = window, keyName) => {
   assertEngine(globalSpace, keyName)
 
-  const branches = getWorkingKey(globalSpace, keyName).branchIndices
+  const key = getWorkingKey(globalSpace, keyName)
+  if (!key) return
+  const branches = key.branchIndices
   Object.keys(getWorkingKey(globalSpace, keyName).branchIndices)
     .forEach((branch) => {
       branches[branch] = 0

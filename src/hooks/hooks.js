@@ -54,8 +54,14 @@ const useEffect = (globalSpace = window, storeName = TRAM_EFFECT_STORE, workingK
     // get the key value from working-key
     const key = getWorkingKeyValue(globalSpace, workingKeyName)
 
-    // if there is no store, call and return
-    if (!effectStore || !key) return onEffect()
+    // if there is no store, call start and cleanup
+    if (!effectStore || !key) {
+      const cleanup = onEffect()
+      if (typeof cleanup === 'function') {
+        cleanup()
+      }
+      return
+    }
 
     // increment the working key branch value
     // this makes successive useEffects calls unique (until we reset the key)

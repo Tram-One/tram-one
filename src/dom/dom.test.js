@@ -1,4 +1,3 @@
-const { TRAM_HOOK_KEY } = require('../engineNames')
 const { setupWorkingKey } = require('../working-key')
 const { registerDom } = require('./dom')
 
@@ -57,14 +56,14 @@ describe('dom', () => {
 
       it('should update the working key in global space inside a registered elements', () => {
         const mockSpace = {}
-        setupWorkingKey(mockSpace, TRAM_HOOK_KEY)
-        const baseHtml = registerDom(mockSpace)(null)
+        setupWorkingKey(mockSpace, 'mock-key')
+        const baseHtml = registerDom(mockSpace, 'mock-key')(null)
         const inside = (attrs, children) => {
-          expect(mockSpace[TRAM_HOOK_KEY].branch).toEqual(['inside'])
+          expect(mockSpace['mock-key'].branch).toEqual(['inside'])
           return baseHtml`<div ${attrs}>${children}</div>`
         }
 
-        const html = registerDom(mockSpace)(null, {
+        const html = registerDom(mockSpace, 'mock-key')(null, {
           inside
         })
         const outside = html`
@@ -91,7 +90,7 @@ describe('dom', () => {
         const mockSpace = {}
         const baseHtml = registerDom(mockSpace)(null)
         const inside = (attrs, children) => {
-          expect(mockSpace[TRAM_HOOK_KEY]).toBeUndefined()
+          expect(mockSpace['mock-key']).toBeUndefined()
           return baseHtml`<div ${attrs}>${children}</div>`
         }
 

@@ -15,7 +15,7 @@ const { getWorkingKey, pushWorkingKeyBranch, popWorkingKeyBranch } = require('..
  *
  * @return {function}
  */
-const registerDom = (globalSpace = window) => {
+const registerDom = (globalSpace = window, workingKeyName = TRAM_HOOK_KEY) => {
   assertIsObject(globalSpace, 'globalSpace', true)
   return (namespace, registry = {}) => {
     assertIsString(namespace, 'namespace', true)
@@ -25,10 +25,10 @@ const registerDom = (globalSpace = window) => {
     const hookedRegistry = globalSpace && Object.keys(registry).reduce((newRegistry, tagName) => {
       const tagFunction = registry[tagName]
       const hookedTagFunction = (...args) => {
-        const workingKey = getWorkingKey(globalSpace, TRAM_HOOK_KEY)
-        workingKey && pushWorkingKeyBranch(globalSpace, TRAM_HOOK_KEY)(tagName)
+        const workingKey = getWorkingKey(globalSpace, workingKeyName)
+        workingKey && pushWorkingKeyBranch(globalSpace, workingKeyName)(tagName)
         const tagResult = tagFunction(...args)
-        workingKey && popWorkingKeyBranch(globalSpace, TRAM_HOOK_KEY)()
+        workingKey && popWorkingKeyBranch(globalSpace, workingKeyName)()
         return tagResult
       }
 

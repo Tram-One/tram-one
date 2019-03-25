@@ -18,7 +18,7 @@ const switchElement = (getPath = defaultGetPath) => {
   assertIsFunction(getPath, 'getPath', false)
 
   return (attrs, children) => {
-    return children.filter(child => (typeof child === 'object'))[0]
+    return children.find(child => (typeof child === 'object'))
   }
 }
 

@@ -1,27 +1,14 @@
 const HoverEngine = require('hover-engine')
 
-const { TRAM_APP_ENGINE } = require('../engineNames')
+const { TRAM_APP_ENGINE } = require('../engine-names')
 const { assertGlobalSpaceAndEngine, assertIsObject, assertIsFunction } = require('../asserts')
+const { setup, get } = require('../namespace')
 
 const assertEngine = assertGlobalSpaceAndEngine('engineName')
 
-const setupEngine = (globalSpace = window, engineName) => {
-  assertEngine(globalSpace, engineName)
+const setupEngine = setup(() => new HoverEngine())
 
-  // we do not have a space to put our engine
-  if (!globalSpace) return false
-
-  // if one already exists, return existing one
-  if (globalSpace[engineName]) return globalSpace[engineName]
-
-  globalSpace[engineName] = new HoverEngine()
-  return globalSpace[engineName]
-}
-
-const getEngine = (globalSpace = window, engineName) => {
-  assertEngine(globalSpace, engineName)
-  return globalSpace && globalSpace[engineName]
-}
+const getEngine = get
 
 const addActions = (globalSpace = window, engineName = TRAM_APP_ENGINE) => {
   assertEngine(globalSpace, engineName)

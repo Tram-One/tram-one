@@ -1,7 +1,7 @@
 const battery = require('hover-battery')
 const urlListener = require('url-listener')
 
-const { TRAM_STATE_ENGINE, TRAM_APP_ENGINE, TRAM_EFFECT_STORE, TRAM_HOOK_KEY } = require('../engineNames')
+const { TRAM_STATE_ENGINE, TRAM_APP_ENGINE, TRAM_EFFECT_STORE, TRAM_HOOK_KEY } = require('../engine-names')
 const { setupEngine, getEngine } = require('../engine')
 const { setupLog } = require('../log')
 const { mount } = require('../mount')

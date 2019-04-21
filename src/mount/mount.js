@@ -1,6 +1,6 @@
 const morph = require('tatermorph')
 
-const { TRAM_EFFECT_STORE, TRAM_HOOK_KEY } = require('../engineNames')
+const { TRAM_EFFECT_STORE, TRAM_HOOK_KEY } = require('../engine-names')
 const { getLog, clearLog } = require('../log')
 const { resetIndicies } = require('../working-key')
 const { assertIsObject, assertIsDefined, assertIsFunction } = require('../asserts')

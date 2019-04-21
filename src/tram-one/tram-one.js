@@ -1,6 +1,6 @@
 const { registerDom, registerHtml, registerSvg } = require('../dom')
 const { setupEngine, getEngine, addActions, addListener } = require('../engine')
-const { useEffect, useState, useStore } = require('../hooks')
+const { useEffect, useState, useStore, useUrlParams } = require('../hooks')
 const { setupLog, getLog, clearLog } = require('../log')
 const { mount } = require('../mount')
 const { routeElement, switchElement } = require('../routing')
@@ -15,6 +15,7 @@ module.exports = (globalSpace = window) => ({
   useEffect: useEffect(globalSpace),
   useState: useState(globalSpace),
   useStore: useStore(globalSpace),
+  useUrlParams: useUrlParams(),
   routeElement: routeElement(),
   switchElement: switchElement(),
   start: start(globalSpace)
@@ -23,7 +24,7 @@ module.exports = (globalSpace = window) => ({
 module.exports.pantograph = {
   registerDom, registerHtml, registerSvg,
   setupEngine, getEngine, addActions, addListener,
-  useEffect, useState, useStore,
+  useEffect, useState, useStore, useUrlParams,
   setupLog, getLog, clearLog,
   mount,
   routeElement, switchElement,

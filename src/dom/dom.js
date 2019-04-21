@@ -2,7 +2,7 @@ const belit = require('belit')
 const ninlil = require('ninlil')
 const hyperz = require('hyperz')
 
-const { TRAM_HOOK_KEY } = require('../engineNames')
+const { TRAM_HOOK_KEY } = require('../engine-names')
 const { assertIsObject, assertIsString } = require('../asserts')
 const { getWorkingKey, pushWorkingKeyBranch, popWorkingKeyBranch } = require('../working-key')
 

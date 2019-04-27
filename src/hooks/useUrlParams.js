@@ -9,7 +9,7 @@ module.exports = (getPath = defaultGetPath) => {
   return (pattern) => {
     assertIsDefined(pattern, 'pattern')
 
-    return rlite(() => ({}), {
+    return rlite(() => false, {
       [pattern]: (params) => params
     })(getPath())
   }

@@ -2,20 +2,6 @@ const { setupEngine, getEngine, addActions, addListener } = require('./engine')
 
 describe('engine', () => {
   describe('setupEngine', () => {
-    it('should return false if there is no global space', () => {
-      const setupResult = setupEngine(null, 'mock-engine')
-      expect(setupResult).toBeFalsy()
-    })
-
-    it('should return existing engine if one already exists', () => {
-      const mockEngine = {}
-      const mockSpace = {
-        'mock-engine': mockEngine
-      }
-      const setupResult = setupEngine(mockSpace, 'mock-engine')
-      expect(setupResult).toBe(mockEngine)
-    })
-
     it('should create a new engine if none exists', () => {
       const mockSpace = {}
       const setupResult = setupEngine(mockSpace, 'mock-engine')
@@ -30,17 +16,6 @@ describe('engine', () => {
   })
 
   describe('getEngine', () => {
-    it('should return falsy if there is no globalSpace', () => {
-      const getResult = getEngine(null, 'mock-engine')
-      expect(getResult).toBeFalsy()
-    })
-
-    it('should return falsy if engine is not setup', () => {
-      const mockSpace = {}
-      const getResult = getEngine(mockSpace, 'mock-engine')
-      expect(getResult).toBeFalsy()
-    })
-
     it('should return engine if it has been setup', () => {
       const mockSpace = {}
       const engine = setupEngine(mockSpace, 'mock-engine')

@@ -1,5 +1,5 @@
 const { setupEngine } = require('../engine')
-const { setupWorkingKey, resetIndicies } = require('../working-key')
+const { setupWorkingKey, resetIndices } = require('../working-key')
 const useState = require('./useState')
 
 describe('useState', () => {
@@ -76,7 +76,7 @@ describe('useState', () => {
       const useStateWithEngineAndKey = useState(mockSpace, 'mock-engine', 'mock-working-key')
       const [value, setValue] = useStateWithEngineAndKey(10)
       setValue(20)
-      resetIndicies(mockSpace, 'mock-working-key')
+      resetIndices(mockSpace, 'mock-working-key')
       const [newValue, setNewValue] = useStateWithEngineAndKey(10)
       expect(newValue).toEqual(20)
     })

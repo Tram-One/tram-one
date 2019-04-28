@@ -1,31 +1,16 @@
-const { getEngine } = require('../engine')
+const { setup, get } = require('../namespace')
 const { assertGlobalSpaceAndEngine, assertIsString, assertIsDefined } = require('../asserts')
 
 const assertEngine = assertGlobalSpaceAndEngine('keyName')
 
-const setupWorkingKey = (globalSpace = window, keyName) => {
-  assertEngine(globalSpace, keyName)
-
-  // we do not have a space to put our key
-  if (!globalSpace) return false
-
-  // if one already exists, return it
-  if (globalSpace[keyName]) return globalSpace[keyName]
-
-  globalSpace[keyName] = {
-    branch: [],
-    branchIndices: {
-      '': 0
-    }
+const setupWorkingKey = setup(() => ({
+  branch: [],
+  branchIndices: {
+    '': 0
   }
-  return globalSpace[keyName]
-}
+}))
 
-const getWorkingKey = (globalSpace = window, keyName) => {
-  assertEngine(globalSpace, keyName)
-
-  return getEngine(globalSpace, keyName)
-}
+const getWorkingKey = get
 
 const getWorkingBranch = (globalSpace = window, keyName) => {
   assertEngine(globalSpace, keyName)
@@ -70,10 +55,10 @@ const getWorkingKeyValue = (globalSpace = window, keyName) => {
   if (!workingKey) return workingKey
 
   const index = workingKey.branchIndices[getWorkingBranch(globalSpace, keyName)]
-  return getWorkingBranch(globalSpace, keyName) + `${[index]}`
+  return `${getWorkingBranch(globalSpace, keyName)}[${index}]`
 }
 
-const resetIndicies = (globalSpace = window, keyName) => {
+const resetIndices = (globalSpace = window, keyName) => {
   assertEngine(globalSpace, keyName)
 
   const key = getWorkingKey(globalSpace, keyName)
@@ -85,4 +70,4 @@ const resetIndicies = (globalSpace = window, keyName) => {
     })
 }
 
-module.exports = { setupWorkingKey, pushWorkingKeyBranch, popWorkingKeyBranch, incrementWorkingKeyBranch, getWorkingKey, getWorkingKeyValue, resetIndicies }
+module.exports = { setupWorkingKey, pushWorkingKeyBranch, popWorkingKeyBranch, incrementWorkingKeyBranch, getWorkingKey, getWorkingBranch, getWorkingKeyValue, resetIndices: resetIndices }

@@ -1,24 +1,11 @@
 const { assertGlobalSpaceAndEngine } = require('../asserts')
+const { setup, get } = require('../namespace')
 
 const assertEngine = assertGlobalSpaceAndEngine('logName')
 
-const setupLog = (globalSpace = window, logName) => {
-  assertEngine(globalSpace, logName)
+const setupLog = setup(() => ({}))
 
-  // we do not have a space to put our log, return empty object
-  if (!globalSpace) return false
-
-  // if one already exists, return it
-  if (globalSpace[logName]) return globalSpace[logName]
-
-  globalSpace[logName] = {}
-  return globalSpace[logName]
-}
-
-const getLog = (globalSpace = window, logName) => {
-  assertEngine(globalSpace, logName)
-  return globalSpace && globalSpace[logName]
-}
+const getLog = get
 
 const clearLog = (globalSpace = window, logName) => {
   assertEngine(globalSpace, logName)

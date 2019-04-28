@@ -2,7 +2,7 @@ const morph = require('tatermorph')
 
 const { TRAM_EFFECT_STORE, TRAM_HOOK_KEY } = require('../engine-names')
 const { getLog, clearLog } = require('../log')
-const { resetIndicies } = require('../working-key')
+const { resetIndices } = require('../working-key')
 const { assertIsObject, assertIsDefined, assertIsFunction } = require('../asserts')
 
 /**
@@ -77,7 +77,7 @@ const mount = (globalSpace = window, effectStore = TRAM_EFFECT_STORE, workingKey
     )
 
     // if we used any working keys for hooks, clear them out now
-    resetIndicies(globalSpace, workingKeyName)
+    resetIndices(globalSpace, workingKeyName)
   }
 }
 

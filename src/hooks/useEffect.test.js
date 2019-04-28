@@ -99,7 +99,7 @@ describe('useEffect', () => {
         startEffect()
       }
       useEffectWithStoreAndKey(mockEffect)
-      expect(mockSpace['mock-effect-store']['0']).toBe(mockEffect)
+      expect(mockSpace['mock-effect-store']['[0]']).toBe(mockEffect)
     })
   })
 })

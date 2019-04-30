@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "lint": "xo",
-    "lint:loop": "onchange '**/*.js' -i -- xo",
+    "lint:loop": "npx onchange '**/*.js' -i -- xo",
     "example": "node dev-scripts/example-selector.js",
     "examples": "npm run example",
     "build": "npm run build:cjs && npm run build:umd",
@@ -57,7 +57,7 @@
   },
   "devDependencies": {
     "domino": "^2.0.1",
-    "eslint-config-tram-one": "^2.0.0",
+    "eslint-config-tram-one": "^2.2.0",
     "express": "^4.15.3",
     "inquirer": "^5.2.0",
     "internal-ip": "^1.2.0",

@@ -10,7 +10,7 @@ const units = ['B', 'kB', 'MB', 'GB']
 const getSize = (fileName) => {
   const bytes = fs.statSync(path.resolve(buildPath, fileName)).size
   const n = Math.floor(Math.log(bytes) / Math.log(1024))
-  const formatted = (bytes / Math.pow(1024, n)).toFixed(2)
+  const formatted = (bytes / (1024 ** n)).toFixed(2)
   return `${formatted} ${units[n]}`
 }
 

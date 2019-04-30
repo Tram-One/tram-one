@@ -1,8 +1,8 @@
 # Library Distributable
 dist
 
-# Transformed Spec Files
-tests/bundled-spec.js
+# Coverage Report
+coverage
 
 # Logs
 logs

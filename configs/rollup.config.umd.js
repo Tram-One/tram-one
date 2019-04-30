@@ -3,7 +3,7 @@ const commonjs = require('rollup-plugin-commonjs')
 const filesize = require('rollup-plugin-filesize')
 const globals = require('rollup-plugin-node-globals')
 const resolve = require('rollup-plugin-node-resolve')
-const terser = require('rollup-plugin-terser').terser
+const { terser } = require('rollup-plugin-terser')
 const unassert = require('rollup-plugin-unassert')
 // const sizes = require('rollup-plugin-sizes')
 
@@ -30,7 +30,7 @@ export default {
   output: {
     name: 'tram-one',
     file: pkg.umd,
-    globals: {domino: 'domino'},
+    globals: { domino: 'domino' },
     format: 'umd'
   },
   plugins: plugins

@@ -26,13 +26,13 @@ const registerDom = (globalSpace = window, workingKeyName = TRAM_HOOK_KEY) => {
       const tagFunction = registry[tagName]
       const hookedTagFunction = (...args) => {
         const workingKey = getWorkingKey(globalSpace, workingKeyName)
-        workingKey && pushWorkingKeyBranch(globalSpace, workingKeyName)(tagName)
+        if (workingKey) { pushWorkingKeyBranch(globalSpace, workingKeyName)(tagName) }
         const tagResult = tagFunction(...args)
-        workingKey && popWorkingKeyBranch(globalSpace, workingKeyName)()
+        if (workingKey) { popWorkingKeyBranch(globalSpace, workingKeyName)() }
         return tagResult
       }
 
-      return Object.assign({}, newRegistry, {[tagName]: hookedTagFunction})
+      return Object.assign({}, newRegistry, { [tagName]: hookedTagFunction })
     }, {})
 
     return ninlil(hyperz, belit(namespace), hookedRegistry || registry || {})

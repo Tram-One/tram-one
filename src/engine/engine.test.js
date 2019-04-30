@@ -37,7 +37,7 @@ describe('engine', () => {
     })
 
     it('should not fail if there is no mock space', () => {
-      const engine = setupEngine(null, 'mock-engine')
+      setupEngine(null, 'mock-engine')
       const mockAction = {
         init: () => 0
       }
@@ -56,7 +56,7 @@ describe('engine', () => {
     })
 
     it('should not fail if there is no mock space', () => {
-      const engine = setupEngine(null, 'mock-engine')
+      setupEngine(null, 'mock-engine')
       const mockListener = () => {}
       addListener(null, 'mock-engine')(mockListener)
     })

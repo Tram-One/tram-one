@@ -10,7 +10,9 @@ describe('useEffect', () => {
       const mockEffect = () => {
         startEffect()
       }
+
       useEffectNoGlobal(mockEffect)
+
       expect(startEffect).toHaveBeenCalled()
     })
 
@@ -20,7 +22,9 @@ describe('useEffect', () => {
       const mockEffect = () => {
         return endEffect
       }
+
       useEffectNoGlobal(mockEffect)
+
       expect(endEffect).toHaveBeenCalled()
     })
   })
@@ -33,7 +37,9 @@ describe('useEffect', () => {
       const mockEffect = () => {
         startEffect()
       }
+
       useEffectNoStore(mockEffect)
+
       expect(startEffect).toHaveBeenCalled()
     })
 
@@ -44,7 +50,9 @@ describe('useEffect', () => {
       const mockEffect = () => {
         return endEffect
       }
+
       useEffectNoStore(mockEffect)
+
       expect(endEffect).toHaveBeenCalled()
     })
   })
@@ -58,7 +66,9 @@ describe('useEffect', () => {
       const mockEffect = () => {
         startEffect()
       }
+
       useEffectNoKey(mockEffect)
+
       expect(startEffect).toHaveBeenCalled()
     })
 
@@ -70,7 +80,9 @@ describe('useEffect', () => {
       const mockEffect = () => {
         return endEffect
       }
+
       useEffectNoKey(mockEffect)
+
       expect(endEffect).toHaveBeenCalled()
     })
   })
@@ -85,7 +97,9 @@ describe('useEffect', () => {
       const mockEffect = () => {
         startEffect()
       }
+
       useEffectWithStoreAndKey(mockEffect)
+
       expect(startEffect).not.toHaveBeenCalled()
     })
 
@@ -98,7 +112,9 @@ describe('useEffect', () => {
       const mockEffect = () => {
         startEffect()
       }
+
       useEffectWithStoreAndKey(mockEffect)
+
       expect(mockSpace['mock-effect-store']['[0]']).toBe(mockEffect)
     })
   })

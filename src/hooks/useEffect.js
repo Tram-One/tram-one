@@ -3,7 +3,6 @@ const { getLog } = require('../log')
 const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('../working-key')
 const { assertGlobalSpaceAndEngine, assertIsFunction } = require('../asserts')
 
-
 module.exports = (globalSpace = window, storeName = TRAM_EFFECT_STORE, workingKeyName = TRAM_HOOK_KEY) => {
   assertGlobalSpaceAndEngine(TRAM_EFFECT_STORE)(globalSpace, storeName)
 
@@ -22,6 +21,7 @@ module.exports = (globalSpace = window, storeName = TRAM_EFFECT_STORE, workingKe
       if (typeof cleanup === 'function') {
         cleanup()
       }
+
       return
     }
 

@@ -30,7 +30,7 @@ const clicker = () => {
   `
 }
 
-addActions({counter: countActions})
+addActions({ counter: countActions })
 
 // if you take a look at the console, we can add a listener that logs on action
 console.log(

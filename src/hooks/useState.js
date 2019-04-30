@@ -32,7 +32,7 @@ module.exports = (globalSpace = window, engineName = TRAM_STATE_ENGINE, workingK
     }
 
     // generate getter for key
-    const keyGetter =  stateEngine.store[key]
+    const keyGetter = stateEngine.store[key]
 
     // generate setter for key
     const keySetter = stateEngine.actions[`set${key}`]

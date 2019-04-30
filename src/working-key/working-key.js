@@ -70,4 +70,13 @@ const resetIndices = (globalSpace = window, keyName) => {
     })
 }
 
-module.exports = { setupWorkingKey, pushWorkingKeyBranch, popWorkingKeyBranch, incrementWorkingKeyBranch, getWorkingKey, getWorkingBranch, getWorkingKeyValue, resetIndices: resetIndices }
+module.exports = {
+  setupWorkingKey,
+  pushWorkingKeyBranch,
+  popWorkingKeyBranch,
+  incrementWorkingKeyBranch,
+  getWorkingKey,
+  getWorkingBranch,
+  getWorkingKeyValue,
+  resetIndices
+}

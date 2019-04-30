@@ -35,6 +35,7 @@ const mount = (globalSpace = window, effectStore = TRAM_EFFECT_STORE, workingKey
       const targetChild = document.createElement('div')
       target.appendChild(targetChild)
     }
+
     const targetChild = target.firstElementChild
 
     // collect all the DOM events that we should be keeping track of.
@@ -72,9 +73,9 @@ const mount = (globalSpace = window, effectStore = TRAM_EFFECT_STORE, workingKey
 
     // run all new effects that we haven't seen before
     // save any cleanup effects in the effectStore
-    newEffectKeys.forEach(effectKey =>
+    newEffectKeys.forEach(effectKey => {
       getLog(globalSpace, effectStore)[effectKey] = allNewEffects[effectKey]()
-    )
+    })
 
     // if we used any working keys for hooks, clear them out now
     resetIndices(globalSpace, workingKeyName)

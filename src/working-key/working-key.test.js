@@ -1,3 +1,4 @@
+/* eslint-disable dot-notation */
 const { setupWorkingKey, getWorkingKey, getWorkingBranch, pushWorkingKeyBranch, popWorkingKeyBranch, incrementWorkingKeyBranch, getWorkingKeyValue, resetIndices } = require('./working-key')
 
 describe('working-key', () => {

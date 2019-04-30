@@ -25,7 +25,6 @@ let footer, pageWrapper, home
   }
 }
 
-
 // create page wrapper element
 {
   const html = registerHtml({
@@ -67,6 +66,5 @@ let footer, pageWrapper, home
     `
   }
 }
-
 
 start('.main', home)

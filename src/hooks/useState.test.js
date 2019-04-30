@@ -6,13 +6,13 @@ describe('useState', () => {
   describe('with no global space', () => {
     it('should return value that was passed in', () => {
       const useStateNoGlobal = useState(null, 'mock-engine')
-      const [value, setValue] = useStateNoGlobal(10)
+      const [value] = useStateNoGlobal(10)
       expect(value).toEqual(10)
     })
 
     it('should return no-op for setValue', () => {
       const useStateNoGlobal = useState(null, 'mock-engine')
-      const [value, setValue] = useStateNoGlobal(10)
+      const [, setValue] = useStateNoGlobal(10)
       setValue(20) // should not fail
     })
   })
@@ -21,14 +21,14 @@ describe('useState', () => {
     it('should return value that was passed in', () => {
       const mockSpace = {}
       const useStateNoEngine = useState(mockSpace, 'mock-engine', 'mock-working-key')
-      const [value, setValue] = useStateNoEngine(10)
+      const [value] = useStateNoEngine(10)
       expect(value).toEqual(10)
     })
 
     it('should return no-op for setValue', () => {
       const mockSpace = {}
       const useStateNoEngine = useState(mockSpace, 'mock-engine', 'mock-working-key')
-      const [value, setValue] = useStateNoEngine(10)
+      const [, setValue] = useStateNoEngine(10)
       setValue(20) // should not fail
     })
   })
@@ -38,7 +38,7 @@ describe('useState', () => {
       const mockSpace = {}
       setupEngine(mockSpace, 'mock-engine')
       const useStateNoKey = useState(mockSpace, 'mock-engine', 'mock-working-key')
-      const [value, setValue] = useStateNoKey(10)
+      const [value] = useStateNoKey(10)
       expect(value).toEqual(10)
     })
 
@@ -46,7 +46,7 @@ describe('useState', () => {
       const mockSpace = {}
       setupEngine(mockSpace, 'mock-engine')
       const useStateNoKey = useState(mockSpace, 'mock-engine', 'mock-working-key')
-      const [value, setValue] = useStateNoKey(10)
+      const [, setValue] = useStateNoKey(10)
       setValue(20) // should not fail
     })
   })
@@ -57,7 +57,7 @@ describe('useState', () => {
       setupEngine(mockSpace, 'mock-engine')
       setupWorkingKey(mockSpace, 'mock-working-key')
       const useStateWithEngineAndKey = useState(mockSpace, 'mock-engine', 'mock-working-key')
-      const [value, setValue] = useStateWithEngineAndKey(10)
+      const [value] = useStateWithEngineAndKey(10)
       expect(value).toEqual(10)
     })
 
@@ -65,7 +65,7 @@ describe('useState', () => {
       const mockSpace = {}
       setupEngine(mockSpace, 'mock-engine')
       const useStateWithEngineAndKey = useState(mockSpace, 'mock-engine', 'mock-working-key')
-      const [value, setValue] = useStateWithEngineAndKey(10)
+      const [, setValue] = useStateWithEngineAndKey(10)
       setValue(20) // should not fail
     })
 
@@ -74,10 +74,10 @@ describe('useState', () => {
       setupEngine(mockSpace, 'mock-engine')
       setupWorkingKey(mockSpace, 'mock-working-key')
       const useStateWithEngineAndKey = useState(mockSpace, 'mock-engine', 'mock-working-key')
-      const [value, setValue] = useStateWithEngineAndKey(10)
+      const [, setValue] = useStateWithEngineAndKey(10)
       setValue(20)
       resetIndices(mockSpace, 'mock-working-key')
-      const [newValue, setNewValue] = useStateWithEngineAndKey(10)
+      const [newValue] = useStateWithEngineAndKey(10)
       expect(newValue).toEqual(20)
     })
   })

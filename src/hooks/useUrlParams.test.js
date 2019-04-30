@@ -7,7 +7,7 @@ describe('useUrlParams', () => {
       const useUrlParamsWithMock = useUrlParams(mockGetPath)
       const params = useUrlParamsWithMock('/:account/list')
       expect(params).toEqual(
-        expect.objectContaining({account: 'fake-id'})
+        expect.objectContaining({ account: 'fake-id' })
       )
     })
 

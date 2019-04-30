@@ -10,7 +10,8 @@
     "dist/tram-one.umd.js"
   ],
   "scripts": {
-    "lint": "xo tram-one.js dev-scripts/*.js configs/*.js tests/specs/*.js",
+    "lint": "xo",
+    "lint:loop": "onchange '**/*.js' -i -- xo",
     "example": "node dev-scripts/example-selector.js",
     "examples": "npm run example",
     "build": "npm run build:cjs && npm run build:umd",
@@ -61,6 +62,7 @@
     "inquirer": "^5.2.0",
     "internal-ip": "^1.2.0",
     "jasmine": "^3.0.0",
+    "onchange": "^5.2.0",
     "opn": "^5.0.0",
     "rollup": "^1.6.0",
     "rollup-plugin-commonjs": "^9.2.1",
@@ -74,7 +76,7 @@
     "webpack": "^4.29.0",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.1.14",
-    "xo": "0.20.2"
+    "xo": "0.24.0"
   },
   "xo": {
     "extends": [

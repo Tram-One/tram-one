@@ -3,7 +3,6 @@ const { setupEngine, getEngine, addActions, addListener } = require('../engine')
 const { useEffect, useState, useEngine, useUrlParams, useGlobalState } = require('../hooks')
 const { setupLog, getLog, clearLog } = require('../log')
 const { mount } = require('../mount')
-const { routeElement, switchElement } = require('../routing')
 const { start } = require('../start')
 
 module.exports = (globalSpace = window) => ({
@@ -17,8 +16,6 @@ module.exports = (globalSpace = window) => ({
   useEngine: useEngine(globalSpace),
   useGlobalState: useGlobalState(globalSpace),
   useUrlParams: useUrlParams(),
-  routeElement: routeElement(),
-  switchElement: switchElement(),
   start: start(globalSpace)
 })
 
@@ -28,6 +25,5 @@ module.exports.pantograph = {
   useEffect, useState, useEngine, useUrlParams,
   setupLog, getLog, clearLog,
   mount,
-  routeElement, switchElement,
   start
 }

@@ -1,8 +1,10 @@
-const { mount } = require('./mount')
+/* eslint-disable max-nested-callbacks */
 const { registerHtml } = require('../dom')
 const { setupLog } = require('../log')
 const { useEffect } = require('../hooks')
 const { setupWorkingKey } = require('../working-key')
+const { mount } = require('./mount')
+
 const html = registerHtml()()
 
 describe('mount', () => {
@@ -15,6 +17,7 @@ describe('mount', () => {
           const mockComponent = () => {
             return html`<div><h1>Mock Component</h1></div>`
           }
+
           mountNoGlobal(target, mockComponent)
           expect(target.outerHTML).toEqual('<div><div><h1>Mock Component</h1></div></div>')
         })
@@ -26,10 +29,12 @@ describe('mount', () => {
           const mockEffect = () => {
             mockStartEffect()
           }
+
           const mockComponent = () => {
             useEffect(null, 'mock-store', 'mock-working-key')(mockEffect)
             return html`<div><h1>Mock Component</h1></div>`
           }
+
           mountNoGlobal(target, mockComponent)
           expect(mockStartEffect).toHaveBeenCalled()
         })
@@ -41,10 +46,12 @@ describe('mount', () => {
           const mockEffect = () => {
             return mockCleanupEffect
           }
+
           const mockComponent = () => {
             useEffect(null, 'mock-store', 'mock-working-key')(mockEffect)
             return html`<div><h1>Mock Component</h1></div>`
           }
+
           mountNoGlobal(target, mockComponent)
           expect(mockCleanupEffect).toHaveBeenCalled()
         })
@@ -57,6 +64,7 @@ describe('mount', () => {
           const mockComponent = () => {
             return html`<div><h1>Mock Component</h1></div>`
           }
+
           mountNoGlobal(target, mockComponent)
           const mockComponentUpdate = () => html`<div><h1>Mock Updated Component</h1></div>`
           mountNoGlobal(target, mockComponentUpdate)
@@ -70,10 +78,12 @@ describe('mount', () => {
           const mockEffect = () => {
             return mockCleanupEffect
           }
+
           const mockComponent = () => {
             useEffect(null, 'mock-store', 'mock-working-key')(mockEffect)
             return html`<div><h1>Mock Component</h1></div>`
           }
+
           mountNoGlobal(target, mockComponent)
           const mockComponentUpdate = () => html`<div><h1>Mock Updated Component</h1></div>`
           mountNoGlobal(target, mockComponentUpdate)
@@ -91,6 +101,7 @@ describe('mount', () => {
           const mockComponent = () => {
             return html`<div><h1>Mock Component</h1></div>`
           }
+
           mountNoStore(target, mockComponent)
           expect(target.outerHTML).toEqual('<div><div><h1>Mock Component</h1></div></div>')
         })
@@ -103,10 +114,12 @@ describe('mount', () => {
           const mockEffect = () => {
             mockStartEffect()
           }
+
           const mockComponent = () => {
             useEffect(mockSpace, 'mock-store', 'mock-working-key')(mockEffect)
             return html`<div><h1>Mock Component</h1></div>`
           }
+
           mountNoStore(target, mockComponent)
           expect(mockStartEffect).toHaveBeenCalled()
         })
@@ -119,10 +132,12 @@ describe('mount', () => {
           const mockEffect = () => {
             return mockCleanupEffect
           }
+
           const mockComponent = () => {
             useEffect(mockSpace, 'mock-store', 'mock-working-key')(mockEffect)
             return html`<div><h1>Mock Component</h1></div>`
           }
+
           mountNoStore(target, mockComponent)
           expect(mockCleanupEffect).toHaveBeenCalled()
         })
@@ -136,6 +151,7 @@ describe('mount', () => {
           const mockComponent = () => {
             return html`<div><h1>Mock Component</h1></div>`
           }
+
           mountNoStore(target, mockComponent)
           const mockComponentUpdate = () => html`<div><h1>Mock Updated Component</h1></div>`
           mountNoStore(target, mockComponentUpdate)
@@ -155,6 +171,7 @@ describe('mount', () => {
           const mockComponent = () => {
             return html`<div><h1>Mock Component</h1></div>`
           }
+
           mountWithStore(target, mockComponent)
           expect(target.outerHTML).toEqual('<div><div><h1>Mock Component</h1></div></div>')
         })
@@ -169,10 +186,12 @@ describe('mount', () => {
           const mockEffect = () => {
             mockStartEffect()
           }
+
           const mockComponent = () => {
             useEffect(mockSpace, 'mock-store', 'mock-working-key')(mockEffect)
             return html`<div><h1>Mock Component</h1></div>`
           }
+
           mountWithStore(target, mockComponent)
           expect(mockStartEffect).toHaveBeenCalled()
         })
@@ -187,10 +206,12 @@ describe('mount', () => {
           const mockEffect = () => {
             return mockCleanupEffect
           }
+
           const mockComponent = () => {
             useEffect(mockSpace, 'mock-store', 'mock-working-key')(mockEffect)
             return html`<div><h1>Mock Component</h1></div>`
           }
+
           mountWithStore(target, mockComponent)
           expect(mockCleanupEffect).not.toHaveBeenCalled()
         })
@@ -206,6 +227,7 @@ describe('mount', () => {
           const mockComponent = () => {
             return html`<div><h1>Mock Component</h1></div>`
           }
+
           mountWithStore(target, mockComponent)
           const mockComponentUpdate = () => html`<div><h1>Mock Updated Component</h1></div>`
           mountWithStore(target, mockComponentUpdate)
@@ -224,10 +246,12 @@ describe('mount', () => {
             mockStartEffect()
             return mockCleanupEffect
           }
+
           const mockComponent = () => {
             useEffect(mockSpace, 'mock-store', 'mock-working-key')(mockEffect)
             return html`<div><h1>Mock Component</h1></div>`
           }
+
           mountWithStore(target, mockComponent)
           expect(mockStartEffect).toHaveBeenCalled()
           expect(mockCleanupEffect).not.toHaveBeenCalled()
@@ -250,10 +274,12 @@ describe('mount', () => {
             mockStartEffect()
             return mockCleanupEffect
           }
+
           const mockComponent = () => {
             useEffect(mockSpace, 'mock-store', 'mock-working-key')(mockEffect)
             return html`<div><h1>Mock Component</h1></div>`
           }
+
           mountWithStore(target, mockComponent)
           const mockComponentUpdate = () => html`<div><h1>Mock Updated Component</h1></div>`
           mountWithStore(target, mockComponent)

@@ -35,5 +35,4 @@ jobs:
 
       - run: npm run lint
 
-      # version of firefox on circleci is too old
-      - run: npm test -- --skip PhantomJS,Firefox
+      - run: npm test

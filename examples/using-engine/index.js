@@ -4,7 +4,7 @@
 // import Tram from 'tram-one'
 // const { ... } = Tram()
 
-const { start, registerHtml, useStore, addActions, addListener } = window['tram-one']()
+const { start, registerHtml, useEngine, addActions, addListener } = window['tram-one']()
 
 // real code you would see in a project
 
@@ -16,7 +16,7 @@ const countActions = {
 }
 
 const clicker = () => {
-  const [store, actions] = useStore()
+  const [store, actions] = useEngine()
   return html`
     <div>
       Tram-One

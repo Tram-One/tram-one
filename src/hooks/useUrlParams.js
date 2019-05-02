@@ -1,16 +1,13 @@
 const rlite = require('rlite-router')
-const { assertIsFunction, assertIsDefined } = require('../asserts')
+const { assertIsFunction } = require('../asserts')
 
 const defaultGetPath = () => window.location.href.replace(window.location.origin, '')
 
 module.exports = (getPath = defaultGetPath) => {
   assertIsFunction(getPath, 'getPath')
 
-  return (pattern) => {
-    assertIsDefined(pattern, 'pattern')
+  const onNonMatchingPath = () => false
+  const returnParams = params => params
 
-    return rlite(() => false, {
-      [pattern]: (params) => params
-    })(getPath())
-  }
+  return (pattern = '*') => rlite(onNonMatchingPath, { [pattern]: returnParams })(getPath())
 }

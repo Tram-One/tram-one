@@ -4,7 +4,7 @@ const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('../working-ke
 const { assertGlobalSpaceAndEngine } = require('../asserts')
 
 module.exports = (globalSpace = window, engineName = TRAM_STATE_ENGINE, workingKeyName = TRAM_HOOK_KEY) => {
-  assertGlobalSpaceAndEngine(TRAM_STATE_ENGINE)(globalSpace, engineName)
+  assertGlobalSpaceAndEngine(TRAM_STATE_ENGINE, globalSpace, engineName)
 
   return (value) => {
     // get a state engine

@@ -3,7 +3,7 @@ const { getEngine } = require('../engine')
 const { assertGlobalSpaceAndEngine, assertIsDefined } = require('../asserts')
 
 module.exports = (globalSpace = window, engineName = TRAM_GLOBAL_STATE_ENGINE) => {
-  assertGlobalSpaceAndEngine(TRAM_GLOBAL_STATE_ENGINE)(globalSpace, engineName)
+  assertGlobalSpaceAndEngine(TRAM_GLOBAL_STATE_ENGINE, globalSpace, engineName)
 
   return (key, value) => {
     assertIsDefined(key, 'key')

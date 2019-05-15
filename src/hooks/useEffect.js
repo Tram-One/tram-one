@@ -4,7 +4,7 @@ const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('../working-ke
 const { assertGlobalSpaceAndEngine, assertIsFunction } = require('../asserts')
 
 module.exports = (globalSpace = window, storeName = TRAM_EFFECT_STORE, workingKeyName = TRAM_HOOK_KEY) => {
-  assertGlobalSpaceAndEngine(TRAM_EFFECT_STORE)(globalSpace, storeName)
+  assertGlobalSpaceAndEngine(TRAM_EFFECT_STORE, globalSpace, storeName)
 
   return (onEffect) => {
     assertIsFunction(onEffect, 'effect')

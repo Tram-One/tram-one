@@ -1,14 +1,12 @@
 const { assertGlobalSpaceAndEngine } = require('../asserts')
 const { setup, get } = require('../namespace')
 
-const assertEngine = assertGlobalSpaceAndEngine('logName')
-
 const setupLog = setup(() => ({}))
 
 const getLog = get
 
 const clearLog = (globalSpace = window, logName) => {
-  assertEngine(globalSpace, logName)
+  assertGlobalSpaceAndEngine('logName', globalSpace, logName)
 
   const logStore = getLog(globalSpace, logName)
 

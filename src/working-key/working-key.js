@@ -1,8 +1,6 @@
 const { setup, get } = require('../namespace')
 const { assertGlobalSpaceAndEngine, assertIsString, assertIsDefined } = require('../asserts')
 
-const assertEngine = assertGlobalSpaceAndEngine('keyName')
-
 const setupWorkingKey = setup(() => ({
   branch: [],
   branchIndices: {
@@ -13,13 +11,13 @@ const setupWorkingKey = setup(() => ({
 const getWorkingKey = get
 
 const getWorkingBranch = (globalSpace = window, keyName) => {
-  assertEngine(globalSpace, keyName)
+  assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
 
   return getWorkingKey(globalSpace, keyName).branch.join('/')
 }
 
 const pushWorkingKeyBranch = (globalSpace = window, keyName) => {
-  assertEngine(globalSpace, keyName)
+  assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
 
   return (branch) => {
     assertIsString(branch)
@@ -33,7 +31,7 @@ const pushWorkingKeyBranch = (globalSpace = window, keyName) => {
 }
 
 const popWorkingKeyBranch = (globalSpace = window, keyName) => {
-  assertEngine(globalSpace, keyName)
+  assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
 
   return () => {
     const workingKey = getWorkingKey(globalSpace, keyName)
@@ -42,14 +40,14 @@ const popWorkingKeyBranch = (globalSpace = window, keyName) => {
 }
 
 const incrementWorkingKeyBranch = (globalSpace = window, keyName) => {
-  assertEngine(globalSpace, keyName)
+  assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
 
   const workingKey = getWorkingKey(globalSpace, keyName)
   workingKey.branchIndices[getWorkingBranch(globalSpace, keyName)] += 1
 }
 
 const getWorkingKeyValue = (globalSpace = window, keyName) => {
-  assertEngine(globalSpace, keyName)
+  assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
 
   const workingKey = getWorkingKey(globalSpace, keyName)
   if (!workingKey) return workingKey
@@ -59,7 +57,7 @@ const getWorkingKeyValue = (globalSpace = window, keyName) => {
 }
 
 const resetIndices = (globalSpace = window, keyName) => {
-  assertEngine(globalSpace, keyName)
+  assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
 
   const key = getWorkingKey(globalSpace, keyName)
   if (!key) return

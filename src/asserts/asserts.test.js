@@ -178,13 +178,13 @@ describe('asserts', () => {
 
   describe('assertGlobalSpaceAndEngine', () => {
     it('should throw if globalSpace is not an object', () => {
-      const check = () => asserts.assertGlobalSpaceAndEngine('test-engine-name')('not-a-valid-global-space', 'engine-value')
+      const check = () => asserts.assertGlobalSpaceAndEngine('test-engine-name', 'not-a-valid-global-space', 'engine-value')
       expect(check).toThrow(expect.objectContaining({
         message: expect.stringMatching(/globalSpace/)
       }))
     })
     it('should throw if engineValue is not a string', () => {
-      const check = () => asserts.assertGlobalSpaceAndEngine('test-engine-name')(undefined, null)
+      const check = () => asserts.assertGlobalSpaceAndEngine('test-engine-name', undefined, null)
       expect(check).toThrow(expect.objectContaining({
         message: expect.stringMatching(/test-engine-name/)
       }))

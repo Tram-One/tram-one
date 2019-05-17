@@ -1,7 +1,7 @@
 const battery = require('hover-battery')
 const urlListener = require('url-listener')
 
-const { TRAM_STATE_ENGINE, TRAM_APP_ENGINE, TRAM_EFFECT_STORE, TRAM_HOOK_KEY } = require('../engine-names')
+const { TRAM_STATE_ENGINE, TRAM_APP_ENGINE, TRAM_GLOBAL_STATE_ENGINE, TRAM_EFFECT_STORE, TRAM_HOOK_KEY } = require('../engine-names')
 const { setupEngine, getEngine } = require('../engine')
 const { setupLog } = require('../log')
 const { mount } = require('../mount')
@@ -24,6 +24,9 @@ const start = (globalSpace = window) => {
   // setup dedicated engine for app state management
   setupEngine(globalSpace, TRAM_APP_ENGINE)
 
+  // setup dedicated engine for app state management
+  setupEngine(globalSpace, TRAM_GLOBAL_STATE_ENGINE)
+
   // setup store for effects
   setupLog(globalSpace, TRAM_EFFECT_STORE)
 
@@ -43,6 +46,11 @@ const start = (globalSpace = window) => {
 
     // re-mount the app when an app action is triggered
     getEngine(globalSpace, TRAM_APP_ENGINE).addListener(() => {
+      appMount(selector, component)
+    })
+
+    // re-mount the app when a global state action is triggered
+    getEngine(globalSpace, TRAM_GLOBAL_STATE_ENGINE).addListener(() => {
       appMount(selector, component)
     })
 

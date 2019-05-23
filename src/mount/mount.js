@@ -63,8 +63,10 @@ const mount = (globalSpace = window, effectStore = TRAM_EFFECT_STORE, workingKey
     const newEffectKeys = Object.keys(allNewEffects).filter(effect => !(effect in existingEffects))
     const removedEffectKeys = Object.keys(existingEffects).filter(effect => !(effect in allNewEffects))
 
-    // run all clean up effects if the effect was removed
-    removedEffectKeys.forEach(effectKey => existingEffects[effectKey]())
+    // run all clean up effects if the effect was removed and is a function
+    removedEffectKeys
+      .filter(effectKey => typeof existingEffects[effectKey] === 'function')
+      .forEach(effectKey => existingEffects[effectKey]())
 
     // add any effects that should be in the store back in
     existingEffectKeys.forEach(effectKey => {

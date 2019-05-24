@@ -1,11 +1,23 @@
 const { registerDom, registerHtml, registerSvg } = require('../dom')
-const { setupEngine, getEngine, addActions, addListener } = require('../engine')
+const { addActions, addListener } = require('../engine')
 const { useEffect, useState, useEngine, useUrlParams, useGlobalState } = require('../hooks')
-const { setupLog, getLog, clearLog } = require('../log')
-const { mount } = require('../mount')
 const { start } = require('../start')
 
-module.exports = (globalSpace = window) => ({
+module.exports = {
+  registerDom: registerDom(window),
+  registerHtml: registerHtml(window),
+  registerSvg: registerSvg(window),
+  addActions: addActions(window),
+  addListener: addListener(window),
+  useEffect: useEffect(window),
+  useState: useState(window),
+  useEngine: useEngine(window),
+  useGlobalState: useGlobalState(window),
+  useUrlParams: useUrlParams(),
+  start: start(window)
+}
+
+module.exports.Tram = (globalSpace = window) => ({
   registerDom: registerDom(globalSpace),
   registerHtml: registerHtml(globalSpace),
   registerSvg: registerSvg(globalSpace),
@@ -18,12 +30,3 @@ module.exports = (globalSpace = window) => ({
   useUrlParams: useUrlParams(),
   start: start(globalSpace)
 })
-
-module.exports.pantograph = {
-  registerDom, registerHtml, registerSvg,
-  setupEngine, getEngine, addActions, addListener,
-  useEffect, useState, useEngine, useUrlParams,
-  setupLog, getLog, clearLog,
-  mount,
-  start
-}

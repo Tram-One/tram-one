@@ -1,10 +1,9 @@
 // in reality, this should be either:
-// const { ... } = require('tram-one')()
+// const { ... } = require('tram-one')
 // or
-// import Tram from 'tram-one'
-// const { ... } = Tram()
+// import { ... } from 'tram-one'
 
-const { start, registerHtml } = window['tram-one']()
+const { start, registerHtml } = window['tram-one']
 
 // elements are separated into blocks so that
 // register html can be called correctly

@@ -6,17 +6,9 @@ const { TRAM_HOOK_KEY } = require('../engine-names')
 const { assertIsObject, assertIsString } = require('../asserts')
 const { getWorkingKey, pushWorkingKeyBranch, popWorkingKeyBranch } = require('../working-key')
 
-/**
- * function to generate a tagged template function for any namespace
- * - for complete documentation, please refer to http://tram-one.io/#tram-dom
- *
- * @param {string} namespace
- * @param {object} registry
- *
- * @return {function}
- */
 const registerDom = (globalSpace = window, workingKeyName = TRAM_HOOK_KEY) => {
   assertIsObject(globalSpace, 'globalSpace', true)
+
   return (namespace, registry = {}) => {
     assertIsString(namespace, 'namespace', true)
     assertIsObject(registry, 'registry')

@@ -4,6 +4,9 @@ dist
 # Coverage Report
 coverage
 
+# docma docs
+docma
+
 # Logs
 logs
 *.log

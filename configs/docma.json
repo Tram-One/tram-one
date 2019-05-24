@@ -1,0 +1,6 @@
+{
+  "src": [
+      "./src/**/*.doc.js"
+  ],
+  "dest": "./output/doc"
+}

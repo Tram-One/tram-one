@@ -1,6 +1,6 @@
 {
   "name": "tram-one",
-  "version": "8.0.0-beta.3",
+  "version": "8.0.0-beta.4",
   "description": "🚋 Batteries Included View Framework",
   "main": "dist/tram-one.cjs.js",
   "commonjs": "dist/tram-one.cjs.js",
@@ -13,9 +13,12 @@
     "lint": "xo",
     "lint:loop": "npx onchange '**/*.js' -i -- xo",
     "build": "npm run build:cjs && npm run build:umd",
-    "postbuild": "node dev-scripts/build-size-badges.js",
+    "postbuild": "npm run build:badges && npm run build:docs",
     "build:cjs": "rollup -c configs/rollup.config.cjs.js",
     "build:umd": "rollup -c configs/rollup.config.umd.js",
+    "build:badges": "node dev-scripts/build-size-badges.js",
+    "build:docs": "docma -c configs/docma.json -d docma",
+    "watch:docs": "watch \"npm run build:docs\" src",
     "clean": "git clean -Xdf",
     "test": "jest --watch",
     "test:ci": "jest",
@@ -54,6 +57,7 @@
     "url-listener": "^2.0.0"
   },
   "devDependencies": {
+    "docma": "^3.2.2",
     "domino": "^2.0.1",
     "eslint-config-tram-one": "^2.2.0",
     "express": "^4.15.3",
@@ -69,6 +73,7 @@
     "rollup-plugin-node-globals": "^1.4.0",
     "rollup-plugin-node-resolve": "^4.0.1",
     "rollup-plugin-sizes": "^0.5.1",
+    "watch": "^1.0.2",
     "xo": "0.24.0"
   },
   "xo": {

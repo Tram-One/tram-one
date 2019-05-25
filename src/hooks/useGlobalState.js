@@ -1,5 +1,5 @@
 const { TRAM_GLOBAL_STATE_ENGINE } = require('../engine-names')
-const { getEngine } = require('../engine')
+const { get } = require('../namespace')
 const { assertGlobalSpaceAndEngine, assertIsDefined } = require('../asserts')
 
 module.exports = (globalSpace = window, engineName = TRAM_GLOBAL_STATE_ENGINE) => {
@@ -9,7 +9,7 @@ module.exports = (globalSpace = window, engineName = TRAM_GLOBAL_STATE_ENGINE) =
     assertIsDefined(key, 'key')
 
     // get a state engine
-    const stateEngine = getEngine(globalSpace, engineName)
+    const stateEngine = get(globalSpace, engineName)
 
     // if we couldn't get an engine or working key, just return whatever value we got
     if (!stateEngine || !key) return [value, () => {}]

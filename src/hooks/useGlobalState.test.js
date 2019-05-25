@@ -1,5 +1,8 @@
-const { setupEngine } = require('../engine')
+const HoverEngine = require('hover-engine')
+const { setup } = require('../namespace')
 const useGlobalState = require('./useGlobalState')
+
+const setupEngine = setup(() => new HoverEngine())
 
 describe('useGlobalState', () => {
   describe('with no global space', () => {

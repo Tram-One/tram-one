@@ -1,28 +1,20 @@
-const battery = require('hover-battery')
+const HoverEngine = require('hover-engine')
 const urlListener = require('url-listener')
 
-const { TRAM_STATE_ENGINE, TRAM_APP_ENGINE, TRAM_GLOBAL_STATE_ENGINE, TRAM_EFFECT_STORE, TRAM_HOOK_KEY } = require('../engine-names')
-const { setupEngine, getEngine } = require('../engine')
+const { TRAM_STATE_ENGINE, TRAM_GLOBAL_STATE_ENGINE, TRAM_EFFECT_STORE, TRAM_HOOK_KEY } = require('../engine-names')
+const { setup, get } = require('../namespace')
 const { setupLog } = require('../log')
 const { mount } = require('../mount')
 const { setupWorkingKey } = require('../working-key')
 const { assertIsObject, assertIsDefined, assertIsFunction } = require('../asserts')
 
-/**
- * start the app by mounting a component on some DOM or css selector
- * - for complete documentation, please refer to http://tram-one.io/#app-start
- *
- * @param {*} selector
- * @param {object} component
- */
+const setupEngine = setup(() => new HoverEngine())
+
 const start = (globalSpace = window) => {
   assertIsObject(globalSpace, 'globalSpace', true)
 
   // setup dedicated engine for component state
   setupEngine(globalSpace, TRAM_STATE_ENGINE)
-
-  // setup dedicated engine for app state management
-  setupEngine(globalSpace, TRAM_APP_ENGINE)
 
   // setup dedicated engine for app state management
   setupEngine(globalSpace, TRAM_GLOBAL_STATE_ENGINE)
@@ -33,33 +25,20 @@ const start = (globalSpace = window) => {
   // setup working key for hooks
   setupWorkingKey(globalSpace, TRAM_HOOK_KEY)
 
-  return (selector, component, webStorage) => {
+  return (selector, component) => {
     assertIsDefined(selector, 'selector', 'a DOM element or CSS selection string')
     assertIsFunction(component, 'component')
-    assertIsObject(webStorage, 'webStorage', true)
 
     const appMount = mount(globalSpace)
     // re-mount the app when a state action is triggered
-    getEngine(globalSpace, TRAM_STATE_ENGINE).addListener(() => {
-      appMount(selector, component)
-    })
-
-    // re-mount the app when an app action is triggered
-    getEngine(globalSpace, TRAM_APP_ENGINE).addListener(() => {
+    get(globalSpace, TRAM_STATE_ENGINE).addListener(() => {
       appMount(selector, component)
     })
 
     // re-mount the app when a global state action is triggered
-    getEngine(globalSpace, TRAM_GLOBAL_STATE_ENGINE).addListener(() => {
+    get(globalSpace, TRAM_GLOBAL_STATE_ENGINE).addListener(() => {
       appMount(selector, component)
     })
-
-    // if webStorage is defined, wire it into hover-engine with hover-battery
-    // (effectively, set up the initial store values and add appropriate listeners to write to webStorage)
-    if (webStorage) {
-      getEngine(globalSpace, TRAM_APP_ENGINE).addActions(battery(webStorage).actions)
-      getEngine(globalSpace, TRAM_APP_ENGINE).addListener(battery(webStorage).listener)
-    }
 
     // wire up urlListener so that we remount whenever the url changes
     urlListener(() => {

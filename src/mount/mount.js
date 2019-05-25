@@ -5,16 +5,6 @@ const { getLog, clearLog } = require('../log')
 const { resetIndices } = require('../working-key')
 const { assertIsObject, assertIsDefined, assertIsFunction } = require('../asserts')
 
-/**
- * internal method for building and updating / creating the app
- * - do not call this to start your app
- * - for complete documentation, please refer to http://tram-one.io/#app-mount
- *
- * @param {*} selector
- * @param {string} [pathName]
- * @param {object} store
- * @param {object} actions
- */
 const mount = (globalSpace = window, effectStore = TRAM_EFFECT_STORE, workingKeyName = TRAM_HOOK_KEY) => {
   assertIsObject(globalSpace, 'globalSpace', true)
 

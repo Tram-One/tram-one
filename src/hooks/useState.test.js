@@ -1,6 +1,9 @@
-const { setupEngine } = require('../engine')
+const HoverEngine = require('hover-engine')
+const { setup } = require('../namespace')
 const { setupWorkingKey, resetIndices } = require('../working-key')
 const useState = require('./useState')
+
+const setupEngine = setup(() => new HoverEngine())
 
 describe('useState', () => {
   describe('with no global space', () => {

@@ -1,5 +1,5 @@
 const { TRAM_HOOK_KEY, TRAM_STATE_ENGINE } = require('../engine-names')
-const { getEngine } = require('../engine')
+const { get } = require('../namespace')
 const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('../working-key')
 const { assertGlobalSpaceAndEngine } = require('../asserts')
 
@@ -8,7 +8,7 @@ module.exports = (globalSpace = window, engineName = TRAM_STATE_ENGINE, workingK
 
   return (value) => {
     // get a state engine
-    const stateEngine = getEngine(globalSpace, engineName)
+    const stateEngine = get(globalSpace, engineName)
 
     // get the key value from working-key
     const key = getWorkingKeyValue(globalSpace, workingKeyName)

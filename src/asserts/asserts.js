@@ -76,7 +76,6 @@ const assertIsDefined = (value, variable, shape = 'defined') => {
  * @param {string} engineName - name of the engine
  * @param {object} globalSpace - globalSpace object
  * @param {*} engineValue - engine object
- * @returns {function} function to assert globalSpace and engineValue
  */
 const assertGlobalSpaceAndEngine = (engineName, globalSpace, engineValue) => {
   assertIsObject(globalSpace, 'globalSpace', true)

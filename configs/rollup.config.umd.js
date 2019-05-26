@@ -22,6 +22,8 @@ const plugins = [
   filesize()
 ]
 
+// domino is a package used by belit to support server side rendering,
+// it does not need to be included in browser buidls, which will have document
 export default {
   input: 'src/tram-one/index.js',
   external: ['domino'],

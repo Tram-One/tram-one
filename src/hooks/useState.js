@@ -3,7 +3,7 @@ const { get } = require('../namespace')
 const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('../working-key')
 const { assertGlobalSpaceAndEngine } = require('../asserts')
 
-module.exports = (globalSpace = window, engineName = TRAM_STATE_ENGINE, workingKeyName = TRAM_HOOK_KEY) => {
+module.exports = (globalSpace, engineName = TRAM_STATE_ENGINE, workingKeyName = TRAM_HOOK_KEY) => {
   assertGlobalSpaceAndEngine(TRAM_STATE_ENGINE, globalSpace, engineName)
 
   return (value) => {

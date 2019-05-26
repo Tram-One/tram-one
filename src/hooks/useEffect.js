@@ -3,7 +3,7 @@ const { getLog } = require('../log')
 const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('../working-key')
 const { assertGlobalSpaceAndEngine, assertIsFunction } = require('../asserts')
 
-module.exports = (globalSpace = window, storeName = TRAM_EFFECT_STORE, workingKeyName = TRAM_HOOK_KEY) => {
+module.exports = (globalSpace, storeName = TRAM_EFFECT_STORE, workingKeyName = TRAM_HOOK_KEY) => {
   assertGlobalSpaceAndEngine(TRAM_EFFECT_STORE, globalSpace, storeName)
 
   return (onEffect) => {

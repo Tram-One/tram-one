@@ -10,13 +10,13 @@ const setupWorkingKey = setup(() => ({
 
 const getWorkingKey = get
 
-const getWorkingBranch = (globalSpace = window, keyName) => {
+const getWorkingBranch = (globalSpace, keyName) => {
   assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
 
   return getWorkingKey(globalSpace, keyName).branch.join('/')
 }
 
-const pushWorkingKeyBranch = (globalSpace = window, keyName) => {
+const pushWorkingKeyBranch = (globalSpace, keyName) => {
   assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
 
   return (branch) => {
@@ -30,7 +30,7 @@ const pushWorkingKeyBranch = (globalSpace = window, keyName) => {
   }
 }
 
-const popWorkingKeyBranch = (globalSpace = window, keyName) => {
+const popWorkingKeyBranch = (globalSpace, keyName) => {
   assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
 
   return () => {
@@ -39,14 +39,14 @@ const popWorkingKeyBranch = (globalSpace = window, keyName) => {
   }
 }
 
-const incrementWorkingKeyBranch = (globalSpace = window, keyName) => {
+const incrementWorkingKeyBranch = (globalSpace, keyName) => {
   assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
 
   const workingKey = getWorkingKey(globalSpace, keyName)
   workingKey.branchIndices[getWorkingBranch(globalSpace, keyName)] += 1
 }
 
-const getWorkingKeyValue = (globalSpace = window, keyName) => {
+const getWorkingKeyValue = (globalSpace, keyName) => {
   assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
 
   const workingKey = getWorkingKey(globalSpace, keyName)
@@ -56,7 +56,7 @@ const getWorkingKeyValue = (globalSpace = window, keyName) => {
   return `${getWorkingBranch(globalSpace, keyName)}[${index}]`
 }
 
-const resetIndices = (globalSpace = window, keyName) => {
+const resetIndices = (globalSpace, keyName) => {
   assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
 
   const key = getWorkingKey(globalSpace, keyName)

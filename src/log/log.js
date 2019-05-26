@@ -5,7 +5,7 @@ const setupLog = setup(() => ({}))
 
 const getLog = get
 
-const clearLog = (globalSpace = window, logName) => {
+const clearLog = (globalSpace, logName) => {
   assertGlobalSpaceAndEngine('logName', globalSpace, logName)
 
   const logStore = getLog(globalSpace, logName)

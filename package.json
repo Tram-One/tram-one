@@ -19,6 +19,7 @@
     "build:badges": "node dev-scripts/build-size-badges.js",
     "build:docs": "docma -c configs/docma.json -d docma",
     "watch:docs": "watch \"npm run build:docs\" src",
+    "watch:build": "watch \"npm run build\" src",
     "clean": "git clean -Xdf",
     "test": "jest --watch",
     "test:ci": "jest",
@@ -57,7 +58,6 @@
   },
   "devDependencies": {
     "docma": "^3.2.2",
-    "domino": "^2.0.1",
     "eslint-config-tram-one": "^2.2.0",
     "express": "^4.15.3",
     "inquirer": "^5.2.0",

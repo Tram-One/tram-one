@@ -2,7 +2,7 @@ const { assertGlobalSpaceAndEngine, assertIsFunction } = require('../asserts')
 
 const setup = (constructor) => {
   assertIsFunction(constructor, 'constructor')
-  return (globalSpace = window, namespace) => {
+  return (globalSpace, namespace) => {
     assertGlobalSpaceAndEngine('namespace', globalSpace, namespace)
 
     // we do not have a space to put our object
@@ -16,7 +16,7 @@ const setup = (constructor) => {
   }
 }
 
-const get = (globalSpace = window, namespace) => {
+const get = (globalSpace, namespace) => {
   assertGlobalSpaceAndEngine('namespace', globalSpace, namespace)
   return globalSpace && globalSpace[namespace]
 }

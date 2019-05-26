@@ -6,7 +6,7 @@ const { TRAM_HOOK_KEY } = require('../engine-names')
 const { assertIsObject, assertIsString } = require('../asserts')
 const { getWorkingKey, pushWorkingKeyBranch, popWorkingKeyBranch } = require('../working-key')
 
-const registerDom = (globalSpace = window, workingKeyName = TRAM_HOOK_KEY) => {
+const registerDom = (globalSpace, workingKeyName = TRAM_HOOK_KEY) => {
   assertIsObject(globalSpace, 'globalSpace', true)
 
   return (namespace, registry = {}) => {

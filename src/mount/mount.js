@@ -5,7 +5,7 @@ const { getLog, clearLog } = require('../log')
 const { resetIndices } = require('../working-key')
 const { assertIsObject, assertIsDefined, assertIsFunction } = require('../asserts')
 
-const mount = (globalSpace = window, effectStore = TRAM_EFFECT_STORE, workingKeyName = TRAM_HOOK_KEY) => {
+const mount = (globalSpace, effectStore = TRAM_EFFECT_STORE, workingKeyName = TRAM_HOOK_KEY) => {
   assertIsObject(globalSpace, 'globalSpace', true)
 
   return (selector, component) => {

@@ -10,7 +10,7 @@ const { assertIsObject, assertIsDefined, assertIsFunction } = require('../assert
 
 const setupEngine = setup(() => new HoverEngine())
 
-const start = (globalSpace = window) => {
+const start = (globalSpace) => {
   assertIsObject(globalSpace, 'globalSpace', true)
 
   // setup dedicated engine for component state
@@ -31,12 +31,14 @@ const start = (globalSpace = window) => {
 
     const appMount = mount(globalSpace)
     // re-mount the app when a state action is triggered
-    get(globalSpace, TRAM_STATE_ENGINE).addListener(() => {
+    const stateEngine = get(globalSpace, TRAM_STATE_ENGINE)
+    stateEngine && stateEngine.addListener(() => {
       appMount(selector, component)
     })
 
     // re-mount the app when a global state action is triggered
-    get(globalSpace, TRAM_GLOBAL_STATE_ENGINE).addListener(() => {
+    const globalStateEngine = get(globalSpace, TRAM_GLOBAL_STATE_ENGINE)
+    globalStateEngine && globalStateEngine.addListener(() => {
       appMount(selector, component)
     })
 

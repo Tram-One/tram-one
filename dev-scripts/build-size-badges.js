@@ -3,7 +3,7 @@ const fs = require('fs')
 const badge = require('./badge')
 
 const buildPath = 'dist'
-const destPath = 'docs/images'
+const destPath = 'docs/badges'
 const units = ['B', 'kB', 'MB', 'GB']
 
 // get filesize and transform to correct unit

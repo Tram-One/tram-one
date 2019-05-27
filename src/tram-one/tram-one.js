@@ -1,4 +1,4 @@
-const { registerDom, registerHtml, registerSvg } = require('../dom')
+const { registerHtml, registerSvg } = require('../dom')
 const { useEffect, useState, useUrlParams, useGlobalState } = require('../hooks')
 const { start } = require('../start')
 
@@ -18,7 +18,6 @@ const globalSpace = (() => {
 })()
 
 module.exports = {
-  registerDom: registerDom(globalSpace),
   registerHtml: registerHtml(globalSpace),
   registerSvg: registerSvg(globalSpace),
   useEffect: useEffect(globalSpace),

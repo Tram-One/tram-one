@@ -13,10 +13,10 @@
 </div>
 <div align="center">
   <a href="https://www.npmjs.com/package/tram-one">
-    <img src="https://github.com/Tram-One/tram-one/raw/master/docs/images/cjs.svg?sanitize=true" alt="Common JS build size">
+    <img src="https://github.com/Tram-One/tram-one/raw/master/docs/badges/cjs.svg?sanitize=true" alt="Common JS build size">
   </a>
   <a href="https://unpkg.com/tram-one/dist/tram-one.umd.js">
-    <img src="https://github.com/Tram-One/tram-one/raw/master/docs/images/umd.svg?sanitize=true" alt="UMD build size">
+    <img src="https://github.com/Tram-One/tram-one/raw/master/docs/badges/umd.svg?sanitize=true" alt="UMD build size">
   </a>
   <a href="https://join.slack.com/t/tram-one/shared_invite/enQtMjY0NDA3OTg2MzQyLWUyMGIyZTYwNzZkNDJiNWNmNzdiOTMzYjg0YzMzZTkzZDE4MTlmN2Q2YjE0NDIwMGI3ODEzYzQ4ODdlMzQ2ODM">
     <img src="https://img.shields.io/badge/slack-join-83ded3.svg?style=flat" alt="Join Slack">
@@ -33,10 +33,6 @@ Batteries Included View Framework
 
 You can visit the website <a href="http://tram-one.io/">tram-one.io</a> to read
 installation instructions, feature documentation, and the complete API.
-
-<a href="http://tram-one.io/">
-  <img src="http://tram-one.io/preview.png" alt="Website">
-</a>
 
 ## Summary
 Tram-One is a view framework for developers who want to jump straight into

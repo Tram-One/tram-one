@@ -5,7 +5,7 @@ dist
 coverage
 
 # docma docs
-docma
+docs/website
 
 # Logs
 logs

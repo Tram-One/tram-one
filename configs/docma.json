@@ -1,0 +1,78 @@
+{
+  "src": [
+    "./src/**/*.doc.js",
+    "./docs/guides/*.md"
+  ],
+  "app": {
+    "title": "Tram-One",
+    "entrance": "content:introduction",
+    "favicon": "./docs/logo/color_128x128.png",
+    "routing": {
+      "method": "path"
+    }
+  },
+  "assets": {
+    "/": "./docs/logo"
+  },
+  "template": {
+    "options": {
+      "title": "Tram-One",
+      "logo": "./logo/tram-logo-v3.svg",
+      "navbar": {
+        "enabled": true,
+        "fixed": true,
+        "dark": true,
+        "animations": true,
+        "menu": [
+          {
+            "label": "Introduction",
+            "href": "/"
+          },
+          {
+            "label": "Tutorial",
+            "href": "/tutorial"
+          },
+          {
+            "label": "API",
+            "href": "/api/#Tram-One"
+          },
+          {
+            "label": "Try It",
+            "items": [
+              {
+                "label": "CodeSandbox",
+                "href": "https://codesandbox.io/s/tramone-sample-app-lvt6u",
+                "target": "_blank"
+              },
+              {
+                "label": "Script Tag",
+                "href": "/umd"
+              },
+              {
+                "label": "Node Module",
+                "href": "/npm"
+              },
+              {
+                "label": "Tram-One Express",
+                "href": "/tram-one-express"
+              }
+            ]
+          },
+          {
+            "iconClass": "fab fa-lg fa-slack",
+            "label": "",
+            "href": "https://join.slack.com/t/tram-one/shared_invite/enQtMjY0NDA3OTg2MzQyLWUyMGIyZTYwNzZkNDJiNWNmNzdiOTMzYjg0YzMzZTkzZDE4MTlmN2Q2YjE0NDIwMGI3ODEzYzQ4ODdlMzQ2ODM",
+            "target": "_blank"
+          },
+          {
+            "iconClass": "fab fa-lg fa-github",
+            "label": "",
+            "href": "https://github.com/Tram-One/",
+            "target": "_blank"
+          }
+        ]
+      }
+    }
+  },
+  "dest": "./docs/website"
+}

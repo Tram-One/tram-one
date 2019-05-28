@@ -3,14 +3,14 @@ const fs = require('fs')
 const badge = require('./badge')
 
 const buildPath = 'dist'
-const destPath = 'docs/images'
+const destPath = 'docs/badges'
 const units = ['B', 'kB', 'MB', 'GB']
 
 // get filesize and transform to correct unit
 const getSize = (fileName) => {
   const bytes = fs.statSync(path.resolve(buildPath, fileName)).size
   const n = Math.floor(Math.log(bytes) / Math.log(1024))
-  const formatted = (bytes / Math.pow(1024, n)).toFixed(2)
+  const formatted = (bytes / (1024 ** n)).toFixed(2)
   return `${formatted} ${units[n]}`
 }
 
@@ -22,5 +22,5 @@ const generateBadge = (label) => {
   fs.writeFile(dest, svg, err => err && process.stdout.write(err))
 }
 
-generateBadge('esm')
+generateBadge('cjs')
 generateBadge('umd')

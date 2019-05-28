@@ -2,31 +2,45 @@
 <html>
   <head>
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/Tram-One/tram-logo/master/v3/black_64x64.png" />
+
+    <!-- in reality, you would only use one of the below options -->
     <script src="https://unpkg.com/tram-one/dist/tram-one.umd.js"></script>
+    <script src="../../dist/tram-one.umd.js"></script>
+
   </head>
   <body>
     <div class="main"></div>
     <script>
-      const Tram = window['tram-one']
-      const html = Tram.html()
-      const app = new Tram()
+      const { registerHtml, start } = window['tram-one']
+      const html = registerHtml()
+
+      const exampleLocalScript = `<script src="node_modules/tram-one/dist/tram-one.umd.js"\>\<\/script>`
+      const exampleUnpkgScript = `<script src="https://unpkg.com/tram-one/dist/tram-one.umd.js"\>\<\/script>`
 
       const page = () => {
         return html`
           <div>
             <h2>UMD Page Example</h2>
             <div>
-              This Page uses the umd hosted on <a href="https://unpkg.com/tram-one/dist/tram-one.umd.js">unpkg.com/tram-one</a>
-              <br />
-              Note: You can find these umd builds in the <a href="https://github.com/Tram-One/tram-one/releases">releases on github</a> and the
-              npm release when you run npm install (node_modules/tram-one/dist/tram-one.umd.js)
+              <div>This Page uses the umd build of Tram-One.</div>
+              <div>
+                If you have a local build or install, you can reference it directly for you app like
+                <textarea readonly style="width: 100%;">
+                  ${exampleLocalScript}
+                </textarea>
+              </div>
+              <div>
+                If you want to use the npm cdn, you can use unpkg.com (requires no build tooling)
+                <textarea readonly style="width: 100%;">
+                  ${exampleUnpkgScript}
+                </textarea>
+              </div>
             </div>
           </div>
         `
       }
 
-      app.addRoute('/page', page)
-      app.start('.main', '/page')
+      start('.main', page)
     </script>
   </body>
 </html>

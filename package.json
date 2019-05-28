@@ -24,7 +24,7 @@
     "watch:lint": "watch \"npm run lint\" src",
     "watch:build": "watch \"npm run build\" src",
     "prepublish:site": "rm -rf docs/website && npm run build:site",
-    "publish:site": "surge docs/website --domain https://tram-one.surge.sh",
+    "publish:site": "surge docs/website --domain tram-one.io",
     "clean": "git clean -Xdf",
     "test": "jest --watch",
     "test:ci": "jest",

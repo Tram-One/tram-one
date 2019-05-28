@@ -1,6 +1,6 @@
 {
   "name": "tram-one",
-  "version": "8.0.0-beta.6",
+  "version": "8.0.0-beta.7",
   "description": "🚋 Batteries Included View Framework",
   "main": "dist/tram-one.cjs.js",
   "commonjs": "dist/tram-one.cjs.js",
@@ -11,7 +11,6 @@
   ],
   "scripts": {
     "lint": "xo",
-    "lint:loop": "npx onchange '**/*.js' -i -- xo",
     "build": "npm run build:cjs && npm run build:umd",
     "postbuild": "npm run build:badges && npm run build:site",
     "build:cjs": "rollup -c configs/rollup.config.cjs.js",
@@ -22,6 +21,7 @@
     "watch-src:site": "watch \"npm run build:site\" src",
     "watch-config:site": "watch \"npm run build:site\" configs",
     "watch-guides:site": "watch \"npm run build:site\" docs/guides",
+    "watch:lint": "watch \"npm run lint\" src",
     "watch:build": "watch \"npm run build\" src",
     "prepublish:site": "rm -rf docs/website && npm run build:site",
     "publish:site": "surge docs/website --domain https://tram-one.surge.sh",
@@ -52,7 +52,7 @@
   "license": "MIT",
   "dependencies": {
     "assert": "^1.4.1",
-    "belit": "^4.1.2",
+    "belit": "^4.1.3",
     "hover-engine": "^2.0.2",
     "hyperz": "^4.0.1",
     "ninlil": "^2.0.0",
@@ -68,7 +68,6 @@
     "inquirer": "^5.2.0",
     "internal-ip": "^1.2.0",
     "jest": "^24.5.0",
-    "onchange": "^5.2.0",
     "opn": "^5.0.0",
     "rollup": "^1.6.0",
     "rollup-plugin-commonjs": "^9.2.1",

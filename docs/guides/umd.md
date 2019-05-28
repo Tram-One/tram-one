@@ -8,3 +8,27 @@ then you can include the following in any html page:
 ```html
 <script src="https://unpkg.com/tram-one/dist/tram-one.umd.js"></script>
 ```
+
+This script tag will include a `tram-one` object on the window that you can use to get
+any of the standard methods.
+
+```html
+<body>
+  <div class="main"></div>
+  <script>
+    const { registerHtml, start } = window['tram-one']
+    const html = registerHtml()
+
+    const page = () => {
+      return html`
+        <div>
+          <h1>Tram-One</h1>
+          Learn more at <a href="tram-one.io">tram-one.io</a>
+        </div>
+      `
+    }
+
+    start('.main', page)
+  </script>
+</body>
+```

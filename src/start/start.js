@@ -32,15 +32,19 @@ const start = (globalSpace) => {
     const appMount = mount(globalSpace)
     // re-mount the app when a state action is triggered
     const stateEngine = get(globalSpace, TRAM_STATE_ENGINE)
-    stateEngine && stateEngine.addListener(() => {
-      appMount(selector, component)
-    })
+    if (stateEngine) {
+      stateEngine.addListener(() => {
+        appMount(selector, component)
+      })
+    }
 
     // re-mount the app when a global state action is triggered
     const globalStateEngine = get(globalSpace, TRAM_GLOBAL_STATE_ENGINE)
-    globalStateEngine && globalStateEngine.addListener(() => {
-      appMount(selector, component)
-    })
+    if (globalStateEngine) {
+      globalStateEngine.addListener(() => {
+        appMount(selector, component)
+      })
+    }
 
     // wire up urlListener so that we remount whenever the url changes
     urlListener(() => {

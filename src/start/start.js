@@ -10,6 +10,20 @@ const { assertIsObject, assertIsDefined, assertIsFunction } = require('../assert
 
 const setupEngine = setup(() => new HoverEngine())
 
+/**
+ * This file defines a single function, start, which is used to
+ * initially mount a component onto an existing element.
+ *
+ * This function also is responsible for starting all the internal engines
+ * required for Tram-One to save internal state and trigger re-renders.
+ *
+ * While this function defines all the engines and when they should trigger,
+ * the actual logic for placing the element on the page is contained in the
+ * `mount()` function.
+ *
+ * @see https://tram-one.io/api/#Tram-One#start
+ */
+
 const start = (globalSpace) => {
   assertIsObject(globalSpace, 'globalSpace', true)
 

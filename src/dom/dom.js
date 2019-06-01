@@ -6,6 +6,20 @@ const { TRAM_HOOK_KEY } = require('../engine-names')
 const { assertIsObject, assertIsString } = require('../asserts')
 const { getWorkingKey, pushWorkingKeyBranch, popWorkingKeyBranch } = require('../working-key')
 
+/**
+ * This file contains a single function, registerDom, which is responsible
+ * for building tagged template functions which translate XML strings to DOM Nodes.
+ *
+ * This function also enables custom components, such that any component defined
+ * in a tag-function mapping object (known as a registry) will resolve to calling
+ * that component function.
+ *
+ * Also this function is responsible for updating the working key (an object
+ * which keeps track of hooks called over many renders).
+ *
+ * @see https://tram-one.io/api/#Tram-One#registerHtml
+ */
+
 const registerDom = (globalSpace, workingKeyName = TRAM_HOOK_KEY) => {
   assertIsObject(globalSpace, 'globalSpace', true)
 

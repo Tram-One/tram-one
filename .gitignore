@@ -14,3 +14,6 @@ logs
 
 # Dependency directory
 node_modules
+
+# SSL certificates
+.ssl

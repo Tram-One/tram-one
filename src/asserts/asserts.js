@@ -1,6 +1,11 @@
 const assert = require('assert')
 
 /**
+ * This file contains helper functions to verify that
+ * functions have the correct data on runtime.
+ */
+
+/**
  * check if the value is undefined or null
  * @param {*} value - value to check
  * @returns {boolean} if the value is defined

@@ -3,6 +3,17 @@ const { get } = require('../namespace')
 const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('../working-key')
 const { assertGlobalSpaceAndEngine } = require('../asserts')
 
+/**
+ * This file defines one function, useState, which is a hook that
+ * that enables component state.
+ *
+ * This function has an identical interface to React's useState hook.
+ *
+ * Under the hood it uses Hover-Engine to save values and trigger re-renders.
+ *
+ * @see https://tram-one.io/api/#Tram-One#useState
+ */
+
 module.exports = (globalSpace, engineName = TRAM_STATE_ENGINE, workingKeyName = TRAM_HOOK_KEY) => {
   assertGlobalSpaceAndEngine(TRAM_STATE_ENGINE, globalSpace, engineName)
 

@@ -25,7 +25,7 @@
 
 # Tram-One
 
-Batteries Included View Framework
+Modern View Framework For Pure Javascript
 <br>
 <br>
 
@@ -42,9 +42,9 @@ Batteries Included!
 
 ### Why?
 Tram-One is a project built to make exposing custom elements easy, and to
-have redux-like state management, and basic routing by default. It was created
-out of  the frustration of having to scaffold the same dependencies over and
-over again.
+have global and component state management with react-like hooks, and basic
+routing by default. It was created out of  the frustration of having to
+scaffold the same dependencies over and over again.
 
 Tram-One was also created to avoid a lot of the syntax that locks you into
 frameworks like Vue and React. The components written here can mimic the syntax
@@ -53,8 +53,8 @@ you're already familiar, or help you create pure HTML friendly code.
 ## This Repo and the Tram-One Org
 This repo contains the main Tram-One framework, which can be installed and
 used to make web-apps. The Tram-One org (found at https://github.com/Tram-One)
-includes many of the dependencies as well as the websites for the project. The
-dependencies, while made for Tram-One, can be used in other projects.
+includes many of the dependencies as well as the websites and generators for the project.
+The dependencies, while made for Tram-One, can be used in other projects.
 
 ## Development
 
@@ -62,16 +62,6 @@ dependencies, while made for Tram-One, can be used in other projects.
 
 If you want to start contributing, need help, or would just like to say hi,
 [join our slack channel](https://join.slack.com/t/tram-one/shared_invite/enQtMjY0NDA3OTg2MzQyLWUyMGIyZTYwNzZkNDJiNWNmNzdiOTMzYjg0YzMzZTkzZDE4MTlmN2Q2YjE0NDIwMGI3ODEzYzQ4ODdlMzQ2ODM)!
-
-### Commands
-
-If you decide to clone this repo, there are several commands included in the
-`package.json` to help you develop.
-- `npm run lint`, runs eslint in the project
-- `npm run example`, kicks off one of the example apps in this repo
-- `npm run build`, builds the project and creates a distributable
-- `npm run test-dev`, hosts the tests to be launched in a browser
-- `npm run test`, runs tests against all available browsers on the machine
 
 ### Todo
 

@@ -6,18 +6,26 @@
   "app": {
     "title": "Tram-One",
     "entrance": "content:introduction",
-    "favicon": "./docs/logo/color_128x128.png",
+    "favicon": "./docs/images/logo_64.png",
+    "meta": [
+      { "property": "og:title", "content": "Tram-One"},
+      { "property": "og:description", "content": "Modern View Framework For Pure Javascript"},
+      { "property": "og:url", "content": "https://tram-one.io"},
+      { "property": "og:image", "content": "https://tram-one.io/images/preview.png"},
+      { "name": "twitter:card", "content": "summary_large_image"},
+      { "name": "twitter:creator", "content": "@jrjurman"}
+    ],
     "routing": {
       "method": "path"
     }
   },
   "assets": {
-    "/": "./docs/logo"
+    "/": "./docs/images"
   },
   "template": {
     "options": {
       "title": "Tram-One",
-      "logo": "./logo/tram-logo-v3.svg",
+      "logo": "./images/logo_64.png",
       "navbar": {
         "enabled": true,
         "fixed": true,
@@ -73,6 +81,9 @@
         ]
       }
     }
+  },
+  "markdown": {
+    "sanitize": false
   },
   "dest": "./docs/website"
 }

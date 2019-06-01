@@ -3,6 +3,7 @@ const { registerHtml } = require('../dom')
 const { setupLog } = require('../log')
 const { useEffect } = require('../hooks')
 const { setupWorkingKey } = require('../working-key')
+const { setupRenderTracker } = require('../render-tracker')
 const { mount } = require('./mount')
 
 const html = registerHtml()()
@@ -92,7 +93,7 @@ describe('mount', () => {
       })
     })
 
-    describe('without effect store or working key', () => {
+    describe('without effect store, working key, or render-tracker', () => {
       describe('without existing element', () => {
         it('should create new element', () => {
           const target = document.createElement('div')
@@ -160,14 +161,15 @@ describe('mount', () => {
       })
     })
 
-    describe('with effect store and working key', () => {
+    describe('with effect store, working key, and render-tracker', () => {
       describe('without existing element', () => {
         it('should create new element', () => {
           const target = document.createElement('div')
           const mockSpace = {}
           setupLog(mockSpace, 'mock-store')
           setupWorkingKey(mockSpace, 'mock-working-key')
-          const mountWithStore = mount(mockSpace, 'mock-store', 'mock-working-key')
+          setupRenderTracker(mockSpace, 'mock-render-tracker')
+          const mountWithStore = mount(mockSpace, 'mock-store', 'mock-working-key', 'mock-render-tracker')
           const mockComponent = () => {
             return html`<div><h1>Mock Component</h1></div>`
           }

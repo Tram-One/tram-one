@@ -1,5 +1,13 @@
 const { registerDom } = require('./dom')
 
+/**
+ * This file contains two functions, registerHtml and
+ * registerSvg, they are implementations of registerDom
+ * and are the only exposed interface to users of Tram-One.
+ * @see https://tram-one.io/api/#Tram-One#registerHtml
+ * @see https://tram-one.io/api/#Tram-One#registerSvg
+ */
+
 const registerHtml = (globalSpace) => (registry) => {
   return registerDom(globalSpace)(null, registry)
 }

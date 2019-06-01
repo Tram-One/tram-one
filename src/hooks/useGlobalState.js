@@ -2,6 +2,19 @@ const { TRAM_GLOBAL_STATE_ENGINE } = require('../engine-names')
 const { get } = require('../namespace')
 const { assertGlobalSpaceAndEngine, assertIsDefined } = require('../asserts')
 
+/**
+ * This file defines one function, useGlobalState, which is a hook that
+ * that enables global app state.
+ *
+ * This function has a similar interface to `useState()` but can be used to
+ * pull values in many different components (and avoid prop drilling). In this
+ * way it is similar to React's Context API, but does not require a Provider Component.
+ *
+ * Under the hood it uses Hover-Engine to save values and trigger re-renders.
+ *
+ * @see https://tram-one.io/api/#Tram-One#useGlobalState
+ */
+
 module.exports = (globalSpace, engineName = TRAM_GLOBAL_STATE_ENGINE) => {
   assertGlobalSpaceAndEngine(TRAM_GLOBAL_STATE_ENGINE, globalSpace, engineName)
 

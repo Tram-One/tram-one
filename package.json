@@ -30,6 +30,7 @@
     "publish:ssl": "surge ssl --pem .ssl/surge.pem --domain tram-one.io",
     "clean": "git clean -Xdf",
     "test": "jest --watch",
+    "posttest": "npm run lint",
     "test:ci": "jest",
     "start": "npm i && npm run build",
     "restart": "npm run clean && npm start"
@@ -86,6 +87,10 @@
   "xo": {
     "extends": [
       "tram-one"
-    ]
+    ],
+    "rules": {
+      "valid-jsdoc": 0,
+      "capitalized-comments": 0
+    }
   }
 }

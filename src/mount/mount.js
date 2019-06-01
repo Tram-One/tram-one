@@ -39,6 +39,7 @@ const mount = (globalSpace, effectStore = TRAM_EFFECT_STORE, workingKeyName = TR
       const targetChild = document.createElement('div')
       target.appendChild(targetChild)
     }
+
     const targetChild = target.firstElementChild
 
     /**

@@ -1,3 +1,4 @@
+/* eslint valid-jsdoc: 2 */
 /* types */
 
 /**

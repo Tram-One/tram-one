@@ -108,8 +108,8 @@ const copyWorkingKey = (globalSpace, keyName) => {
   if (!key) return
   return {
     branch: [...key.branch],
-    branchIndices: {...key.branchIndices}
-  };
+    branchIndices: { ...key.branchIndices }
+  }
 }
 
 /**

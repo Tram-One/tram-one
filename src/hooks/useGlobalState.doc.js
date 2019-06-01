@@ -1,3 +1,5 @@
+/* eslint valid-jsdoc: 2 */
+
 /**
  * @name useGlobalState
  * @function

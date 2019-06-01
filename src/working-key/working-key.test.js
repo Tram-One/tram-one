@@ -210,7 +210,7 @@ describe('working-key', () => {
       expect(workingKey.branchIndices['branch1']).toEqual(1)
       expect(workingKey.branchIndices['branch1/branch2']).toEqual(2)
 
-      const workingKeyCopy = copyWorkingKey(mockSpace, 'mock-key');
+      const workingKeyCopy = copyWorkingKey(mockSpace, 'mock-key')
 
       incrementWorkingKeyBranch(mockSpace, 'mock-key')
       incrementWorkingKeyBranch(mockSpace, 'mock-key')
@@ -240,7 +240,7 @@ describe('working-key', () => {
       expect(workingKey.branchIndices['branch1']).toEqual(1)
       expect(workingKey.branchIndices['branch1/branch2']).toEqual(2)
 
-      const workingKeyCopy = copyWorkingKey(mockSpace, 'mock-key');
+      const workingKeyCopy = copyWorkingKey(mockSpace, 'mock-key')
       resetIndices(mockSpace, 'mock-key')
       restoreIndices(mockSpace, 'mock-key', workingKeyCopy)
 

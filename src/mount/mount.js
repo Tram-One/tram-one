@@ -1,7 +1,8 @@
 const morph = require('tatermorph')
 
-const { TRAM_EFFECT_STORE, TRAM_HOOK_KEY } = require('../engine-names')
+const { TRAM_EFFECT_STORE, TRAM_HOOK_KEY, TRAM_RENDER_TRACKER } = require('../engine-names')
 const { getLog, clearLog } = require('../log')
+const { getRenderTracker, setRenderTracker } = require('../render-tracker')
 const { resetIndices, restoreIndices, copyWorkingKey } = require('../working-key')
 const { assertIsObject, assertIsDefined, assertIsFunction } = require('../asserts')
 
@@ -15,12 +16,15 @@ const { assertIsObject, assertIsDefined, assertIsFunction } = require('../assert
  * we also manage effects (triggering new ones, and cleaning up old ones).
  */
 
-const mount = (globalSpace, effectStore = TRAM_EFFECT_STORE, workingKeyName = TRAM_HOOK_KEY) => {
+const mount = (globalSpace, effectStore = TRAM_EFFECT_STORE, workingKeyName = TRAM_HOOK_KEY, renderTracker = TRAM_RENDER_TRACKER) => {
   assertIsObject(globalSpace, 'globalSpace', true)
 
   return (selector, component) => {
     assertIsDefined(selector, 'selector', 'a DOM element or CSS selection string')
     assertIsFunction(component, 'component')
+
+    // turn rendering back on after many renders have resolved
+    setRenderTracker(globalSpace, renderTracker, true)
 
     /**
      * if the selector is a string, try to find the element,
@@ -69,8 +73,17 @@ const mount = (globalSpace, effectStore = TRAM_EFFECT_STORE, workingKeyName = TR
     /**
      * update our child element with a new version of the app
      * tatermorph knows how to intelligently trigger only diffs that matter on the page
+     *
+     * first we have to check the render tracker, which will resolve first on
+     * the final component mount, and then other component mounts can be rejected
      */
-    morph(targetChild, component(), getEvents)
+    const app = component()
+    const renderTrackerStore = getRenderTracker(globalSpace, renderTracker)
+    const shouldRender = renderTrackerStore ? renderTrackerStore.shouldRender : true
+    if (shouldRender) {
+      setRenderTracker(globalSpace, renderTracker, false)
+      morph(targetChild, app, getEvents)
+    }
 
     // get the effects that are new
     const allNewEffects = Object.assign({}, getLog(globalSpace, effectStore))

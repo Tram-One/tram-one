@@ -1,11 +1,12 @@
 const HoverEngine = require('hover-engine')
 const urlListener = require('url-listener')
 
-const { TRAM_STATE_ENGINE, TRAM_GLOBAL_STATE_ENGINE, TRAM_EFFECT_STORE, TRAM_HOOK_KEY } = require('../engine-names')
+const { TRAM_STATE_ENGINE, TRAM_GLOBAL_STATE_ENGINE, TRAM_EFFECT_STORE, TRAM_HOOK_KEY, TRAM_RENDER_TRACKER } = require('../engine-names')
 const { setup, get } = require('../namespace')
 const { setupLog } = require('../log')
 const { mount } = require('../mount')
 const { setupWorkingKey } = require('../working-key')
+const { setupRenderTracker } = require('../render-tracker')
 const { assertIsObject, assertIsDefined, assertIsFunction } = require('../asserts')
 
 const setupEngine = setup(() => new HoverEngine())
@@ -39,16 +40,22 @@ const start = (globalSpace) => {
   // setup working key for hooks
   setupWorkingKey(globalSpace, TRAM_HOOK_KEY)
 
+  // setup render count to be 0
+  setupRenderTracker(globalSpace, TRAM_RENDER_TRACKER)
+
   return (selector, component) => {
     assertIsDefined(selector, 'selector', 'a DOM element or CSS selection string')
     assertIsFunction(component, 'component')
 
-    const appMount = mount(globalSpace)
+    const appMount = () => {
+      mount(globalSpace)(selector, component)
+    }
+
     // re-mount the app when a state action is triggered
     const stateEngine = get(globalSpace, TRAM_STATE_ENGINE)
     if (stateEngine) {
       stateEngine.addListener(() => {
-        appMount(selector, component)
+        appMount()
       })
     }
 
@@ -56,17 +63,17 @@ const start = (globalSpace) => {
     const globalStateEngine = get(globalSpace, TRAM_GLOBAL_STATE_ENGINE)
     if (globalStateEngine) {
       globalStateEngine.addListener(() => {
-        appMount(selector, component)
+        appMount()
       })
     }
 
     // wire up urlListener so that we remount whenever the url changes
     urlListener(() => {
-      appMount(selector, component)
+      appMount()
     })
 
     // trigger an initial mount
-    appMount(selector, component)
+    appMount()
   }
 }
 

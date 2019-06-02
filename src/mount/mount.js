@@ -3,7 +3,7 @@ const morph = require('tatermorph')
 const { TRAM_EFFECT_STORE, TRAM_HOOK_KEY, TRAM_RENDER_TRACKER } = require('../engine-names')
 const { getLog, clearLog } = require('../log')
 const { getRenderTracker, setRenderTracker } = require('../render-tracker')
-const { resetIndices, restoreIndices, copyWorkingKey } = require('../working-key')
+const { resetWorkingKey, restoreWorkingKey, copyWorkingKey } = require('../working-key')
 const { assertIsObject, assertIsDefined, assertIsFunction } = require('../asserts')
 
 /**
@@ -53,7 +53,7 @@ const mount = (globalSpace, effectStore = TRAM_EFFECT_STORE, workingKeyName = TR
      * us to not lose our place
      */
     const keyRestorePoint = copyWorkingKey(globalSpace, workingKeyName)
-    resetIndices(globalSpace, workingKeyName)
+    resetWorkingKey(globalSpace, workingKeyName)
 
     /**
      * collect all the DOM events that we should be keeping track of.
@@ -80,6 +80,7 @@ const mount = (globalSpace, effectStore = TRAM_EFFECT_STORE, workingKeyName = TR
     const app = component()
     const renderTrackerStore = getRenderTracker(globalSpace, renderTracker)
     const shouldRender = renderTrackerStore ? renderTrackerStore.shouldRender : true
+    // if (!shouldRender) { return }
     if (shouldRender) {
       setRenderTracker(globalSpace, renderTracker, false)
       morph(targetChild, app, getEvents)
@@ -112,7 +113,7 @@ const mount = (globalSpace, effectStore = TRAM_EFFECT_STORE, workingKeyName = TR
     })
 
     // if we used any working keys for hooks, clear them out now
-    restoreIndices(globalSpace, workingKeyName, keyRestorePoint)
+    restoreWorkingKey(globalSpace, workingKeyName, keyRestorePoint)
   }
 }
 

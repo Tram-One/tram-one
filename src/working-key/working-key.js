@@ -86,12 +86,13 @@ const getWorkingKeyValue = (globalSpace, keyName) => {
  * resets the counter for all branchs so that when `useState` is called again
  * it refers to the correct hook from the last time it was called
  */
-const resetIndices = (globalSpace, keyName) => {
+const resetWorkingKey = (globalSpace, keyName) => {
   assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
 
   const key = getWorkingKey(globalSpace, keyName)
   if (!key) return
   const branches = key.branchIndices
+  getWorkingKey(globalSpace, keyName).branch = []
   Object.keys(getWorkingKey(globalSpace, keyName).branchIndices)
     .forEach((branch) => {
       branches[branch] = 0
@@ -116,12 +117,13 @@ const copyWorkingKey = (globalSpace, keyName) => {
  * if we needed to reset pre-emptively, use this to get back
  * to where the branches were before
  */
-const restoreIndices = (globalSpace, keyName, restoreKey) => {
+const restoreWorkingKey = (globalSpace, keyName, restoreKey) => {
   assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
 
   const key = getWorkingKey(globalSpace, keyName)
   if (!key) return
   const branches = key.branchIndices
+  getWorkingKey(globalSpace, keyName).branch = [...restoreKey.branch]
   Object.keys(getWorkingKey(globalSpace, keyName).branchIndices)
     .forEach((branch) => {
       branches[branch] = restoreKey.branchIndices[branch] || 0
@@ -136,7 +138,7 @@ module.exports = {
   getWorkingKey,
   getWorkingBranch,
   getWorkingKeyValue,
-  resetIndices,
+  resetWorkingKey,
   copyWorkingKey,
-  restoreIndices
+  restoreWorkingKey
 }

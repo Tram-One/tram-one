@@ -12,7 +12,7 @@
   "scripts": {
     "lint": "xo",
     "build": "npm run build:cjs && npm run build:umd",
-    "postbuild": "npm run build:badges && npm run build:site",
+    "postbuild": "npm run build:badges",
     "build:cjs": "rollup -c configs/rollup.config.cjs.js",
     "build:umd": "rollup -c configs/rollup.config.umd.js",
     "build:badges": "node dev-scripts/build-size-badges.js",

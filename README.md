@@ -57,7 +57,7 @@ includes many of the dependencies as well as the websites and generators for the
 The dependencies, while made for Tram-One, can be used in other projects.
 
 ## Architecture Diagram
-![](https://github.com/Tram-One/tram-one/raw/master/docs/badges/achitecture-diagram.png)
+![](https://github.com/Tram-One/tram-one/blob/master/docs/images/architecture-diagram.png?raw=true)
 
 ### Slack
 

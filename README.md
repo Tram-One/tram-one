@@ -56,7 +56,8 @@ used to make web-apps. The Tram-One org (found at https://github.com/Tram-One)
 includes many of the dependencies as well as the websites and generators for the project.
 The dependencies, while made for Tram-One, can be used in other projects.
 
-## Development
+## Architecture Diagram
+![](https://github.com/Tram-One/tram-one/raw/master/docs/badges/achitecture-diagram.png)
 
 ### Slack
 

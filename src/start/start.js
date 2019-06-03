@@ -1,12 +1,12 @@
 const HoverEngine = require('hover-engine')
 const urlListener = require('url-listener')
 
-const { TRAM_STATE_ENGINE, TRAM_GLOBAL_STATE_ENGINE, TRAM_EFFECT_STORE, TRAM_HOOK_KEY, TRAM_RENDER_TRACKER } = require('../engine-names')
+const { TRAM_STATE_ENGINE, TRAM_GLOBAL_STATE_ENGINE, TRAM_EFFECT_STORE, TRAM_HOOK_KEY, TRAM_RENDER_LOCK, TRAM_EFFECT_QUEUE } = require('../engine-names')
 const { setup, get } = require('../namespace')
-const { setupLog } = require('../log')
+const { setupEffectStore } = require('../effect-store')
 const { mount } = require('../mount')
 const { setupWorkingKey } = require('../working-key')
-const { setupRenderTracker } = require('../render-tracker')
+const { setupRenderLock } = require('../render-lock')
 const { assertIsObject, assertIsDefined, assertIsFunction } = require('../asserts')
 
 const setupEngine = setup(() => new HoverEngine())
@@ -35,13 +35,16 @@ const start = (globalSpace) => {
   setupEngine(globalSpace, TRAM_GLOBAL_STATE_ENGINE)
 
   // setup store for effects
-  setupLog(globalSpace, TRAM_EFFECT_STORE)
+  setupEffectStore(globalSpace, TRAM_EFFECT_STORE)
+
+  // setup queue for new effects when resolving mounts
+  setupEffectStore(globalSpace, TRAM_EFFECT_QUEUE)
 
   // setup working key for hooks
   setupWorkingKey(globalSpace, TRAM_HOOK_KEY)
 
   // setup render count to be 0
-  setupRenderTracker(globalSpace, TRAM_RENDER_TRACKER)
+  setupRenderLock(globalSpace, TRAM_RENDER_LOCK)
 
   return (selector, component) => {
     assertIsDefined(selector, 'selector', 'a DOM element or CSS selection string')

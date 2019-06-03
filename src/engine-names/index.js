@@ -11,5 +11,6 @@ module.exports = {
   TRAM_STATE_ENGINE: 'tram-state-engine',
   TRAM_GLOBAL_STATE_ENGINE: 'tram-global-state-engine',
   TRAM_EFFECT_STORE: 'tram-effect-store',
-  TRAM_RENDER_TRACKER: 'tram-render-tracker'
+  TRAM_EFFECT_QUEUE: 'tram-effect-queue',
+  TRAM_RENDER_LOCK: 'tram-render-lock'
 }

@@ -1,4 +1,4 @@
-const { setupLog } = require('../log')
+const { setupEffectStore } = require('../effect-store')
 const { setupWorkingKey } = require('../working-key')
 const useEffect = require('./useEffect')
 
@@ -60,7 +60,7 @@ describe('useEffect', () => {
   describe('without working key', () => {
     it('should immediately run the start effect', () => {
       const mockSpace = {}
-      setupLog(mockSpace, 'mock-effect-store')
+      setupEffectStore(mockSpace, 'mock-effect-store')
       const useEffectNoKey = useEffect(mockSpace, 'mock-effect-store', 'mock-working-key')
       const startEffect = jest.fn()
       const mockEffect = () => {
@@ -74,7 +74,7 @@ describe('useEffect', () => {
 
     it('should immediately run the cleanup effect', () => {
       const mockSpace = {}
-      setupLog(mockSpace, 'mock-effect-store')
+      setupEffectStore(mockSpace, 'mock-effect-store')
       const useEffectNoKey = useEffect(mockSpace, 'mock-effect-store', 'mock-working-key')
       const endEffect = jest.fn()
       const mockEffect = () => {
@@ -90,7 +90,7 @@ describe('useEffect', () => {
   describe('with new working key and store', () => {
     it('should not immediately run the start effect', () => {
       const mockSpace = {}
-      setupLog(mockSpace, 'mock-effect-store')
+      setupEffectStore(mockSpace, 'mock-effect-store')
       setupWorkingKey(mockSpace, 'mock-working-key')
       const useEffectWithStoreAndKey = useEffect(mockSpace, 'mock-effect-store', 'mock-working-key')
       const startEffect = jest.fn()
@@ -105,7 +105,7 @@ describe('useEffect', () => {
 
     it('should store the effect in the effect store', () => {
       const mockSpace = {}
-      setupLog(mockSpace, 'mock-effect-store')
+      setupEffectStore(mockSpace, 'mock-effect-store')
       setupWorkingKey(mockSpace, 'mock-working-key')
       const useEffectWithStoreAndKey = useEffect(mockSpace, 'mock-effect-store', 'mock-working-key')
       const startEffect = jest.fn()

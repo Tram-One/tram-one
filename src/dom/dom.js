@@ -2,8 +2,9 @@ const belit = require('belit')
 const ninlil = require('ninlil')
 const hyperz = require('hyperz')
 
-const { TRAM_HOOK_KEY } = require('../engine-names')
+const { TRAM_HOOK_KEY, TRAM_RENDER_LOCK } = require('../engine-names')
 const { assertIsObject, assertIsString } = require('../asserts')
+const { getRenderLock } = require('../render-lock')
 const { getWorkingKey, pushWorkingKeyBranch, popWorkingKeyBranch } = require('../working-key')
 
 /**
@@ -20,7 +21,7 @@ const { getWorkingKey, pushWorkingKeyBranch, popWorkingKeyBranch } = require('..
  * @see https://tram-one.io/api/#Tram-One#registerHtml
  */
 
-const registerDom = (globalSpace, workingKeyName = TRAM_HOOK_KEY) => {
+const registerDom = (globalSpace, workingKeyName = TRAM_HOOK_KEY, renderLockName = TRAM_RENDER_LOCK) => {
   assertIsObject(globalSpace, 'globalSpace', true)
 
   return (namespace, registry = {}) => {
@@ -31,10 +32,19 @@ const registerDom = (globalSpace, workingKeyName = TRAM_HOOK_KEY) => {
     const hookedRegistry = globalSpace && Object.keys(registry).reduce((newRegistry, tagName) => {
       const tagFunction = registry[tagName]
       const hookedTagFunction = (...args) => {
+        // grab working key (used for isolating hook values)
         const workingKey = getWorkingKey(globalSpace, workingKeyName)
+
+        // push a new branch onto the working key
         if (workingKey) { pushWorkingKeyBranch(globalSpace, workingKeyName)(tagName) }
-        const tagResult = tagFunction(...args)
+
+        // if render lock has already been turned off, we should avoid rendering components
+        const { shouldRender } = getRenderLock(globalSpace, renderLockName)
+        const tagResult = shouldRender ? tagFunction(...args) : ''
+
+        // pop the branch off (since we are done rendering this component)
         if (workingKey) { popWorkingKeyBranch(globalSpace, workingKeyName)() }
+
         return tagResult
       }
 

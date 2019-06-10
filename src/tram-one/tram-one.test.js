@@ -91,6 +91,30 @@ describe('Tram-One', () => {
     expect(mockPage.outerHTML).toEqual('<div><div><div>15</div></div></div>')
   })
 
+  it('should render app that uses an effect to update the view', () => {
+    const counter = () => {
+      const [count, setCount] = useState(5)
+      if (count < 10) {
+        setCount(15)
+      }
+
+      if (count === 15) {
+        useEffect(() => {
+          setCount(20)
+        })
+      }
+
+      return rootHtml`<div>${count}</div>`
+    }
+
+    const html = registerHtml({ counter })
+    const home = () => html`<div><counter /></div>`
+
+    const mockPage = document.createElement('div')
+    start(mockPage, home)
+    expect(mockPage.outerHTML).toEqual('<div><div><div>20</div></div></div>')
+  })
+
   it('should render app which uses global state', () => {
     const login = () => {
       const [name, setName] = useGlobalState('name', '')

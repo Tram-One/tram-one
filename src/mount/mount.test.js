@@ -1,9 +1,9 @@
 /* eslint-disable max-nested-callbacks */
 const { registerHtml } = require('../dom')
-const { setupLog } = require('../log')
+const { setupEffectStore } = require('../effect-store')
 const { useEffect } = require('../hooks')
 const { setupWorkingKey } = require('../working-key')
-const { setupRenderTracker } = require('../render-tracker')
+const { setupRenderLock } = require('../render-lock')
 const { mount } = require('./mount')
 
 const html = registerHtml()()
@@ -32,7 +32,7 @@ describe('mount', () => {
           }
 
           const mockComponent = () => {
-            useEffect(null, 'mock-store', 'mock-working-key')(mockEffect)
+            useEffect(null, 'mock-queue', 'mock-working-key')(mockEffect)
             return html`<div><h1>Mock Component</h1></div>`
           }
 
@@ -49,7 +49,7 @@ describe('mount', () => {
           }
 
           const mockComponent = () => {
-            useEffect(null, 'mock-store', 'mock-working-key')(mockEffect)
+            useEffect(null, 'mock-queue', 'mock-working-key')(mockEffect)
             return html`<div><h1>Mock Component</h1></div>`
           }
 
@@ -81,7 +81,7 @@ describe('mount', () => {
           }
 
           const mockComponent = () => {
-            useEffect(null, 'mock-store', 'mock-working-key')(mockEffect)
+            useEffect(null, 'mock-queue', 'mock-working-key')(mockEffect)
             return html`<div><h1>Mock Component</h1></div>`
           }
 
@@ -93,83 +93,16 @@ describe('mount', () => {
       })
     })
 
-    describe('without effect store, working key, or render-tracker', () => {
+    describe('with globalSpace', () => {
       describe('without existing element', () => {
         it('should create new element', () => {
           const target = document.createElement('div')
           const mockSpace = {}
-          const mountNoStore = mount(mockSpace, 'mock-store', 'mock-working-key')
-          const mockComponent = () => {
-            return html`<div><h1>Mock Component</h1></div>`
-          }
-
-          mountNoStore(target, mockComponent)
-          expect(target.outerHTML).toEqual('<div><div><h1>Mock Component</h1></div></div>')
-        })
-
-        it('should call start effect', () => {
-          const target = document.createElement('div')
-          const mockSpace = {}
-          const mountNoStore = mount(mockSpace, 'mock-store', 'mock-working-key')
-          const mockStartEffect = jest.fn()
-          const mockEffect = () => {
-            mockStartEffect()
-          }
-
-          const mockComponent = () => {
-            useEffect(mockSpace, 'mock-store', 'mock-working-key')(mockEffect)
-            return html`<div><h1>Mock Component</h1></div>`
-          }
-
-          mountNoStore(target, mockComponent)
-          expect(mockStartEffect).toHaveBeenCalled()
-        })
-
-        it('should call cleanup effect', () => {
-          const target = document.createElement('div')
-          const mockSpace = {}
-          const mountNoStore = mount(mockSpace, 'mock-store', 'mock-working-key')
-          const mockCleanupEffect = jest.fn()
-          const mockEffect = () => {
-            return mockCleanupEffect
-          }
-
-          const mockComponent = () => {
-            useEffect(mockSpace, 'mock-store', 'mock-working-key')(mockEffect)
-            return html`<div><h1>Mock Component</h1></div>`
-          }
-
-          mountNoStore(target, mockComponent)
-          expect(mockCleanupEffect).toHaveBeenCalled()
-        })
-      })
-
-      describe('with existing element', () => {
-        it('should update existing element', () => {
-          const target = document.createElement('div')
-          const mockSpace = {}
-          const mountNoStore = mount(mockSpace, 'mock-store', 'mock-working-key')
-          const mockComponent = () => {
-            return html`<div><h1>Mock Component</h1></div>`
-          }
-
-          mountNoStore(target, mockComponent)
-          const mockComponentUpdate = () => html`<div><h1>Mock Updated Component</h1></div>`
-          mountNoStore(target, mockComponentUpdate)
-          expect(target.outerHTML).toEqual('<div><div><h1>Mock Updated Component</h1></div></div>')
-        })
-      })
-    })
-
-    describe('with effect store, working key, and render-tracker', () => {
-      describe('without existing element', () => {
-        it('should create new element', () => {
-          const target = document.createElement('div')
-          const mockSpace = {}
-          setupLog(mockSpace, 'mock-store')
+          setupEffectStore(mockSpace, 'mock-store')
+          setupEffectStore(mockSpace, 'mock-queue')
           setupWorkingKey(mockSpace, 'mock-working-key')
-          setupRenderTracker(mockSpace, 'mock-render-tracker')
-          const mountWithStore = mount(mockSpace, 'mock-store', 'mock-working-key', 'mock-render-tracker')
+          setupRenderLock(mockSpace, 'mock-render-lock')
+          const mountWithStore = mount(mockSpace, 'mock-store', 'mock-queue', 'mock-working-key', 'mock-render-lock')
           const mockComponent = () => {
             return html`<div><h1>Mock Component</h1></div>`
           }
@@ -181,16 +114,18 @@ describe('mount', () => {
         it('should call the start effect', () => {
           const target = document.createElement('div')
           const mockSpace = {}
-          setupLog(mockSpace, 'mock-store')
+          setupEffectStore(mockSpace, 'mock-store')
+          setupEffectStore(mockSpace, 'mock-queue')
           setupWorkingKey(mockSpace, 'mock-working-key')
-          const mountWithStore = mount(mockSpace, 'mock-store', 'mock-working-key')
+          setupRenderLock(mockSpace, 'mock-render-lock')
+          const mountWithStore = mount(mockSpace, 'mock-store', 'mock-queue', 'mock-working-key', 'mock-render-lock')
           const mockStartEffect = jest.fn()
           const mockEffect = () => {
             mockStartEffect()
           }
 
           const mockComponent = () => {
-            useEffect(mockSpace, 'mock-store', 'mock-working-key')(mockEffect)
+            useEffect(mockSpace, 'mock-queue', 'mock-working-key')(mockEffect)
             return html`<div><h1>Mock Component</h1></div>`
           }
 
@@ -201,16 +136,18 @@ describe('mount', () => {
         it('should not call the cleanup effect', () => {
           const target = document.createElement('div')
           const mockSpace = {}
-          setupLog(mockSpace, 'mock-store')
+          setupEffectStore(mockSpace, 'mock-store')
+          setupEffectStore(mockSpace, 'mock-queue')
           setupWorkingKey(mockSpace, 'mock-working-key')
-          const mountWithStore = mount(mockSpace, 'mock-store', 'mock-working-key')
+          setupRenderLock(mockSpace, 'mock-render-lock')
+          const mountWithStore = mount(mockSpace, 'mock-store', 'mock-queue', 'mock-working-key', 'mock-render-lock')
           const mockCleanupEffect = jest.fn()
           const mockEffect = () => {
             return mockCleanupEffect
           }
 
           const mockComponent = () => {
-            useEffect(mockSpace, 'mock-store', 'mock-working-key')(mockEffect)
+            useEffect(mockSpace, 'mock-queue', 'mock-working-key')(mockEffect)
             return html`<div><h1>Mock Component</h1></div>`
           }
 
@@ -223,9 +160,11 @@ describe('mount', () => {
         it('should update existing element', () => {
           const target = document.createElement('div')
           const mockSpace = {}
-          setupLog(mockSpace, 'mock-store')
+          setupEffectStore(mockSpace, 'mock-store')
+          setupEffectStore(mockSpace, 'mock-queue')
           setupWorkingKey(mockSpace, 'mock-working-key')
-          const mountWithStore = mount(mockSpace, 'mock-store', 'mock-working-key')
+          setupRenderLock(mockSpace, 'mock-render-lock')
+          const mountWithStore = mount(mockSpace, 'mock-store', 'mock-queue', 'mock-working-key', 'mock-render-lock')
           const mockComponent = () => {
             return html`<div><h1>Mock Component</h1></div>`
           }
@@ -239,9 +178,11 @@ describe('mount', () => {
         it('should not call effects on second mount (when same)', () => {
           const target = document.createElement('div')
           const mockSpace = {}
-          setupLog(mockSpace, 'mock-store')
+          setupEffectStore(mockSpace, 'mock-store')
+          setupEffectStore(mockSpace, 'mock-queue')
           setupWorkingKey(mockSpace, 'mock-working-key')
-          const mountWithStore = mount(mockSpace, 'mock-store', 'mock-working-key')
+          setupRenderLock(mockSpace, 'mock-render-lock')
+          const mountWithStore = mount(mockSpace, 'mock-store', 'mock-queue', 'mock-working-key', 'mock-render-lock')
           const mockStartEffect = jest.fn()
           const mockCleanupEffect = jest.fn()
           const mockEffect = () => {
@@ -250,7 +191,7 @@ describe('mount', () => {
           }
 
           const mockComponent = () => {
-            useEffect(mockSpace, 'mock-store', 'mock-working-key')(mockEffect)
+            useEffect(mockSpace, 'mock-queue', 'mock-working-key')(mockEffect)
             return html`<div><h1>Mock Component</h1></div>`
           }
 
@@ -267,9 +208,11 @@ describe('mount', () => {
         it('should call cleanup effect on second mount (when different)', () => {
           const target = document.createElement('div')
           const mockSpace = {}
-          setupLog(mockSpace, 'mock-store')
+          setupEffectStore(mockSpace, 'mock-store')
+          setupEffectStore(mockSpace, 'mock-queue')
           setupWorkingKey(mockSpace, 'mock-working-key')
-          const mountWithStore = mount(mockSpace, 'mock-store', 'mock-working-key')
+          setupRenderLock(mockSpace, 'mock-render-lock')
+          const mountWithStore = mount(mockSpace, 'mock-store', 'mock-queue', 'mock-working-key', 'mock-render-lock')
           const mockStartEffect = jest.fn()
           const mockCleanupEffect = jest.fn()
           const mockEffect = () => {
@@ -278,7 +221,7 @@ describe('mount', () => {
           }
 
           const mockComponent = () => {
-            useEffect(mockSpace, 'mock-store', 'mock-working-key')(mockEffect)
+            useEffect(mockSpace, 'mock-queue', 'mock-working-key')(mockEffect)
             return html`<div><h1>Mock Component</h1></div>`
           }
 

@@ -1,5 +1,5 @@
 /* eslint-disable dot-notation */
-const { setupWorkingKey, getWorkingKey, getWorkingBranch, pushWorkingKeyBranch, popWorkingKeyBranch, incrementWorkingKeyBranch, getWorkingKeyValue, resetIndices, restoreIndices, copyWorkingKey } = require('./working-key')
+const { setupWorkingKey, getWorkingKey, getWorkingBranch, pushWorkingKeyBranch, popWorkingKeyBranch, incrementWorkingKeyBranch, getWorkingKeyValue, resetWorkingKey, restoreWorkingKey, copyWorkingKey } = require('./working-key')
 
 describe('working-key', () => {
   describe('setupWorkingKey', () => {
@@ -164,7 +164,7 @@ describe('working-key', () => {
     })
   })
 
-  describe('resetIndices', () => {
+  describe('resetWorkingKey', () => {
     it('should reset all indices to 0', () => {
       const mockSpace = {}
       const workingKey = setupWorkingKey(mockSpace, 'mock-key')
@@ -179,12 +179,14 @@ describe('working-key', () => {
       incrementWorkingKeyBranch(mockSpace, 'mock-key')
       incrementWorkingKeyBranch(mockSpace, 'mock-key')
 
+      expect(workingKey.branch).toEqual(['branch1', 'branch2'])
       expect(workingKey.branchIndices['']).toEqual(3)
       expect(workingKey.branchIndices['branch1']).toEqual(1)
       expect(workingKey.branchIndices['branch1/branch2']).toEqual(2)
 
-      resetIndices(mockSpace, 'mock-key')
+      resetWorkingKey(mockSpace, 'mock-key')
 
+      expect(workingKey.branch).toEqual([])
       expect(workingKey.branchIndices['']).toEqual(0)
       expect(workingKey.branchIndices['branch1']).toEqual(0)
       expect(workingKey.branchIndices['branch1/branch2']).toEqual(0)
@@ -206,6 +208,7 @@ describe('working-key', () => {
       incrementWorkingKeyBranch(mockSpace, 'mock-key')
       incrementWorkingKeyBranch(mockSpace, 'mock-key')
 
+      expect(workingKey.branch).toEqual(['branch1', 'branch2'])
       expect(workingKey.branchIndices['']).toEqual(3)
       expect(workingKey.branchIndices['branch1']).toEqual(1)
       expect(workingKey.branchIndices['branch1/branch2']).toEqual(2)
@@ -214,14 +217,16 @@ describe('working-key', () => {
 
       incrementWorkingKeyBranch(mockSpace, 'mock-key')
       incrementWorkingKeyBranch(mockSpace, 'mock-key')
+      pushMockKeyBranch('branch3')
 
+      expect(workingKeyCopy.branch).toEqual(['branch1', 'branch2'])
       expect(workingKeyCopy.branchIndices['']).toEqual(3)
       expect(workingKeyCopy.branchIndices['branch1']).toEqual(1)
       expect(workingKeyCopy.branchIndices['branch1/branch2']).toEqual(2)
     })
   })
 
-  describe('restoreIndices', () => {
+  describe('restoreWorkingKey', () => {
     it('should restore all indices to the existing key value', () => {
       const mockSpace = {}
       const workingKey = setupWorkingKey(mockSpace, 'mock-key')
@@ -236,14 +241,16 @@ describe('working-key', () => {
       incrementWorkingKeyBranch(mockSpace, 'mock-key')
       incrementWorkingKeyBranch(mockSpace, 'mock-key')
 
+      expect(workingKey.branch).toEqual(['branch1', 'branch2'])
       expect(workingKey.branchIndices['']).toEqual(3)
       expect(workingKey.branchIndices['branch1']).toEqual(1)
       expect(workingKey.branchIndices['branch1/branch2']).toEqual(2)
 
       const workingKeyCopy = copyWorkingKey(mockSpace, 'mock-key')
-      resetIndices(mockSpace, 'mock-key')
-      restoreIndices(mockSpace, 'mock-key', workingKeyCopy)
+      resetWorkingKey(mockSpace, 'mock-key')
+      restoreWorkingKey(mockSpace, 'mock-key', workingKeyCopy)
 
+      expect(workingKey.branch).toEqual(['branch1', 'branch2'])
       expect(workingKey.branchIndices['']).toEqual(3)
       expect(workingKey.branchIndices['branch1']).toEqual(1)
       expect(workingKey.branchIndices['branch1/branch2']).toEqual(2)

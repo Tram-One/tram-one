@@ -1,6 +1,6 @@
 const HoverEngine = require('hover-engine')
 const { setup } = require('../namespace')
-const { setupWorkingKey, resetIndices } = require('../working-key')
+const { setupWorkingKey, resetWorkingKey } = require('../working-key')
 const useState = require('./useState')
 
 const setupEngine = setup(() => new HoverEngine())
@@ -79,7 +79,7 @@ describe('useState', () => {
       const useStateWithEngineAndKey = useState(mockSpace, 'mock-engine', 'mock-working-key')
       const [, setValue] = useStateWithEngineAndKey(10)
       setValue(20)
-      resetIndices(mockSpace, 'mock-working-key')
+      resetWorkingKey(mockSpace, 'mock-working-key')
       const [newValue] = useStateWithEngineAndKey(10)
       expect(newValue).toEqual(20)
     })

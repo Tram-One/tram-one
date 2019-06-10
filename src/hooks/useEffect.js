@@ -1,5 +1,5 @@
-const { TRAM_HOOK_KEY, TRAM_EFFECT_STORE } = require('../engine-names')
-const { getLog } = require('../log')
+const { TRAM_HOOK_KEY, TRAM_EFFECT_QUEUE } = require('../engine-names')
+const { getEffectStore } = require('../effect-store')
 const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('../working-key')
 const { assertGlobalSpaceAndEngine, assertIsFunction } = require('../asserts')
 
@@ -14,14 +14,14 @@ const { assertGlobalSpaceAndEngine, assertIsFunction } = require('../asserts')
  * @see https://tram-one.io/api/#Tram-One#useEffect
  */
 
-module.exports = (globalSpace, storeName = TRAM_EFFECT_STORE, workingKeyName = TRAM_HOOK_KEY) => {
-  assertGlobalSpaceAndEngine(TRAM_EFFECT_STORE, globalSpace, storeName)
+module.exports = (globalSpace, storeName = TRAM_EFFECT_QUEUE, workingKeyName = TRAM_HOOK_KEY) => {
+  assertGlobalSpaceAndEngine(TRAM_EFFECT_QUEUE, globalSpace, storeName)
 
   return (onEffect) => {
     assertIsFunction(onEffect, 'effect')
 
     // get the store of effects
-    const effectStore = getLog(globalSpace, storeName)
+    const effectStore = getEffectStore(globalSpace, storeName)
 
     // get the key value from working-key
     const key = getWorkingKeyValue(globalSpace, workingKeyName)

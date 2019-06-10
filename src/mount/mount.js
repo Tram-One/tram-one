@@ -1,9 +1,9 @@
 const morph = require('tatermorph')
 
-const { TRAM_EFFECT_STORE, TRAM_HOOK_KEY, TRAM_RENDER_TRACKER } = require('../engine-names')
-const { getLog, clearLog } = require('../log')
-const { getRenderTracker, setRenderTracker } = require('../render-tracker')
-const { resetIndices, restoreIndices, copyWorkingKey } = require('../working-key')
+const { TRAM_EFFECT_STORE, TRAM_HOOK_KEY, TRAM_RENDER_LOCK, TRAM_EFFECT_QUEUE } = require('../engine-names')
+const { getEffectStore, clearEffectStore } = require('../effect-store')
+const { getRenderLock, setRenderLock } = require('../render-lock')
+const { resetWorkingKey, restoreWorkingKey, copyWorkingKey } = require('../working-key')
 const { assertIsObject, assertIsDefined, assertIsFunction } = require('../asserts')
 
 /**
@@ -16,7 +16,7 @@ const { assertIsObject, assertIsDefined, assertIsFunction } = require('../assert
  * we also manage effects (triggering new ones, and cleaning up old ones).
  */
 
-const mount = (globalSpace, effectStore = TRAM_EFFECT_STORE, workingKeyName = TRAM_HOOK_KEY, renderTracker = TRAM_RENDER_TRACKER) => {
+const mount = (globalSpace, effectStore = TRAM_EFFECT_STORE, effectQueue = TRAM_EFFECT_QUEUE, workingKeyName = TRAM_HOOK_KEY, renderLock = TRAM_RENDER_LOCK) => {
   assertIsObject(globalSpace, 'globalSpace', true)
 
   return (selector, component) => {
@@ -24,7 +24,7 @@ const mount = (globalSpace, effectStore = TRAM_EFFECT_STORE, workingKeyName = TR
     assertIsFunction(component, 'component')
 
     // turn rendering back on after many renders have resolved
-    setRenderTracker(globalSpace, renderTracker, true)
+    setRenderLock(globalSpace, renderLock, true)
 
     /**
      * if the selector is a string, try to find the element,
@@ -53,7 +53,7 @@ const mount = (globalSpace, effectStore = TRAM_EFFECT_STORE, workingKeyName = TR
      * us to not lose our place
      */
     const keyRestorePoint = copyWorkingKey(globalSpace, workingKeyName)
-    resetIndices(globalSpace, workingKeyName)
+    resetWorkingKey(globalSpace, workingKeyName)
 
     /**
      * collect all the DOM events that we should be keeping track of.
@@ -66,53 +66,60 @@ const mount = (globalSpace, effectStore = TRAM_EFFECT_STORE, workingKeyName = TR
       return [].concat(newNode.events).concat(oldNode.events)
     }
 
-    // save all the mount effects that have happened, and wipe the effectStore
-    const existingEffects = Object.assign({}, getLog(globalSpace, effectStore))
-    clearLog(globalSpace, effectStore)
+    // wipe the effectQueue
+    clearEffectStore(globalSpace, effectQueue)
 
-    /**
-     * update our child element with a new version of the app
-     * tatermorph knows how to intelligently trigger only diffs that matter on the page
-     *
-     * first we have to check the render tracker, which will resolve first on
-     * the final component mount, and then other component mounts can be rejected
-     */
+    // build the app locally, this may be called several times in a single update
     const app = component()
-    const renderTrackerStore = getRenderTracker(globalSpace, renderTracker)
-    const shouldRender = renderTrackerStore ? renderTrackerStore.shouldRender : true
+
+    // determine if we should render this app to the page (we render only the final build)
+    const renderLockStore = getRenderLock(globalSpace, renderLock)
+    const shouldRender = renderLockStore ? renderLockStore.shouldRender : true
+
     if (shouldRender) {
-      setRenderTracker(globalSpace, renderTracker, false)
+      // any future processing of component() for this mount will be rejected
+      setRenderLock(globalSpace, renderLock, false)
+
+      // update the target dom with the new app dom (this is done intelligently in the dom)
       morph(targetChild, app, getEvents)
+
+      // get the effects that have already been processed
+      const existingEffects = getEffectStore(globalSpace, effectStore) || {}
+
+      // get the effects that are new
+      const newEffects = getEffectStore(globalSpace, effectQueue) || {}
+
+      // split out effects between existing, new and removed
+      const existingEffectKeys = Object.keys(newEffects).filter(effect => (effect in existingEffects))
+      const newEffectKeys = Object.keys(newEffects).filter(effect => !(effect in existingEffects))
+      const removedEffectKeys = Object.keys(existingEffects).filter(effect => !(effect in newEffects))
+
+      // run all clean up effects if the effect was removed and is a function
+      removedEffectKeys
+        .filter(effectKey => typeof existingEffects[effectKey] === 'function')
+        .forEach(effectKey => {
+          // call clean up effect
+          existingEffects[effectKey]()
+          // remove effect from effectStore
+          delete getEffectStore(globalSpace, effectStore)[effectKey]
+        })
+
+      // add any effects that should be in the store back in
+      existingEffectKeys.forEach(effectKey => {
+        getEffectStore(globalSpace, effectStore)[effectKey] = existingEffects[effectKey]
+      })
+
+      /**
+       * run all new effects that we haven't seen before
+       * save any cleanup effects in the effectStore
+       */
+      newEffectKeys.forEach(effectKey => {
+        getEffectStore(globalSpace, effectStore)[effectKey] = newEffects[effectKey]()
+      })
     }
 
-    // get the effects that are new
-    const allNewEffects = Object.assign({}, getLog(globalSpace, effectStore))
-
-    // split out effects between existing, new and removed
-    const existingEffectKeys = Object.keys(allNewEffects).filter(effect => (effect in existingEffects))
-    const newEffectKeys = Object.keys(allNewEffects).filter(effect => !(effect in existingEffects))
-    const removedEffectKeys = Object.keys(existingEffects).filter(effect => !(effect in allNewEffects))
-
-    // run all clean up effects if the effect was removed and is a function
-    removedEffectKeys
-      .filter(effectKey => typeof existingEffects[effectKey] === 'function')
-      .forEach(effectKey => existingEffects[effectKey]())
-
-    // add any effects that should be in the store back in
-    existingEffectKeys.forEach(effectKey => {
-      getLog(globalSpace, effectStore)[effectKey] = existingEffects[effectKey]
-    })
-
-    /**
-     * run all new effects that we haven't seen before
-     * save any cleanup effects in the effectStore
-     */
-    newEffectKeys.forEach(effectKey => {
-      getLog(globalSpace, effectStore)[effectKey] = allNewEffects[effectKey]()
-    })
-
     // if we used any working keys for hooks, clear them out now
-    restoreIndices(globalSpace, workingKeyName, keyRestorePoint)
+    restoreWorkingKey(globalSpace, workingKeyName, keyRestorePoint)
   }
 }
 

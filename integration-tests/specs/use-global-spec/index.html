@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <script src="http://localhost:1228/tram-one.umd.js"></script>
+  </head>
+  <body>
+    <div class="main"></div>
+    <script>
+      const { registerHtml, useGlobalState, start } = window['tram-one']
+      const rootHtml = registerHtml()
+
+      const login = () => {
+        const [name, setName] = useGlobalState('name', '')
+        if (name === '') {
+          setName('Sprocket')
+        }
+
+        return rootHtml`<div class="login-header" name=${name}>Logged in as ${name}</div>`
+      }
+
+      const nameHeader = () => {
+        const [name] = useGlobalState('name')
+        return rootHtml`<div class="name-header" name=${name}>Hello ${name}</div>`
+      }
+
+      const html = registerHtml({
+        'login': login,
+        'name-header': nameHeader
+      })
+
+      const home = () => html`
+        <div>
+          <login />
+          <name-header />
+        </div>
+      `
+      const mockPage = document.createElement('div')
+
+      start('.main', home)
+    </script>
+  </body>
+</html>

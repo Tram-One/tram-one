@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <script src="http://localhost:1228/tram-one.umd.js"></script>
+  </head>
+  <body>
+    <div class="main"></div>
+    <script>
+      const { registerHtml, useEffect, useState, start } = window['tram-one']
+      const windowLock = () => {
+        useEffect(() => {
+          window.mockLock = true
+          return () => window.mockLock = false
+        })
+      }
+
+      const html = registerHtml({
+        'window-lock': windowLock
+      })
+
+      const page = () => {
+        const [hasLock, setLock] = useState(true)
+        const toggleLock = () => {
+          setLock(!hasLock)
+        }
+        return html`
+          <div>
+            <h1>Tram-One App</h1>
+            <button id="toggle-lock" onclick=${toggleLock}>Toggle Lock</button>
+            ${hasLock ? html`<window-lock />` : 'No Lock'}
+          </div>
+        `
+      }
+
+      start('.main', page)
+    </script>
+  </body>
+</html>

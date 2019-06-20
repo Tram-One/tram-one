@@ -32,6 +32,7 @@
     "test": "jest --watch",
     "posttest": "npm run lint",
     "test:ci": "jest",
+    "integration-test": "node integration-tests/run-tests.js",
     "start": "npm i && npm run build",
     "restart": "npm run clean && npm start"
   },
@@ -94,7 +95,9 @@
     ],
     "rules": {
       "valid-jsdoc": 0,
-      "capitalized-comments": 0
+      "capitalized-comments": 0,
+      "new-cap": 0,
+      "unicorn/no-process-exit": 0
     }
   }
 }

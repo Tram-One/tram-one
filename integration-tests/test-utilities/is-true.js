@@ -5,5 +5,5 @@ module.exports = (value, valueName, shouldBe, results) => {
   const type = passed ? 'pass' : 'error'
   const prefix = passed ? '✔' : '✘'
 
-  results.push({ type, message: chalk.green(`${prefix} ${valueName} should be ${shouldBe}`) })
+  results.push({ type: type, message: chalk.green(`${prefix} ${valueName} should be ${shouldBe}`) })
 }

@@ -1,14 +1,13 @@
-const express = require('express')
 const path = require('path')
+const express = require('express')
 const Nightmare = require('nightmare')
 const chalk = require('chalk')
 const processResults = require('./process-results')
-const endSpec = require('./end-spec')
 
-module.exports = async (title, assets, spec, {debugging = false} = {}) => {
+module.exports = async (title, assets, spec, { debugging = false } = {}) => {
   console.log(chalk.yellow(title))
 
-  const hold = () => new Promise(resolve => {})
+  const hold = () => new Promise(() => {})
 
   const nightmare = Nightmare({ show: debugging })
 
@@ -34,12 +33,8 @@ module.exports = async (title, assets, spec, {debugging = false} = {}) => {
     // stop the server
     await server.close()
 
-    // exit with different code based on errors
-    endSpec(results)
+    return results
+  } catch (error) {
+    throw new Error(error)
   }
-  catch (runtimeError) {
-    console.error(runtimeError)
-    endSpec([{type: 'error'}])
-  }
-
 }

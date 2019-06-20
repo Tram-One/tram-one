@@ -2,6 +2,7 @@ const path = require('path')
 const express = require('express')
 const Nightmare = require('nightmare')
 const chalk = require('chalk')
+const ip = require('ip')
 const processResults = require('./process-results')
 
 module.exports = async (title, assets, spec, { debugging = false } = {}) => {
@@ -19,10 +20,11 @@ module.exports = async (title, assets, spec, { debugging = false } = {}) => {
 
   try {
     // start server hosting test app
-    const server = await app.listen(port, () => console.log(`Spec App is Running on ${chalk.blue(`http://localhost:${port}`)}`))
+    const host = `http://${ip.address()}:${port}`
+    const server = await app.listen(port, () => console.log(`Spec App is Running on ${chalk.blue(host)}`))
 
     // collect results from running the spec
-    const results = await spec(nightmare)
+    const results = await spec(nightmare, host)
 
     // log the results
     processResults(results)

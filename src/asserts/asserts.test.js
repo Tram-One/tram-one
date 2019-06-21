@@ -70,6 +70,75 @@ describe('asserts', () => {
     })
   })
 
+  describe('assertIsArray', () => {
+    describe('with undefined', () => {
+      it('should not throw error if undefined is allowed', () => {
+        const check = () => asserts.assertIsArray(undefined, 'test-object', true)
+        expect(check).not.toThrow()
+      })
+
+      it('should throw error if undefined is not allowed', () => {
+        const check = () => asserts.assertIsArray(undefined, 'test-object', false)
+        expect(check).toThrow()
+      })
+
+      it('should throw error by default', () => {
+        const check = () => asserts.assertIsArray(undefined, 'test-object')
+        expect(check).toThrow()
+      })
+    })
+
+    describe('with value', () => {
+      it('should throw if value is an object', () => {
+        const check = () => asserts.assertIsArray({}, 'test-object', true)
+        expect(check).toThrow()
+      })
+
+      it('should not throw if value is an array', () => {
+        const check = () => asserts.assertIsArray([], 'test-object', true)
+        expect(check).not.toThrow()
+      })
+
+      it('should throw if value is a string', () => {
+        const check = () => asserts.assertIsArray('', 'test-object', true)
+        expect(check).toThrow()
+      })
+
+      it('should throw if value is a number', () => {
+        const check = () => asserts.assertIsArray(10, 'test-object', true)
+        expect(check).toThrow()
+      })
+
+      it('should throw if value is a function', () => {
+        const check = () => asserts.assertIsArray(() => {}, 'test-object', true)
+        expect(check).toThrow()
+      })
+    })
+
+    describe('throw message', () => {
+      it('should include variable name', () => {
+        const check = () => asserts.assertIsArray(() => {}, 'test-object', true)
+        expect(check).toThrow(expect.objectContaining({
+          message: expect.stringMatching(/test-object/)
+        }))
+      })
+
+      it('should include shape', () => {
+        const check = () => asserts.assertIsArray(() => {}, 'test-object', true, 'some kinda array')
+        expect(check).toThrow(expect.objectContaining({
+          message: expect.stringMatching(/some kinda array/)
+        }))
+      })
+
+      it('should include `an object` by default', () => {
+        const check = () => asserts.assertIsArray(() => {}, 'test-object', true)
+        expect(check).toThrow(expect.objectContaining({
+          message: expect.stringMatching(/an array/)
+        }))
+      })
+    })
+  })
+
   describe('assertIsString', () => {
     describe('with undefined', () => {
       it('should not throw error if undefined is allowed', () => {

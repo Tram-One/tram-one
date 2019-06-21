@@ -36,31 +36,31 @@
  * @instance
  *
  * @description
- * Hook that runs when the component first renders.
- * If the result of onEffect is another function,
- * then that function is called on when the component is removed.
+ * Hook that triggers component start, update, and cleanup effects.
+ * If the result of onEffect is another function, then that function is called on when the component is removed.
  *
- * <blockquote>
- *   <strong>Note! This is unique from react's useEffect hook in the following ways:</strong>
- *   <ul>
- *   <li>it takes no dependencies</li>
- *   <li>it is not called on update</li>
- *   <li>if {@link onEffect} does not return a function, the return is ignored (async effects are okay)</li>
- *   </ul>
- * </blockquote>
+ * If there are triggers passed in, when those values are updated, the cleanup will also get called, and
+ * the onEffect will trigger again. It is a common pattern to list any value used in the effect as a trigger.
+ *
+ * If {@link onEffect} does not return a function, the return is ignored, which means async
+ * functions are okay!
  *
  * @param {onEffect} onEffect function to run on component mount
+ * @param {Array} [triggers] list of values that when updated will trigger the effect again
  *
  * @example
- * import { registerHtml, useEffect } from 'tram-one'
+ * import { registerHtml, useEffect, useState } from 'tram-one'
  * const html = registerHtml()
  *
  *
  * export default () => {
- *   useEffect(() => {
- *     document.title = "Page Title"
- *   })
+ *   const [title, updateTitle] = useState('Tram-One App')
+ *   onUpdateTitle = (event) => updateTitle(event.target.value)
  *
- *   return html`<h1>Page Title</h1>`
+ *   useEffect(() => {
+ *     document.title = title
+ *   }, [title])
+ *
+ *   return html`<input value=${title} onkeydown=${onUpdateTitle} />`
  * }
  */

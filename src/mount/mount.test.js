@@ -236,6 +236,78 @@ describe('mount', () => {
           expect(mockStartEffect).not.toHaveBeenCalled()
           expect(mockCleanupEffect).toHaveBeenCalled()
         })
+
+        it('should call effects on second mount with updated triggers', () => {
+          const target = document.createElement('div')
+          const mockSpace = {}
+          setupEffectStore(mockSpace, 'mock-store')
+          setupEffectStore(mockSpace, 'mock-queue')
+          setupWorkingKey(mockSpace, 'mock-working-key')
+          setupRenderLock(mockSpace, 'mock-render-lock')
+          const mountWithStore = mount(mockSpace, 'mock-store', 'mock-queue', 'mock-working-key', 'mock-render-lock')
+          const mockStartEffect = jest.fn()
+          const mockCleanupEffect = jest.fn()
+          const mockEffect = () => {
+            mockStartEffect()
+            return mockCleanupEffect
+          }
+
+          const mockComponent = () => {
+            useEffect(mockSpace, 'mock-queue', 'mock-working-key')(mockEffect, [0])
+            return html`<div><h1>Mock Component</h1></div>`
+          }
+
+          mountWithStore(target, mockComponent)
+          const mockComponentUpdate = () => {
+            useEffect(mockSpace, 'mock-queue', 'mock-working-key')(mockEffect, [1])
+            return html`<div><h1>Mock Component</h1></div>`
+          }
+
+          mountWithStore(target, mockComponent)
+          expect(mockStartEffect).toHaveBeenCalled()
+          expect(mockCleanupEffect).not.toHaveBeenCalled()
+          mockStartEffect.mockClear()
+          mockCleanupEffect.mockClear()
+          mountWithStore(target, mockComponentUpdate)
+          expect(mockCleanupEffect).toHaveBeenCalled()
+          expect(mockStartEffect).toHaveBeenCalled()
+        })
+
+        it('should not call effects on second mount with same triggers', () => {
+          const target = document.createElement('div')
+          const mockSpace = {}
+          setupEffectStore(mockSpace, 'mock-store')
+          setupEffectStore(mockSpace, 'mock-queue')
+          setupWorkingKey(mockSpace, 'mock-working-key')
+          setupRenderLock(mockSpace, 'mock-render-lock')
+          const mountWithStore = mount(mockSpace, 'mock-store', 'mock-queue', 'mock-working-key', 'mock-render-lock')
+          const mockStartEffect = jest.fn()
+          const mockCleanupEffect = jest.fn()
+          const mockEffect = () => {
+            mockStartEffect()
+            return mockCleanupEffect
+          }
+
+          const mockComponent = () => {
+            useEffect(mockSpace, 'mock-queue', 'mock-working-key')(mockEffect, [0])
+            return html`<div><h1>Mock Component</h1></div>`
+          }
+
+          mountWithStore(target, mockComponent)
+          const mockComponentUpdate = () => {
+            useEffect(mockSpace, 'mock-queue', 'mock-working-key')(mockEffect, [0])
+            return html`<div><h1>Mock Component</h1></div>`
+          }
+
+          mountWithStore(target, mockComponent)
+          expect(mockStartEffect).toHaveBeenCalled()
+          expect(mockCleanupEffect).not.toHaveBeenCalled()
+          mockStartEffect.mockClear()
+          mockCleanupEffect.mockClear()
+          mountWithStore(target, mockComponentUpdate)
+          expect(mockCleanupEffect).not.toHaveBeenCalled()
+          expect(mockStartEffect).not.toHaveBeenCalled()
+        })
       })
     })
   })

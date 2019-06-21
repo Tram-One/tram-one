@@ -1,4 +1,4 @@
-const serverSpec = require('../../test-utilities/setup-server-spec')
+const serverSpec = require('../../test-utilities/setup-server')
 const elementExists = require('../../test-utilities/element-exists')
 
 module.exports = () => {

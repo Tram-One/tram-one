@@ -1,4 +1,4 @@
-const serverSpec = require('../../test-utilities/setup-server-spec')
+const serverSpec = require('../../test-utilities/setup-server')
 const isTrue = require('../../test-utilities/is-true')
 
 module.exports = () => {

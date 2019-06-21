@@ -7,9 +7,9 @@ const { assertGlobalSpaceAndEngine, assertIsFunction } = require('../asserts')
  * This file defines one function, useEffect, which is a hook that
  * that enables side-effects for tram-one components.
  *
- * In it's current implementation, it only triggers when a component mounts
- * and when it is cleaned up (which is unique from React's implementation which
- * calls on every render). The logic for when it triggers is in `mount()`
+ * This hook slightly mimics the react implementation, in that if you
+ * pass in an array of values, and those differ from a previous call,
+ * it will trigger the cleanup of the old effect and start a new one.
  *
  * @see https://tram-one.io/api/#Tram-One#useEffect
  */
@@ -17,7 +17,7 @@ const { assertGlobalSpaceAndEngine, assertIsFunction } = require('../asserts')
 module.exports = (globalSpace, storeName = TRAM_EFFECT_QUEUE, workingKeyName = TRAM_HOOK_KEY) => {
   assertGlobalSpaceAndEngine(TRAM_EFFECT_QUEUE, globalSpace, storeName)
 
-  return (onEffect) => {
+  return (onEffect, triggers = []) => {
     assertIsFunction(onEffect, 'effect')
 
     // get the store of effects
@@ -40,6 +40,11 @@ module.exports = (globalSpace, storeName = TRAM_EFFECT_QUEUE, workingKeyName = T
     // this makes successive useEffects calls unique (until we reset the key)
     incrementWorkingKeyBranch(globalSpace, workingKeyName)
 
-    effectStore[key] = onEffect
+    // if we have triggers, append them to the key
+    // this will make calls with new / different triggers to restart the effect
+    const formatTriggers = triggers.join(':')
+    const keyWithTriggers = `${key}(${formatTriggers})`
+
+    effectStore[keyWithTriggers] = onEffect
   }
 }

@@ -21,10 +21,12 @@ module.exports = async (title, assets, spec, { debugging = false } = {}) => {
   try {
     // start server hosting test app
     const host = `http://${ip.address()}:${port}`
-    const server = await app.listen(port, () => console.log(`Spec App is Running on ${chalk.blue(host)}`))
+    const server = await app.listen(port)
+    console.log(`\tSpec App is Running on ${chalk.blue(host)}`)
 
     // collect results from running the spec
     const results = await spec(nightmare, host)
+    console.log('\tFinished Nightmare Specs')
 
     // log the results
     processResults(results)

@@ -6,7 +6,7 @@ If you're familiar with other view frameworks and build tools, you can use Tram-
 npm i tram-one
 ```
 
-We recommend using [tram-one-express](/guides/tram-one-express), however if you have your own build tooling,
+We recommend using [tram-one-express](/tram-one-express), however if you have your own build tooling,
 using tram-one is as simple as including it as one of your dependencies.
 
 ### On Node.js

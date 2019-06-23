@@ -46,7 +46,7 @@
  * functions are okay!
  *
  * @param {onEffect} onEffect function to run on component mount
- * @param {Array} [triggers] list of values that when updated will trigger the effect again
+ * @param {Array} [triggers=[]] list of values that when updated will trigger the effect again
  *
  * @example
  * import { registerHtml, useEffect, useState } from 'tram-one'

@@ -101,6 +101,7 @@ const mount = (globalSpace, effectStore = TRAM_EFFECT_STORE, effectQueue = TRAM_
             // call clean up effect
             existingEffects[effectKey]()
           }
+
           // remove effect from effectStore
           delete getEffectStore(globalSpace, effectStore)[effectKey]
         })

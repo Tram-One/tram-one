@@ -1,6 +1,6 @@
 {
   "name": "tram-one",
-  "version": "8.1.0",
+  "version": "8.1.1",
   "description": "🚋 Batteries Included View Framework",
   "main": "dist/tram-one.cjs.js",
   "commonjs": "dist/tram-one.cjs.js",

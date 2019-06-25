@@ -96,10 +96,12 @@ const mount = (globalSpace, effectStore = TRAM_EFFECT_STORE, effectQueue = TRAM_
 
       // run all clean up effects if the effect was removed and is a function
       removedEffectKeys
-        .filter(effectKey => typeof existingEffects[effectKey] === 'function')
         .forEach(effectKey => {
-          // call clean up effect
-          existingEffects[effectKey]()
+          if (typeof existingEffects[effectKey] === 'function') {
+            // call clean up effect
+            existingEffects[effectKey]()
+          }
+
           // remove effect from effectStore
           delete getEffectStore(globalSpace, effectStore)[effectKey]
         })

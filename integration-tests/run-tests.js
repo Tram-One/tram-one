@@ -9,29 +9,29 @@ const useGlobalSpec = require('./specs/use-global-spec')
 const endSpec = require('./test-utilities/end-spec')
 
 const runTests = async () => {
-  try {
-    const componentResults = await componentSpec()
-    const routingResults = await routingSpec()
-    const sideEffectResults = await sideEffectSpec()
-    const svgResults = await svgSpec()
-    const umdResults = await umdSpec()
-    const updatedEffectResults = await updatedEffectSpec()
-    const useGlobalResults = await useGlobalSpec()
+	try {
+		const componentResults = await componentSpec()
+		const routingResults = await routingSpec()
+		const sideEffectResults = await sideEffectSpec()
+		const svgResults = await svgSpec()
+		const umdResults = await umdSpec()
+		const updatedEffectResults = await updatedEffectSpec()
+		const useGlobalResults = await useGlobalSpec()
 
-    const results = [
-      componentResults,
-      routingResults,
-      sideEffectResults,
-      svgResults,
-      umdResults,
-      updatedEffectResults,
-      useGlobalResults
-    ].reduce((totalResults, resultList) => totalResults.concat(resultList))
+		const results = [
+			componentResults,
+			routingResults,
+			sideEffectResults,
+			svgResults,
+			umdResults,
+			updatedEffectResults,
+			useGlobalResults
+		].reduce((totalResults, resultList) => totalResults.concat(resultList))
 
-    endSpec(results)
-  } catch (error) {
-    throw error
-  }
+		endSpec(results)
+	} catch (error) {
+		throw error
+	}
 }
 
 runTests()

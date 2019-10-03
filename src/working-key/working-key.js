@@ -1,5 +1,5 @@
-const { setup, get } = require('../namespace')
-const { assertGlobalSpaceAndEngine, assertIsString, assertIsDefined } = require('../asserts')
+const {setup, get} = require('../namespace')
+const {assertGlobalSpaceAndEngine, assertIsString, assertIsDefined} = require('../asserts')
 
 /**
  * This file defines all the functions required to interact with
@@ -9,20 +9,20 @@ const { assertGlobalSpaceAndEngine, assertIsString, assertIsDefined } = require(
  */
 
 const setupWorkingKey = setup(() => ({
-  // list of custom tags that we've stepped into
-  branch: [],
-  // map of branches to index value (used as a cursor for hooks)
-  branchIndices: {
-    '': 0
-  }
+	// list of custom tags that we've stepped into
+	branch: [],
+	// map of branches to index value (used as a cursor for hooks)
+	branchIndices: {
+		'': 0
+	}
 }))
 
 const getWorkingKey = get
 
 const getWorkingBranch = (globalSpace, keyName) => {
-  assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
+	assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
 
-  return getWorkingKey(globalSpace, keyName).branch.join('/')
+	return getWorkingKey(globalSpace, keyName).branch.join('/')
 }
 
 /**
@@ -30,17 +30,17 @@ const getWorkingBranch = (globalSpace, keyName) => {
  * custom component when mounting.
  */
 const pushWorkingKeyBranch = (globalSpace, keyName) => {
-  assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
+	assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
 
-  return (branch) => {
-    assertIsString(branch)
-    const workingKey = getWorkingKey(globalSpace, keyName)
-    assertIsDefined(workingKey, 'workingKey', 'setup, use setupWorkingKey')
-    workingKey.branch.push(branch)
-    if (!workingKey.branchIndices[getWorkingBranch(globalSpace, keyName)]) {
-      workingKey.branchIndices[getWorkingBranch(globalSpace, keyName)] = 0
-    }
-  }
+	return branch => {
+		assertIsString(branch)
+		const workingKey = getWorkingKey(globalSpace, keyName)
+		assertIsDefined(workingKey, 'workingKey', 'setup, use setupWorkingKey')
+		workingKey.branch.push(branch)
+		if (!workingKey.branchIndices[getWorkingBranch(globalSpace, keyName)]) {
+			workingKey.branchIndices[getWorkingBranch(globalSpace, keyName)] = 0
+		}
+	}
 }
 
 /**
@@ -48,12 +48,12 @@ const pushWorkingKeyBranch = (globalSpace, keyName) => {
  * a single child component.
  */
 const popWorkingKeyBranch = (globalSpace, keyName) => {
-  assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
+	assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
 
-  return () => {
-    const workingKey = getWorkingKey(globalSpace, keyName)
-    workingKey.branch.pop()
-  }
+	return () => {
+		const workingKey = getWorkingKey(globalSpace, keyName)
+		workingKey.branch.pop()
+	}
 }
 
 /**
@@ -61,10 +61,10 @@ const popWorkingKeyBranch = (globalSpace, keyName) => {
  * These values are used to pull the correct hook value on re-renders.
  */
 const incrementWorkingKeyBranch = (globalSpace, keyName) => {
-  assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
+	assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
 
-  const workingKey = getWorkingKey(globalSpace, keyName)
-  workingKey.branchIndices[getWorkingBranch(globalSpace, keyName)] += 1
+	const workingKey = getWorkingKey(globalSpace, keyName)
+	workingKey.branchIndices[getWorkingBranch(globalSpace, keyName)] += 1
 }
 
 /**
@@ -73,13 +73,13 @@ const incrementWorkingKeyBranch = (globalSpace, keyName) => {
  * re-renders.
  */
 const getWorkingKeyValue = (globalSpace, keyName) => {
-  assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
+	assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
 
-  const workingKey = getWorkingKey(globalSpace, keyName)
-  if (!workingKey) return workingKey
+	const workingKey = getWorkingKey(globalSpace, keyName)
+	if (!workingKey) return workingKey
 
-  const index = workingKey.branchIndices[getWorkingBranch(globalSpace, keyName)]
-  return `${getWorkingBranch(globalSpace, keyName)}[${index}]`
+	const index = workingKey.branchIndices[getWorkingBranch(globalSpace, keyName)]
+	return `${getWorkingBranch(globalSpace, keyName)}[${index}]`
 }
 
 /**
@@ -87,30 +87,30 @@ const getWorkingKeyValue = (globalSpace, keyName) => {
  * it refers to the correct hook from the last time it was called
  */
 const resetWorkingKey = (globalSpace, keyName) => {
-  assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
+	assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
 
-  const key = getWorkingKey(globalSpace, keyName)
-  if (!key) return
-  const branches = key.branchIndices
-  getWorkingKey(globalSpace, keyName).branch = []
-  Object.keys(getWorkingKey(globalSpace, keyName).branchIndices)
-    .forEach((branch) => {
-      branches[branch] = 0
-    })
+	const key = getWorkingKey(globalSpace, keyName)
+	if (!key) return
+	const branches = key.branchIndices
+	getWorkingKey(globalSpace, keyName).branch = []
+	Object.keys(getWorkingKey(globalSpace, keyName).branchIndices)
+		.forEach(branch => {
+			branches[branch] = 0
+		})
 }
 
 /**
  * returns a deep copy of the existing key, usually used as a restore point later
  */
 const copyWorkingKey = (globalSpace, keyName) => {
-  assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
+	assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
 
-  const key = getWorkingKey(globalSpace, keyName)
-  if (!key) return
-  return {
-    branch: [...key.branch],
-    branchIndices: { ...key.branchIndices }
-  }
+	const key = getWorkingKey(globalSpace, keyName)
+	if (!key) return
+	return {
+		branch: [...key.branch],
+		branchIndices: {...key.branchIndices}
+	}
 }
 
 /**
@@ -118,27 +118,27 @@ const copyWorkingKey = (globalSpace, keyName) => {
  * to where the branches were before
  */
 const restoreWorkingKey = (globalSpace, keyName, restoreKey) => {
-  assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
+	assertGlobalSpaceAndEngine('keyName', globalSpace, keyName)
 
-  const key = getWorkingKey(globalSpace, keyName)
-  if (!key) return
-  const branches = key.branchIndices
-  getWorkingKey(globalSpace, keyName).branch = [...restoreKey.branch]
-  Object.keys(getWorkingKey(globalSpace, keyName).branchIndices)
-    .forEach((branch) => {
-      branches[branch] = restoreKey.branchIndices[branch] || 0
-    })
+	const key = getWorkingKey(globalSpace, keyName)
+	if (!key) return
+	const branches = key.branchIndices
+	getWorkingKey(globalSpace, keyName).branch = [...restoreKey.branch]
+	Object.keys(getWorkingKey(globalSpace, keyName).branchIndices)
+		.forEach(branch => {
+			branches[branch] = restoreKey.branchIndices[branch] || 0
+		})
 }
 
 module.exports = {
-  setupWorkingKey,
-  pushWorkingKeyBranch,
-  popWorkingKeyBranch,
-  incrementWorkingKeyBranch,
-  getWorkingKey,
-  getWorkingBranch,
-  getWorkingKeyValue,
-  resetWorkingKey,
-  copyWorkingKey,
-  restoreWorkingKey
+	setupWorkingKey,
+	pushWorkingKeyBranch,
+	popWorkingKeyBranch,
+	incrementWorkingKeyBranch,
+	getWorkingKey,
+	getWorkingBranch,
+	getWorkingKeyValue,
+	resetWorkingKey,
+	copyWorkingKey,
+	restoreWorkingKey
 }

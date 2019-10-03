@@ -1,29 +1,29 @@
-const { setupWorkingKey } = require('../working-key')
-const { setupRenderLock } = require('../render-lock')
-const { registerDom } = require('./dom')
+const {setupWorkingKey} = require('../working-key')
+const {setupRenderLock} = require('../render-lock')
+const {registerDom} = require('./dom')
 
 // for these tests we don't care so much about the
 // resulting space that exists in the DOM
 const removeSpacing = domString => domString.replace(/\s/g, '')
 
 describe('dom', () => {
-  describe('registerDom', () => {
-    describe('without global space', () => {
-      it('should return an html function that creates DOM', () => {
-        const html = registerDom(null)(null)
-        const div = html`<div>Some Text</div>`
+	describe('registerDom', () => {
+		describe('without global space', () => {
+			it('should return an html function that creates DOM', () => {
+				const html = registerDom(null)(null)
+				const div = html`<div>Some Text</div>`
 
-        expect(div.outerHTML).toEqual('<div>Some Text</div>')
-      })
+				expect(div.outerHTML).toEqual('<div>Some Text</div>')
+			})
 
-      it('should support custom elements in registry', () => {
-        const baseHtml = registerDom(null)(null)
-        const inside = (attrs, children) => baseHtml`<div ${attrs}>${children}</div>`
+			it('should support custom elements in registry', () => {
+				const baseHtml = registerDom(null)(null)
+				const inside = (attrs, children) => baseHtml`<div ${attrs}>${children}</div>`
 
-        const html = registerDom(null)(null, {
-          inside
-        })
-        const outside = html`
+				const html = registerDom(null)(null, {
+					inside
+				})
+				const outside = html`
           <div>
             Outside HTML
             <inside someAttr="some attr value">
@@ -32,7 +32,7 @@ describe('dom', () => {
           </div>
         `
 
-        const expectedResult = `
+				const expectedResult = `
           <div>
             Outside HTML
             <div someAttr="some attr value">
@@ -40,33 +40,33 @@ describe('dom', () => {
             </div>
           </div>
         `
-        expect(removeSpacing(outside.outerHTML)).toEqual(removeSpacing(expectedResult))
-      })
-    })
+				expect(removeSpacing(outside.outerHTML)).toEqual(removeSpacing(expectedResult))
+			})
+		})
 
-    describe('with global space', () => {
-      it('should return an html function that creates DOM', () => {
-        const mockSpace = {}
-        const html = registerDom(mockSpace)(null)
-        const div = html`<div>Some Text</div>`
+		describe('with global space', () => {
+			it('should return an html function that creates DOM', () => {
+				const mockSpace = {}
+				const html = registerDom(mockSpace)(null)
+				const div = html`<div>Some Text</div>`
 
-        expect(div.outerHTML).toEqual('<div>Some Text</div>')
-      })
-      it('should update the working key in global space inside a registered elements', () => {
-        const mockSpace = {}
-        setupWorkingKey(mockSpace, 'mock-key')
-        setupRenderLock(mockSpace, 'mock-lock')
+				expect(div.outerHTML).toEqual('<div>Some Text</div>')
+			})
+			it('should update the working key in global space inside a registered elements', () => {
+				const mockSpace = {}
+				setupWorkingKey(mockSpace, 'mock-key')
+				setupRenderLock(mockSpace, 'mock-lock')
 
-        const baseHtml = registerDom(mockSpace, 'mock-key', 'mock-lock')(null)
-        const inside = (attrs, children) => {
-          expect(mockSpace['mock-key'].branch).toEqual(['inside'])
-          return baseHtml`<div ${attrs}>${children}</div>`
-        }
+				const baseHtml = registerDom(mockSpace, 'mock-key', 'mock-lock')(null)
+				const inside = (attrs, children) => {
+					expect(mockSpace['mock-key'].branch).toEqual(['inside'])
+					return baseHtml`<div ${attrs}>${children}</div>`
+				}
 
-        const html = registerDom(mockSpace, 'mock-key', 'mock-lock')(null, {
-          inside
-        })
-        const outside = html`
+				const html = registerDom(mockSpace, 'mock-key', 'mock-lock')(null, {
+					inside
+				})
+				const outside = html`
           <div>
             Outside HTML
             <inside someAttr="some attr value">
@@ -75,7 +75,7 @@ describe('dom', () => {
           </div>
         `
 
-        const expectedResult = `
+				const expectedResult = `
           <div>
             Outside HTML
             <div someAttr="some attr value">
@@ -83,8 +83,8 @@ describe('dom', () => {
             </div>
           </div>
         `
-        expect(removeSpacing(outside.outerHTML)).toEqual(removeSpacing(expectedResult))
-      })
-    })
-  })
+				expect(removeSpacing(outside.outerHTML)).toEqual(removeSpacing(expectedResult))
+			})
+		})
+	})
 })

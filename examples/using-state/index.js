@@ -3,28 +3,28 @@
 // or
 // import { ... } from 'tram-one'
 
-const { start, registerHtml, useState } = window['tram-one']
+const {start, registerHtml, useState} = window['tram-one']
 
 // real code you would see in a project
 
 const html = registerHtml()
 
 const useCounter = () => {
-  const [counter, setCounter] = useState(0)
-  const incrementCounter = () => {
-    setCounter(counter + 1)
-  }
+	const [counter, setCounter] = useState(0)
+	const incrementCounter = () => {
+		setCounter(counter + 1)
+	}
 
-  const decrementCounter = () => {
-    setCounter(counter - 1)
-  }
+	const decrementCounter = () => {
+		setCounter(counter - 1)
+	}
 
-  return { counter, incrementCounter, decrementCounter }
+	return {counter, incrementCounter, decrementCounter}
 }
 
 const clicker = () => {
-  const { counter, incrementCounter, decrementCounter } = useCounter()
-  return html`
+	const {counter, incrementCounter, decrementCounter} = useCounter()
+	return html`
     <div>
       Tram-One uses <a href="https://github.com/JRJurman/hover-engine">Hover-Engine</a> internally to manage state, but you can use standard hooks to update and read values.
       Tram-One also uses <a href="https://github.com/Tram-One/tatermorph">tatermorph</a> (a fork of nanomorph) for DOM diffing.

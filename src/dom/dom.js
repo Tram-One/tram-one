@@ -2,10 +2,10 @@ const belit = require('belit')
 const ninlil = require('ninlil')
 const hyperz = require('hyperz')
 
-const { TRAM_HOOK_KEY, TRAM_RENDER_LOCK } = require('../engine-names')
-const { assertIsObject, assertIsString } = require('../asserts')
-const { getRenderLock } = require('../render-lock')
-const { getWorkingKey, pushWorkingKeyBranch, popWorkingKeyBranch } = require('../working-key')
+const {TRAM_HOOK_KEY, TRAM_RENDER_LOCK} = require('../engine-names')
+const {assertIsObject, assertIsString} = require('../asserts')
+const {getRenderLock} = require('../render-lock')
+const {getWorkingKey, pushWorkingKeyBranch, popWorkingKeyBranch} = require('../working-key')
 
 /**
  * This file contains a single function, registerDom, which is responsible
@@ -22,37 +22,37 @@ const { getWorkingKey, pushWorkingKeyBranch, popWorkingKeyBranch } = require('..
  */
 
 const registerDom = (globalSpace, workingKeyName = TRAM_HOOK_KEY, renderLockName = TRAM_RENDER_LOCK) => {
-  assertIsObject(globalSpace, 'globalSpace', true)
+	assertIsObject(globalSpace, 'globalSpace', true)
 
-  return (namespace, registry = {}) => {
-    assertIsString(namespace, 'namespace', true)
-    assertIsObject(registry, 'registry')
+	return (namespace, registry = {}) => {
+		assertIsString(namespace, 'namespace', true)
+		assertIsObject(registry, 'registry')
 
-    // modify the registry so that each component function updates the hook working key
-    const hookedRegistry = globalSpace && Object.keys(registry).reduce((newRegistry, tagName) => {
-      const tagFunction = registry[tagName]
-      const hookedTagFunction = (...args) => {
-        // grab working key (used for isolating hook values)
-        const workingKey = getWorkingKey(globalSpace, workingKeyName)
+		// modify the registry so that each component function updates the hook working key
+		const hookedRegistry = globalSpace && Object.keys(registry).reduce((newRegistry, tagName) => {
+			const tagFunction = registry[tagName]
+			const hookedTagFunction = (...args) => {
+				// grab working key (used for isolating hook values)
+				const workingKey = getWorkingKey(globalSpace, workingKeyName)
 
-        // push a new branch onto the working key
-        if (workingKey) { pushWorkingKeyBranch(globalSpace, workingKeyName)(tagName) }
+				// push a new branch onto the working key
+				if (workingKey) { pushWorkingKeyBranch(globalSpace, workingKeyName)(tagName) }
 
-        // if render lock has already been turned off, we should avoid rendering components
-        const { shouldRender } = getRenderLock(globalSpace, renderLockName)
-        const tagResult = shouldRender ? tagFunction(...args) : ''
+				// if render lock has already been turned off, we should avoid rendering components
+				const {shouldRender} = getRenderLock(globalSpace, renderLockName)
+				const tagResult = shouldRender ? tagFunction(...args) : ''
 
-        // pop the branch off (since we are done rendering this component)
-        if (workingKey) { popWorkingKeyBranch(globalSpace, workingKeyName)() }
+				// pop the branch off (since we are done rendering this component)
+				if (workingKey) { popWorkingKeyBranch(globalSpace, workingKeyName)() }
 
-        return tagResult
-      }
+				return tagResult
+			}
 
-      return Object.assign({}, newRegistry, { [tagName]: hookedTagFunction })
-    }, {})
+			return Object.assign({}, newRegistry, {[tagName]: hookedTagFunction})
+		}, {})
 
-    return ninlil(hyperz, belit(namespace), hookedRegistry || registry || {})
-  }
+		return ninlil(hyperz, belit(namespace), hookedRegistry || registry || {})
+	}
 }
 
-module.exports = { registerDom }
+module.exports = {registerDom}

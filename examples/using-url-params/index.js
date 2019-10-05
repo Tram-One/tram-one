@@ -3,14 +3,14 @@
 // or
 // import { ... } from 'tram-one'
 
-const { registerHtml, useUrlParams, start } = window['tram-one']
+const {registerHtml, useUrlParams, start} = window['tram-one']
 
 const html = registerHtml()
 
 const home = () => {
-  const { color } = useUrlParams()
+	const {color} = useUrlParams()
 
-  return html`
+	return html`
     <div>
       Tram-One
       uses <a href="https://github.com/chrisdavies/rlite">rlite</a>

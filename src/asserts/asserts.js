@@ -10,7 +10,7 @@ const assert = require('assert')
  * @param {*} value - value to check
  * @returns {boolean} if the value is defined
  */
-const undefinedCheck = (value) => (value === undefined || value === null)
+const undefinedCheck = value => (value === undefined || value === null)
 
 /**
  * verify that value is an object, and throw an assert warning if it is not
@@ -24,9 +24,9 @@ const undefinedCheck = (value) => (value === undefined || value === null)
  * assertIsObject(store, 'store', false, 'map of paths to values')
  */
 const assertIsObject = (value, variable, orUndefined = false, shape = 'an object') => {
-  if (orUndefined && undefinedCheck(value)) return
-  assert.strictEqual(typeof value, 'object', `Tram-One: ${variable} should be ${shape}`)
-  assert.ok(!(Array.isArray(value)), `Tram-One: ${variable} should be ${shape}`)
+	if (orUndefined && undefinedCheck(value)) return
+	assert.strictEqual(typeof value, 'object', `Tram-One: ${variable} should be ${shape}`)
+	assert.ok(!(Array.isArray(value)), `Tram-One: ${variable} should be ${shape}`)
 }
 
 /**
@@ -41,9 +41,9 @@ const assertIsObject = (value, variable, orUndefined = false, shape = 'an object
  * assertIsArray(triggers, 'triggers', false, 'list of values')
  */
 const assertIsArray = (value, variable, orUndefined = false, shape = 'an array') => {
-  if (orUndefined && undefinedCheck(value)) return
-  assert.strictEqual(typeof value, 'object', `Tram-One: ${variable} should be ${shape}`)
-  assert.ok((Array.isArray(value)), `Tram-One: ${variable} should be ${shape}`)
+	if (orUndefined && undefinedCheck(value)) return
+	assert.strictEqual(typeof value, 'object', `Tram-One: ${variable} should be ${shape}`)
+	assert.ok((Array.isArray(value)), `Tram-One: ${variable} should be ${shape}`)
 }
 
 /**
@@ -58,8 +58,8 @@ const assertIsArray = (value, variable, orUndefined = false, shape = 'an array')
  * assertIsString(key, 'key', false, 'a string of digits')
  */
 const assertIsString = (value, variable, orUndefined = false, shape = 'a string') => {
-  if (orUndefined && undefinedCheck(value)) return
-  assert.strictEqual(typeof value, 'string', `Tram-One: ${variable} should be ${shape}`)
+	if (orUndefined && undefinedCheck(value)) return
+	assert.strictEqual(typeof value, 'string', `Tram-One: ${variable} should be ${shape}`)
 }
 
 /**
@@ -74,8 +74,8 @@ const assertIsString = (value, variable, orUndefined = false, shape = 'a string'
  * assertIsString(key, 'key', false, 'a string of digits')
  */
 const assertIsFunction = (value, variable, orUndefined = false, shape = 'a function') => {
-  if (orUndefined && undefinedCheck(value)) return
-  assert.strictEqual(typeof value, 'function', `Tram-One: ${variable} should be ${shape}`)
+	if (orUndefined && undefinedCheck(value)) return
+	assert.strictEqual(typeof value, 'function', `Tram-One: ${variable} should be ${shape}`)
 }
 
 /**
@@ -89,7 +89,7 @@ const assertIsFunction = (value, variable, orUndefined = false, shape = 'a funct
  * assertIsDefined(key, 'key', 'a string of digits')
  */
 const assertIsDefined = (value, variable, shape = 'defined') => {
-  assert.ok(!undefinedCheck(value), `Tram-One: ${variable} should be ${shape}`)
+	assert.ok(!undefinedCheck(value), `Tram-One: ${variable} should be ${shape}`)
 }
 
 /**
@@ -100,8 +100,8 @@ const assertIsDefined = (value, variable, shape = 'defined') => {
  * @param {*} engineValue - engine object
  */
 const assertGlobalSpaceAndEngine = (engineName, globalSpace, engineValue) => {
-  assertIsObject(globalSpace, 'globalSpace', true)
-  assertIsString(engineValue, engineName)
+	assertIsObject(globalSpace, 'globalSpace', true)
+	assertIsString(engineValue, engineName)
 }
 
-module.exports = { assertIsObject, assertIsArray, assertIsString, assertIsFunction, assertIsDefined, assertGlobalSpaceAndEngine }
+module.exports = {assertIsObject, assertIsArray, assertIsString, assertIsFunction, assertIsDefined, assertGlobalSpaceAndEngine}

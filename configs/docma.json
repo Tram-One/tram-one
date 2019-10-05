@@ -8,12 +8,30 @@
     "entrance": "content:introduction",
     "favicon": "./docs/images/logo_64.png",
     "meta": [
-      { "property": "og:title", "content": "Tram-One"},
-      { "property": "og:description", "content": "Modern View Framework For Pure Javascript"},
-      { "property": "og:url", "content": "https://tram-one.io"},
-      { "property": "og:image", "content": "https://tram-one.io/images/preview.png"},
-      { "name": "twitter:card", "content": "summary_large_image"},
-      { "name": "twitter:creator", "content": "@jrjurman"}
+      {
+        "property": "og:title",
+        "content": "Tram-One"
+      },
+      {
+        "property": "og:description",
+        "content": "Modern View Framework For Pure Javascript"
+      },
+      {
+        "property": "og:url",
+        "content": "https://tram-one.io"
+      },
+      {
+        "property": "og:image",
+        "content": "https://tram-one.io/images/preview.png"
+      },
+      {
+        "name": "twitter:card",
+        "content": "summary_large_image"
+      },
+      {
+        "name": "twitter:creator",
+        "content": "@jrjurman"
+      }
     ],
     "routing": {
       "method": "path"
@@ -65,6 +83,10 @@
                 "href": "/tram-one-express"
               }
             ]
+          },
+          {
+            "label": "Hacktoberfest",
+            "href": "/hacktoberfest"
           },
           {
             "iconClass": "fab fa-lg fa-slack",

@@ -1,5 +1,5 @@
-const { assertGlobalSpaceAndEngine } = require('../asserts')
-const { setup, get } = require('../namespace')
+const {assertGlobalSpaceAndEngine} = require('../asserts')
+const {setup, get} = require('../namespace')
 
 /**
  * Render lock is a boolean which is used to indicate whether we should
@@ -7,21 +7,21 @@ const { setup, get } = require('../namespace')
  * abandon the outdated render.
  */
 
-const setupRenderLock = setup(() => ({ shouldRender: true }))
+const setupRenderLock = setup(() => ({shouldRender: true}))
 
 const getRenderLock = get
 
 const setRenderLock = (globalSpace, renderLockName, shouldRender) => {
-  assertGlobalSpaceAndEngine('renderLockName', globalSpace, renderLockName)
+	assertGlobalSpaceAndEngine('renderLockName', globalSpace, renderLockName)
 
-  const renderLock = getRenderLock(globalSpace, renderLockName)
+	const renderLock = getRenderLock(globalSpace, renderLockName)
 
-  // if there is no lock, return should render value
-  if (!renderLock) return { shouldRender }
+	// if there is no lock, return should render value
+	if (!renderLock) return {shouldRender}
 
-  renderLock.shouldRender = shouldRender
+	renderLock.shouldRender = shouldRender
 
-  return renderLock
+	return renderLock
 }
 
-module.exports = { setupRenderLock, getRenderLock, setRenderLock }
+module.exports = {setupRenderLock, getRenderLock, setRenderLock}

@@ -5,17 +5,17 @@ const pkg = require('../package.json')
 const external = Object.keys(pkg.dependencies)
 
 const plugins = [
-  commonjs(),
-  filesize()
+	commonjs(),
+	filesize()
 ]
 
 export default {
-  input: 'src/tram-one/index.js',
-  external: external,
-  plugins: plugins,
-  output: {
-    file: pkg.commonjs,
-    format: 'cjs',
-    interop: false
-  }
+	input: 'src/tram-one/index.js',
+	external,
+	plugins,
+	output: {
+		file: pkg.commonjs,
+		format: 'cjs',
+		interop: false
+	}
 }

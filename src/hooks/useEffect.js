@@ -1,7 +1,7 @@
-const { TRAM_HOOK_KEY, TRAM_EFFECT_QUEUE } = require('../engine-names')
-const { getEffectStore } = require('../effect-store')
-const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('../working-key')
-const { assertGlobalSpaceAndEngine, assertIsFunction, assertIsArray } = require('../asserts')
+const {TRAM_HOOK_KEY, TRAM_EFFECT_QUEUE} = require('../engine-names')
+const {getEffectStore} = require('../effect-store')
+const {getWorkingKeyValue, incrementWorkingKeyBranch} = require('../working-key')
+const {assertGlobalSpaceAndEngine, assertIsFunction, assertIsArray} = require('../asserts')
 
 /**
  * This file defines one function, useEffect, which is a hook that
@@ -15,37 +15,37 @@ const { assertGlobalSpaceAndEngine, assertIsFunction, assertIsArray } = require(
  */
 
 module.exports = (globalSpace, storeName = TRAM_EFFECT_QUEUE, workingKeyName = TRAM_HOOK_KEY) => {
-  assertGlobalSpaceAndEngine(TRAM_EFFECT_QUEUE, globalSpace, storeName)
+	assertGlobalSpaceAndEngine(TRAM_EFFECT_QUEUE, globalSpace, storeName)
 
-  return (onEffect, triggers = []) => {
-    assertIsFunction(onEffect, 'effect')
-    assertIsArray(triggers, 'triggers', true)
+	return (onEffect, triggers = []) => {
+		assertIsFunction(onEffect, 'effect')
+		assertIsArray(triggers, 'triggers', true)
 
-    // get the store of effects
-    const effectStore = getEffectStore(globalSpace, storeName)
+		// get the store of effects
+		const effectStore = getEffectStore(globalSpace, storeName)
 
-    // get the key value from working-key
-    const key = getWorkingKeyValue(globalSpace, workingKeyName)
+		// get the key value from working-key
+		const key = getWorkingKeyValue(globalSpace, workingKeyName)
 
-    // if there is no store, call start and cleanup
-    if (!effectStore || !key) {
-      const cleanup = onEffect()
-      if (typeof cleanup === 'function') {
-        cleanup()
-      }
+		// if there is no store, call start and cleanup
+		if (!effectStore || !key) {
+			const cleanup = onEffect()
+			if (typeof cleanup === 'function') {
+				cleanup()
+			}
 
-      return
-    }
+			return
+		}
 
-    // increment the working key branch value
-    // this makes successive useEffects calls unique (until we reset the key)
-    incrementWorkingKeyBranch(globalSpace, workingKeyName)
+		// increment the working key branch value
+		// this makes successive useEffects calls unique (until we reset the key)
+		incrementWorkingKeyBranch(globalSpace, workingKeyName)
 
-    // if we have triggers, append them to the key
-    // this will make calls with new / different triggers to restart the effect
-    const formatTriggers = triggers.join(':')
-    const keyWithTriggers = `${key}(${formatTriggers})`
+		// if we have triggers, append them to the key
+		// this will make calls with new / different triggers to restart the effect
+		const formatTriggers = triggers.join(':')
+		const keyWithTriggers = `${key}(${formatTriggers})`
 
-    effectStore[keyWithTriggers] = onEffect
-  }
+		effectStore[keyWithTriggers] = onEffect
+	}
 }

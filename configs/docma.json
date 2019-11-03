@@ -85,10 +85,6 @@
             ]
           },
           {
-            "label": "Hacktoberfest",
-            "href": "/hacktoberfest"
-          },
-          {
             "iconClass": "fab fa-lg fa-slack",
             "label": "",
             "href": "https://join.slack.com/t/tram-one/shared_invite/enQtMjY0NDA3OTg2MzQyLWUyMGIyZTYwNzZkNDJiNWNmNzdiOTMzYjg0YzMzZTkzZDE4MTlmN2Q2YjE0NDIwMGI3ODEzYzQ4ODdlMzQ2ODM",

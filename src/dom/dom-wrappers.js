@@ -1,4 +1,4 @@
-const {registerDom} = require('./dom')
+const { registerDom } = require('./dom')
 
 /**
  * This file contains two functions, registerHtml and
@@ -16,4 +16,4 @@ const registerSvg = globalSpace => registry => {
 	return registerDom(globalSpace)('http://www.w3.org/2000/svg', registry)
 }
 
-module.exports = {registerHtml, registerSvg}
+module.exports = { registerHtml, registerSvg }

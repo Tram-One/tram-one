@@ -1,6 +1,6 @@
-const {registerHtml, registerSvg} = require('../dom')
-const {useEffect, useState, useUrlParams, useGlobalState} = require('../hooks')
-const {start} = require('../start')
+const { registerHtml, registerSvg } = require('../dom')
+const { useEffect, useState, useUrlParams, useGlobalState } = require('../hooks')
+const { start } = require('../start')
 
 /**
  * This file is the main export that is exposed to users of

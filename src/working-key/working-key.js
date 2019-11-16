@@ -1,5 +1,5 @@
-const {setup, get} = require('../namespace')
-const {assertGlobalSpaceAndEngine, assertIsString, assertIsDefined} = require('../asserts')
+const { setup, get } = require('../namespace')
+const { assertGlobalSpaceAndEngine, assertIsString, assertIsDefined } = require('../asserts')
 
 /**
  * This file defines all the functions required to interact with
@@ -109,7 +109,7 @@ const copyWorkingKey = (globalSpace, keyName) => {
 	if (!key) return
 	return {
 		branch: [...key.branch],
-		branchIndices: {...key.branchIndices}
+		branchIndices: { ...key.branchIndices }
 	}
 }
 

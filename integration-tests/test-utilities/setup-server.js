@@ -5,12 +5,12 @@ const chalk = require('chalk')
 const ip = require('ip')
 const processResults = require('./process-results')
 
-module.exports = async (title, assets, spec, {debugging = false} = {}) => {
+module.exports = async (title, assets, spec, { debugging = false } = {}) => {
 	console.log(chalk.yellow(title))
 
 	const hold = () => new Promise(() => {})
 
-	const nightmare = Nightmare({show: debugging})
+	const nightmare = Nightmare({ show: debugging })
 
 	// setup express server for running the simple page-spec
 	const app = express()

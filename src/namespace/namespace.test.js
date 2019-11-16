@@ -1,4 +1,4 @@
-const {setup, get} = require('./namespace')
+const { setup, get } = require('./namespace')
 
 describe('namespace', () => {
 	describe('setup', () => {

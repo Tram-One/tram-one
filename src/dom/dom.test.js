@@ -1,6 +1,6 @@
-const {setupWorkingKey} = require('../working-key')
-const {setupRenderLock} = require('../render-lock')
-const {registerDom} = require('./dom')
+const { setupWorkingKey } = require('../working-key')
+const { setupRenderLock } = require('../render-lock')
+const { registerDom } = require('./dom')
 
 // for these tests we don't care so much about the
 // resulting space that exists in the DOM

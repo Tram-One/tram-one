@@ -2,10 +2,10 @@ const belit = require('belit')
 const ninlil = require('ninlil')
 const hyperz = require('hyperz')
 
-const {TRAM_HOOK_KEY, TRAM_RENDER_LOCK} = require('../engine-names')
-const {assertIsObject, assertIsString} = require('../asserts')
-const {getRenderLock} = require('../render-lock')
-const {getWorkingKey, pushWorkingKeyBranch, popWorkingKeyBranch} = require('../working-key')
+const { TRAM_HOOK_KEY, TRAM_RENDER_LOCK } = require('../engine-names')
+const { assertIsObject, assertIsString } = require('../asserts')
+const { getRenderLock } = require('../render-lock')
+const { getWorkingKey, pushWorkingKeyBranch, popWorkingKeyBranch } = require('../working-key')
 
 /**
  * This file contains a single function, registerDom, which is responsible
@@ -39,7 +39,7 @@ const registerDom = (globalSpace, workingKeyName = TRAM_HOOK_KEY, renderLockName
 				if (workingKey) { pushWorkingKeyBranch(globalSpace, workingKeyName)(tagName) }
 
 				// if render lock has already been turned off, we should avoid rendering components
-				const {shouldRender} = getRenderLock(globalSpace, renderLockName)
+				const { shouldRender } = getRenderLock(globalSpace, renderLockName)
 				const tagResult = shouldRender ? tagFunction(...args) : ''
 
 				// pop the branch off (since we are done rendering this component)
@@ -48,11 +48,11 @@ const registerDom = (globalSpace, workingKeyName = TRAM_HOOK_KEY, renderLockName
 				return tagResult
 			}
 
-			return Object.assign({}, newRegistry, {[tagName]: hookedTagFunction})
+			return Object.assign({}, newRegistry, { [tagName]: hookedTagFunction })
 		}, {})
 
 		return ninlil(hyperz, belit(namespace), hookedRegistry || registry || {})
 	}
 }
 
-module.exports = {registerDom}
+module.exports = { registerDom }

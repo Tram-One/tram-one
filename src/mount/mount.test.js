@@ -1,10 +1,10 @@
 /* eslint-disable max-nested-callbacks */
-const {registerHtml} = require('../dom')
-const {setupEffectStore} = require('../effect-store')
-const {useEffect} = require('../hooks')
-const {setupWorkingKey} = require('../working-key')
-const {setupRenderLock} = require('../render-lock')
-const {mount} = require('./mount')
+const { registerHtml } = require('../dom')
+const { setupEffectStore } = require('../effect-store')
+const { useEffect } = require('../hooks')
+const { setupWorkingKey } = require('../working-key')
+const { setupRenderLock } = require('../render-lock')
+const { mount } = require('./mount')
 
 const html = registerHtml()()
 

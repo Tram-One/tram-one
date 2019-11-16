@@ -1,4 +1,4 @@
-const {assertGlobalSpaceAndEngine, assertIsFunction} = require('../asserts')
+const { assertGlobalSpaceAndEngine, assertIsFunction } = require('../asserts')
 
 /**
  * namespace is a generic interface for objects that need to be persisted in
@@ -31,4 +31,4 @@ const get = (globalSpace, namespace) => {
 	return globalSpace && globalSpace[namespace]
 }
 
-module.exports = {setup, get}
+module.exports = { setup, get }

@@ -1,13 +1,13 @@
 const HoverEngine = require('hover-engine')
 const urlListener = require('url-listener')
 
-const {TRAM_STATE_ENGINE, TRAM_GLOBAL_STATE_ENGINE, TRAM_EFFECT_STORE, TRAM_HOOK_KEY, TRAM_RENDER_LOCK, TRAM_EFFECT_QUEUE} = require('../engine-names')
-const {setup, get} = require('../namespace')
-const {setupEffectStore} = require('../effect-store')
-const {mount} = require('../mount')
-const {setupWorkingKey} = require('../working-key')
-const {setupRenderLock} = require('../render-lock')
-const {assertIsObject, assertIsDefined, assertIsFunction} = require('../asserts')
+const { TRAM_STATE_ENGINE, TRAM_GLOBAL_STATE_ENGINE, TRAM_EFFECT_STORE, TRAM_HOOK_KEY, TRAM_RENDER_LOCK, TRAM_EFFECT_QUEUE } = require('../engine-names')
+const { setup, get } = require('../namespace')
+const { setupEffectStore } = require('../effect-store')
+const { mount } = require('../mount')
+const { setupWorkingKey } = require('../working-key')
+const { setupRenderLock } = require('../render-lock')
+const { assertIsObject, assertIsDefined, assertIsFunction } = require('../asserts')
 
 const setupEngine = setup(() => new HoverEngine())
 
@@ -80,4 +80,4 @@ const start = globalSpace => {
 	}
 }
 
-module.exports = {start}
+module.exports = { start }

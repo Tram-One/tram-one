@@ -104,4 +104,4 @@ const assertGlobalSpaceAndEngine = (engineName, globalSpace, engineValue) => {
 	assertIsString(engineValue, engineName)
 }
 
-module.exports = {assertIsObject, assertIsArray, assertIsString, assertIsFunction, assertIsDefined, assertGlobalSpaceAndEngine}
+module.exports = { assertIsObject, assertIsArray, assertIsString, assertIsFunction, assertIsDefined, assertGlobalSpaceAndEngine }

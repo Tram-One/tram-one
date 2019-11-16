@@ -1,5 +1,5 @@
-const {registerHtml} = require('../dom')
-const {start} = require('./start')
+const { registerHtml } = require('../dom')
+const { start } = require('./start')
 
 const html = registerHtml()()
 

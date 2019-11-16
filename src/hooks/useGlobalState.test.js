@@ -1,5 +1,5 @@
 const HoverEngine = require('hover-engine')
-const {setup} = require('../namespace')
+const { setup } = require('../namespace')
 const useGlobalState = require('./useGlobalState')
 
 const setupEngine = setup(() => new HoverEngine())

@@ -1,4 +1,4 @@
-const {setupEffectStore, getEffectStore, clearEffectStore} = require('./effect-store')
+const { setupEffectStore, getEffectStore, clearEffectStore } = require('./effect-store')
 
 describe('effectStore', () => {
 	describe('setupEffectStore', () => {

@@ -1,6 +1,6 @@
 const HoverEngine = require('hover-engine')
-const {setup} = require('../namespace')
-const {setupWorkingKey, resetWorkingKey} = require('../working-key')
+const { setup } = require('../namespace')
+const { setupWorkingKey, resetWorkingKey } = require('../working-key')
 const useState = require('./useState')
 
 const setupEngine = setup(() => new HoverEngine())

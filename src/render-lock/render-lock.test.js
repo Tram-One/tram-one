@@ -1,4 +1,4 @@
-const {setupRenderLock, getRenderLock, setRenderLock} = require('./render-lock')
+const { setupRenderLock, getRenderLock, setRenderLock } = require('./render-lock')
 
 describe('render-lock', () => {
 	describe('setupRenderLock', () => {
@@ -21,20 +21,20 @@ describe('render-lock', () => {
 	describe('setRenderLock', () => {
 		it('should return value passed in if there is no globalSpace', () => {
 			const setResult = setRenderLock(null, 'mock-render-lock', false)
-			expect(setResult).toEqual({shouldRender: false})
+			expect(setResult).toEqual({ shouldRender: false })
 		})
 
 		it('should return value passed in if there is no renderLock', () => {
 			const mockSpace = {}
 			const setResult = setRenderLock(mockSpace, 'mock-render-lock', false)
-			expect(setResult).toEqual({shouldRender: false})
+			expect(setResult).toEqual({ shouldRender: false })
 		})
 
 		it('should set the value for renderLock if one exists', () => {
 			const mockSpace = {}
 			const renderLock = setupRenderLock(mockSpace, 'mock-render-lock')
 			const setResult = setRenderLock(mockSpace, 'mock-render-lock', false)
-			expect(setResult).toEqual({shouldRender: false})
+			expect(setResult).toEqual({ shouldRender: false })
 			expect(renderLock.shouldRender).toBe(false)
 		})
 	})

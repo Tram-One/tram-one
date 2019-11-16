@@ -1,5 +1,5 @@
-const {setupEffectStore} = require('../effect-store')
-const {setupWorkingKey} = require('../working-key')
+const { setupEffectStore } = require('../effect-store')
+const { setupWorkingKey } = require('../working-key')
 const useEffect = require('./useEffect')
 
 describe('useEffect', () => {

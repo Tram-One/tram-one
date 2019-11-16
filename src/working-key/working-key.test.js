@@ -1,5 +1,5 @@
 /* eslint-disable dot-notation */
-const {setupWorkingKey, getWorkingKey, getWorkingBranch, pushWorkingKeyBranch, popWorkingKeyBranch, incrementWorkingKeyBranch, getWorkingKeyValue, resetWorkingKey, restoreWorkingKey, copyWorkingKey} = require('./working-key')
+const { setupWorkingKey, getWorkingKey, getWorkingBranch, pushWorkingKeyBranch, popWorkingKeyBranch, incrementWorkingKeyBranch, getWorkingKeyValue, resetWorkingKey, restoreWorkingKey, copyWorkingKey } = require('./working-key')
 
 describe('working-key', () => {
 	describe('setupWorkingKey', () => {

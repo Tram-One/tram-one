@@ -1,7 +1,7 @@
-const {TRAM_HOOK_KEY, TRAM_EFFECT_QUEUE} = require('../engine-names')
-const {getEffectStore} = require('../effect-store')
-const {getWorkingKeyValue, incrementWorkingKeyBranch} = require('../working-key')
-const {assertGlobalSpaceAndEngine, assertIsFunction, assertIsArray} = require('../asserts')
+const { TRAM_HOOK_KEY, TRAM_EFFECT_QUEUE } = require('../engine-names')
+const { getEffectStore } = require('../effect-store')
+const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('../working-key')
+const { assertGlobalSpaceAndEngine, assertIsFunction, assertIsArray } = require('../asserts')
 
 /**
  * This file defines one function, useEffect, which is a hook that

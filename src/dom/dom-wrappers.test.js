@@ -3,7 +3,7 @@ jest.mock('./dom', () => ({
 	registerDom: () => mockRegister
 }))
 
-const {registerHtml, registerSvg} = require('./dom-wrappers')
+const { registerHtml, registerSvg } = require('./dom-wrappers')
 
 describe('dom wrappers', () => {
 	describe('registerHtml', () => {

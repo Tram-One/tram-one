@@ -1,10 +1,10 @@
 const morph = require('tatermorph')
 
-const {TRAM_EFFECT_STORE, TRAM_HOOK_KEY, TRAM_RENDER_LOCK, TRAM_EFFECT_QUEUE} = require('../engine-names')
-const {getEffectStore, clearEffectStore} = require('../effect-store')
-const {getRenderLock, setRenderLock} = require('../render-lock')
-const {resetWorkingKey, restoreWorkingKey, copyWorkingKey} = require('../working-key')
-const {assertIsObject, assertIsDefined, assertIsFunction} = require('../asserts')
+const { TRAM_EFFECT_STORE, TRAM_HOOK_KEY, TRAM_RENDER_LOCK, TRAM_EFFECT_QUEUE } = require('../engine-names')
+const { getEffectStore, clearEffectStore } = require('../effect-store')
+const { getRenderLock, setRenderLock } = require('../render-lock')
+const { resetWorkingKey, restoreWorkingKey, copyWorkingKey } = require('../working-key')
+const { assertIsObject, assertIsDefined, assertIsFunction } = require('../asserts')
 
 /**
  * This file has a single function, mount, which is responsible for updating
@@ -125,4 +125,4 @@ const mount = (globalSpace, effectStore = TRAM_EFFECT_STORE, effectQueue = TRAM_
 	}
 }
 
-module.exports = {mount}
+module.exports = { mount }

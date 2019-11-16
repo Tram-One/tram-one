@@ -1,6 +1,6 @@
-const {TRAM_GLOBAL_STATE_ENGINE} = require('../engine-names')
-const {get} = require('../namespace')
-const {assertGlobalSpaceAndEngine, assertIsDefined} = require('../asserts')
+const { TRAM_GLOBAL_STATE_ENGINE } = require('../engine-names')
+const { get } = require('../namespace')
+const { assertGlobalSpaceAndEngine, assertIsDefined } = require('../asserts')
 
 /**
  * This file defines one function, useGlobalState, which is a hook that

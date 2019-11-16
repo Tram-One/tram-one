@@ -1,7 +1,7 @@
-const {TRAM_HOOK_KEY, TRAM_STATE_ENGINE} = require('../engine-names')
-const {get} = require('../namespace')
-const {getWorkingKeyValue, incrementWorkingKeyBranch} = require('../working-key')
-const {assertGlobalSpaceAndEngine} = require('../asserts')
+const { TRAM_HOOK_KEY, TRAM_STATE_ENGINE } = require('../engine-names')
+const { get } = require('../namespace')
+const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('../working-key')
+const { assertGlobalSpaceAndEngine } = require('../asserts')
 
 /**
  * This file defines one function, useState, which is a hook that

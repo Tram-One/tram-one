@@ -26,4 +26,14 @@ const clearEffectStore = (globalSpace, effectName) => {
 	return effectStore
 }
 
-module.exports = { setupEffectStore, getEffectStore, clearEffectStore }
+const restoreEffectStore = (globalSpace, effectName, restoreStore) => {
+	assertGlobalSpaceAndEngine('effectName', globalSpace, effectName)
+
+	const effectStore = getEffectStore(globalSpace, effectName)
+
+	if (!effectStore) return
+
+	globalSpace[effectName] = restoreStore
+}
+
+module.exports = { setupEffectStore, getEffectStore, clearEffectStore, restoreEffectStore }

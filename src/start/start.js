@@ -1,15 +1,12 @@
-const HoverEngine = require('hover-engine')
 const urlListener = require('url-listener')
 
-const { TRAM_STATE_ENGINE, TRAM_GLOBAL_STATE_ENGINE, TRAM_EFFECT_STORE, TRAM_HOOK_KEY, TRAM_RENDER_LOCK, TRAM_EFFECT_QUEUE } = require('../engine-names')
-const { setup, get } = require('../namespace')
+const { TRAM_EFFECT_STORE, TRAM_HOOK_KEY, TRAM_EFFECT_QUEUE, TRAM_OBSERVABLE_STORE, TRAM_MUTATION_OBSERVER } = require('../engine-names')
 const { setupEffectStore } = require('../effect-store')
 const { mount } = require('../mount')
 const { setupWorkingKey } = require('../working-key')
-const { setupRenderLock } = require('../render-lock')
+const { setupObservableStore } = require('../observable-store')
+const { setupMutationObserver, watchForRemoval } = require('../mutation-observer')
 const { assertIsObject, assertIsDefined, assertIsFunction } = require('../asserts')
-
-const setupEngine = setup(() => new HoverEngine())
 
 /**
  * This file defines a single function, start, which is used to
@@ -28,12 +25,6 @@ const setupEngine = setup(() => new HoverEngine())
 const start = globalSpace => {
 	assertIsObject(globalSpace, 'globalSpace', true)
 
-	// setup dedicated engine for component state
-	setupEngine(globalSpace, TRAM_STATE_ENGINE)
-
-	// setup dedicated engine for app state management
-	setupEngine(globalSpace, TRAM_GLOBAL_STATE_ENGINE)
-
 	// setup store for effects
 	setupEffectStore(globalSpace, TRAM_EFFECT_STORE)
 
@@ -43,8 +34,15 @@ const start = globalSpace => {
 	// setup working key for hooks
 	setupWorkingKey(globalSpace, TRAM_HOOK_KEY)
 
-	// setup render count to be 0
-	setupRenderLock(globalSpace, TRAM_RENDER_LOCK)
+	// setup observable store
+	setupObservableStore(globalSpace, TRAM_OBSERVABLE_STORE)
+
+	// setup a mutation observer (for cleaning up removed elements)
+	setupMutationObserver(globalSpace, TRAM_MUTATION_OBSERVER)
+	watchForRemoval(globalSpace, TRAM_MUTATION_OBSERVER, document)
+
+	// setup a new effect queue
+	globalSpace.TRAM_NEW_EFFECT_QUEUE = []
 
 	return (selector, component) => {
 		assertIsDefined(selector, 'selector', 'a DOM element or CSS selection string')
@@ -52,22 +50,6 @@ const start = globalSpace => {
 
 		const appMount = () => {
 			mount(globalSpace)(selector, component)
-		}
-
-		// re-mount the app when a state action is triggered
-		const stateEngine = get(globalSpace, TRAM_STATE_ENGINE)
-		if (stateEngine) {
-			stateEngine.addListener(() => {
-				appMount()
-			})
-		}
-
-		// re-mount the app when a global state action is triggered
-		const globalStateEngine = get(globalSpace, TRAM_GLOBAL_STATE_ENGINE)
-		if (globalStateEngine) {
-			globalStateEngine.addListener(() => {
-				appMount()
-			})
 		}
 
 		// wire up urlListener so that we remount whenever the url changes

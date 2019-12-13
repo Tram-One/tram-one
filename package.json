@@ -53,6 +53,7 @@
   "repository": "https://github.com/Tram-One/tram-one",
   "license": "MIT",
   "dependencies": {
+    "@nx-js/observer-util": "^4.2.2",
     "assert": "^1.4.1",
     "belit": "^4.1.5",
     "hover-engine": "^2.1.0",

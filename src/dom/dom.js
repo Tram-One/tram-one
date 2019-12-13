@@ -2,10 +2,11 @@ const belit = require('belit')
 const ninlil = require('ninlil')
 const hyperz = require('hyperz')
 
-const { TRAM_HOOK_KEY, TRAM_RENDER_LOCK } = require('../engine-names')
+const { TRAM_HOOK_KEY } = require('../engine-names')
 const { assertIsObject, assertIsString } = require('../asserts')
-const { getRenderLock } = require('../render-lock')
-const { getWorkingKey, pushWorkingKeyBranch, popWorkingKeyBranch } = require('../working-key')
+const { pushWorkingKeyBranch, popWorkingKeyBranch, incrementWorkingKeyBranch, copyWorkingKey, restoreWorkingKey } = require('../working-key')
+const observeTag = require('./observe-tag')
+const processEffects = require('./process-node-effects')
 
 /**
  * This file contains a single function, registerDom, which is responsible
@@ -21,7 +22,7 @@ const { getWorkingKey, pushWorkingKeyBranch, popWorkingKeyBranch } = require('..
  * @see https://tram-one.io/api/#Tram-One#registerHtml
  */
 
-const registerDom = (globalSpace, workingKeyName = TRAM_HOOK_KEY, renderLockName = TRAM_RENDER_LOCK) => {
+const registerDom = (globalSpace, workingKeyName = TRAM_HOOK_KEY) => {
 	assertIsObject(globalSpace, 'globalSpace', true)
 
 	return (namespace, registry = {}) => {
@@ -32,18 +33,30 @@ const registerDom = (globalSpace, workingKeyName = TRAM_HOOK_KEY, renderLockName
 		const hookedRegistry = globalSpace && Object.keys(registry).reduce((newRegistry, tagName) => {
 			const tagFunction = registry[tagName]
 			const hookedTagFunction = (...args) => {
-				// grab working key (used for isolating hook values)
-				const workingKey = getWorkingKey(globalSpace, workingKeyName)
-
 				// push a new branch onto the working key
-				if (workingKey) { pushWorkingKeyBranch(globalSpace, workingKeyName)(tagName) }
+				const props = JSON.stringify(args[0])
+				const newBranch = `${tagName}[${props}]`
+				pushWorkingKeyBranch(globalSpace, workingKeyName)(newBranch)
 
-				// if render lock has already been turned off, we should avoid rendering components
-				const { shouldRender } = getRenderLock(globalSpace, renderLockName)
-				const tagResult = shouldRender ? tagFunction(...args) : ''
+				// increment branch so that we have a unique value
+				incrementWorkingKeyBranch(globalSpace, workingKeyName)
+				const uniqueBranch = copyWorkingKey(globalSpace, workingKeyName)
+
+				// create a tag function that has the args passed in
+				// run tag creation with the observer (so that it can be reactive)
+				const populatedTagFunction = () => {
+					// reset working key so we have the correct place when starting a new component
+					restoreWorkingKey(globalSpace, workingKeyName, uniqueBranch)
+					return tagFunction(...args)
+				}
+
+				const processNewEffects = processEffects(globalSpace)
+
+				const tagResult = observeTag(() => processNewEffects(populatedTagFunction))
+				// const tagResult = processNewEffects(() => observeTag(populatedTagFunction))
 
 				// pop the branch off (since we are done rendering this component)
-				if (workingKey) { popWorkingKeyBranch(globalSpace, workingKeyName)() }
+				popWorkingKeyBranch(globalSpace, workingKeyName)()
 
 				return tagResult
 			}

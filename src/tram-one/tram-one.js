@@ -1,5 +1,5 @@
 const { registerHtml, registerSvg } = require('../dom')
-const { useEffect, useState, useUrlParams, useGlobalState } = require('../hooks')
+const { useEffect, useUrlParams, useObservable, useGlobalObservable } = require('../hooks')
 const { start } = require('../start')
 
 /**
@@ -34,8 +34,8 @@ module.exports = {
 	registerHtml: registerHtml(globalSpace),
 	registerSvg: registerSvg(globalSpace),
 	useEffect: useEffect(globalSpace),
-	useState: useState(globalSpace),
-	useGlobalState: useGlobalState(globalSpace),
+	useObservable: useObservable(globalSpace),
+	useGlobalObservable: useGlobalObservable(globalSpace),
 	useUrlParams: useUrlParams(),
 	start: start(globalSpace)
 }

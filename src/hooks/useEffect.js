@@ -1,7 +1,7 @@
 const { TRAM_HOOK_KEY, TRAM_EFFECT_QUEUE } = require('../engine-names')
 const { getEffectStore } = require('../effect-store')
 const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('../working-key')
-const { assertGlobalSpaceAndEngine, assertIsFunction, assertIsArray } = require('../asserts')
+const { assertGlobalSpaceAndEngine, assertIsFunction } = require('../asserts')
 
 /**
  * This file defines one function, useEffect, which is a hook that
@@ -17,9 +17,8 @@ const { assertGlobalSpaceAndEngine, assertIsFunction, assertIsArray } = require(
 module.exports = (globalSpace, storeName = TRAM_EFFECT_QUEUE, workingKeyName = TRAM_HOOK_KEY) => {
 	assertGlobalSpaceAndEngine(TRAM_EFFECT_QUEUE, globalSpace, storeName)
 
-	return (onEffect, triggers = []) => {
+	return onEffect => {
 		assertIsFunction(onEffect, 'effect')
-		assertIsArray(triggers, 'triggers', true)
 
 		// get the store of effects
 		const effectStore = getEffectStore(globalSpace, storeName)
@@ -41,11 +40,9 @@ module.exports = (globalSpace, storeName = TRAM_EFFECT_QUEUE, workingKeyName = T
 		// this makes successive useEffects calls unique (until we reset the key)
 		incrementWorkingKeyBranch(globalSpace, workingKeyName)
 
-		// if we have triggers, append them to the key
-		// this will make calls with new / different triggers to restart the effect
-		const formatTriggers = triggers.join(':')
-		const keyWithTriggers = `${key}(${formatTriggers})`
+		// append () so that it's easier to debug effects from components
+		const callLikeKey = `${key}()`
 
-		effectStore[keyWithTriggers] = onEffect
+		effectStore[callLikeKey] = onEffect
 	}
 }

@@ -21,51 +21,44 @@ const processEffects = require('./process-node-effects')
  *
  * @see https://tram-one.io/api/#Tram-One#registerHtml
  */
+const registerDom = (namespace, registry = {}) => {
+	assertIsString(namespace, 'namespace', true)
+	assertIsObject(registry, 'registry')
 
-const registerDom = (globalSpace, workingKeyName = TRAM_HOOK_KEY) => {
-	assertIsObject(globalSpace, 'globalSpace', true)
+	// modify the registry so that each component function updates the hook working key
+	const hookedRegistry = Object.keys(registry).reduce((newRegistry, tagName) => {
+		const tagFunction = registry[tagName]
+		const hookedTagFunction = (...args) => {
+			// push a new branch onto the working key
+			const props = JSON.stringify(args[0])
+			const newBranch = `${tagName}[${props}]`
+			pushWorkingKeyBranch(TRAM_HOOK_KEY, newBranch)
 
-	return (namespace, registry = {}) => {
-		assertIsString(namespace, 'namespace', true)
-		assertIsObject(registry, 'registry')
+			// increment branch so that we have a unique value
+			incrementWorkingKeyBranch(TRAM_HOOK_KEY)
+			const uniqueBranch = copyWorkingKey(TRAM_HOOK_KEY)
 
-		// modify the registry so that each component function updates the hook working key
-		const hookedRegistry = globalSpace && Object.keys(registry).reduce((newRegistry, tagName) => {
-			const tagFunction = registry[tagName]
-			const hookedTagFunction = (...args) => {
-				// push a new branch onto the working key
-				const props = JSON.stringify(args[0])
-				const newBranch = `${tagName}[${props}]`
-				pushWorkingKeyBranch(globalSpace, workingKeyName)(newBranch)
-
-				// increment branch so that we have a unique value
-				incrementWorkingKeyBranch(globalSpace, workingKeyName)
-				const uniqueBranch = copyWorkingKey(globalSpace, workingKeyName)
-
-				// create a tag function that has the args passed in
-				// run tag creation with the observer (so that it can be reactive)
-				const populatedTagFunction = () => {
-					// reset working key so we have the correct place when starting a new component
-					restoreWorkingKey(globalSpace, workingKeyName, uniqueBranch)
-					return tagFunction(...args)
-				}
-
-				const processNewEffects = processEffects(globalSpace)
-
-				const tagResult = observeTag(() => processNewEffects(populatedTagFunction))
-				// const tagResult = processNewEffects(() => observeTag(populatedTagFunction))
-
-				// pop the branch off (since we are done rendering this component)
-				popWorkingKeyBranch(globalSpace, workingKeyName)()
-
-				return tagResult
+			// create a tag function that has the args passed in
+			// run tag creation with the observer (so that it can be reactive)
+			const populatedTagFunction = () => {
+				// reset working key so we have the correct place when starting a new component
+				restoreWorkingKey(TRAM_HOOK_KEY, uniqueBranch)
+				return tagFunction(...args)
 			}
 
-			return Object.assign({}, newRegistry, { [tagName]: hookedTagFunction })
-		}, {})
+			const tagResult = observeTag(() => processEffects(populatedTagFunction))
+			// const tagResult = processNewEffects(() => observeTag(populatedTagFunction))
 
-		return ninlil(hyperz, belit(namespace), hookedRegistry || registry || {})
-	}
+			// pop the branch off (since we are done rendering this component)
+			popWorkingKeyBranch(TRAM_HOOK_KEY)
+
+			return tagResult
+		}
+
+		return Object.assign({}, newRegistry, { [tagName]: hookedTagFunction })
+	}, {})
+
+	return ninlil(hyperz, belit(namespace), hookedRegistry || registry || {})
 }
 
 module.exports = { registerDom }

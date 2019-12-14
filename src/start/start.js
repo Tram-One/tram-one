@@ -6,7 +6,7 @@ const { mount } = require('../mount')
 const { setupWorkingKey } = require('../working-key')
 const { setupObservableStore } = require('../observable-store')
 const { setupMutationObserver, watchForRemoval } = require('../mutation-observer')
-const { assertIsObject, assertIsDefined, assertIsFunction } = require('../asserts')
+const { assertIsDefined, assertIsFunction } = require('../asserts')
 
 /**
  * This file defines a single function, start, which is used to
@@ -22,44 +22,33 @@ const { assertIsObject, assertIsDefined, assertIsFunction } = require('../assert
  * @see https://tram-one.io/api/#Tram-One#start
  */
 
-const start = globalSpace => {
-	assertIsObject(globalSpace, 'globalSpace', true)
-
+const start = (selector, component) => {
 	// setup store for effects
-	setupEffectStore(globalSpace, TRAM_EFFECT_STORE)
+	setupEffectStore(TRAM_EFFECT_STORE)
 
 	// setup queue for new effects when resolving mounts
-	setupEffectStore(globalSpace, TRAM_EFFECT_QUEUE)
+	setupEffectStore(TRAM_EFFECT_QUEUE)
 
 	// setup working key for hooks
-	setupWorkingKey(globalSpace, TRAM_HOOK_KEY)
+	setupWorkingKey(TRAM_HOOK_KEY)
 
 	// setup observable store
-	setupObservableStore(globalSpace, TRAM_OBSERVABLE_STORE)
+	setupObservableStore(TRAM_OBSERVABLE_STORE)
 
 	// setup a mutation observer (for cleaning up removed elements)
-	setupMutationObserver(globalSpace, TRAM_MUTATION_OBSERVER)
-	watchForRemoval(globalSpace, TRAM_MUTATION_OBSERVER, document)
+	setupMutationObserver(TRAM_MUTATION_OBSERVER)
+	watchForRemoval(TRAM_MUTATION_OBSERVER, document)
 
-	// setup a new effect queue
-	globalSpace.TRAM_NEW_EFFECT_QUEUE = []
+	assertIsDefined(selector, 'selector', 'a DOM element or CSS selection string')
+	assertIsFunction(component, 'component')
 
-	return (selector, component) => {
-		assertIsDefined(selector, 'selector', 'a DOM element or CSS selection string')
-		assertIsFunction(component, 'component')
+	// wire up urlListener so that we remount whenever the url changes
+	urlListener(() => {
+		mount(selector, component)
+	})
 
-		const appMount = () => {
-			mount(globalSpace)(selector, component)
-		}
-
-		// wire up urlListener so that we remount whenever the url changes
-		urlListener(() => {
-			appMount()
-		})
-
-		// trigger an initial mount
-		appMount()
-	}
+	// trigger an initial mount
+	mount(selector, component)
 }
 
 module.exports = { start }

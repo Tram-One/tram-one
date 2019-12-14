@@ -1,6 +1,5 @@
 const { observe, unobserve } = require('@nx-js/observer-util')
 const { TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } = require('../node-names')
-const { assertGlobalSpaceAndEngine } = require('../asserts')
 const { setup, get } = require('../namespace')
 
 /**
@@ -90,10 +89,8 @@ const setupMutationObserver = setup(() => new MutationObserver(mutationList => {
 
 const getMutationObserver = get
 
-const watchForRemoval = (globalSpace, observerName, node) => {
-	assertGlobalSpaceAndEngine('observerName', globalSpace, observerName)
-
-	const observerStore = getMutationObserver(globalSpace, observerName)
+const watchForRemoval = (observerName, node) => {
+	const observerStore = getMutationObserver(observerName)
 
 	// if there is no effect store, return an empty object
 	if (!observerStore) return

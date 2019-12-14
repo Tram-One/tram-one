@@ -1,7 +1,7 @@
 const { TRAM_HOOK_KEY, TRAM_EFFECT_QUEUE } = require('../engine-names')
 const { getEffectStore } = require('../effect-store')
 const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('../working-key')
-const { assertGlobalSpaceAndEngine, assertIsFunction } = require('../asserts')
+const { assertIsFunction } = require('../asserts')
 
 /**
  * This file defines one function, useEffect, which is a hook that
@@ -14,35 +14,31 @@ const { assertGlobalSpaceAndEngine, assertIsFunction } = require('../asserts')
  * @see https://tram-one.io/api/#Tram-One#useEffect
  */
 
-module.exports = (globalSpace, storeName = TRAM_EFFECT_QUEUE, workingKeyName = TRAM_HOOK_KEY) => {
-	assertGlobalSpaceAndEngine(TRAM_EFFECT_QUEUE, globalSpace, storeName)
+module.exports = onEffect => {
+	assertIsFunction(onEffect, 'effect')
 
-	return onEffect => {
-		assertIsFunction(onEffect, 'effect')
+	// get the store of effects
+	const effectStore = getEffectStore(TRAM_EFFECT_QUEUE)
 
-		// get the store of effects
-		const effectStore = getEffectStore(globalSpace, storeName)
+	// get the key value from working-key
+	const key = getWorkingKeyValue(TRAM_HOOK_KEY)
 
-		// get the key value from working-key
-		const key = getWorkingKeyValue(globalSpace, workingKeyName)
-
-		// if there is no store, call start and cleanup
-		if (!effectStore || !key) {
-			const cleanup = onEffect()
-			if (typeof cleanup === 'function') {
-				cleanup()
-			}
-
-			return
+	// if there is no store, call start and cleanup
+	if (!effectStore || !key) {
+		const cleanup = onEffect()
+		if (typeof cleanup === 'function') {
+			cleanup()
 		}
 
-		// increment the working key branch value
-		// this makes successive useEffects calls unique (until we reset the key)
-		incrementWorkingKeyBranch(globalSpace, workingKeyName)
-
-		// append () so that it's easier to debug effects from components
-		const callLikeKey = `${key}()`
-
-		effectStore[callLikeKey] = onEffect
+		return
 	}
+
+	// increment the working key branch value
+	// this makes successive useEffects calls unique (until we reset the key)
+	incrementWorkingKeyBranch(TRAM_HOOK_KEY)
+
+	// append () so that it's easier to debug effects from components
+	const callLikeKey = `${key}()`
+
+	effectStore[callLikeKey] = onEffect
 }

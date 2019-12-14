@@ -1,5 +1,4 @@
-const { assertGlobalSpaceAndEngine } = require('../asserts')
-const { setup, get } = require('../namespace')
+const { setup, get, set } = require('../namespace')
 
 /**
  * EffectStores in Tram-One are used for basic key-value object mappings that need
@@ -13,10 +12,10 @@ const setupEffectStore = setup(() => ({}))
 
 const getEffectStore = get
 
-const clearEffectStore = (globalSpace, effectName) => {
-	assertGlobalSpaceAndEngine('effectName', globalSpace, effectName)
+const setEffectStore = set
 
-	const effectStore = getEffectStore(globalSpace, effectName)
+const clearEffectStore = effectName => {
+	const effectStore = getEffectStore(effectName)
 
 	// if there is no effect store, return an empty object
 	if (!effectStore) return {}
@@ -26,14 +25,6 @@ const clearEffectStore = (globalSpace, effectName) => {
 	return effectStore
 }
 
-const restoreEffectStore = (globalSpace, effectName, restoreStore) => {
-	assertGlobalSpaceAndEngine('effectName', globalSpace, effectName)
-
-	const effectStore = getEffectStore(globalSpace, effectName)
-
-	if (!effectStore) return
-
-	globalSpace[effectName] = restoreStore
-}
+const restoreEffectStore = setEffectStore
 
 module.exports = { setupEffectStore, getEffectStore, clearEffectStore, restoreEffectStore }

@@ -1,4 +1,5 @@
-const { assertGlobalSpaceAndEngine, assertIsFunction } = require('../asserts')
+const { assertIsFunction } = require('../asserts')
+const { getTramSpace } = require('../tram-space')
 
 /**
  * namespace is a generic interface for objects that need to be persisted in
@@ -12,23 +13,30 @@ const { assertGlobalSpaceAndEngine, assertIsFunction } = require('../asserts')
 
 const setup = constructor => {
 	assertIsFunction(constructor, 'constructor')
-	return (globalSpace, namespace) => {
-		assertGlobalSpaceAndEngine('namespace', globalSpace, namespace)
+	return namespace => {
+		const tramSpace = getTramSpace()
 
 		// we do not have a space to put our object
-		if (!globalSpace) return false
+		if (!tramSpace) return false
 
 		// if one already exists, return existing one
-		if (globalSpace[namespace]) return globalSpace[namespace]
+		if (tramSpace[namespace]) return tramSpace[namespace]
 
-		globalSpace[namespace] = constructor()
-		return globalSpace[namespace]
+		tramSpace[namespace] = constructor()
+		return tramSpace[namespace]
 	}
 }
 
-const get = (globalSpace, namespace) => {
-	assertGlobalSpaceAndEngine('namespace', globalSpace, namespace)
-	return globalSpace && globalSpace[namespace]
+const get = namespace => {
+	const tramSpace = getTramSpace()
+
+	return tramSpace && tramSpace[namespace]
 }
 
-module.exports = { setup, get }
+const set = (namespace, value) => {
+	const tramSpace = getTramSpace()
+
+	tramSpace[namespace] = value
+}
+
+module.exports = { setup, get, set }

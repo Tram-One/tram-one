@@ -1,6 +1,6 @@
 const { TRAM_OBSERVABLE_STORE, TRAM_HOOK_KEY } = require('../engine-names')
 const { getObservableStore } = require('../observable-store')
-const { getWorkingKeyValue } = require('../working-key')
+const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('../working-key')
 
 /**
  * Source code for both observable hooks, useObservable, and useGlobalObservable.
@@ -12,6 +12,10 @@ const { getWorkingKeyValue } = require('../working-key')
 module.exports = (key, value) => {
 	// get the store of effects
 	const observableStore = getObservableStore(TRAM_OBSERVABLE_STORE)
+
+	// increment the working key branch value
+	// this makes successive useEffects calls unique (until we reset the key)
+	incrementWorkingKeyBranch(TRAM_HOOK_KEY)
 
 	// if a key was passed in, use that, otherwise, generate a key
 	const resolvedKey = key || getWorkingKeyValue(TRAM_HOOK_KEY)

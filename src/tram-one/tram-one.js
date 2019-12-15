@@ -3,13 +3,11 @@ const { useEffect, useUrlParams, useObservable, useGlobalObservable } = require(
 const start = require('../start')
 
 /**
- * This file is the main export that is exposed to users of
- * the Tram-One Framework. The functions exposed at the bottom
- * are what is available to users who import the library.
+ * Tram-One is a light View Framework that comes with all the dependencies you need to start developing on the web.
+ * This framework exposes several functions and hooks to help you start developing.
  *
- * @see https://tram-one.io/api/#Tram-One
+ * To learn more, checkout the tutorials and guides on https://tram-one.io
  */
-
 module.exports = {
 	registerHtml,
 	registerSvg,

@@ -9,20 +9,6 @@ const observeTag = require('./observe-tag')
 const processEffects = require('./process-effects')
 
 /**
- * This file contains a single function, registerDom, which is responsible
- * for building tagged template functions which translate XML strings to DOM Nodes.
- *
- * This function also enables custom components, such that any component defined
- * in a tag-function mapping object (known as a registry) will resolve to calling
- * that component function.
- *
- * Also this function is responsible for updating the working key (an object
- * which keeps track of hooks called over many renders).
- *
- * @see https://tram-one.io/api/#Tram-One#registerHtml
- */
-
-/**
  * This function takes in a namespace and registry of custom components,
  * and builds a `dom` template tag function that can take in a template XML string.
  *
@@ -66,7 +52,7 @@ const registerDom = (namespace, registry = {}) => {
 			return tagResult
 		}
 
-		return Object.assign({}, newRegistry, { [tagName]: hookedTagFunction })
+		return { ...newRegistry, [tagName]: hookedTagFunction }
 	}, {})
 
 	return ninlil(hyperz, belit(namespace), hookedRegistry || registry || {})

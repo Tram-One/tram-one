@@ -3,10 +3,10 @@ const { TRAM_TAG_NEW_EFFECTS } = require('../node-names')
 const { getEffectStore, clearEffectStore, restoreEffectStore } = require('../effect-store')
 
 /**
+ * This is a helper function for the dom creation.
  * This function stores any effects generated when building a tag in resulting node that is generated.
  *
  * These are later processed by the mutation-observer, and cleaned up when the node is removed by the mutation-observer.
- * This function is called internally when building the dom.
  */
 const processEffects = tagFunction => {
 	// save the existing effect queue for any components we are in the middle of building

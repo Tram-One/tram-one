@@ -30,23 +30,6 @@ const assertIsObject = (value, variable, orUndefined = false, shape = 'an object
 }
 
 /**
- * verify that value is an array, and throw an assert warning if it is not
- * @param {*} value - value to check
- * @param {string} variable - name of variable
- * @param {boolean} [orUndefined=false] - if being undefined is allowed
- * @param {string} [shape='an object'] - what the value should be (in words)
- *
- * @example
- * triggers = []
- * assertIsArray(triggers, 'triggers', false, 'list of values')
- */
-const assertIsArray = (value, variable, orUndefined = false, shape = 'an array') => {
-	if (orUndefined && undefinedCheck(value)) return
-	assert.strictEqual(typeof value, 'object', `Tram-One: ${variable} should be ${shape}`)
-	assert.ok((Array.isArray(value)), `Tram-One: ${variable} should be ${shape}`)
-}
-
-/**
  * verify that value is a string, and throw an assert warning if it is not
  * @param {*} value - value to check
  * @param {string} variable - name of variable
@@ -92,16 +75,4 @@ const assertIsDefined = (value, variable, shape = 'defined') => {
 	assert.ok(!undefinedCheck(value), `Tram-One: ${variable} should be ${shape}`)
 }
 
-/**
- * validates that a globalSpace exists and that the engine value is defined
- * otherwise throw an assert error
- * @param {string} engineName - name of the engine
- * @param {object} globalSpace - globalSpace object
- * @param {*} engineValue - engine object
- */
-const assertGlobalSpaceAndEngine = (engineName, globalSpace, engineValue) => {
-	assertIsObject(globalSpace, 'globalSpace', true)
-	assertIsString(engineValue, engineName)
-}
-
-module.exports = { assertIsObject, assertIsArray, assertIsString, assertIsFunction, assertIsDefined, assertGlobalSpaceAndEngine }
+module.exports = { assertIsObject, assertIsString, assertIsFunction, assertIsDefined }

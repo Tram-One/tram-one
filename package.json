@@ -1,6 +1,6 @@
 {
   "name": "tram-one",
-  "version": "9.0.0-beta.0",
+  "version": "9.0.0-beta.1",
   "description": "🚋 Batteries Included View Framework",
   "main": "dist/tram-one.cjs.js",
   "commonjs": "dist/tram-one.cjs.js",
@@ -56,11 +56,8 @@
     "@nx-js/observer-util": "^4.2.2",
     "assert": "^1.4.1",
     "belit": "^4.1.5",
-    "hover-engine": "^2.1.0",
     "hyperz": "^4.0.1",
     "ninlil": "^2.0.0",
-    "rlite-router": "^2.0.3",
-    "tatermorph": "^7.0.0",
     "url-listener": "^2.0.0",
     "use-url-params": "^2.0.0"
   },

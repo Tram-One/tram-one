@@ -54,12 +54,10 @@ const clearNode = node => {
 	const hasEffects = node[TRAM_TAG_CLEANUP_EFFECTS]
 
 	if (hasReaction) {
-		console.log('removing reaction for', node)
 		unobserve(node[TRAM_TAG_REACTION])
 	}
 
 	if (hasEffects) {
-		console.log('removing effects for', node)
 		cleanupEffects(node[TRAM_TAG_CLEANUP_EFFECTS])
 	}
 }

@@ -1,17 +1,60 @@
 const { registerDom } = require('./dom')
 
 /**
- * This file contains two functions, registerHtml and
- * registerSvg, they are implementations of registerDom
- * and are the only exposed interface to users of Tram-One.
- * @see https://tram-one.io/api/#Tram-One#registerHtml
- * @see https://tram-one.io/api/#Tram-One#registerSvg
+ * @name registerHtml
+ * @description
+ * Function to generate a tagged template function for XHTML / HTML.
+ *
+ * @param {registry} [registry={}] map of tag names to functions, use this to use custom elements built in tram-one
+ *
+ * @return {dom} tagged template function that builds HTML components
+ *
+ * @example
+ * import { registerHtml } from 'tram-one'
+ * import customHeader from './customHeader'
+ * const html = registerHtml({
+ *   'custom-header': customHeader
+ * })
+ *
+ *
+ * export default () => {
+ *   return html`
+ *     <div>
+ *       <custom-header>Learn about Tram-One!</custom-header>
+ *       <span>That header sure was neat</span>
+ *     </div>
+ *   `
+ * }
  */
-
 const registerHtml = registry => {
 	return registerDom(null, registry)
 }
 
+/**
+ * @name registerSvg
+ * @description
+ * Function to generate a tagged template function for SVG.
+ *
+ * @param {registry} [registry={}] map of tag names to functions, use this to use custom elements built in tram-one
+ *
+ * @return {dom} tagged template function that builds SVG components
+ *
+ * @example
+ * import { registerSvg } from 'tram-one'
+ * import customHeader from './customHeader'
+ * const svg = registerSvg()
+ *
+ *
+ * export default () => {
+ *   return svg`
+ *     <svg viewBox="0 0 864 864">
+ *       <g>
+ *         <circle fill="#FDF491" cx="100" cy="100" r="20"/>
+ *       </g>
+ *     </svg>
+ *   `
+ * }
+ */
 const registerSvg = registry => {
 	return registerDom('http://www.w3.org/2000/svg', registry)
 }

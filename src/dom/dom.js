@@ -6,7 +6,7 @@ const { TRAM_HOOK_KEY } = require('../engine-names')
 const { assertIsObject, assertIsString } = require('../asserts')
 const { pushWorkingKeyBranch, popWorkingKeyBranch, incrementWorkingKeyBranch, copyWorkingKey, restoreWorkingKey } = require('../working-key')
 const observeTag = require('./observe-tag')
-const processEffects = require('./process-node-effects')
+const processEffects = require('./process-effects')
 
 /**
  * This file contains a single function, registerDom, which is responsible
@@ -21,6 +21,16 @@ const processEffects = require('./process-node-effects')
  *
  * @see https://tram-one.io/api/#Tram-One#registerHtml
  */
+
+/**
+ * This function takes in a namespace and registry of custom components,
+ * and builds a `dom` template tag function that can take in a template XML string.
+ *
+ * This function shouldn't need to be called directly, instead, you can use `registerHtml` or `registerSvg`
+ *
+ * @param {string} namespace namespace to create nodes in (by default XHTML namespace)
+ * @param {object} registry mapping of tag names to component functions
+ */
 const registerDom = (namespace, registry = {}) => {
 	assertIsString(namespace, 'namespace', true)
 	assertIsObject(registry, 'registry')
@@ -29,25 +39,26 @@ const registerDom = (namespace, registry = {}) => {
 	const hookedRegistry = Object.keys(registry).reduce((newRegistry, tagName) => {
 		const tagFunction = registry[tagName]
 		const hookedTagFunction = (...args) => {
-			// push a new branch onto the working key
+			// push a new branch onto the working key so any values that need to be unique among components
+			// but consistent across renders can be read
 			const props = JSON.stringify(args[0])
 			const newBranch = `${tagName}[${props}]`
 			pushWorkingKeyBranch(TRAM_HOOK_KEY, newBranch)
 
-			// increment branch so that we have a unique value
+			// increment branch so that we have a unique value (in case we are rendering a list of components)
 			incrementWorkingKeyBranch(TRAM_HOOK_KEY)
 			const uniqueBranch = copyWorkingKey(TRAM_HOOK_KEY)
 
 			// create a tag function that has the args passed in
-			// run tag creation with the observer (so that it can be reactive)
 			const populatedTagFunction = () => {
 				// reset working key so we have the correct place when starting a new component
 				restoreWorkingKey(TRAM_HOOK_KEY, uniqueBranch)
+
 				return tagFunction(...args)
 			}
 
+			// observe store usage and process any new effects that were called when building the component
 			const tagResult = observeTag(() => processEffects(populatedTagFunction))
-			// const tagResult = processNewEffects(() => observeTag(populatedTagFunction))
 
 			// pop the branch off (since we are done rendering this component)
 			popWorkingKeyBranch(TRAM_HOOK_KEY)

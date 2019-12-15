@@ -3,18 +3,15 @@ const { TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } = re
 const { setup, get } = require('../namespace')
 
 /**
- * EffectStores in Tram-One are used for basic key-value object mappings that need
- * to be persisted in the globalSpace.
+ * The mutation-observer is a global instance of browsers MutationObserver
+ * which tracks when nodes are added or removed.
  *
- * Currently this is used with working keys and useEffect to keep track of what
- * effects should be triggered or cleaned up.
+ * When nodes are added we process their effects. When nodes are removed we process any cleanup,
+ * and stop observers that would trigger for that node.
  */
 
 // filter mutations that have only removals (these are nodes being removed, not added / updated)
 const removalMutations = mutation => mutation.addedNodes.length === 0 && mutation.removedNodes.length > 0
-
-// filter mutations that only have additions (these are new nodes, not updates or removals)
-// const additionMuttations = mutation => mutation.addedNodes.length > 0 && mutation.removedNodes.length === 0
 
 // process new effects for new nodes
 const processEffects = node => {
@@ -51,17 +48,18 @@ const cleanupEffects = cleanupEffects => {
 	cleanupEffects.forEach(cleanup => cleanup())
 }
 
-// unobserve for both observer-util and our mutation observer
-const totalUnobserve = node => {
+// unobserve the reaction tied to the node, and run all cleanup effects for the node
+const clearNode = node => {
 	const hasReaction = node[TRAM_TAG_REACTION]
 	const hasEffects = node[TRAM_TAG_CLEANUP_EFFECTS]
 
 	if (hasReaction) {
-		console.log('removing node', node)
+		console.log('removing reaction for', node)
 		unobserve(node[TRAM_TAG_REACTION])
 	}
 
 	if (hasEffects) {
+		console.log('removing effects for', node)
 		cleanupEffects(node[TRAM_TAG_CLEANUP_EFFECTS])
 	}
 }
@@ -71,16 +69,17 @@ const setupMutationObserver = setup(() => new MutationObserver(mutationList => {
 	mutationList
 		.filter(removalMutations)
 		.flatMap(mutation => [...mutation.removedNodes])
-		.forEach(totalUnobserve)
+		.forEach(clearNode)
 
 	// cleanup orphaned nodes that are no longer on the DOM
-	// Omae Wa Mou Shindeiru
 	mutationList
 		.flatMap(mutation => [...mutation.removedNodes])
 		.flatMap(node => [...node.querySelectorAll('*')])
-		.forEach(totalUnobserve)
+		.forEach(clearNode)
 
 	// call new effects on any new nodes
+	// technically, we only call it on the children of those nodes that are added
+	// but this is fine for reasons I don't fully understand...
 	mutationList
 		.flatMap(mutation => [...mutation.addedNodes])
 		.flatMap(node => [...(node.querySelectorAll ? node.querySelectorAll('*') : [])])
@@ -89,7 +88,8 @@ const setupMutationObserver = setup(() => new MutationObserver(mutationList => {
 
 const getMutationObserver = get
 
-const watchForRemoval = (observerName, node) => {
+// tell the mutation observer to watch the given node for changes
+const startWatcher = (observerName, node) => {
 	const observerStore = getMutationObserver(observerName)
 
 	// if there is no effect store, return an empty object
@@ -98,4 +98,4 @@ const watchForRemoval = (observerName, node) => {
 	observerStore.observe(node, { childList: true, subtree: true })
 }
 
-module.exports = { setupMutationObserver, getMutationObserver, watchForRemoval }
+module.exports = { setupMutationObserver, getMutationObserver, startWatcher }

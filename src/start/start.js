@@ -1,28 +1,44 @@
 const urlListener = require('url-listener')
 
+const mount = require('../mount')
 const { TRAM_EFFECT_STORE, TRAM_HOOK_KEY, TRAM_EFFECT_QUEUE, TRAM_OBSERVABLE_STORE, TRAM_MUTATION_OBSERVER } = require('../engine-names')
 const { setupEffectStore } = require('../effect-store')
-const { mount } = require('../mount')
 const { setupWorkingKey } = require('../working-key')
 const { setupObservableStore } = require('../observable-store')
-const { setupMutationObserver, watchForRemoval } = require('../mutation-observer')
-const { assertIsDefined, assertIsFunction } = require('../asserts')
+const { setupMutationObserver, startWatcher } = require('../mutation-observer')
 
 /**
- * This file defines a single function, start, which is used to
- * initially mount a component onto an existing element.
+ * @name start
  *
- * This function also is responsible for starting all the internal engines
- * required for Tram-One to save internal state and trigger re-renders.
+ * @description
+ * Function to attach a {@link component} to an existing element on the page.
+ * This function also starts all the listeners and allows the basic hooks to function.
  *
- * While this function defines all the engines and when they should trigger,
- * the actual logic for placing the element on the page is contained in the
- * `mount()` function.
  *
- * @see https://tram-one.io/api/#Tram-One#start
+ * This should only be called for the initial render / building of the app.
+ *
+ * @param {string|Node} selector either a CSS selector, or Node to attach the component to
+ *
+ * @param {component} component top-level component to attach to the page.
+ *
+ *
+ * @example
+ * import { registerHtml, start } from 'tram-one';
+ * import './styles.css';
+ *
+ * const html = registerHtml();
+ *
+ * const home = () => html`
+ *   <div>
+ *     <h1>Tram-One Rocks!</h1>
+ *   </div>
+ * `;
+ *
+ * start('#app', home);
  */
+module.exports = (selector, component) => {
+	/* setup all the internal engines required for tram-one to work */
 
-const start = (selector, component) => {
 	// setup store for effects
 	setupEffectStore(TRAM_EFFECT_STORE)
 
@@ -37,10 +53,7 @@ const start = (selector, component) => {
 
 	// setup a mutation observer (for cleaning up removed elements)
 	setupMutationObserver(TRAM_MUTATION_OBSERVER)
-	watchForRemoval(TRAM_MUTATION_OBSERVER, document)
-
-	assertIsDefined(selector, 'selector', 'a DOM element or CSS selection string')
-	assertIsFunction(component, 'component')
+	startWatcher(TRAM_MUTATION_OBSERVER, document)
 
 	// wire up urlListener so that we remount whenever the url changes
 	urlListener(() => {
@@ -50,5 +63,3 @@ const start = (selector, component) => {
 	// trigger an initial mount
 	mount(selector, component)
 }
-
-module.exports = { start }

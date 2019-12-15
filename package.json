@@ -62,7 +62,7 @@
     "rlite-router": "^2.0.3",
     "tatermorph": "^7.0.0",
     "url-listener": "^2.0.0",
-    "use-url-params": "^1.0.0"
+    "use-url-params": "^2.0.0"
   },
   "devDependencies": {
     "chalk": "^3.0.0",

@@ -4,27 +4,44 @@ const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('../working-ke
 const { assertIsFunction } = require('../asserts')
 
 /**
- * This file defines one function, useEffect, which is a hook that
- * that enables side-effects for tram-one components.
+ * @name useEffect
  *
- * This hook slightly mimics the react implementation, in that if you
- * pass in an array of values, and those differ from a previous call,
- * it will trigger the cleanup of the old effect and start a new one.
+ * @description
+ * Hook that triggers component start, update, and cleanup effects.
+ * If the result of onEffect is another function, then that function is called on when the component is removed.
  *
- * @see https://tram-one.io/api/#Tram-One#useEffect
+ * If the effect is dependent on a observable, it will automatically trigger again if that value updates.
+ *
+ * If `onEffect` does not return a function, the return is ignored, which means async functions are okay!
+ *
+ * @param {function} onEffect function to run on component mount
+ *
+ * @example
+ * import { registerHtml, useEffect, useObservable } from 'tram-one'
+ * const html = registerHtml()
+ *
+ * export default () => {
+ *   const [title, updateTitle] = useObservable('Tram-One App')
+ *   onUpdateTitle = (event) => updateTitle(event.target.value)
+ *
+ *   useEffect(() => {
+ *     document.title = title
+ *   })
+ *
+ *   return html`<input value=${title} onkeydown=${onUpdateTitle} />`
+ * }
  */
-
 module.exports = onEffect => {
 	assertIsFunction(onEffect, 'effect')
 
 	// get the store of effects
-	const effectStore = getEffectStore(TRAM_EFFECT_QUEUE)
+	const effectQueue = getEffectStore(TRAM_EFFECT_QUEUE)
 
 	// get the key value from working-key
 	const key = getWorkingKeyValue(TRAM_HOOK_KEY)
 
 	// if there is no store, call start and cleanup
-	if (!effectStore || !key) {
+	if (!effectQueue || !key) {
 		const cleanup = onEffect()
 		if (typeof cleanup === 'function') {
 			cleanup()
@@ -40,5 +57,6 @@ module.exports = onEffect => {
 	// append () so that it's easier to debug effects from components
 	const callLikeKey = `${key}()`
 
-	effectStore[callLikeKey] = onEffect
+	// add the effect to the effect queue, so it can be processed later
+	effectQueue[callLikeKey] = onEffect
 }

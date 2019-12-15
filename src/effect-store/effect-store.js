@@ -14,6 +14,10 @@ const getEffectStore = get
 
 const setEffectStore = set
 
+/**
+ * clear the effect store
+ * usually called when we want to empty the effect store
+ */
 const clearEffectStore = effectName => {
 	const effectStore = getEffectStore(effectName)
 
@@ -25,6 +29,10 @@ const clearEffectStore = effectName => {
 	return effectStore
 }
 
+/**
+ * restore the effect store to a previous value
+ * usually used when we had to interrupt the processing of effects
+ */
 const restoreEffectStore = setEffectStore
 
 module.exports = { setupEffectStore, getEffectStore, clearEffectStore, restoreEffectStore }

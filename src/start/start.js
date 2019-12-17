@@ -1,5 +1,3 @@
-const urlListener = require('url-listener')
-
 const mount = require('../mount')
 const { TRAM_EFFECT_STORE, TRAM_HOOK_KEY, TRAM_EFFECT_QUEUE, TRAM_OBSERVABLE_STORE, TRAM_MUTATION_OBSERVER } = require('../engine-names')
 const { setupEffectStore } = require('../effect-store')
@@ -54,11 +52,6 @@ module.exports = (selector, component) => {
 	// setup a mutation observer (for cleaning up removed elements)
 	setupMutationObserver(TRAM_MUTATION_OBSERVER)
 	startWatcher(TRAM_MUTATION_OBSERVER, document)
-
-	// wire up urlListener so that we remount whenever the url changes
-	urlListener(() => {
-		mount(selector, component)
-	})
 
 	// trigger an initial mount
 	mount(selector, component)

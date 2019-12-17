@@ -32,9 +32,8 @@ module.exports = (key, value) => {
 	const keyGetter = observableStore[resolvedKey]
 
 	// generate setter for key
-	const isObject = typeof value === 'object'
+	// Note: for objects and arrays, it is more performant to update the fields direclty
 	const keySetter = newValue => {
-		if (isObject) console.warn('Tram-One: Avoid using setters if dealing with objects or arrays')
 		observableStore[resolvedKey] = newValue
 	}
 

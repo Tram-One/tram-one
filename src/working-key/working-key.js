@@ -1,5 +1,4 @@
 const { setup, get } = require('../namespace')
-const { assertIsString, assertIsDefined } = require('../asserts')
 
 /**
  * This file defines all the functions required to interact with
@@ -28,9 +27,7 @@ const getWorkingBranch = keyName => {
  * custom component when mounting.
  */
 const pushWorkingKeyBranch = (keyName, branch) => {
-	assertIsString(branch)
 	const workingKey = getWorkingKey(keyName)
-	assertIsDefined(workingKey, 'workingKey', 'setup, use setupWorkingKey')
 	workingKey.branch.push(branch)
 	if (!workingKey.branchIndices[getWorkingBranch(keyName)]) {
 		workingKey.branchIndices[getWorkingBranch(keyName)] = 0

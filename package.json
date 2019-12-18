@@ -54,10 +54,10 @@
   "license": "MIT",
   "dependencies": {
     "@nx-js/observer-util": "^4.2.2",
-    "assert": "^1.4.1",
     "belit": "^4.1.5",
     "hyperz": "^4.0.1",
     "ninlil": "^2.0.0",
+    "type": "^2.0.0",
     "url-listener": "^2.0.0",
     "use-url-params": "^2.0.0"
   },

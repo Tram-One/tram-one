@@ -1,9 +1,10 @@
 const belit = require('belit')
 const ninlil = require('ninlil')
 const hyperz = require('hyperz')
+const ensureIsObject = require('type/object/ensure')
+const ensureIsString = require('type/string/ensure')
 
 const { TRAM_HOOK_KEY } = require('../engine-names')
-const { assertIsObject, assertIsString } = require('../asserts')
 const { pushWorkingKeyBranch, popWorkingKeyBranch, incrementWorkingKeyBranch, copyWorkingKey, restoreWorkingKey } = require('../working-key')
 const observeTag = require('./observe-tag')
 const processEffects = require('./process-effects')
@@ -18,8 +19,8 @@ const processEffects = require('./process-effects')
  * @param {object} registry mapping of tag names to component functions
  */
 const registerDom = (namespace, registry = {}) => {
-	assertIsString(namespace, 'namespace', true)
-	assertIsObject(registry, 'registry')
+	ensureIsString(namespace, { isOptional: true, errorMessage: `Tram-One: namespace should be a string, recieved ${typeof namespace}, ${namespace}` })
+	ensureIsObject(registry, { errorMessage: `Tram-One: registry should be an object, recieved ${typeof registry}, ${registry}` })
 
 	// modify the registry so that each component function updates the hook working key
 	const hookedRegistry = Object.keys(registry).reduce((newRegistry, tagName) => {

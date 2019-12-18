@@ -1,20 +1,21 @@
+const ensureFunction = require('type/function/ensure')
+
 const { TRAM_HOOK_KEY, TRAM_EFFECT_QUEUE } = require('../engine-names')
 const { getEffectStore } = require('../effect-store')
 const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('../working-key')
-const { assertIsFunction } = require('../asserts')
 
 /**
  * @name useEffect
  *
  * @description
  * Hook that triggers component start, update, and cleanup effects.
- * If the result of onEffect is another function, then that function is called on when the component is removed.
+ * If the result of effect is another function, then that function is called on when the component is removed.
  *
  * If the effect is dependent on a observable, it will automatically trigger again if that value updates.
  *
- * If `onEffect` does not return a function, the return is ignored, which means async functions are okay!
+ * If `effect` does not return a function, the return is ignored, which means async functions are okay!
  *
- * @param {function} onEffect function to run on component mount
+ * @param {function} effect function to run on component mount
  *
  * @example
  * import { registerHtml, useEffect, useObservable } from 'tram-one'
@@ -31,8 +32,8 @@ const { assertIsFunction } = require('../asserts')
  *   return html`<input value=${title} onkeydown=${onUpdateTitle} />`
  * }
  */
-module.exports = onEffect => {
-	assertIsFunction(onEffect, 'effect')
+module.exports = effect => {
+	ensureFunction(effect, { errorMessage: `Tram-One: effect should be a function, recieved ${typeof effect}, ${effect}` })
 
 	// get the store of effects
 	const effectQueue = getEffectStore(TRAM_EFFECT_QUEUE)
@@ -42,7 +43,7 @@ module.exports = onEffect => {
 
 	// if there is no store, call start and cleanup
 	if (!effectQueue || !key) {
-		const cleanup = onEffect()
+		const cleanup = effect()
 		if (typeof cleanup === 'function') {
 			cleanup()
 		}
@@ -58,5 +59,5 @@ module.exports = onEffect => {
 	const callLikeKey = `${key}()`
 
 	// add the effect to the effect queue, so it can be processed later
-	effectQueue[callLikeKey] = onEffect
+	effectQueue[callLikeKey] = effect
 }

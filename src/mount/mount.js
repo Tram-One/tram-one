@@ -1,12 +1,13 @@
+const ensureFunction = require('type/function/ensure')
+const ensureValue = require('type/value/ensure')
 const { registerHtml } = require('../dom')
-const { assertIsDefined, assertIsFunction } = require('../asserts')
 
 /**
  * Updates a selector with an initial component for the first render.
  */
 module.exports = (selector, component) => {
-	assertIsDefined(selector, 'selector', 'a DOM element or CSS selection string')
-	assertIsFunction(component, 'component')
+	ensureValue(selector, { errorMessage: `Tram-One: selector should be defined as a CSS Selector or DOM Node, recieved ${selector}` })
+	ensureFunction(component, { errorMessage: `Tram-One: component should be a function, recieved ${typeof selector}, ${selector}` })
 
 	// if the selector is a string, try to find the element,
 	// otherwise it's probably DOM that we should write directly to

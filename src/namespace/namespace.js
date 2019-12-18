@@ -1,4 +1,3 @@
-const { assertIsFunction } = require('../asserts')
 const { getTramSpace } = require('../tram-space')
 
 /**
@@ -12,7 +11,6 @@ const { getTramSpace } = require('../tram-space')
  */
 
 const setup = constructor => {
-	assertIsFunction(constructor, 'constructor')
 	return namespace => {
 		const tramSpace = getTramSpace()
 

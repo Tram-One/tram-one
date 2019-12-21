@@ -38,5 +38,3 @@ jobs:
       - run: npm run test:ci
 
       - run: npm run build
-
-      - run: npm run integration-test

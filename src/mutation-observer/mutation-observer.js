@@ -10,9 +10,6 @@ const { setup, get } = require('../namespace')
  * and stop observers that would trigger for that node.
  */
 
-// filter mutations that have only removals (these are nodes being removed, not added / updated)
-const removalMutations = mutation => mutation.addedNodes.length === 0 && mutation.removedNodes.length > 0
-
 // process new effects for new nodes
 const processEffects = node => {
 	const hasNewEffects = node[TRAM_TAG_NEW_EFFECTS]
@@ -63,12 +60,6 @@ const clearNode = node => {
 }
 
 const setupMutationObserver = setup(() => new MutationObserver(mutationList => {
-	// unobserve any nodes that were just removed
-	mutationList
-		.filter(removalMutations)
-		.flatMap(mutation => [...mutation.removedNodes])
-		.forEach(clearNode)
-
 	// cleanup orphaned nodes that are no longer on the DOM
 	mutationList
 		.flatMap(mutation => [...mutation.removedNodes])
@@ -76,8 +67,6 @@ const setupMutationObserver = setup(() => new MutationObserver(mutationList => {
 		.forEach(clearNode)
 
 	// call new effects on any new nodes
-	// technically, we only call it on the children of those nodes that are added
-	// but this is fine for reasons I don't fully understand...
 	mutationList
 		.flatMap(mutation => [...mutation.addedNodes])
 		.flatMap(node => [...(node.querySelectorAll ? node.querySelectorAll('*') : [])])
@@ -89,9 +78,6 @@ const getMutationObserver = get
 // tell the mutation observer to watch the given node for changes
 const startWatcher = (observerName, node) => {
 	const observerStore = getMutationObserver(observerName)
-
-	// if there is no effect store, return an empty object
-	if (!observerStore) return
 
 	observerStore.observe(node, { childList: true, subtree: true })
 }

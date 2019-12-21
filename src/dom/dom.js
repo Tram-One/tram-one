@@ -56,7 +56,7 @@ const registerDom = (namespace, registry = {}) => {
 		return { ...newRegistry, [tagName]: hookedTagFunction }
 	}, {})
 
-	return ninlil(hyperz, belit(namespace), hookedRegistry || registry || {})
+	return ninlil(hyperz, belit(namespace), hookedRegistry)
 }
 
 module.exports = { registerDom }

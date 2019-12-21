@@ -3,7 +3,7 @@ const { TRAM_EFFECT_STORE, TRAM_HOOK_KEY, TRAM_EFFECT_QUEUE, TRAM_OBSERVABLE_STO
 const { setupEffectStore } = require('../effect-store')
 const { setupWorkingKey } = require('../working-key')
 const { setupObservableStore } = require('../observable-store')
-const { setupMutationObserver, startWatcher } = require('../mutation-observer')
+const { setupMutationObserver } = require('../mutation-observer')
 
 /**
  * @name start
@@ -49,9 +49,8 @@ module.exports = (selector, component) => {
 	// setup observable store
 	setupObservableStore(TRAM_OBSERVABLE_STORE)
 
-	// setup a mutation observer (for cleaning up removed elements)
+	// setup a mutation observer for cleaning up removed elements and triggering effects
 	setupMutationObserver(TRAM_MUTATION_OBSERVER)
-	startWatcher(TRAM_MUTATION_OBSERVER, document)
 
 	// trigger an initial mount
 	mount(selector, component)

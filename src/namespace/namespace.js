@@ -14,12 +14,6 @@ const setup = constructor => {
 	return namespace => {
 		const tramSpace = getTramSpace()
 
-		// we do not have a space to put our object
-		if (!tramSpace) return false
-
-		// if one already exists, return existing one
-		if (tramSpace[namespace]) return tramSpace[namespace]
-
 		tramSpace[namespace] = constructor()
 		return tramSpace[namespace]
 	}
@@ -27,13 +21,11 @@ const setup = constructor => {
 
 const get = namespace => {
 	const tramSpace = getTramSpace()
-
-	return tramSpace && tramSpace[namespace]
+	return tramSpace[namespace]
 }
 
 const set = (namespace, value) => {
 	const tramSpace = getTramSpace()
-
 	tramSpace[namespace] = value
 }
 

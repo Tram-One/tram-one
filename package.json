@@ -27,9 +27,7 @@
     "publish:site": "surge docs/website --domain https://tram-one.io",
     "clean": "git clean -Xdf",
     "test": "jest --watch",
-    "posttest": "npm run lint",
     "test:ci": "jest",
-    "integration-test": "node integration-tests/run-tests.js",
     "start": "npm i && npm run build",
     "restart": "npm run clean && npm start"
   },
@@ -62,14 +60,12 @@
     "use-url-params": "^2.0.0"
   },
   "devDependencies": {
-    "chalk": "^3.0.0",
+    "@testing-library/dom": "^6.11.0",
+    "@testing-library/jest-dom": "^4.2.4",
     "docma": "^3.2.2",
     "eslint-config-tram-one": "^4.0.0",
-    "express": "^4.17.1",
-    "http-server": "^0.11.1",
-    "ip": "^1.1.5",
     "jest": "^24.9.0",
-    "nightmare": "^3.0.2",
+    "jest-environment-jsdom-fourteen": "^1.0.1",
     "rollup": "^1.27.0",
     "rollup-plugin-commonjs": "^9.2.1",
     "rollup-plugin-filesize": "^6.2.1",

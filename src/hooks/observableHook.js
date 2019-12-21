@@ -20,9 +20,6 @@ module.exports = (key, value) => {
 	// if a key was passed in, use that, otherwise, generate a key
 	const resolvedKey = key || getWorkingKeyValue(TRAM_HOOK_KEY)
 
-	// if there is no store, return the value and no-op
-	if (!observableStore || !resolvedKey) return [value, () => {}]
-
 	// saves value into the store if it doesn't exist in the observableStore yet
 	if (!Object.prototype.hasOwnProperty.call(observableStore, resolvedKey)) {
 		observableStore[resolvedKey] = value

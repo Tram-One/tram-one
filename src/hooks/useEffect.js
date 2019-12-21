@@ -41,16 +41,6 @@ module.exports = effect => {
 	// get the key value from working-key
 	const key = getWorkingKeyValue(TRAM_HOOK_KEY)
 
-	// if there is no store, call start and cleanup
-	if (!effectQueue || !key) {
-		const cleanup = effect()
-		if (typeof cleanup === 'function') {
-			cleanup()
-		}
-
-		return
-	}
-
 	// increment the working key branch value
 	// this makes successive useEffects calls unique (until we reset the key)
 	incrementWorkingKeyBranch(TRAM_HOOK_KEY)

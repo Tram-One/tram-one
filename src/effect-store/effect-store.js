@@ -21,12 +21,7 @@ const setEffectStore = set
 const clearEffectStore = effectName => {
 	const effectStore = getEffectStore(effectName)
 
-	// if there is no effect store, return an empty object
-	if (!effectStore) return {}
-
 	Object.keys(effectStore).forEach(key => delete effectStore[key])
-
-	return effectStore
 }
 
 /**

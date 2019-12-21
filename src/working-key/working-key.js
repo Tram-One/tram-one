@@ -59,25 +59,9 @@ const incrementWorkingKeyBranch = keyName => {
  */
 const getWorkingKeyValue = keyName => {
 	const workingKey = getWorkingKey(keyName)
-	if (!workingKey) return workingKey
 
 	const index = workingKey.branchIndices[getWorkingBranch(keyName)]
 	return `${getWorkingBranch(keyName)}[${index}]`
-}
-
-/**
- * resets the counter for all branchs so that when `useState` is called again
- * it refers to the correct hook from the last time it was called
- */
-const resetWorkingKey = keyName => {
-	const key = getWorkingKey(keyName)
-	if (!key) return
-	const branches = key.branchIndices
-	getWorkingKey(keyName).branch = []
-	Object.keys(getWorkingKey(keyName).branchIndices)
-		.forEach(branch => {
-			branches[branch] = 0
-		})
 }
 
 /**
@@ -85,7 +69,6 @@ const resetWorkingKey = keyName => {
  */
 const copyWorkingKey = keyName => {
 	const key = getWorkingKey(keyName)
-	if (!key) return
 	return {
 		branch: [...key.branch],
 		branchIndices: { ...key.branchIndices }
@@ -98,7 +81,6 @@ const copyWorkingKey = keyName => {
  */
 const restoreWorkingKey = (keyName, restoreKey) => {
 	const key = getWorkingKey(keyName)
-	if (!key) return
 	const branches = key.branchIndices
 	getWorkingKey(keyName).branch = [...restoreKey.branch]
 	Object.keys(getWorkingKey(keyName).branchIndices)
@@ -115,7 +97,6 @@ module.exports = {
 	getWorkingKey,
 	getWorkingBranch,
 	getWorkingKeyValue,
-	resetWorkingKey,
 	copyWorkingKey,
 	restoreWorkingKey
 }

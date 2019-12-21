@@ -1,6 +1,8 @@
 const ensureFunction = require('type/function/ensure')
 const ensureValue = require('type/value/ensure')
+const { TRAM_MUTATION_OBSERVER } = require('../engine-names')
 const { registerHtml } = require('../dom')
+const { startWatcher } = require('../mutation-observer')
 
 /**
  * Updates a selector with an initial component for the first render.
@@ -13,11 +15,15 @@ module.exports = (selector, component) => {
 	// otherwise it's probably DOM that we should write directly to
 	const target = (typeof selector) === 'string' ? document.querySelector(selector) : selector
 	if (target === null) {
-		console.warn('Tram-One: could not find target, is the element on the page yet?')
+		console.error('Tram-One: could not find target, is the element on the page yet?')
+		return
 	}
 
+	// watch for changes on the target so that we can process node changes
+	startWatcher(TRAM_MUTATION_OBSERVER, target)
+
 	// build a div to render the app on
-	//  -if it doesn't exist as a child of the selector, create one first
+	// - if it doesn't exist as a child of the selector, create one first
 	if (!target.firstElementChild) {
 		const targetChild = document.createElement('div')
 		target.appendChild(targetChild)

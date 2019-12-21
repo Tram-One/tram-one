@@ -233,6 +233,41 @@ describe('Tram-One', () => {
 		expect(document.title).toBe('The count is 7')
 	})
 
+	it('should call updated cleanups', async () => {
+		// mount the app on the container
+		const container = document.createElement('div')
+		start(container, updatablePage)
+
+		// verify the page is mounted with default values
+		expect(getByTestId(container, 'updatable-button')).toHaveTextContent('5')
+
+		// let effects process
+		await wait()
+
+		// verify the title is the default value
+		expect(document.title).toBe('The count is 5')
+
+		// click on the inner component (that updates the component's state)
+		fireEvent.click(getByTestId(container, 'updatable-button'))
+
+		// let effects process
+		await wait()
+
+		// verify the page and title updated
+		expect(getByTestId(container, 'updatable-button')).toHaveTextContent('6')
+		expect(document.title).toBe('The count is 6')
+
+		// click on the remove button to trigger cleanup
+		fireEvent.click(getByTestId(container, 'remove-count'))
+
+		// let effects process
+		await wait()
+
+		// verify the page and title updated
+		expect(getByTestId(container, 'home-page')).toHaveTextContent('Counter Removed')
+		expect(document.title).toBe('The count was 6')
+	})
+
 	it('should render a page with a pre-configured global', () => {
 		global.tramSpace = {}
 

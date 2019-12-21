@@ -6,6 +6,7 @@ module.exports = ({ initialCount }) => {
 	const increment = () => { counter.count += 1 }
 	useEffect(() => {
 		document.title = `The count is ${counter.count}`
+		return () => { document.title = `The count was ${counter.count}` }
 	})
 
 	return html`<button data-testid="updatable-button" onclick=${increment}>${counter.count}</button>`

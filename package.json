@@ -27,7 +27,7 @@
     "publish:site": "surge docs/website --domain https://tram-one.io",
     "clean": "git clean -Xdf",
     "test": "jest --watch",
-    "test:ci": "jest",
+    "test:ci": "jest --coverage",
     "start": "npm i && npm run build",
     "restart": "npm run clean && npm start"
   },

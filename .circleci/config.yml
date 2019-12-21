@@ -37,4 +37,7 @@ jobs:
 
       - run: npm run test:ci
 
+      - store_artifacts:
+        - path: coverage/lcov-report
+
       - run: npm run build

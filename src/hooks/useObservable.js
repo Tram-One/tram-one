@@ -10,14 +10,14 @@ const observableHook = require('./observableHook')
  * If the value (or a subfield if it is an object or array) is updated,
  * it will cause only the components that are dependent on that value to update.
  *
+ * @param {any} value the default value to start the state at
+ *
+ * @returns {Array} array whose first index is the current value, and whose second index
+ * is a function that can be used to set the value.
  * @note
  * if storing an object or array, you should mutate the subfields directly,
  * and avoid using the setter that is returned. This will be more performant,
  * and cause only components that are reactive to the sub-fields to update.
- *
- * @param {any} value the default value to start the state at
- *
- * @returns {[any, function]} getter and setter
  *
  * @example
  * import { registerHtml, useObservable } from 'tram-one'

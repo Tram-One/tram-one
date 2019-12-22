@@ -5,9 +5,9 @@ const { registerDom } = require('./dom')
  * @description
  * Function to generate a tagged template function for XHTML / HTML.
  *
- * @param {registry} [registry={}] map of tag names to functions, use this to use custom elements built in tram-one
+ * @param {object} [registry={}] map of tag names to functions, use this to use custom elements built in tram-one
  *
- * @return {dom} tagged template function that builds HTML components
+ * @return {function} tagged template function that builds HTML components
  *
  * @example
  * import { registerHtml } from 'tram-one'
@@ -35,9 +35,9 @@ const registerHtml = registry => {
  * @description
  * Function to generate a tagged template function for SVG.
  *
- * @param {registry} [registry={}] map of tag names to functions, use this to use custom elements built in tram-one
+ * @param {object} [registry={}] map of tag names to functions, use this to use custom elements built in tram-one
  *
- * @return {dom} tagged template function that builds SVG components
+ * @return {function} tagged template function that builds SVG components
  *
  * @example
  * import { registerSvg } from 'tram-one'

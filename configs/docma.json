@@ -1,8 +1,8 @@
 {
   "src": [
-    "./src/**/*.doc.js",
+    "./src/**/*.js",
     "./docs/guides/*.md"
-  ],
+	],
   "app": {
     "title": "Tram-One",
     "entrance": "content:introduction",
@@ -60,7 +60,7 @@
           },
           {
             "label": "API",
-            "href": "/api/#Tram-One"
+            "href": "/api/"
           },
           {
             "label": "Try It",

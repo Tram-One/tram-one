@@ -57,10 +57,6 @@
             "href": "/"
           },
           {
-            "label": "Tutorial",
-            "href": "/tutorial"
-          },
-          {
             "label": "API",
             "href": "/api/"
           },

@@ -23,7 +23,3 @@ npm start
 
 You will see a web application with a title bar, and some simple text. Feel free
 from here to play around, build new components, and remove existing ones.
-
-
-If you want to learn more of the features in a step by step guide, go to our
-[tutorial](/tutorial) to learn all the features available in Tram-One!

@@ -41,8 +41,3 @@ jobs:
           path: coverage/lcov-report/
 
       - run: npm run build
-
-      - run: npm run build:site
-
-      - store_artifacts:
-          path: docs/

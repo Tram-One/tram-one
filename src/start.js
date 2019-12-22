@@ -10,30 +10,28 @@ const { setupMutationObserver } = require('./mutation-observer')
  * @memberof Tram-One
  * @public
  * @description
- * Function to attach a {@link component} to an existing element on the page.
+ * Function to attach a component to an existing element on the page.
  * This function also starts all the listeners and allows the basic hooks to function.
  *
- *
  * This should only be called for the initial render / building of the app.
+ *
+ * StackBlitz for starting with a selector on the page
+ * <iframe
+ *	 src="https://stackblitz.com/edit/tram-one-docs-start-example-one?embed=1&file=index.js&hideExplorer=1"
+ *	 width="100%"
+ *	 height="300px"
+ * ></iframe>
+ *
+ * StackBlitz for starting on a dom element (useful for testing)
+ * <iframe
+ *	 src="https://stackblitz.com/edit/tram-one-docs-start-example-two?embed=1&file=index.js&hideExplorer=1"
+ *	 width="100%"
+ *	 height="300px"
+ * ></iframe>
  *
  * @param {string|Node} selector either a CSS selector, or Node to attach the component to
  *
  * @param {component} component top-level component to attach to the page.
- *
- *
- * @example
- * import { registerHtml, start } from 'tram-one';
- * import './styles.css';
- *
- * const html = registerHtml();
- *
- * const home = () => html`
- *   <div>
- *     <h1>Tram-One Rocks!</h1>
- *   </div>
- * `;
- *
- * start('#app', home);
  */
 module.exports = (selector, component) => {
 	/* setup all the internal engines required for tram-one to work */

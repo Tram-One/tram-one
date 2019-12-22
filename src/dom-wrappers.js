@@ -6,27 +6,25 @@ const { registerDom } = require('./dom')
  * @public
  * @description
  * Function to generate a tagged template function for XHTML / HTML.
+ * Takes in a registry that allows you to import other tag functions and use them in your template string.
  *
+ * StackBlitz for registerHtml with no registry
+ * <iframe
+ *	 src="https://stackblitz.com/edit/tram-one-docs-registerhtml-example-one?embed=1&file=index.js&hideExplorer=1"
+ *	 width="100%"
+ *	 height="300px"
+ * ></iframe>
+ *
+ * StackBlitz for registerHtml with registry (use Ctrl+P to look at `custom-header.js`)
+ * <iframe
+ *	 src="https://stackblitz.com/edit/tram-one-docs-registerhtml-example-two?embed=1&file=index.js&hideExplorer=1"
+ *	 width="100%"
+ *	 height="300px"
+ * ></iframe>
  * @param {object} [registry={}] map of tag names to functions, use this to use custom elements built in tram-one
  *
  * @return {function} tagged template function that builds HTML components
  *
- * @example
- * import { registerHtml } from 'tram-one'
- * import customHeader from './customHeader'
- * const html = registerHtml({
- *   'custom-header': customHeader
- * })
- *
- *
- * export default () => {
- *   return html`
- *     <div>
- *       <custom-header>Learn about Tram-One!</custom-header>
- *       <span>That header sure was neat</span>
- *     </div>
- *   `
- * }
  */
 const registerHtml = registry => {
 	return registerDom(null, registry)
@@ -39,25 +37,16 @@ const registerHtml = registry => {
  * @description
  * Function to generate a tagged template function for SVG.
  *
+ * StackBlitz for registerSvg
+ * <iframe
+ *	 src="https://stackblitz.com/edit/tram-one-docs-registersvg-example-one?embed=1&file=index.js&hideExplorer=1"
+ *	 width="100%"
+ *	 height="300px"
+ * ></iframe>
+ *
  * @param {object} [registry={}] map of tag names to functions, use this to use custom elements built in tram-one
  *
  * @return {function} tagged template function that builds SVG components
- *
- * @example
- * import { registerSvg } from 'tram-one'
- * import customHeader from './customHeader'
- * const svg = registerSvg()
- *
- *
- * export default () => {
- *   return svg`
- *     <svg viewBox="0 0 864 864">
- *       <g>
- *         <circle fill="#FDF491" cx="100" cy="100" r="20"/>
- *       </g>
- *     </svg>
- *   `
- * }
  */
 const registerSvg = registry => {
 	return registerDom('http://www.w3.org/2000/svg', registry)

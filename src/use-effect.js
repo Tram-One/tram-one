@@ -16,22 +16,13 @@ const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('./working-key
  *
  * If `effect` does not return a function, the return is ignored, which means async functions are okay!
  *
+ * StackBlitz for simple useEffect
+ * <iframe
+ *	 src="https://stackblitz.com/edit/tram-one-docs-use-effect-example-one?embed=1&file=index.js&hideExplorer=1"
+ *	 width="100%"
+ *	 height="300px"
+ * ></iframe>
  * @param {function} effect function to run on component mount
- *
- * @example
- * import { registerHtml, useEffect, useObservable } from 'tram-one'
- * const html = registerHtml()
- *
- * export default () => {
- *   const [title, updateTitle] = useObservable('Tram-One App')
- *   onUpdateTitle = (event) => updateTitle(event.target.value)
- *
- *   useEffect(() => {
- *     document.title = title
- *   })
- *
- *   return html`<input value=${title} onkeydown=${onUpdateTitle} />`
- * }
  */
 module.exports = effect => {
 	ensureFunction(effect, { errorMessage: `Tram-One: effect should be a function, recieved ${typeof effect}, ${effect}` })

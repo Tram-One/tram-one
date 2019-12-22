@@ -12,34 +12,16 @@ const useObservable = require('./use-observable')
  * It's internal functionality is powered by the package
  * {@link https://www.npmjs.com/package/rlite-router | rlite}
  *
+ * StackBlitz for path checking in useUrlParams
+ * <iframe
+ *	 src="https://stackblitz.com/edit/tram-one-docs-use-url-params-example-one?embed=1&file=index.js&hideExplorer=1"
+ *	 width="100%"
+ *	 height="300px"
+ * ></iframe>
+ *
  * @param {String} [pattern] path to match on (can include path variables)
  *
  * @returns {Object|Boolean} object with params if path matches, otherwise returns false
- *
- * @example
- * // Check Route Example
- * import { registerHtml, useUrlParams } from 'tram-one'
- * import HomePage from './pages/home'
- * import UserPage from './pages/user'
- * import NotFoundPage from './pages/not-found'
- *
- *
- * export default () => {
- *   if (useUrlParams('/')) return HomePage();
- *   if (useUrlParams('/user')) return UserPage();
- *   return NotFoundPage();
- * }
- *
- * @example
- * // Get Url Params - path is `/user/exampleUser?session=true`
- * import { registerHtml, useUrlParams } from 'tram-one'
- *
- *
- * export default () => {
- *   const params = useUrlParams('/user/:userId')
- *   params.userId // => exampleUser
- *   params.session // => true
- * }
  */
 module.exports = pattern => {
 	// save and update results in an observable, so that we can update

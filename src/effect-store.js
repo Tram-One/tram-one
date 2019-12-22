@@ -1,6 +1,8 @@
-const { setup, get, set } = require('../namespace')
+const { setup, get, set } = require('./namespace')
 
 /**
+ * @private
+ * @description
  * EffectStores in Tram-One are used for basic key-value object mappings that need
  * to be persisted in the globalSpace.
  *
@@ -15,6 +17,8 @@ const getEffectStore = get
 const setEffectStore = set
 
 /**
+ * @private
+ * @description
  * clear the effect store
  * usually called when we want to empty the effect store
  */
@@ -25,6 +29,8 @@ const clearEffectStore = effectName => {
 }
 
 /**
+ * @private
+ * @description
  * restore the effect store to a previous value
  * usually used when we had to interrupt the processing of effects
  */

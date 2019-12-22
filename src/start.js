@@ -1,13 +1,14 @@
-const mount = require('../mount')
-const { TRAM_EFFECT_STORE, TRAM_HOOK_KEY, TRAM_EFFECT_QUEUE, TRAM_OBSERVABLE_STORE, TRAM_MUTATION_OBSERVER } = require('../engine-names')
-const { setupEffectStore } = require('../effect-store')
-const { setupWorkingKey } = require('../working-key')
-const { setupObservableStore } = require('../observable-store')
-const { setupMutationObserver } = require('../mutation-observer')
+const mount = require('./mount')
+const { TRAM_EFFECT_STORE, TRAM_HOOK_KEY, TRAM_EFFECT_QUEUE, TRAM_OBSERVABLE_STORE, TRAM_MUTATION_OBSERVER } = require('./engine-names')
+const { setupEffectStore } = require('./effect-store')
+const { setupWorkingKey } = require('./working-key')
+const { setupObservableStore } = require('./observable-store')
+const { setupMutationObserver } = require('./mutation-observer')
 
 /**
  * @name start
- *
+ * @memberof Tram-One
+ * @public
  * @description
  * Function to attach a {@link component} to an existing element on the page.
  * This function also starts all the listeners and allows the basic hooks to function.

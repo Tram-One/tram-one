@@ -4,12 +4,14 @@ const hyperz = require('hyperz')
 const ensureIsObject = require('type/object/ensure')
 const ensureIsString = require('type/string/ensure')
 
-const { TRAM_HOOK_KEY } = require('../engine-names')
-const { pushWorkingKeyBranch, popWorkingKeyBranch, incrementWorkingKeyBranch, copyWorkingKey, restoreWorkingKey } = require('../working-key')
+const { TRAM_HOOK_KEY } = require('./engine-names')
+const { pushWorkingKeyBranch, popWorkingKeyBranch, incrementWorkingKeyBranch, copyWorkingKey, restoreWorkingKey } = require('./working-key')
 const observeTag = require('./observe-tag')
 const processEffects = require('./process-effects')
 
 /**
+ * @private
+ * @description
  * This function takes in a namespace and registry of custom components,
  * and builds a `dom` template tag function that can take in a template XML string.
  *

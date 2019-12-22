@@ -1,8 +1,9 @@
-const observableHook = require('./observableHook')
+const observableHook = require('./observable-hook')
 
 /**
- * @name useGlobalObservable
- *
+ * @name useObservable
+ * @memberof Tram-One
+ * @public
  * @description
  * Hook that stores local component state.
  * This in part mimics React's useState hook, but allows the component to update independentaly

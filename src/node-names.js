@@ -1,4 +1,6 @@
 /**
+ * @private
+ * @description
  * This file is a collection of strings used to store values
  * in custom elements. If you ever need to debug Tram-One's
  * internal state, you can inspect these on individual elements.

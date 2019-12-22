@@ -1,14 +1,16 @@
-const { TRAM_EFFECT_STORE, TRAM_EFFECT_QUEUE } = require('../engine-names')
-const { TRAM_TAG_NEW_EFFECTS } = require('../node-names')
-const { getEffectStore, clearEffectStore, restoreEffectStore } = require('../effect-store')
+const { TRAM_EFFECT_STORE, TRAM_EFFECT_QUEUE } = require('./engine-names')
+const { TRAM_TAG_NEW_EFFECTS } = require('./node-names')
+const { getEffectStore, clearEffectStore, restoreEffectStore } = require('./effect-store')
 
 /**
+ * @private
+ * @description
  * This is a helper function for the dom creation.
  * This function stores any effects generated when building a tag in resulting node that is generated.
  *
  * These are later processed by the mutation-observer, and cleaned up when the node is removed by the mutation-observer.
  */
-const processEffects = tagFunction => {
+module.exports = tagFunction => {
 	// save the existing effect queue for any components we are in the middle of building
 	const existingQueuedEffects = { ...getEffectStore(TRAM_EFFECT_QUEUE) }
 
@@ -31,5 +33,3 @@ const processEffects = tagFunction => {
 
 	return tagResult
 }
-
-module.exports = processEffects

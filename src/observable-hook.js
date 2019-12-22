@@ -1,8 +1,10 @@
-const { TRAM_OBSERVABLE_STORE, TRAM_HOOK_KEY } = require('../engine-names')
-const { getObservableStore } = require('../observable-store')
-const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('../working-key')
+const { TRAM_OBSERVABLE_STORE, TRAM_HOOK_KEY } = require('./engine-names')
+const { getObservableStore } = require('./observable-store')
+const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('./working-key')
 
 /**
+ * @private
+ * @description
  * Source code for both observable hooks, useObservable, and useGlobalObservable.
  * This hook exposes a globally stored value (in either case), that can cause the component
  * to update when that value (or a subfield of that value) is updated.

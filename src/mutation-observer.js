@@ -1,8 +1,10 @@
 const { observe, unobserve } = require('@nx-js/observer-util')
-const { TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } = require('../node-names')
-const { setup, get } = require('../namespace')
+const { TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } = require('./node-names')
+const { setup, get } = require('./namespace')
 
 /**
+ * @private
+ * @description
  * The mutation-observer is a global instance of browsers MutationObserver
  * which tracks when nodes are added or removed.
  *

@@ -3,6 +3,8 @@
     "./src/**/*.js",
     "./docs/guides/*.md"
 	],
+	"jsdoc": {
+	},
   "app": {
     "title": "Tram-One",
     "entrance": "content:introduction",

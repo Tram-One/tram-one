@@ -1,3 +1,9 @@
+/**
+ * @private
+ * @description
+ * Function to return the object where tram-one global stores are availble.
+ * If when called there are no global stores defined, it makes one on `global` or `window`
+ */
 module.exports.getTramSpace = () => {
 	const globalSpaceIsDefined = typeof global.tramSpace !== 'undefined'
 	const windowIsDefined = typeof window !== 'undefined'

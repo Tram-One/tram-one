@@ -1,10 +1,12 @@
 const ensureFunction = require('type/function/ensure')
 const ensureValue = require('type/value/ensure')
-const { TRAM_MUTATION_OBSERVER } = require('../engine-names')
-const { registerHtml } = require('../dom')
-const { startWatcher } = require('../mutation-observer')
+const { startWatcher } = require('./mutation-observer')
+const { registerHtml } = require('./dom-wrappers')
+const { TRAM_MUTATION_OBSERVER } = require('./engine-names')
 
 /**
+ * @private
+ * @description
  * Updates a selector with an initial component for the first render.
  */
 module.exports = (selector, component) => {

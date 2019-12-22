@@ -10,7 +10,7 @@ const plugins = [
 ]
 
 export default {
-	input: 'src/tram-one/index.js',
+	input: 'src/tram-one',
 	external,
 	plugins,
 	output: {

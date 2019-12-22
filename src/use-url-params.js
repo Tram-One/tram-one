@@ -1,9 +1,11 @@
 const urlListener = require('url-listener')
 const useUrlParams = require('use-url-params')
-const useObservable = require('./useObservable')
+const useObservable = require('./use-observable')
 
 /**
  * @name useUrlParams
+ * @memberof Tram-One
+ * @public
  * @description
  * Hook that returns path variables based on the route.
  * Can return path parameters, query params, and more.

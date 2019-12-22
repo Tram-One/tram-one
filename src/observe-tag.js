@@ -1,14 +1,16 @@
 const { observe } = require('@nx-js/observer-util')
-const { TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } = require('../node-names')
+const { TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } = require('./node-names')
 
 /**
+ * @private
+ * @description
  * This is a helper function for the dom creation.
  * This function observes any state values used when making the tag, and allow it to update
  * independently when one of those state values updates.
  *
  * The mutation-observer will unobserve any reactions here when the node is removed.
  */
-const observeTag = tagFunction => {
+module.exports = tagFunction => {
 	let tagResult
 	const tagReaction = observe(() => {
 		// if there is an existing tagResult, it is the last rendering, and so we want to re-render over it
@@ -47,5 +49,3 @@ const observeTag = tagFunction => {
 
 	return tagResult
 }
-
-module.exports = observeTag

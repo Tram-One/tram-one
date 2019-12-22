@@ -2,6 +2,8 @@ const { registerDom } = require('./dom')
 
 /**
  * @name registerHtml
+ * @memberof Tram-One
+ * @public
  * @description
  * Function to generate a tagged template function for XHTML / HTML.
  *
@@ -32,6 +34,8 @@ const registerHtml = registry => {
 
 /**
  * @name registerSvg
+ * @memberof Tram-One
+ * @public
  * @description
  * Function to generate a tagged template function for SVG.
  *

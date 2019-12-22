@@ -1,12 +1,13 @@
 const ensureFunction = require('type/function/ensure')
 
-const { TRAM_HOOK_KEY, TRAM_EFFECT_QUEUE } = require('../engine-names')
-const { getEffectStore } = require('../effect-store')
-const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('../working-key')
+const { TRAM_HOOK_KEY, TRAM_EFFECT_QUEUE } = require('./engine-names')
+const { getEffectStore } = require('./effect-store')
+const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('./working-key')
 
 /**
  * @name useEffect
- *
+ * @memberof Tram-One
+ * @public
  * @description
  * Hook that triggers component start, update, and cleanup effects.
  * If the result of effect is another function, then that function is called on when the component is removed.

@@ -49,15 +49,15 @@ const home = () => {
 start('#app', home)
 ```
 
-Tram-One takes inspiration from frameworks like [Choo](https://choo.io/) and [React](https://reactjs.org/). Tram-One includes a set of default hooks, similar to React, which allow for
-routing, component state, and global state management.
+Tram-One takes inspiration from frameworks like [Choo](https://choo.io/), [React](https://reactjs.org/), and [Svelte](https://svelte.dev/). Tram-One includes a set of default hooks, similar to React and Svelte, which allow for
+routing, effects, component state, and global state management.
 
 ```javascript
-import { registerHtml, useState } from 'tram-one'
+import { registerHtml, useObservable } from 'tram-one'
 const html = registerHtml()
 
 export default () => {
-  const [count, updateCount] = useState(0)
+  const [count, updateCount] = useObservable(0)
   const incrementCount = () => updateCount(count + 1)
   return html`
     <button
@@ -74,7 +74,7 @@ The syntax is based on similar modules that Choo uses, offering custom component
 js template syntax that should be familiar and confortable to React developers.
 
 ```javascript
-import { registerHtml, useState } from 'tram-one'
+import { registerHtml } from 'tram-one'
 import Counter from './Counter'
 const html = registerHtml({
   'Counter': Counter,

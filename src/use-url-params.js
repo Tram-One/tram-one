@@ -19,6 +19,13 @@ const useObservable = require('./use-observable')
  *	 height="300px"
  * ></iframe>
  *
+ * StackBlitz for reading params
+ * <iframe
+ *	 src="https://stackblitz.com/edit/tram-one-docs-use-url-params-example-two?embed=1&file=index.js&hideExplorer=1"
+ *	 width="100%"
+ *	 height="300px"
+ * ></iframe>
+ *
  * @param {String} [pattern] path to match on (can include path variables)
  *
  * @returns {Object|Boolean} object with params if path matches, otherwise returns false

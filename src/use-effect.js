@@ -10,7 +10,7 @@ const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('./working-key
  * @public
  * @description
  * Hook that triggers component start, update, and cleanup effects.
- * If the result of effect is another function, then that function is called on when the component is removed.
+ * If the return of effect is another function, then that function is called on when the component is removed.
  *
  * If the effect is dependent on a observable, it will automatically trigger again if that value updates.
  *

@@ -27,8 +27,8 @@ module.exports = (key, value) => {
 		observableStore[resolvedKey] = value
 	}
 
-	// generate getter for key
-	const keyGetter = observableStore[resolvedKey]
+	// get value for key
+	const keyValue = observableStore[resolvedKey]
 
 	// generate setter for key
 	// Note: for objects and arrays, it is more performant to update the fields direclty
@@ -36,6 +36,6 @@ module.exports = (key, value) => {
 		observableStore[resolvedKey] = newValue
 	}
 
-	// return getter and setter for the key
-	return [keyGetter, keySetter]
+	// return value and setter for the key
+	return [keyValue, keySetter]
 }

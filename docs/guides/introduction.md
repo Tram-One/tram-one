@@ -33,59 +33,26 @@ Tram-One is a light View Framework that comes with all the dependencies you need
 
 Tram-One is an orchestration of common features, and relies only on plain pure javascript, so you don't have to bother learning / parsing / transpiling special templating languages. It relies only on ES6 Template Strings, which are [supported in most major browsers](https://caniuse.com/#feat=template-literals).
 
-```javascript
-import { registerHtml, start } from 'tram-one'
-const html = registerHtml()
-
-const home = () => {
-  return html`
-    <div>
-      <h1>Tram One</h1>
-      <h2>A Modern View Framework</h2>
-    </div>
-  `
-}
-
-start('#app', home)
-```
+<iframe
+	src="https://stackblitz.com/edit/tram-one-docs-introduction-example-one?embed=1&file=index.js&hideExplorer=1"
+	width="100%"
+	height="350px"
+></iframe>
 
 Tram-One takes inspiration from frameworks like [Choo](https://choo.io/), [React](https://reactjs.org/), and [Svelte](https://svelte.dev/). Tram-One includes a set of default hooks, similar to React and Svelte, which allow for
 routing, effects, component state, and global state management.
 
-```javascript
-import { registerHtml, useObservable } from 'tram-one'
-const html = registerHtml()
-
-export default () => {
-  const [count, updateCount] = useObservable(0)
-  const incrementCount = () => updateCount(count + 1)
-  return html`
-    <button
-      class="counter-button"
-      onclick=${incrementCount}
-    >
-      ${count}
-    </button>
-  `
-}
-```
+<iframe
+	src="https://stackblitz.com/edit/tram-one-docs-introduction-example-two?embed=1&file=index.js&hideExplorer=1"
+	width="100%"
+	height="350px"
+></iframe>
 
 The syntax is based on similar modules that Choo uses, offering custom components in a
 js template syntax that should be familiar and confortable to React developers.
 
-```javascript
-import { registerHtml } from 'tram-one'
-import Counter from './Counter'
-const html = registerHtml({
-  'Counter': Counter,
-})
-
-export default () => {
-  return html`
-    <div>
-      <span>Click the button below to update your count</span>
-      <Counter />
-    </div>
-  `
-}
-```
+<iframe
+	src="https://stackblitz.com/edit/tram-one-docs-introduction-example-three?embed=1&file=index.js&hideExplorer=1"
+	width="100%"
+	height="350px"
+></iframe>

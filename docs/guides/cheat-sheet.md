@@ -14,6 +14,7 @@
 	.sheet-block {
 		flex-grow: 1;
 		margin: 1em;
+		font-size: 0.8em;
 	}
 	.cheat-sheet {
 		display: flex;
@@ -26,7 +27,7 @@
 
 <div class="sheet-block">
 
-### Component
+#### New Component
 ```javascript
 const html = registerHtml()
 const CustomList = (props, children) => {
@@ -44,7 +45,7 @@ const CustomList = (props, children) => {
 
 <div class="sheet-block">
 
-### Using Components
+#### Using Components
 ```javascript
 import List from './List'
 const html = registerHtml({
@@ -59,7 +60,7 @@ const html = registerHtml({
 
 <div class="sheet-block">
 
-### Component State
+#### Component State
 ```javascript
 const [ color, setColor ] = useObservable('blue')
 const toggleColor = () => setColor('red')
@@ -71,7 +72,7 @@ const toggleColor = () => setColor('red')
 
 <div class="sheet-block">
 
-### Global State
+#### Global State
 ```javascript
 const [ list, setList ] = useGlobalObservable('todos', [])
 const onAddItem = newItem => list.push(newItem)
@@ -83,7 +84,7 @@ if another component sets a default value
 
 <div class="sheet-block">
 
-### Testing Routes
+#### Testing Routes
 ```javascript
 if (useUrlParams('/about')) return html`<about />`
 if (useUrlParams('/api')) return html`<api />`
@@ -96,7 +97,7 @@ return html`<home-page />`
 
 <div class="sheet-block">
 
-### Route Parameters
+#### Route Parameters
 ```javascript
 const { accountId } = useUrlParams('/:accountId/')
 ```
@@ -105,7 +106,7 @@ const { accountId } = useUrlParams('/:accountId/')
 </div>
 <div class="sheet-block">
 
-### Effects
+#### Effects
 ```javascript
 useEffect(() => {
 	document.title = "Tram-One Page"
@@ -118,7 +119,7 @@ useEffect(() => {
 
 <div class="sheet-block">
 
-### Async Effects
+#### Async Effects
 ```javascript
 const [user] = useObservable({ accountId: null })
 useEffect(async () => {

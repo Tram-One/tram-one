@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/node:10-browsers
+      - image: circleci/node:latest
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -37,6 +37,10 @@ jobs:
 
       - run: npm run test:ci
 
+      - store_artifacts:
+          path: coverage/lcov-report/
+
       - run: npm run build
 
-      - run: npm run integration-test
+      - store_artifacts:
+          path: dist

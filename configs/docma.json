@@ -1,8 +1,10 @@
 {
   "src": [
-    "./src/**/*.doc.js",
+    "./src/**/*.js",
     "./docs/guides/*.md"
-  ],
+	],
+	"jsdoc": {
+	},
   "app": {
     "title": "Tram-One",
     "entrance": "content:introduction",
@@ -44,6 +46,9 @@
     "options": {
       "title": "Tram-One",
       "logo": "./images/logo_64.png",
+			"sidebar": {
+				"toolbar": false
+			},
       "navbar": {
         "enabled": true,
         "fixed": true,
@@ -55,19 +60,19 @@
             "href": "/"
           },
           {
-            "label": "Tutorial",
-            "href": "/tutorial"
-          },
-          {
             "label": "API",
-            "href": "/api/#Tram-One"
+            "href": "/api"
+					},
+					{
+            "label": "Cheatsheet",
+            "href": "/cheat-sheet"
           },
           {
             "label": "Try It",
             "items": [
               {
-                "label": "CodeSandbox",
-                "href": "https://codesandbox.io/s/github/Tram-One/tram-one-express/tree/tram-one-example",
+                "label": "StackBlitz",
+                "href": "https://stackblitz.com/edit/tram-one-blank-template?file=index.js",
                 "target": "_blank"
               },
               {

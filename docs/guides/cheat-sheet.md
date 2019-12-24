@@ -66,7 +66,7 @@ const [ color, setColor ] = useObservable('blue')
 const toggleColor = () => setColor('red')
 ```
 * initial state can be an object or array
-* avoid setter if using an object or array
+* avoid using setter if managing an object or array
 
 </div>
 
@@ -77,8 +77,7 @@ const toggleColor = () => setColor('red')
 const [ list, setList ] = useGlobalObservable('todos', [])
 const onAddItem = newItem => list.push(newItem)
 ```
-* doesn't need an initial value<br/>
-if another component sets a default value
+* not all calls need an initial value
 
 </div>
 
@@ -113,7 +112,7 @@ useEffect(() => {
 	return () => console.log('cleanup triggered')
 })
 ```
-* cleanup will call for every component re-render
+* calls for every component re-render
 
 </div>
 

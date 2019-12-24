@@ -29,6 +29,7 @@ export default {
 	external: ['domino'],
 	output: {
 		name: 'tram-one',
+		exports: 'named',
 		file: pkg.umd,
 		globals: { domino: 'domino' },
 		format: 'umd'

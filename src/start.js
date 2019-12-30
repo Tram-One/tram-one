@@ -15,23 +15,25 @@ const { setupMutationObserver } = require('./mutation-observer')
  *
  * This should only be called for the initial render / building of the app.
  *
- * StackBlitz for starting with a selector on the page
+ * Sandbox for starting with a selector on the page
  * <iframe
- *	 src="https://stackblitz.com/edit/tram-one-docs-start-example-one?embed=1&file=index.js&hideExplorer=1"
- *	 width="100%"
- *	 height="300px"
+ *	 src="https://codesandbox.io/embed/github/Tram-One/tram-one-samples/tree/start-example-one/?autoresize=1&fontsize=14&hidenavigation=1&module=%2Findex.js&theme=dark"
+ *	 style="width:100%; height:350px; border:0; border-radius: 4px; overflow:hidden;"
+ *	 allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb"
+ *	 sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
  * ></iframe>
  *
- * StackBlitz for starting on a dom element (useful for testing)
+ * Sandbox for starting on a dom element (useful for testing)
  * <iframe
- *	 src="https://stackblitz.com/edit/tram-one-docs-start-example-two?embed=1&file=index.js&hideExplorer=1"
- *	 width="100%"
- *	 height="300px"
+ *	 src="https://codesandbox.io/embed/github/Tram-One/tram-one-samples/tree/start-example-two/?autoresize=1&fontsize=14&hidenavigation=1&expanddevtools=1&module=%2Findex.js&theme=dark"
+ *	 style="width:100%; height:350px; border:0; border-radius: 4px; overflow:hidden;"
+ *	 allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb"
+ *	 sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
  * ></iframe>
  *
  * @param {string|Node} selector either a CSS selector, or Node to attach the component to
  *
- * @param {component} component top-level component to attach to the page.
+ * @param {function} component top-level component to attach to the page.
  */
 module.exports = (selector, component) => {
 	/* setup all the internal engines required for tram-one to work */

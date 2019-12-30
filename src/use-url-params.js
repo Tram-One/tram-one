@@ -12,18 +12,20 @@ const useObservable = require('./use-observable')
  * It's internal functionality is powered by the package
  * {@link https://www.npmjs.com/package/rlite-router | rlite}
  *
- * StackBlitz for path checking in useUrlParams
+ * Sandbox for path checking in useUrlParams
  * <iframe
- *	 src="https://stackblitz.com/edit/tram-one-docs-use-url-params-example-one?embed=1&file=index.js&hideExplorer=1"
- *	 width="100%"
- *	 height="300px"
+ *	 src="https://codesandbox.io/embed/github/Tram-One/tram-one-samples/tree/use-url-params-example-one/?autoresize=1&fontsize=14&hidenavigation=1&module=%2Findex.js&theme=dark"
+ *	 style="width:100%; height:350px; border:0; border-radius: 4px; overflow:hidden;"
+ *	 allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb"
+ *	 sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
  * ></iframe>
  *
- * StackBlitz for reading params
+ * Sandbox for reading params
  * <iframe
- *	 src="https://stackblitz.com/edit/tram-one-docs-use-url-params-example-two?embed=1&file=index.js&hideExplorer=1"
- *	 width="100%"
- *	 height="300px"
+ *	 src="https://codesandbox.io/embed/github/Tram-One/tram-one-samples/tree/use-url-params-example-two/?autoresize=1&fontsize=14&hidenavigation=1&module=%2Findex.js&theme=dark"
+ *	 style="width:100%; height:350px; border:0; border-radius: 4px; overflow:hidden;"
+ *	 allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb"
+ *	 sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
  * ></iframe>
  *
  * @param {String} [pattern] path to match on (can include path variables)

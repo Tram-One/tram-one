@@ -11,23 +11,25 @@ const observableHook = require('./observable-hook')
  * If the value (or a subfield if it is an object or array) is updated,
  * it will cause only the components that are dependent on that value to update.
  *
- * StackBlitz for useObservable with a primitive
+ * Sandbox for useObservable with a primitive
  * <iframe
- *	 src="https://stackblitz.com/edit/tram-one-docs-use-observable-example-one?embed=1&file=index.js&hideExplorer=1"
- *	 width="100%"
- *	 height="300px"
+ *	 src="https://codesandbox.io/embed/github/Tram-One/tram-one-samples/tree/use-observable-example-one/?autoresize=1&fontsize=14&hidenavigation=1&module=%2Findex.js&theme=dark"
+ *	 style="width:100%; height:350px; border:0; border-radius: 4px; overflow:hidden;"
+ *	 allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb"
+ *	 sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
  * ></iframe>
  *
- * StackBlitz for useObservable with an object
+ * Sandbox for useObservable with an object
  * <blockquote>
  *   if storing an object or array, you should mutate the subfields directly,
  *   and avoid using the setter that is returned. This will be more performant,
  *   and cause only components that are reactive to the sub-fields to update.
  * </blockquote>
  * <iframe
- *	 src="https://stackblitz.com/edit/tram-one-docs-use-observable-example-two?embed=1&file=index.js&hideExplorer=1"
- *	 width="100%"
- *	 height="300px"
+ *	 src="https://codesandbox.io/embed/github/Tram-One/tram-one-samples/tree/use-observable-example-two/?autoresize=1&fontsize=14&hidenavigation=1&module=%2Findex.js&theme=dark"
+ *	 style="width:100%; height:350px; border:0; border-radius: 4px; overflow:hidden;"
+ *	 allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb"
+ *	 sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
  * ></iframe>
  * @param {any} value the default value to start the state at
  *

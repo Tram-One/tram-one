@@ -15,8 +15,6 @@ const observableHook = require('./observable-hook')
  * <iframe
  *	 src="https://codesandbox.io/embed/github/Tram-One/tram-one-samples/tree/use-global-observable-example-one/?autoresize=1&fontsize=14&hidenavigation=1&module=%2Findex.js&theme=dark"
  *	 style="width:100%; height:350px; border:0; border-radius: 4px; overflow:hidden;"
- *	 allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb"
- *	 sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
  * ></iframe>
  *
  * @param {string} key a unique string to write and read the global value

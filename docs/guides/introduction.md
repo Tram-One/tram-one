@@ -34,25 +34,22 @@ Tram-One is a light View Framework that comes with all the dependencies you need
 Tram-One is an orchestration of common features, and relies only on plain pure javascript, so you don't have to bother learning / parsing / transpiling special templating languages. It relies only on ES6 Template Strings, which are [supported in most major browsers](https://caniuse.com/#feat=template-literals).
 
 <iframe
-	src="https://stackblitz.com/edit/tram-one-docs-introduction-example-one?embed=1&file=index.js&hideExplorer=1"
-	width="100%"
-	height="350px"
+	src="https://codesandbox.io/embed/github/Tram-One/tram-one-samples/tree/introduction-example-one/?autoresize=1&fontsize=14&hidenavigation=1&module=%2Findex.js&theme=dark"
+	style="width:100%; height:350px; border:0; border-radius: 4px; overflow:hidden;"
 ></iframe>
 
 Tram-One takes inspiration from frameworks like [Choo](https://choo.io/), [React](https://reactjs.org/), and [Svelte](https://svelte.dev/). Tram-One includes a set of default hooks, similar to React and Svelte, which allow for
 routing, effects, component state, and global state management.
 
 <iframe
-	src="https://stackblitz.com/edit/tram-one-docs-introduction-example-two?embed=1&file=index.js&hideExplorer=1"
-	width="100%"
-	height="350px"
+	src="https://codesandbox.io/embed/github/Tram-One/tram-one-samples/tree/introduction-example-two/?autoresize=1&fontsize=14&hidenavigation=1&module=%2Findex.js&theme=dark"
+	style="width:100%; height:350px; border:0; border-radius: 4px; overflow:hidden;"
 ></iframe>
 
 The syntax is based on similar modules that Choo uses, offering custom components in a
 js template syntax that should be familiar and confortable to React developers.
 
 <iframe
-	src="https://stackblitz.com/edit/tram-one-docs-introduction-example-three?embed=1&file=index.js&hideExplorer=1"
-	width="100%"
-	height="350px"
+	src="https://codesandbox.io/embed/github/Tram-One/tram-one-samples/tree/introduction-example-three/?autoresize=1&fontsize=14&hidenavigation=1&module=%2Findex.js&theme=dark"
+	style="width:100%; height:350px; border:0; border-radius: 4px; overflow:hidden;"
 ></iframe>

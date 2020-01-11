@@ -71,8 +71,8 @@
             "label": "Try It",
             "items": [
               {
-                "label": "StackBlitz",
-                "href": "https://stackblitz.com/edit/tram-one-blank-template?file=index.js",
+                "label": "CodeSandbox",
+                "href": "https://codesandbox.io/s/github/Tram-One/tram-one-express/tree/tram-one-example",
                 "target": "_blank"
               },
               {

@@ -128,6 +128,7 @@ describe('Tram-One', () => {
 		// verify the home page is there, and we haven't loaded or fetched
 		expect(getByTestId(container, 'home-page')).toHaveTextContent('Fetching...')
 		expect(getByTestId(container, 'loader')).toHaveTextContent('loading...')
+		expect(getByTestId(container, 'loader')).toHaveTextContent('loading2...')
 
 		// wait for mutation observer to pick up new elements
 		await wait()
@@ -135,6 +136,7 @@ describe('Tram-One', () => {
 		// verify both elements were updated
 		expect(getByTestId(container, 'home-page')).toHaveTextContent('Finished Fetching!')
 		expect(getByTestId(container, 'loader')).toHaveTextContent('Finished loading!')
+		expect(getByTestId(container, 'loader')).toHaveTextContent('Finished loading2!')
 	})
 
 	it('should share state in a global store', async () => {

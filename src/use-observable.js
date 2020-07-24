@@ -29,7 +29,7 @@ const observableHook = require('./observable-hook')
  * ></iframe>
  * @param {any} value the default value to start the state at
  *
- * @returns {Array} array whose first index is the current value, 
+ * @returns {Array} array whose first index is the current value,
  * whose second index is a function that can be used to set the value,
  * and whose third index is a non-observed version of the value.
  */

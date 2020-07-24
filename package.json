@@ -86,7 +86,8 @@
       "valid-jsdoc": 0,
       "capitalized-comments": 0,
       "new-cap": 0,
-      "unicorn/no-process-exit": 0
+      "unicorn/no-process-exit": 0,
+      "unicorn/no-unreadable-array-destructuring": 0
     }
   }
 }

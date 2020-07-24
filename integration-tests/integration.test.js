@@ -1,10 +1,10 @@
-const { getByTestId, fireEvent, wait } = require('@testing-library/dom')
+const { getByTestId, getByRole, fireEvent, wait } = require('@testing-library/dom')
 const { start, registerHtml } = require('../src/tram-one')
 
-const { globalCounter, graphic, home, loadingPage, loading, removablePage, removable, updatablePage, updatable, updatedEffect, urlLabel } = require('./mock-components')
+const { frozenCounter, globalCounter, graphic, home, loadingPage, loading, removablePage, updatablePage, updatable, urlLabel } = require('./mock-components')
 
 const html = registerHtml({
-	globalCounter, graphic, home, loadingPage, loading, removablePage, removable, updatablePage, updatable, updatedEffect, urlLabel
+	globalCounter, home, loadingPage, loading, updatable, urlLabel
 })
 
 describe('Tram-One', () => {
@@ -281,5 +281,19 @@ describe('Tram-One', () => {
 		// verify that the global tramSpace was used
 		const keys = Object.keys(global.tramSpace)
 		expect(keys.length).toBeGreaterThan(0)
+	})
+
+	it('should not trigger side-effects of raw objects', () => {
+		// mount the app on the container
+		const container = document.createElement('div')
+		start(container, frozenCounter)
+
+		// verify that the button is rendered with the default text
+		expect(getByRole(container, 'button')).toHaveTextContent('clicks: 0')
+		// click on the click button to trigger update
+		fireEvent.click(getByRole(container, 'button'))
+
+		// verify that the button was not updated
+		expect(getByRole(container, 'button')).toHaveTextContent('clicks: 0')
 	})
 })

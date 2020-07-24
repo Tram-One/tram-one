@@ -24,12 +24,16 @@ const processEffects = node => {
 		node[TRAM_TAG_NEW_EFFECTS].forEach(effect => {
 			let cleanup
 
+			// this is called when an effect is re-triggered
 			const effectReaction = observe(() => {
-				if (cleanup) cleanup()
+				// verify that cleanup is a function before calling it (in case it was a promise)
+				if (typeof cleanup === 'function') cleanup()
 				cleanup = effect()
 			})
 
+			// this is called when a component with an effect is removed
 			const totalCleanup = () => {
+				// verify that cleanup is a function before calling it (in case it was a promise)
 				if (typeof cleanup === 'function') cleanup()
 				unobserve(effectReaction)
 			}

@@ -1,4 +1,4 @@
-const { getByTestId, getByRole, fireEvent, wait } = require('@testing-library/dom')
+const { getByTestId, getByRole, fireEvent, waitFor } = require('@testing-library/dom')
 const { start, registerHtml } = require('../src/tram-one')
 
 const { frozenCounter, globalCounter, graphic, home, loadingPage, loading, removablePage, updatablePage, updatable, urlLabel } = require('./mock-components')
@@ -92,7 +92,7 @@ describe('Tram-One', () => {
 		expect(getByTestId(container, 'home-page')).toHaveTextContent('loading')
 
 		// wait for mutation observer to pick up new elements
-		await wait()
+		await waitFor(() => {})
 
 		// verify that it (eventually) has the finished text
 		expect(getByTestId(container, 'home-page')).toHaveTextContent('Finished')
@@ -108,13 +108,13 @@ describe('Tram-One', () => {
 		expect(getByTestId(container, 'removable-element')).toHaveTextContent('Removable')
 
 		// wait for mutation observer to pick up new elements
-		await wait()
+		await waitFor(() => {})
 
 		// trigger removal
 		fireEvent.click(getByTestId(container, 'hide-removable'))
 
 		// wait for mutation observer to pick up removed elements
-		await wait()
+		await waitFor(() => {})
 
 		// verify that the element was removed
 		expect(getByTestId(container, 'home-page')).toHaveTextContent('Remove was triggered')
@@ -130,7 +130,7 @@ describe('Tram-One', () => {
 		expect(getByTestId(container, 'loader')).toHaveTextContent('loading...')
 
 		// wait for mutation observer to pick up new elements
-		await wait()
+		await waitFor(() => {})
 
 		// verify both elements were updated
 		expect(getByTestId(container, 'home-page')).toHaveTextContent('Finished Fetching!')
@@ -207,7 +207,7 @@ describe('Tram-One', () => {
 		expect(getByTestId(container, 'updatable-button')).toHaveTextContent('5')
 
 		// let effects process
-		await wait()
+		await waitFor(() => {})
 
 		// verify the title is the default value
 		expect(document.title).toBe('The count is 5')
@@ -216,7 +216,7 @@ describe('Tram-One', () => {
 		fireEvent.click(getByTestId(container, 'increment-count'))
 
 		// let effects process
-		await wait()
+		await waitFor(() => {})
 
 		// verify the page and title updated
 		expect(getByTestId(container, 'updatable-button')).toHaveTextContent('6')
@@ -226,7 +226,7 @@ describe('Tram-One', () => {
 		fireEvent.click(getByTestId(container, 'updatable-button'))
 
 		// let effects process
-		await wait()
+		await waitFor(() => {})
 
 		// verify the page and title updated
 		expect(getByTestId(container, 'updatable-button')).toHaveTextContent('7')
@@ -242,7 +242,7 @@ describe('Tram-One', () => {
 		expect(getByTestId(container, 'updatable-button')).toHaveTextContent('5')
 
 		// let effects process
-		await wait()
+		await waitFor(() => {})
 
 		// verify the title is the default value
 		expect(document.title).toBe('The count is 5')
@@ -251,7 +251,7 @@ describe('Tram-One', () => {
 		fireEvent.click(getByTestId(container, 'updatable-button'))
 
 		// let effects process
-		await wait()
+		await waitFor(() => {})
 
 		// verify the page and title updated
 		expect(getByTestId(container, 'updatable-button')).toHaveTextContent('6')
@@ -261,7 +261,7 @@ describe('Tram-One', () => {
 		fireEvent.click(getByTestId(container, 'remove-count'))
 
 		// let effects process
-		await wait()
+		await waitFor(() => {})
 
 		// verify the page and title updated
 		expect(getByTestId(container, 'home-page')).toHaveTextContent('Counter Removed')

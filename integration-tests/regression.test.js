@@ -1,4 +1,4 @@
-const { getByTestId, fireEvent, wait } = require('@testing-library/dom')
+const { getByTestId, fireEvent, waitFor } = require('@testing-library/dom')
 const { start } = require('../src/tram-one')
 
 const { updatablePromisePage, conflictingGlobalCounter } = require('./mock-components')
@@ -13,7 +13,7 @@ describe('Tram-One - regressions', () => {
 		expect(getByTestId(container, 'updatable-button')).toHaveTextContent('5')
 
 		// let effects process
-		await wait()
+		await waitFor(() => {})
 
 		// verify the title is the default value
 		expect(document.title).toBe('The count is 5')

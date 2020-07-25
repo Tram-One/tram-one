@@ -87,7 +87,11 @@
       "capitalized-comments": 0,
       "new-cap": 0,
       "unicorn/no-process-exit": 0,
-      "unicorn/no-unreadable-array-destructuring": 0
+      "unicorn/no-unreadable-array-destructuring": 0,
+      "unicorn/prevent-abbreviations": 0,
+      "unicorn/no-fn-reference-in-iterator": 0,
+      "unicorn/no-reduce": 0,
+      "import/no-anonymous-default-export": 0
     }
   }
 }

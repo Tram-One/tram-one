@@ -1,6 +1,6 @@
 {
   "name": "tram-one",
-  "version": "9.0.1",
+  "version": "9.0.2",
   "description": "🚋 Batteries Included View Framework",
   "main": "dist/tram-one.cjs.js",
   "commonjs": "dist/tram-one.cjs.js",
@@ -60,23 +60,23 @@
     "use-url-params": "^2.0.0"
   },
   "devDependencies": {
-    "@testing-library/dom": "^6.11.0",
-    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/dom": "^7.21.4",
+    "@testing-library/jest-dom": "^5.11.1",
     "docma": "^3.2.2",
     "eslint-config-tram-one": "^4.0.0",
-    "jest": "^24.9.0",
+    "jest": "^26.1.0",
     "jest-environment-jsdom-fourteen": "^1.0.1",
-    "rollup": "^1.27.0",
-    "rollup-plugin-commonjs": "^9.2.1",
-    "rollup-plugin-filesize": "^6.2.1",
+    "rollup": "^2.23.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-filesize": "^9.0.2",
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-globals": "^1.4.0",
-    "rollup-plugin-node-resolve": "^4.0.1",
-    "rollup-plugin-sizes": "^0.5.1",
-    "rollup-plugin-terser": "^4.0.4",
-    "surge": "^0.21.3",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-sizes": "^1.0.3",
+    "rollup-plugin-terser": "^6.1.0",
+    "surge": "^0.21.6",
     "watch": "^1.0.2",
-    "xo": "0.25.3"
+    "xo": "^0.32.1"
   },
   "xo": {
     "extends": [
@@ -86,7 +86,12 @@
       "valid-jsdoc": 0,
       "capitalized-comments": 0,
       "new-cap": 0,
-      "unicorn/no-process-exit": 0
+      "unicorn/no-process-exit": 0,
+      "unicorn/no-unreadable-array-destructuring": 0,
+      "unicorn/prevent-abbreviations": 0,
+      "unicorn/no-fn-reference-in-iterator": 0,
+      "unicorn/no-reduce": 0,
+      "import/no-anonymous-default-export": 0
     }
   }
 }

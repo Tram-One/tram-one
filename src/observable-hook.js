@@ -1,3 +1,4 @@
+const { raw } = require('@nx-js/observer-util')
 const { TRAM_OBSERVABLE_STORE, TRAM_HOOK_KEY } = require('./engine-names')
 const { getObservableStore } = require('./observable-store')
 const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('./working-key')
@@ -23,7 +24,8 @@ module.exports = (key, value) => {
 	const resolvedKey = key || getWorkingKeyValue(TRAM_HOOK_KEY)
 
 	// saves value into the store if it doesn't exist in the observableStore yet
-	if (!Object.prototype.hasOwnProperty.call(observableStore, resolvedKey)) {
+	// and if the value we are writing is defined
+	if (!Object.prototype.hasOwnProperty.call(observableStore, resolvedKey) && value !== undefined) {
 		observableStore[resolvedKey] = value
 	}
 
@@ -36,6 +38,9 @@ module.exports = (key, value) => {
 		observableStore[resolvedKey] = newValue
 	}
 
-	// return value and setter for the key
-	return [keyValue, keySetter]
+	// generate the raw value, in the rare case that this is required
+	const rawValue = raw(keyValue)
+
+	// return value, setter, and raw value for the key
+	return [keyValue, keySetter, rawValue]
 }

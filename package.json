@@ -1,6 +1,6 @@
 {
   "name": "tram-one",
-  "version": "9.0.2",
+  "version": "9.0.3",
   "description": "🚋 Batteries Included View Framework",
   "main": "dist/tram-one.cjs.js",
   "commonjs": "dist/tram-one.cjs.js",
@@ -52,9 +52,9 @@
   "license": "MIT",
   "dependencies": {
     "@nx-js/observer-util": "^4.2.2",
-    "belit": "^4.1.5",
-    "hyperz": "^4.0.1",
-    "ninlil": "^2.0.0",
+    "@tram-one/nanohtml": "^4.1.8",
+    "@tram-one/hyperx": "^4.0.3",
+    "@tram-one/rbel": "^2.0.1",
     "type": "^2.0.0",
     "url-listener": "^2.0.0",
     "use-url-params": "^2.0.0"

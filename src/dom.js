@@ -1,6 +1,6 @@
-const belit = require('belit')
-const ninlil = require('ninlil')
-const hyperz = require('hyperz')
+const nanohtml = require('@tram-one/nanohtml')
+const rbel = require('@tram-one/rbel')
+const hyperx = require('@tram-one/hyperx')
 const ensureIsObject = require('type/object/ensure')
 const ensureIsString = require('type/string/ensure')
 
@@ -58,7 +58,7 @@ const registerDom = (namespace, registry = {}) => {
 		return { ...newRegistry, [tagName]: hookedTagFunction }
 	}, {})
 
-	return ninlil(hyperz, belit(namespace), hookedRegistry)
+	return rbel(hyperx, nanohtml(namespace), hookedRegistry)
 }
 
 module.exports = { registerDom }

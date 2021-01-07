@@ -6,21 +6,12 @@ const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('./working-key
 
 /**
  * @name useEffect
- * @memberof Tram-One
- * @public
+ * @link https://tram-one.io/#use-effect
  * @description
  * Hook that triggers component start, update, and cleanup effects.
  * If the return of effect is another function, then that function is called on when the component is removed.
- *
  * If the effect is dependent on a observable, it will automatically trigger again if that value updates.
  *
- * If `effect` does not return a function, the return is ignored, which means async functions are okay!
- *
- * Sandbox for simple useEffect
- * <iframe
- *	 src="https://codesandbox.io/embed/github/Tram-One/tram-one-samples/tree/use-effect-example-one/?autoresize=1&fontsize=14&hidenavigation=1&module=%2Findex.js&theme=dark"
- *	 style="width:100%; height:350px; border:0; border-radius: 4px; overflow:hidden;"
- * ></iframe>
  * @param {function} effect function to run on component mount
  */
 module.exports = effect => {

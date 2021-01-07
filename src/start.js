@@ -7,28 +7,14 @@ const { setupMutationObserver } = require('./mutation-observer')
 
 /**
  * @name start
- * @memberof Tram-One
- * @public
+ * @link https://tram-one.io/#start
  * @description
  * Function to attach a component to an existing element on the page.
  * This function also starts all the listeners and allows the basic hooks to function.
  *
  * This should only be called for the initial render / building of the app.
  *
- * Sandbox for starting with a selector on the page
- * <iframe
- *	 src="https://codesandbox.io/embed/github/Tram-One/tram-one-samples/tree/start-example-one/?autoresize=1&fontsize=14&hidenavigation=1&module=%2Findex.js&theme=dark"
- *	 style="width:100%; height:350px; border:0; border-radius: 4px; overflow:hidden;"
-s * ></iframe>
- *
- * Sandbox for starting on a dom element (useful for testing)
- * <iframe
- *	 src="https://codesandbox.io/embed/github/Tram-One/tram-one-samples/tree/start-example-two/?autoresize=1&fontsize=14&hidenavigation=1&expanddevtools=1&module=%2Findex.js&theme=dark"
- *	 style="width:100%; height:350px; border:0; border-radius: 4px; overflow:hidden;"
- * ></iframe>
- *
  * @param {string|Node} selector either a CSS selector, or Node to attach the component to
- *
  * @param {function} component top-level component to attach to the page.
  */
 module.exports = (selector, component) => {

@@ -18,50 +18,59 @@
   <a href="https://unpkg.com/tram-one/dist/tram-one.umd.js">
     <img src="https://github.com/Tram-One/tram-one/raw/master/docs/badges/umd.svg?sanitize=true" alt="UMD build size">
   </a>
-  <a href="https://join.slack.com/t/tram-one/shared_invite/enQtMjY0NDA3OTg2MzQyLWUyMGIyZTYwNzZkNDJiNWNmNzdiOTMzYjg0YzMzZTkzZDE4MTlmN2Q2YjE0NDIwMGI3ODEzYzQ4ODdlMzQ2ODM">
-    <img src="https://img.shields.io/badge/slack-join-83ded3.svg?style=flat" alt="Join Slack">
+  <a href="https://discord.gg/dpBXAQC">
+    <img src="https://img.shields.io/badge/discord-join-83ded3.svg?style=flat" alt="Join Discord">
   </a>
 </div>
 
 # Tram-One
 
-Modern View Framework For Pure Javascript
+Modern View Framework For Vanilla Javascript
 <br>
 <br>
-
-## Installation, Docs, and API
-
-You can visit the website <a href="http://tram-one.io/">tram-one.io</a> to read
-installation instructions, feature documentation, and the complete API.
 
 ## Summary
-Tram-One is a view framework for developers who want to jump straight into
-building on the web. At its core, Tram-One is a collection of a few packages
-that gives you the tools to start working right away. That is to say...
-Batteries Included!
+Tram-One is a Modern View Framework that has advance features like hooks, observables, and JSX-like template components, all in plain vanilla javascript.
+
+Tram-One takes inspiration from frameworks like Choo, React, and Svelte, and provides a rich feature set without additional libraries.
+
+[Visit the website for a complete one-stop-shop with everything you need to know about Tram-One.](http://tram-one.io/)
+
+[If you have any questions from this page or about Tram-One, or just want to say hi, join our Discord!](https://discord.gg/dpBXAQC)
+
+```javascript
+import {registerHtml, start} from 'tram-one'
+
+const html = registerHtml()
+const home = () => {
+  return html`
+    <main>
+      <h1> Tram-One </h1>
+      <h2>
+        A Modern View Framework
+        For Vanilla Javascript
+      </h2>
+    </main>
+  `
+}
+
+start('#app', home)
+```
 
 ### Why?
-Tram-One is a project built to make exposing custom elements easy, and to
-have global and component state management with react-like hooks, and basic
-routing by default. It was created out of  the frustration of having to
-scaffold the same dependencies over and over again.
+Tram-One is a project that emphasizes vanilla JS and HTML syntax, while providing the features of modern JS frameworks. It is born out of love of the JSX syntax, but wanting the flexibility of other frameworks to build on top of.
 
-Tram-One was also created to avoid a lot of the syntax that locks you into
-frameworks like Vue and React. The components written here can mimic the syntax
-you're already familiar, or help you create pure HTML friendly code.
+While Tram-One makes use of many dependencies, an effor has been made to expose those dependencies in a way that will hopefully
+encourage other developers to mix-and-match their own libraries, make improvements, and potentially
+build off of what is here to make their own front-end frameworks!
 
 ## This Repo and the Tram-One Org
 This repo contains the main Tram-One framework, which can be installed and
-used to make web-apps. The Tram-One org (found at https://github.com/Tram-One)
+used to make web-apps. [The Tram-One org](https://github.com/Tram-One)
 includes many of the dependencies as well as the websites and generators for the project.
 The dependencies, while made (or modiefied) for Tram-One, can be used in other projects.
 
-### Slack
+### Discord
 
 If you want to start contributing, need help, or would just like to say hi,
-[join our slack channel](https://join.slack.com/t/tram-one/shared_invite/enQtMjY0NDA3OTg2MzQyLWUyMGIyZTYwNzZkNDJiNWNmNzdiOTMzYjg0YzMzZTkzZDE4MTlmN2Q2YjE0NDIwMGI3ODEzYzQ4ODdlMzQ2ODM)!
-
-### Todo
-
-Check out our [Issues on Github](https://github.com/Tram-One/tram-one/issues).
-PRs welcome!
+[join our discord](https://discord.gg/dpBXAQC)!

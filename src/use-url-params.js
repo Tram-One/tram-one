@@ -4,25 +4,12 @@ const useObservable = require('./use-observable')
 
 /**
  * @name useUrlParams
- * @memberof Tram-One
- * @public
+ * @link https://tram-one.io/#use-url-params
  * @description
  * Hook that returns path variables based on the route.
  * Can return path parameters, query params, and more.
  * It's internal functionality is powered by the package
- * {@link https://www.npmjs.com/package/rlite-router | rlite}
- *
- * Sandbox for path checking in useUrlParams
- * <iframe
- *	 src="https://codesandbox.io/embed/github/Tram-One/tram-one-samples/tree/use-url-params-example-one/?autoresize=1&fontsize=14&hidenavigation=1&module=%2Findex.js&theme=dark"
- *	 style="width:100%; height:350px; border:0; border-radius: 4px; overflow:hidden;"
- * ></iframe>
- *
- * Sandbox for reading params
- * <iframe
- *	 src="https://codesandbox.io/embed/github/Tram-One/tram-one-samples/tree/use-url-params-example-two/?autoresize=1&fontsize=14&hidenavigation=1&module=%2Findex.js&theme=dark"
- *	 style="width:100%; height:350px; border:0; border-radius: 4px; overflow:hidden;"
- * ></iframe>
+ * {@link https://www.npmjs.com/package/rlite-router rlite}
  *
  * @param {String} [pattern] path to match on (can include path variables)
  *

@@ -1,6 +1,6 @@
 {
   "name": "tram-one",
-  "version": "9.0.4",
+  "version": "10.0.0",
   "description": "🚋 Modern View Framework for Vanilla Javascript",
   "main": "dist/tram-one.cjs.js",
   "commonjs": "dist/tram-one.cjs.js",
@@ -45,12 +45,12 @@
   "license": "MIT",
   "dependencies": {
     "@nx-js/observer-util": "^4.2.2",
-    "@tram-one/nanohtml": "^4.1.8",
     "@tram-one/hyperx": "^4.0.3",
+    "@tram-one/nanohtml": "^4.1.8",
     "@tram-one/rbel": "^2.0.1",
     "type": "^2.0.0",
     "url-listener": "^2.0.0",
-    "use-url-params": "^2.0.0"
+    "use-url-params": "^3.0.0"
   },
   "devDependencies": {
     "@testing-library/dom": "^7.21.4",

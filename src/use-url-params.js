@@ -3,6 +3,10 @@ const useUrlParams = require('use-url-params')
 const useStore = require('./use-store')
 
 /**
+ * @typedef {Object} UrlObject
+ * @property {boolean} matches if the url matched or not
+ */
+/**
  * @name useUrlParams
  * @link https://tram-one.io/#use-url-params
  * @description
@@ -13,7 +17,7 @@ const useStore = require('./use-store')
  *
  * @param {String} [pattern] path to match on (can include path variables)
  *
- * @returns {Object|Boolean} object with params if path matches, otherwise returns false
+ * @returns {UrlObject} object with a `matches` key, and (if it matched) path and query parameters
  */
 module.exports = pattern => {
 	// save and update results in an observable, so that we can update

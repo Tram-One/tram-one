@@ -15,6 +15,7 @@ const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('./working-key
  * @param {function} effect function to run on component mount
  */
 module.exports = effect => {
+	// effects must be functions
 	ensureFunction(effect, { errorMessage: `Tram-One: effect should be a function, recieved ${typeof effect}, ${effect}` })
 
 	// get the store of effects

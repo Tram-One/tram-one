@@ -1,8 +1,6 @@
 const { setup, get } = require('./namespace')
 
 /**
- * @private
- * @description
  * This file defines all the functions required to interact with
  * a working-key object. This working-key object is used to help
  * hooks understand where in the mounting process we are, and what
@@ -25,8 +23,6 @@ const getWorkingBranch = keyName => {
 }
 
 /**
- * @private
- * @description
  * push a new branch value, usually when we step into a new
  * custom component when mounting.
  */
@@ -39,8 +35,6 @@ const pushWorkingKeyBranch = (keyName, branch) => {
 }
 
 /**
- * @private
- * @description
  * pops the current branch value, usually when we are done mounting
  * a single child component.
  */
@@ -50,8 +44,6 @@ const popWorkingKeyBranch = keyName => {
 }
 
 /**
- * @private
- * @description
  * increments the value for the current branch.
  * These values are used to pull the correct hook value on re-renders.
  */
@@ -61,11 +53,8 @@ const incrementWorkingKeyBranch = keyName => {
 }
 
 /**
- * @private
- * @description
- * used to get a unique string that will be used most likely in
- * a Hover Engine. This unique string _should_ be consistent over many
- * re-renders.
+ * used to get a unique string that will be used as a key for observables and effects.
+ * This unique string _should_ be consistent over many re-renders.
  */
 const getWorkingKeyValue = keyName => {
 	const workingKey = getWorkingKey(keyName)
@@ -75,8 +64,6 @@ const getWorkingKeyValue = keyName => {
 }
 
 /**
- * @private
- * @description
  * returns a deep copy of the existing key, usually used as a restore point later
  */
 const copyWorkingKey = keyName => {
@@ -88,8 +75,6 @@ const copyWorkingKey = keyName => {
 }
 
 /**
- * @private
- * @description
  * if we needed to reset pre-emptively, use this to get back
  * to where the branches were before
  */

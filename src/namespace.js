@@ -1,30 +1,25 @@
-const { getTramSpace } = require('./tram-space')
-
 /**
- * @private
- * @description
- * namespace is a generic interface for objects that need to be persisted in
- * the tramSpace global object. It exposes a setup and get function and runs
- * basic asserts.
+ * namespace is a generic interface for global tram-one state that needs
+ * to be persisted in the app container. It exposes a setup and get function.
  */
+
+const setupTramOneSpace = () => {
+	window['tram-space'] = {}
+}
 
 const setup = constructor => {
 	return namespace => {
-		const tramSpace = getTramSpace()
-
-		tramSpace[namespace] = constructor()
-		return tramSpace[namespace]
+		window['tram-space'][namespace] = constructor()
+		return window['tram-space'][namespace]
 	}
 }
 
 const get = namespace => {
-	const tramSpace = getTramSpace()
-	return tramSpace[namespace]
+	return window['tram-space'][namespace]
 }
 
 const set = (namespace, value) => {
-	const tramSpace = getTramSpace()
-	tramSpace[namespace] = value
+	window['tram-space'][namespace] = value
 }
 
-module.exports = { setup, get, set }
+module.exports = { setup, get, set, setupTramOneSpace }

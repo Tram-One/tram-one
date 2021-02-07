@@ -1,7 +1,11 @@
 const urlListener = require('url-listener')
 const useUrlParams = require('use-url-params')
-const useObservable = require('./use-observable')
+const useStore = require('./use-store')
 
+/**
+ * @typedef {Object} UrlObject
+ * @property {boolean} matches if the url matched or not
+ */
 /**
  * @name useUrlParams
  * @link https://tram-one.io/#use-url-params
@@ -13,28 +17,24 @@ const useObservable = require('./use-observable')
  *
  * @param {String} [pattern] path to match on (can include path variables)
  *
- * @returns {Object|Boolean} object with params if path matches, otherwise returns false
+ * @returns {UrlObject} object with a `matches` key, and (if it matched) path and query parameters
  */
 module.exports = pattern => {
 	// save and update results in an observable, so that we can update
 	// components and effects in a reactive way
 	const initialParams = useUrlParams(pattern)
-	const [observedUrlParams, setUrlParams] = useObservable(initialParams)
+	const observedUrlParams = useStore({ params: initialParams })
 
 	// urlListener can re-read the route and save the new results to the observable
 	urlListener(() => {
 		const updatedParams = useUrlParams(pattern)
 
 		// in cases where useUrlParams returned false, set with the new value
-		if (updatedParams === false || observedUrlParams === false) {
-			setUrlParams(updatedParams)
-		} else {
-			// get all keys so we can override new and old ones (without having to override the whole object)
-			const allParamKeys = [...Object.keys(observedUrlParams), ...Object.keys(updatedParams)]
-			allParamKeys.forEach(paramKey => {
-				observedUrlParams[paramKey] = updatedParams[paramKey]
-			})
-		}
+		// get all keys so we can override new and old ones (without having to override the whole object)
+		const allParamKeys = [...Object.keys(observedUrlParams), ...Object.keys(updatedParams)]
+		allParamKeys.forEach(paramKey => {
+			observedUrlParams[paramKey] = updatedParams[paramKey]
+		})
 	})
 
 	return observedUrlParams

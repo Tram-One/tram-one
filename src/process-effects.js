@@ -3,8 +3,6 @@ const { TRAM_TAG_NEW_EFFECTS } = require('./node-names')
 const { getEffectStore, clearEffectStore, restoreEffectStore } = require('./effect-store')
 
 /**
- * @private
- * @description
  * This is a helper function for the dom creation.
  * This function stores any effects generated when building a tag in resulting node that is generated.
  *

@@ -2,8 +2,6 @@ const { observe } = require('@nx-js/observer-util')
 const { TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } = require('./node-names')
 
 /**
- * @private
- * @description
  * This is a helper function for the dom creation.
  * This function observes any state values used when making the tag, and allow it to update
  * independently when one of those state values updates.

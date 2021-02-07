@@ -1,9 +1,11 @@
 const mount = require('./mount')
+const buildContainer = require('./build-mounting-container')
 const { TRAM_EFFECT_STORE, TRAM_HOOK_KEY, TRAM_EFFECT_QUEUE, TRAM_OBSERVABLE_STORE, TRAM_MUTATION_OBSERVER } = require('./engine-names')
+const { setupTramOneSpace } = require('./namespace')
 const { setupEffectStore } = require('./effect-store')
 const { setupWorkingKey } = require('./working-key')
 const { setupObservableStore } = require('./observable-store')
-const { setupMutationObserver } = require('./mutation-observer')
+const { setupMutationObserver, startWatcher } = require('./mutation-observer')
 
 /**
  * @name start
@@ -14,11 +16,16 @@ const { setupMutationObserver } = require('./mutation-observer')
  *
  * This should only be called for the initial render / building of the app.
  *
- * @param {string|Node} selector either a CSS selector, or Node to attach the component to
  * @param {function} component top-level component to attach to the page.
+ * @param {string|Node} target either a CSS selector, or Node to attach the component to
  */
-module.exports = (selector, component) => {
+module.exports = (component, target) => {
 	/* setup all the internal engines required for tram-one to work */
+
+	// get the container to mount the app on
+	const container = buildContainer(target)
+
+	setupTramOneSpace()
 
 	// setup store for effects
 	setupEffectStore(TRAM_EFFECT_STORE)
@@ -35,6 +42,9 @@ module.exports = (selector, component) => {
 	// setup a mutation observer for cleaning up removed elements and triggering effects
 	setupMutationObserver(TRAM_MUTATION_OBSERVER)
 
+	// watch for changes on the target so that we can process node changes
+	startWatcher(TRAM_MUTATION_OBSERVER, container)
+
 	// trigger an initial mount
-	mount(selector, component)
+	mount(component, container)
 }

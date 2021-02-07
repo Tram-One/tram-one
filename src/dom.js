@@ -10,8 +10,6 @@ const observeTag = require('./observe-tag')
 const processEffects = require('./process-effects')
 
 /**
- * @private
- * @description
  * This function takes in a namespace and registry of custom components,
  * and builds a `dom` template tag function that can take in a template XML string.
  *

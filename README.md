@@ -58,9 +58,9 @@ start('#app', home)
 ```
 
 ### Why?
-Tram-One is a project that emphasizes vanilla JS and HTML syntax, while providing the features of modern JS frameworks. It is born out of love of the JSX syntax, but wanting the flexibility of other frameworks to build on top of.
+Tram-One is a project that emphasizes vanilla JS and HTML syntax, while providing the features of modern JS frameworks. It is born out of love of the JSX syntax, and an attempt to build something unique with existing open source libraries.
 
-While Tram-One makes use of many dependencies, an effor has been made to expose those dependencies in a way that will hopefully
+While Tram-One makes use of many dependencies, an effort has been made to expose those dependencies in a way that will hopefully
 encourage other developers to mix-and-match their own libraries, make improvements, and potentially
 build off of what is here to make their own front-end frameworks!
 

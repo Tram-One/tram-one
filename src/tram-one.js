@@ -1,8 +1,8 @@
 const { registerHtml, registerSvg } = require('./dom-wrappers')
 const useEffect = require('./use-effect')
 const useUrlParams = require('./use-url-params')
-const useObservable = require('./use-observable')
-const useGlobalObservable = require('./use-global-observable')
+const useStore = require('./use-store')
+const useGlobalStore = require('./use-global-store')
 const start = require('./start')
 
 /**
@@ -19,8 +19,8 @@ module.exports = {
 	registerHtml,
 	registerSvg,
 	useEffect,
-	useObservable,
-	useGlobalObservable,
+	useStore,
+	useGlobalStore,
 	useUrlParams,
 	start
 }

@@ -10,7 +10,7 @@ const observableHook = require('./observable-hook')
  * it will cause only the components that are dependent on that value to update.
  *
  * @param {string} key a unique string to write and read the global value
- * @param {Object|Array} value the default value to start the state at
+ * @param {Object|Array} defaultValue the default value to start the store at
  *
  * @returns {Object|Array} the store to interact with.
  */

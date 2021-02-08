@@ -32,7 +32,8 @@ module.exports = (key, value) => {
 	// saves value into the store if it doesn't exist in the observableStore yet
 	// and if the value we are writing is defined
 	if (!Object.prototype.hasOwnProperty.call(observableStore, resolvedKey) && value !== undefined) {
-		observableStore[resolvedKey] = { ...value }
+		// save the value as a shallow copy of the parameter passed in
+		observableStore[resolvedKey] = Array.isArray(value) ? [...value] : { ...value }
 	}
 
 	// get value for key

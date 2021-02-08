@@ -9,7 +9,7 @@ const observableHook = require('./observable-hook')
  * If the subfield of an object, or element of an array is updated
  * it will cause only the components that are dependent on that value to update.
  *
- * @param {Object|Array} value the default value to start the state at
+ * @param {Object|Array} defaultValue the default value to start the store at
  *
  * @returns {Object|Array} the store to interact with.
  */

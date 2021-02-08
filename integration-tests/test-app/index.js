@@ -6,7 +6,8 @@ const html = registerHtml({
 	'click-tracker': require('./click-tracker'),
 	'startup-wait': require('./startup-wait'),
 	'tab': require('./tab'),
-	'account': require('./account')
+	'account': require('./account'),
+	'tasks': require('./tasks')
 })
 
 /**
@@ -22,6 +23,7 @@ const app = () => {
 			<click-tracker />
 			<startup-wait />
 			<tab />
+			<tasks />
 		</main>
 	`
 }

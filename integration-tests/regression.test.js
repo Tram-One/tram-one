@@ -44,4 +44,18 @@ describe('Tram-One - regressions', () => {
 		// verify that effect update was triggered
 		expect(getByText(container, 'Was Locked: true')).toBeVisible()
 	})
+
+	it('should process state as an array', async () => {
+		// start the app
+		const { container } = startApp()
+
+		// previously when state was being processed, it would be converted to an object
+		// this test adds an element to a store to verify array methods work
+
+		// `push` a new element on to a store
+		fireEvent.click(getByText(container, 'Add New Task'))
+
+		// expect the element to appear in the app
+		expect(getByText(container, 'Task Number 0')).toBeVisible()
+	})
 })

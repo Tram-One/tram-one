@@ -14,4 +14,4 @@ const observableHook = require('./observable-hook')
  *
  * @returns {Object|Array} the store to interact with.
  */
-module.exports = (key, value) => observableHook(key, value)
+module.exports = (key, defaultValue) => observableHook(key, defaultValue)

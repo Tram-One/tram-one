@@ -23,15 +23,14 @@ module.exports = pattern => {
 	// save and update results in an observable, so that we can update
 	// components and effects in a reactive way
 	const initialParams = useUrlParams(pattern)
-	const observedUrlParams = useStore({ params: initialParams })
+	const observedUrlParams = useStore(initialParams)
 
 	// urlListener can re-read the route and save the new results to the observable
 	urlListener(() => {
 		const updatedParams = useUrlParams(pattern)
 
-		// in cases where useUrlParams returned false, set with the new value
 		// get all keys so we can override new and old ones (without having to override the whole object)
-		const allParamKeys = [...Object.keys(observedUrlParams), ...Object.keys(updatedParams)]
+		const allParamKeys = [...Object.keys(initialParams), ...Object.keys(updatedParams)]
 		allParamKeys.forEach(paramKey => {
 			observedUrlParams[paramKey] = updatedParams[paramKey]
 		})

@@ -60,14 +60,15 @@ describe('Tram-One - regressions', () => {
 	})
 
 	it('should read the url state on loading the app', async () => {
-		// previously when the app started, the incorrect url information was read
-		// set the add the account
+		// previously when the app started, the incorrect url information was being retrieved by the hook
+
+		// set the account in the url params
 		window.history.pushState({}, '', '/test_account')
 
 		// start the app
 		const { container } = startApp()
 
-		// verify the account info updated
+		// verify the account info is read correctly at startup
 		expect(getByText(container, 'Account: test_account')).toBeVisible()
 	})
 })

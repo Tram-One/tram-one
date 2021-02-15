@@ -136,13 +136,13 @@ describe('Tram-One', () => {
 		expect(getByText(container, 'Account: No Account Info')).toBeVisible()
 		expect(getByText(container, 'Is Account Logged In: No')).toBeVisible()
 
-		// set the add the account
+		// set the account in the url params
 		window.history.pushState({}, '', '/test_account')
 
 		// verify the account info updated
 		expect(getByText(container, 'Account: test_account')).toBeVisible()
 
-		// set the add the logged in value
+		// set the query parameter loggedIn
 		window.history.pushState({}, '', '/test_account?loggedIn=Yes')
 
 		// verify the account info updated

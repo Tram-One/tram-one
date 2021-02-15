@@ -58,4 +58,16 @@ describe('Tram-One - regressions', () => {
 		// expect the element to appear in the app
 		expect(getByText(container, 'Task Number 0')).toBeVisible()
 	})
+
+	it('should read the url state on loading the app', async () => {
+		// previously when the app started, the incorrect url information was read
+		// set the add the account
+		window.history.pushState({}, '', '/test_account')
+
+		// start the app
+		const { container } = startApp()
+
+		// verify the account info updated
+		expect(getByText(container, 'Account: test_account')).toBeVisible()
+	})
 })

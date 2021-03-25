@@ -6,6 +6,7 @@ const { setupEffectStore } = require('./effect-store')
 const { setupWorkingKey } = require('./working-key')
 const { setupObservableStore } = require('./observable-store')
 const { setupMutationObserver, startWatcher } = require('./mutation-observer')
+const startFocusTracker = require('./start-focus-tracker')
 
 /**
  * @name start
@@ -44,6 +45,9 @@ module.exports = (component, target) => {
 
 	// watch for changes on the target so that we can process node changes
 	startWatcher(TRAM_MUTATION_OBSERVER, container)
+
+	// watch for focus on inputs, so we can preserve them between renders
+	startFocusTracker(container)
 
 	// trigger an initial mount
 	mount(component, container)

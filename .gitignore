@@ -17,3 +17,7 @@ node_modules
 
 # SSL certificates
 .ssl
+
+# parcel test app files
+dist
+.parcel-cache

@@ -7,7 +7,7 @@
  */
 
 const { observe, unobserve } = require('@nx-js/observer-util')
-const { TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } = require('./node-names')
+const { TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS, TRAM_TAG_FOCUS } = require('./node-names')
 const { setup, get } = require('./namespace')
 
 // process new effects for new nodes
@@ -63,6 +63,47 @@ const clearNode = node => {
 	}
 }
 
+const reapplyFocus = mutationList => {
+	// check if any nodes had focus
+	const hasFocus = node => node[TRAM_TAG_FOCUS]
+
+	const removedNodes = mutationList
+		.flatMap(mutation => [...mutation.removedNodes])
+		.flatMap(node => [...node.querySelectorAll('*')])
+
+	const elementIndexWithFocus = removedNodes.findIndex(hasFocus)
+	const removedElementWithFocus = removedNodes[elementIndexWithFocus]
+
+	// if we couldn't find any, we can leave now
+	if (elementIndexWithFocus === -1) { return }
+
+	// check if the number of elements matches (if it does, we can probably focus the same index)
+	const addedNodes = mutationList
+		.flatMap(mutation => [...mutation.addedNodes])
+		.flatMap(node => [...(node.querySelectorAll ? node.querySelectorAll('*') : [])])
+
+	const sameNumberOfElements = addedNodes.length === removedNodes.length
+
+	// if the number of elements changed, we can't confidently re-apply focus
+	if (!sameNumberOfElements) { return }
+
+	// if we found the same number of elements, let's re-apply focus to the same child
+	addedNodes[elementIndexWithFocus].focus()
+
+	// give it the attribute in case it is edited again
+	addedNodes[elementIndexWithFocus][TRAM_TAG_FOCUS] = true
+
+	// also try to set the selection, if there is a selection for this element
+	const hasSelectionStart = removedElementWithFocus.selectionStart !== null && removedElementWithFocus.selectionStart !== undefined
+	if (hasSelectionStart) {
+		addedNodes[elementIndexWithFocus].setSelectionRange(
+			removedElementWithFocus.selectionStart,
+			removedElementWithFocus.selectionEnd,
+			removedElementWithFocus.selectionDirection
+		)
+	}
+}
+
 const setupMutationObserver = setup(() => new MutationObserver(mutationList => {
 	// cleanup orphaned nodes that are no longer on the DOM
 	mutationList
@@ -75,6 +116,9 @@ const setupMutationObserver = setup(() => new MutationObserver(mutationList => {
 		.flatMap(mutation => [...mutation.addedNodes])
 		.flatMap(node => [...(node.querySelectorAll ? node.querySelectorAll('*') : [])])
 		.forEach(processEffects)
+
+	// if any node had focus, get that element and re-add focus to the new node
+	reapplyFocus(mutationList)
 }))
 
 const getMutationObserver = get

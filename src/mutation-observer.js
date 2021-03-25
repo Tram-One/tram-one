@@ -63,7 +63,7 @@ const clearNode = node => {
 	}
 }
 
-const reapplyFocus = (mutationList) => {
+const reapplyFocus = mutationList => {
 	// check if any nodes had focus
 	const hasFocus = node => node[TRAM_TAG_FOCUS]
 
@@ -82,7 +82,7 @@ const reapplyFocus = (mutationList) => {
 		.flatMap(mutation => [...mutation.addedNodes])
 		.flatMap(node => [...(node.querySelectorAll ? node.querySelectorAll('*') : [])])
 
-	const sameNumberOfElements = addedNodes.length == removedNodes.length
+	const sameNumberOfElements = addedNodes.length === removedNodes.length
 
 	// if the number of elements changed, we can't confidently re-apply focus
 	if (!sameNumberOfElements) { return }
@@ -99,7 +99,7 @@ const reapplyFocus = (mutationList) => {
 		addedNodes[elementIndexWithFocus].setSelectionRange(
 			removedElementWithFocus.selectionStart,
 			removedElementWithFocus.selectionEnd,
-			removedElementWithFocus.selectionDirection,
+			removedElementWithFocus.selectionDirection
 		)
 	}
 }

@@ -13,7 +13,7 @@ module.exports = () => {
 		tasks.push(newTask.label)
 	}
 
-	const updateNewTask = (event) => {
+	const updateNewTask = event => {
 		newTask.label = event.target.value
 	}
 

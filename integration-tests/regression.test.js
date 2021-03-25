@@ -1,4 +1,4 @@
-const { getByText, fireEvent, waitFor, getByLabelText, getByDisplayValue, wait } = require('@testing-library/dom')
+const { getByText, fireEvent, waitFor, getByLabelText } = require('@testing-library/dom')
 const { default: userEvent } = require('@testing-library/user-event')
 const { startApp } = require('./test-app')
 
@@ -91,7 +91,7 @@ describe('Tram-One - regressions', () => {
 		// verify that the element has focus (before we start changing text)
 		await waitFor(() => {
 			// expect(document.activeElement).toBe(inputElement)
-			expect(getByLabelText(appContainer, 'New Task Label')).toHaveFocus();
+			expect(getByLabelText(appContainer, 'New Task Label')).toHaveFocus()
 		})
 
 		// clear the input
@@ -99,7 +99,7 @@ describe('Tram-One - regressions', () => {
 
 		// wait for mutation observer to reapply focus
 		await waitFor(() => {
-			expect(getByLabelText(appContainer, 'New Task Label')).toHaveFocus();
+			expect(getByLabelText(appContainer, 'New Task Label')).toHaveFocus()
 		})
 
 		// update the state by typing
@@ -111,7 +111,7 @@ describe('Tram-One - regressions', () => {
 		// wait for mutation observer to re-attach focus
 		// expect the input to keep focus after the change event
 		await waitFor(() => {
-			expect(getByLabelText(appContainer, 'New Task Label')).toHaveFocus();
+			expect(getByLabelText(appContainer, 'New Task Label')).toHaveFocus()
 		})
 	})
 })

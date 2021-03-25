@@ -90,7 +90,6 @@ describe('Tram-One - regressions', () => {
 
 		// verify that the element has focus (before we start changing text)
 		await waitFor(() => {
-			// expect(document.activeElement).toBe(inputElement)
 			expect(getByLabelText(appContainer, 'New Task Label')).toHaveFocus()
 		})
 

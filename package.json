@@ -59,7 +59,6 @@
     "@testing-library/user-event": "^13.0.6",
     "eslint-config-tram-one": "^4.0.0",
     "jest": "^26.1.0",
-    "jest-environment-jsdom-fourteen": "^1.0.1",
     "jest-environment-jsdom-sixteen": "^1.0.3",
     "parcel": "^2.0.0-beta.2",
     "rollup": "^2.23.0",

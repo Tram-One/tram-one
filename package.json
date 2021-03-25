@@ -1,6 +1,6 @@
 {
   "name": "tram-one",
-  "version": "10.0.3",
+  "version": "10.1.0",
   "description": "🚋 Modern View Framework for Vanilla Javascript",
   "main": "dist/tram-one.cjs.js",
   "commonjs": "dist/tram-one.cjs.js",
@@ -21,6 +21,7 @@
     "clean": "git clean -Xdf",
     "test": "jest --watch",
     "test:ci": "jest --coverage",
+    "test:app": "parcel integration-tests/test-app/index.html",
     "start": "npm i && npm run build",
     "restart": "npm run clean && npm start"
   },
@@ -53,11 +54,14 @@
     "use-url-params": "^3.0.0"
   },
   "devDependencies": {
-    "@testing-library/dom": "^7.21.4",
-    "@testing-library/jest-dom": "^5.11.1",
+    "@testing-library/dom": "^7.30.0",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/user-event": "^13.0.6",
     "eslint-config-tram-one": "^4.0.0",
     "jest": "^26.1.0",
     "jest-environment-jsdom-fourteen": "^1.0.1",
+    "jest-environment-jsdom-sixteen": "^1.0.3",
+    "parcel": "^2.0.0-beta.2",
     "rollup": "^2.23.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-filesize": "^9.0.2",

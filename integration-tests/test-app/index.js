@@ -41,6 +41,10 @@ const startApp = container => {
 	}
 }
 
+if (document.querySelector('#parcel-page')) {
+	startApp('#parcel-page')
+}
+
 module.exports = {
 	app, startApp
 }

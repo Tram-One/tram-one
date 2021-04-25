@@ -5,8 +5,14 @@ const { TRAM_TAG_FOCUS } = require('./node-names')
  */
 module.exports = container => {
 	// add event listener that marks a tag as having had focus
-	// when there is a clear example, we'll probably want to cleanup and remove the attribute
 	container.addEventListener('focusin', event => {
 		event.target[TRAM_TAG_FOCUS] = true
+	})
+
+	// add event listener that unmarks a tag as having had focus
+	container.addEventListener('focusout', event => {
+		if (event.relatedTarget) {
+			event.target[TRAM_TAG_FOCUS] = false
+		}
 	})
 }

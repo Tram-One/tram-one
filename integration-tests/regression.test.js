@@ -112,5 +112,55 @@ describe('Tram-One - regressions', () => {
 		await waitFor(() => {
 			expect(getByLabelText(appContainer, 'New Task Label')).toHaveFocus()
 		})
+
+		// cleanup - remove app
+		appContainer.remove()
+	})
+
+	it('should keep focus on the most recent input when components rerender', async () => {
+		// for focus to work correctly, the element needs to be attached to the document
+		const appContainer = document.createElement('div')
+		appContainer.id = 'app'
+		window.document.body.appendChild(appContainer)
+
+		// start the app using a css selector
+		startApp('#app')
+
+		// previously when interacting with an input, if the component would rerender
+		// focus would be removed from the component and put on the body of the page
+
+		// focus on the first input
+		userEvent.click(getByLabelText(appContainer, 'New Task Label'))
+
+		// focus on the second input
+		userEvent.click(getByLabelText(appContainer, 'New Task Type'))
+
+		// verify that the element has focus (before we start changing text)
+		await waitFor(() => {
+			expect(getByLabelText(appContainer, 'New Task Type')).toHaveFocus()
+		})
+
+		// clear the input
+		userEvent.type(getByLabelText(appContainer, 'New Task Type'), '{selectall}{backspace}')
+
+		// wait for mutation observer to reapply focus
+		await waitFor(() => {
+			expect(getByLabelText(appContainer, 'New Task Type')).toHaveFocus()
+		})
+
+		// update the state by typing
+		userEvent.type(getByLabelText(appContainer, 'New Task Type'), '0')
+
+		// verify the element has the new value
+		expect(getByLabelText(appContainer, 'New Task Type')).toHaveValue('0')
+
+		// wait for mutation observer to re-attach focus
+		// expect the input to keep focus after the change event
+		await waitFor(() => {
+			expect(getByLabelText(appContainer, 'New Task Type')).toHaveFocus()
+		})
+
+		// cleanup - remove app
+		appContainer.remove()
 	})
 })

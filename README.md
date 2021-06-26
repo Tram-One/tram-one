@@ -25,7 +25,7 @@
 
 # Tram-One
 
-Modern View Framework For Vanilla Javascript
+Modern View Framework for Vanilla Javascript
 <br>
 <br>
 

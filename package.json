@@ -25,20 +25,22 @@
     "start": "npm i && npm run build",
     "restart": "npm run clean && npm start"
   },
+  "runkitExampleFilename": "docs/runkit_example.js",
   "author": {
     "name": "Jesse Jurman",
     "email": "j.r.jurman@gmail.com",
-    "url": "https://github.com/jrjurman"
+    "url": "https://jrjurman.com"
   },
   "keywords": [
     "frontend",
     "framework",
     "client",
-    "server",
-    "ssr",
     "browser",
+    "web-app",
     "tram-one",
-    "hover-engine",
+    "observables",
+    "hooks",
+    "vanilla",
     "tram",
     "one"
   ],

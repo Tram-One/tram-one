@@ -10,4 +10,4 @@ const home = () => {
 	`
 }
 
-const page = home().outerHTML
+home().outerHTML

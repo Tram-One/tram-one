@@ -78,6 +78,9 @@
     "extends": [
       "tram-one"
     ],
+    "ignores": [
+      "docs/"
+    ],
     "rules": {
       "valid-jsdoc": 0,
       "capitalized-comments": 0,

@@ -1,6 +1,6 @@
 {
   "name": "tram-one",
-  "version": "10.1.1",
+  "version": "10.1.2",
   "description": "🚋 Modern View Framework for Vanilla Javascript",
   "main": "dist/tram-one.cjs.js",
   "commonjs": "dist/tram-one.cjs.js",
@@ -25,20 +25,22 @@
     "start": "npm i && npm run build",
     "restart": "npm run clean && npm start"
   },
+  "runkitExampleFilename": "docs/runkit_example.js",
   "author": {
     "name": "Jesse Jurman",
     "email": "j.r.jurman@gmail.com",
-    "url": "https://github.com/jrjurman"
+    "url": "https://jrjurman.com"
   },
   "keywords": [
     "frontend",
     "framework",
     "client",
-    "server",
-    "ssr",
     "browser",
+    "web-app",
     "tram-one",
-    "hover-engine",
+    "observables",
+    "hooks",
+    "vanilla",
     "tram",
     "one"
   ],
@@ -75,6 +77,9 @@
   "xo": {
     "extends": [
       "tram-one"
+    ],
+    "ignores": [
+      "docs/"
     ],
     "rules": {
       "valid-jsdoc": 0,

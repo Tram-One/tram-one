@@ -7,7 +7,8 @@ const html = registerHtml({
 	'startup-wait': require('./startup-wait'),
 	'tab': require('./tab'),
 	'account': require('./account'),
-	'tasks': require('./tasks')
+	'tasks': require('./tasks'),
+	'mirror-input': require('./mirror-input')
 })
 
 /**
@@ -24,6 +25,7 @@ const app = () => {
 			<startup-wait />
 			<tab />
 			<tasks />
+			<mirror-input />
 		</main>
 	`
 }

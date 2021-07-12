@@ -6,7 +6,6 @@ const { setupEffectStore } = require('./effect-store')
 const { setupWorkingKey } = require('./working-key')
 const { setupObservableStore } = require('./observable-store')
 const { setupMutationObserver, startWatcher } = require('./mutation-observer')
-const startFocusTracker = require('./start-focus-tracker')
 
 /**
  * @name start
@@ -37,7 +36,7 @@ module.exports = (component, target) => {
 	// setup working key for hooks
 	setupWorkingKey(TRAM_HOOK_KEY)
 
-	// setup observable store
+	// setup observable store for the useStore and useGlobalStore hooks
 	setupObservableStore(TRAM_OBSERVABLE_STORE)
 
 	// setup a mutation observer for cleaning up removed elements and triggering effects
@@ -45,9 +44,6 @@ module.exports = (component, target) => {
 
 	// watch for changes on the target so that we can process node changes
 	startWatcher(TRAM_MUTATION_OBSERVER, container)
-
-	// watch for focus on inputs, so we can preserve them between renders
-	startFocusTracker(container)
 
 	// trigger an initial mount
 	mount(component, container)

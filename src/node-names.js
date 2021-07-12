@@ -9,6 +9,5 @@
 module.exports = {
 	TRAM_TAG_REACTION: 'tram-tag-reaction',
 	TRAM_TAG_NEW_EFFECTS: 'tram-tag-new-effects',
-	TRAM_TAG_CLEANUP_EFFECTS: 'tram-tag-cleanup-effects',
-	TRAM_TAG_FOCUS: 'tram-tag-focus'
+	TRAM_TAG_CLEANUP_EFFECTS: 'tram-tag-cleanup-effects'
 }

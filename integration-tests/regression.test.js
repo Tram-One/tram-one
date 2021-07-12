@@ -163,4 +163,59 @@ describe('Tram-One - regressions', () => {
 		// cleanup - remove app
 		appContainer.remove()
 	})
+
+	it('should keep focus when both the parent and child element would update', async () => {
+		// for focus to work correctly, the element needs to be attached to the document
+		const appContainer = document.createElement('div')
+		appContainer.id = 'app'
+		window.document.body.appendChild(appContainer)
+
+		// start the app using a css selector
+		startApp('#app')
+
+		// previously when interacting with an input, if both a parent and child element
+		// would update, then focus would not reattach
+
+		// focus on the parent input
+		userEvent.click(getByLabelText(appContainer, 'Mirror Input'))
+
+		// verify that the element has focus (before we start changing text)
+		await waitFor(() => {
+			expect(getByLabelText(appContainer, 'Mirror Input')).toHaveFocus()
+		})
+
+		// update the state by typing
+		userEvent.type(getByLabelText(appContainer, 'Mirror Input'), 'Test')
+
+		// verify the element has the new value
+		expect(getByLabelText(appContainer, 'Mirror Input')).toHaveValue('Test')
+
+		// wait for the sub element to also have the same value
+		await waitFor(() => {
+			expect(getByLabelText(appContainer, 'Sub Mirror Input')).toHaveValue('Test')
+		})
+
+		// repeat the test with the child element
+		// focus on the child input
+		userEvent.click(getByLabelText(appContainer, 'Sub Mirror Input'))
+
+		// verify that the element has focus (before we start changing text)
+		await waitFor(() => {
+			expect(getByLabelText(appContainer, 'Sub Mirror Input')).toHaveFocus()
+		})
+
+		// update the state by typing
+		userEvent.type(getByLabelText(appContainer, 'Sub Mirror Input'), ' Again')
+
+		// verify the element has the new value
+		expect(getByLabelText(appContainer, 'Sub Mirror Input')).toHaveValue('Test Again')
+
+		// wait for the sub element to also have the same value
+		await waitFor(() => {
+			expect(getByLabelText(appContainer, 'Mirror Input')).toHaveValue('Test Again')
+		})
+
+		// cleanup - remove app
+		appContainer.remove()
+	})
 })

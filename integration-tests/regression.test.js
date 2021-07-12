@@ -174,7 +174,7 @@ describe('Tram-One - regressions', () => {
 		startApp('#app')
 
 		// previously when interacting with an input, if both a parent and child element
-		// would update, then focus would not reattach
+		// would update, then focus would not reattach, and/or the value would not update correctly
 
 		// focus on the parent input
 		userEvent.click(getByLabelText(appContainer, 'Mirror Input'))
@@ -187,11 +187,11 @@ describe('Tram-One - regressions', () => {
 		// update the state by typing
 		userEvent.type(getByLabelText(appContainer, 'Mirror Input'), 'Test')
 
-		// verify the element has the new value
-		expect(getByLabelText(appContainer, 'Mirror Input')).toHaveValue('Test')
-
-		// wait for the sub element to also have the same value
+		// verify the element and it's child have the new value
+		// the element should still have focus
 		await waitFor(() => {
+			expect(getByLabelText(appContainer, 'Mirror Input')).toHaveFocus()
+			expect(getByLabelText(appContainer, 'Mirror Input')).toHaveValue('Test')
 			expect(getByLabelText(appContainer, 'Sub Mirror Input')).toHaveValue('Test')
 		})
 
@@ -210,9 +210,12 @@ describe('Tram-One - regressions', () => {
 		// verify the element has the new value
 		expect(getByLabelText(appContainer, 'Sub Mirror Input')).toHaveValue('Test Again')
 
-		// wait for the sub element to also have the same value
+		// verify the element and it's parent have the new value
+		// the element should still have focus
 		await waitFor(() => {
+			expect(getByLabelText(appContainer, 'Sub Mirror Input')).toHaveFocus()
 			expect(getByLabelText(appContainer, 'Mirror Input')).toHaveValue('Test Again')
+			expect(getByLabelText(appContainer, 'Sub Mirror Input')).toHaveValue('Test Again')
 		})
 
 		// cleanup - remove app

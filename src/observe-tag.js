@@ -37,7 +37,8 @@ module.exports = tagFunction => {
 			selectionStart: null,
 			selectionEnd: null,
 			selectionDirection: null,
-			scrollLeft: null
+			scrollLeft: null,
+			scrollTop: null
 		}
 
 		// remove oldTag first so that we unobserve before we re-observe
@@ -57,6 +58,7 @@ module.exports = tagFunction => {
 				removedElementWithFocusData.selectionEnd = removedElementWithFocus.selectionEnd
 				removedElementWithFocusData.selectionDirection = removedElementWithFocus.selectionDirection
 				removedElementWithFocusData.scrollLeft = removedElementWithFocus.scrollLeft
+				removedElementWithFocusData.scrollTop = removedElementWithFocus.scrollTop
 			}
 
 			const emptyDiv = document.createElement('div')
@@ -106,8 +108,9 @@ module.exports = tagFunction => {
 						)
 					}
 
-					// also set the scrollLeft (since this is reset to 0 by default)
+					// also set the scrollLeft and scrollTop (since this is reset to 0 by default)
 					elementToGiveFocus.scrollLeft = removedElementWithFocusData.scrollLeft
+					elementToGiveFocus.scrollTop = removedElementWithFocusData.scrollTop
 				}
 			}
 

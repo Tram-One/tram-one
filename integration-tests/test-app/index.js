@@ -30,16 +30,27 @@ const app = () => {
 	`
 }
 
-const startApp = container => {
-	if (container === undefined) {
-		container = document.createElement('div')
-		container.id = 'app'
+const startApp = (container) => {
+
+	let appContainer = container
+	if (!appContainer) {
+		// before we setup the app, cleanup the document state if this was called before
+		const previousApp = document.querySelector('#app')
+		if (previousApp) previousApp.remove()
+
+		// setup the container for the app
+		appContainer = document.createElement('div')
+		appContainer.id = 'app'
+
+		// attach the container to the document
+		// this is required, since focus and visibility checks depend on being in the document
+		window.document.body.appendChild(appContainer)
 	}
 
-	start(app, container)
+	start(app, appContainer)
 
 	return {
-		container
+		container: appContainer
 	}
 }
 

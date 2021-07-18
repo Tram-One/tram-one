@@ -3,8 +3,8 @@ const { TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } = re
 
 // helper functions for sorting
 const toIndicies = (node, index) => index
-const toNodes = (elementAndChildren) => (index) => elementAndChildren[index]
-const byDistanceFromIndex = (targetIndex) => (indexA, indexB) => {
+const toNodes = elementAndChildren => index => elementAndChildren[index]
+const byDistanceFromIndex = targetIndex => (indexA, indexB) => {
 	const diffFromTargetA = Math.abs(indexA - targetIndex)
 	const diffFromTargetB = Math.abs(indexB - targetIndex)
 	return diffFromTargetA < diffFromTargetB ? -1 : 1

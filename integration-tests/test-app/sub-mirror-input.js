@@ -14,7 +14,7 @@ module.exports = () => {
 		mirrorable.value = event.target.value
 	}
 
-	const letterSpans = [...Array(mirrorable.value.length)].map(() => html`<span class="letter-span">-</span>`)
+	const letterSpans = [...new Array(mirrorable.value.length)].map(() => html`<span class="letter-span">-</span>`)
 
 	return html`
 		<div>

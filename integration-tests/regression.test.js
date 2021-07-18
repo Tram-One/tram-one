@@ -74,191 +74,159 @@ describe('Tram-One - regressions', () => {
 	})
 
 	it('should keep focus on inputs when components would rerender', async () => {
-		// for focus to work correctly, the element needs to be attached to the document
-		const appContainer = document.createElement('div')
-		appContainer.id = 'app'
-		window.document.body.appendChild(appContainer)
-
-		// start the app using a css selector
-		startApp('#app')
+		// start the app
+		const { container } = startApp()
 
 		// previously when interacting with an input, if the component would rerender
 		// focus would be removed from the component and put on the body of the page
 
 		// focus on the input
-		userEvent.click(getByLabelText(appContainer, 'New Task Label'))
+		userEvent.click(getByLabelText(container, 'New Task Label'))
 
 		// verify that the element has focus (before we start changing text)
 		await waitFor(() => {
-			expect(getByLabelText(appContainer, 'New Task Label')).toHaveFocus()
+			expect(getByLabelText(container, 'New Task Label')).toHaveFocus()
 		})
 
 		// clear the input
-		userEvent.type(getByLabelText(appContainer, 'New Task Label'), '{selectall}{backspace}')
+		userEvent.type(getByLabelText(container, 'New Task Label'), '{selectall}{backspace}')
 
 		// wait for mutation observer to reapply focus
 		await waitFor(() => {
-			expect(getByLabelText(appContainer, 'New Task Label')).toHaveFocus()
+			expect(getByLabelText(container, 'New Task Label')).toHaveFocus()
 		})
 
 		// update the state by typing
-		userEvent.type(getByLabelText(appContainer, 'New Task Label'), '0')
+		userEvent.type(getByLabelText(container, 'New Task Label'), '0')
 
 		// verify the element has the new value
-		expect(getByLabelText(appContainer, 'New Task Label')).toHaveValue('0')
+		expect(getByLabelText(container, 'New Task Label')).toHaveValue('0')
 
 		// wait for mutation observer to re-attach focus
 		// expect the input to keep focus after the change event
 		await waitFor(() => {
-			expect(getByLabelText(appContainer, 'New Task Label')).toHaveFocus()
+			expect(getByLabelText(container, 'New Task Label')).toHaveFocus()
 		})
-
-		// cleanup - remove app
-		appContainer.remove()
 	})
 
 	it('should keep focus on the most recent input when components rerender', async () => {
-		// for focus to work correctly, the element needs to be attached to the document
-		const appContainer = document.createElement('div')
-		appContainer.id = 'app'
-		window.document.body.appendChild(appContainer)
-
-		// start the app using a css selector
-		startApp('#app')
+		// start the app
+		const { container } = startApp()
 
 		// previously when interacting with an input, if the component would rerender
 		// focus would be removed from the component and put on the body of the page
 
 		// focus on the first input
-		userEvent.click(getByLabelText(appContainer, 'New Task Label'))
+		userEvent.click(getByLabelText(container, 'New Task Label'))
 
 		// focus on the second input
-		userEvent.click(getByLabelText(appContainer, 'New Task Type'))
+		userEvent.click(getByLabelText(container, 'New Task Type'))
 
 		// verify that the element has focus (before we start changing text)
 		await waitFor(() => {
-			expect(getByLabelText(appContainer, 'New Task Type')).toHaveFocus()
+			expect(getByLabelText(container, 'New Task Type')).toHaveFocus()
 		})
 
 		// clear the input
-		userEvent.type(getByLabelText(appContainer, 'New Task Type'), '{selectall}{backspace}')
+		userEvent.type(getByLabelText(container, 'New Task Type'), '{selectall}{backspace}')
 
 		// wait for mutation observer to reapply focus
 		await waitFor(() => {
-			expect(getByLabelText(appContainer, 'New Task Type')).toHaveFocus()
+			expect(getByLabelText(container, 'New Task Type')).toHaveFocus()
 		})
 
 		// update the state by typing
-		userEvent.type(getByLabelText(appContainer, 'New Task Type'), '0')
+		userEvent.type(getByLabelText(container, 'New Task Type'), '0')
 
 		// verify the element has the new value
-		expect(getByLabelText(appContainer, 'New Task Type')).toHaveValue('0')
+		expect(getByLabelText(container, 'New Task Type')).toHaveValue('0')
 
 		// wait for mutation observer to re-attach focus
 		// expect the input to keep focus after the change event
 		await waitFor(() => {
-			expect(getByLabelText(appContainer, 'New Task Type')).toHaveFocus()
+			expect(getByLabelText(container, 'New Task Type')).toHaveFocus()
 		})
-
-		// cleanup - remove app
-		appContainer.remove()
 	})
 
 	it('should keep focus when both the parent and child element would update', async () => {
-		// for focus to work correctly, the element needs to be attached to the document
-		const appContainer = document.createElement('div')
-		appContainer.id = 'app'
-		window.document.body.appendChild(appContainer)
-
-		// start the app using a css selector
-		startApp('#app')
+		// start the app
+		const { container } = startApp()
 
 		// previously when interacting with an input, if both a parent and child element
 		// would update, then focus would not reattach, and/or the value would not update correctly
 
 		// focus on the parent input
-		userEvent.click(getByLabelText(appContainer, 'Mirror Input'))
+		userEvent.click(getByLabelText(container, 'Mirror Input'))
 
 		// verify that the element has focus (before we start changing text)
 		await waitFor(() => {
-			expect(getByLabelText(appContainer, 'Mirror Input')).toHaveFocus()
+			expect(getByLabelText(container, 'Mirror Input')).toHaveFocus()
 		})
 
 		// update the state by typing
-		userEvent.type(getByLabelText(appContainer, 'Mirror Input'), 'Test')
+		userEvent.type(getByLabelText(container, 'Mirror Input'), 'Test')
 
 		// verify the element and it's child have the new value
 		// the element should still have focus
 		await waitFor(() => {
-			expect(getByLabelText(appContainer, 'Mirror Input')).toHaveFocus()
-			expect(getByLabelText(appContainer, 'Mirror Input')).toHaveValue('Test')
-			expect(getByLabelText(appContainer, 'Sub Mirror Input')).toHaveValue('Test')
+			expect(getByLabelText(container, 'Mirror Input')).toHaveFocus()
+			expect(getByLabelText(container, 'Mirror Input')).toHaveValue('Test')
+			expect(getByLabelText(container, 'Sub Mirror Input')).toHaveValue('Test')
 		})
 
 		// repeat the test with the child element
 		// focus on the child input
-		userEvent.click(getByLabelText(appContainer, 'Sub Mirror Input'))
+		userEvent.click(getByLabelText(container, 'Sub Mirror Input'))
 
 		// verify that the element has focus (before we start changing text)
 		await waitFor(() => {
-			expect(getByLabelText(appContainer, 'Sub Mirror Input')).toHaveFocus()
+			expect(getByLabelText(container, 'Sub Mirror Input')).toHaveFocus()
 		})
 
 		// update the state by typing
-		userEvent.type(getByLabelText(appContainer, 'Sub Mirror Input'), ' Again')
+		userEvent.type(getByLabelText(container, 'Sub Mirror Input'), ' Again')
 
 		// verify the element has the new value
-		expect(getByLabelText(appContainer, 'Sub Mirror Input')).toHaveValue('Test Again')
+		expect(getByLabelText(container, 'Sub Mirror Input')).toHaveValue('Test Again')
 
 		// verify the element and it's parent have the new value
 		// the element should still have focus
 		await waitFor(() => {
-			expect(getByLabelText(appContainer, 'Sub Mirror Input')).toHaveFocus()
-			expect(getByLabelText(appContainer, 'Mirror Input')).toHaveValue('Test Again')
-			expect(getByLabelText(appContainer, 'Sub Mirror Input')).toHaveValue('Test Again')
+			expect(getByLabelText(container, 'Sub Mirror Input')).toHaveFocus()
+			expect(getByLabelText(container, 'Mirror Input')).toHaveValue('Test Again')
+			expect(getByLabelText(container, 'Sub Mirror Input')).toHaveValue('Test Again')
 		})
-
-		// cleanup - remove app
-		appContainer.remove()
 	})
 
 	it('should not error when reseting focus if the number of elements changed', async () => {
-		// for focus to work correctly, the element needs to be attached to the document
-		const appContainer = document.createElement('div')
-		appContainer.id = 'app'
-		window.document.body.appendChild(appContainer)
-
-		// start the app using a css selector
-		startApp('#app')
+		// start the app
+		const { container } = startApp()
 
 		// previously when interacting with an input, if the number of elements decreased
 		// an error was thrown because the element to focus on no longer existed
 
 		// focus on the child input
-		userEvent.click(getByLabelText(appContainer, 'Sub Mirror Input'))
+		userEvent.click(getByLabelText(container, 'Sub Mirror Input'))
 
 		// verify that the element has focus (before we start changing text)
 		await waitFor(() => {
-			expect(getByLabelText(appContainer, 'Sub Mirror Input')).toHaveFocus()
+			expect(getByLabelText(container, 'Sub Mirror Input')).toHaveFocus()
 		})
 
 		// update the state by typing
-		userEvent.type(getByLabelText(appContainer, 'Sub Mirror Input'), 'Test')
+		userEvent.type(getByLabelText(container, 'Sub Mirror Input'), 'Test')
 
 		// verify the element has the new value
-		expect(getByLabelText(appContainer, 'Sub Mirror Input')).toHaveValue('Test')
+		expect(getByLabelText(container, 'Sub Mirror Input')).toHaveValue('Test')
 
 		// verify the element and it's parent have the new value
 		// also verify that the elements were added above it too (previously this would have failed)
 		// the element should still have focus
 		await waitFor(() => {
-			expect(getByLabelText(appContainer, 'Sub Mirror Input')).toHaveFocus()
-			expect(queryAllByText(appContainer, '-')).toHaveLength(4)
-			expect(getByLabelText(appContainer, 'Mirror Input')).toHaveValue('Test')
-			expect(getByLabelText(appContainer, 'Sub Mirror Input')).toHaveValue('Test')
+			expect(getByLabelText(container, 'Sub Mirror Input')).toHaveFocus()
+			expect(queryAllByText(container, '-')).toHaveLength(4)
+			expect(getByLabelText(container, 'Mirror Input')).toHaveValue('Test')
+			expect(getByLabelText(container, 'Sub Mirror Input')).toHaveValue('Test')
 		})
-
-		// cleanup - remove app
-		appContainer.remove()
 	})
 })

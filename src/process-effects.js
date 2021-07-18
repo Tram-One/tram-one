@@ -17,6 +17,10 @@ module.exports = tagFunction => {
 
 	// create the component, which will save new effects to the effect queue
 	const tagResult = tagFunction()
+	if (tagResult === undefined) {
+		throw new Error('Tram-One: no element returned from tag, is anything being returned?')
+	}
+
 
 	// see if there are any brand new effects
 	const existingEffects = getEffectStore(TRAM_EFFECT_STORE)

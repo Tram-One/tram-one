@@ -1,15 +1,19 @@
 const { observe } = require('@nx-js/observer-util')
 const { TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } = require('./node-names')
 
-// helper functions for sorting
+// functions to go to nodes or indicies (made for .map)
 const toIndicies = (node, index) => index
-const toNodes = elementAndChildren => index => elementAndChildren[index]
+const toNodes = allNodes => index => allNodes[index]
+
+// sorting function that prioritizes indicies that are closest to a target
+// e.g. target = 3, [1, 2, 3, 4, 5] => [3, 2, 4, 1, 5]
 const byDistanceFromIndex = targetIndex => (indexA, indexB) => {
 	const diffFromTargetA = Math.abs(indexA - targetIndex)
 	const diffFromTargetB = Math.abs(indexB - targetIndex)
 	return diffFromTargetA < diffFromTargetB ? -1 : 1
 }
 
+// get an array including the element and all it's children
 const parentAndChildrenElements = node => {
 	const children = node.querySelectorAll('*')
 	return [node, ...children]

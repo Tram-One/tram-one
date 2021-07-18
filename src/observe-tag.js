@@ -1,6 +1,15 @@
 const { observe } = require('@nx-js/observer-util')
 const { TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } = require('./node-names')
 
+// helper functions for sorting
+const toIndicies = (node, index) => index
+const toNodes = (elementAndChildren) => (index) => elementAndChildren[index]
+const byDistanceFromIndex = (targetIndex) => (indexA, indexB) => {
+	const diffFromTargetA = Math.abs(indexA - targetIndex)
+	const diffFromTargetB = Math.abs(indexB - targetIndex)
+	return diffFromTargetA < diffFromTargetB ? -1 : 1
+}
+
 /**
  * This is a helper function for the dom creation.
  * This function observes any state values used when making the tag, and allow it to update
@@ -15,6 +24,7 @@ module.exports = tagFunction => {
 		let oldTag = tagResult
 		const removedElementWithFocusData = {
 			index: null,
+			tagName: null,
 			selectionStart: null,
 			selectionEnd: null,
 			selectionDirection: null
@@ -30,6 +40,7 @@ module.exports = tagFunction => {
 			// if an element had focus, copy over all the selection data (so we can copy it back later)
 			if (removedElementWithFocusData.index >= 0) {
 				const removedElementWithFocus = parentAndChildrenNodes[removedElementWithFocusData.index]
+				removedElementWithFocusData.tagName = removedElementWithFocus.tagName
 				removedElementWithFocusData.selectionStart = removedElementWithFocus.selectionStart
 				removedElementWithFocusData.selectionEnd = removedElementWithFocus.selectionEnd
 				removedElementWithFocusData.selectionDirection = removedElementWithFocus.selectionDirection
@@ -57,18 +68,42 @@ module.exports = tagFunction => {
 			// if an element had focus, reapply it
 			if (removedElementWithFocusData.index >= 0) {
 				const children = tagResult.querySelectorAll('*')
+				const elementAndChildren = [tagResult, ...children]
 
-				const elementToGiveFocus = [tagResult, ...children][removedElementWithFocusData.index]
-				elementToGiveFocus.focus()
+				const newElementAtIndex = elementAndChildren[removedElementWithFocusData.index]
+				const newElementAtIndexMatches = newElementAtIndex && (elementAndChildren[removedElementWithFocusData.index].tagName === removedElementWithFocusData.tagName)
 
-				// also try to set the selection, if there is a selection for this element
-				const hasSelectionStart = removedElementWithFocusData.selectionStart !== null && removedElementWithFocusData.selectionStart !== undefined
-				if (hasSelectionStart) {
-					elementToGiveFocus.setSelectionRange(
-						removedElementWithFocusData.selectionStart,
-						removedElementWithFocusData.selectionEnd,
-						removedElementWithFocusData.selectionDirection
-					)
+				let elementToGiveFocus
+
+				// if the elementAtIndex matches, set that to be the element to give focus
+				if (newElementAtIndexMatches) {
+					elementToGiveFocus = newElementAtIndex
+				}
+
+				// if the tagName doesn't match (or exist), it means the number of children probably changed...
+				// we can still try to find it though, we'll look through the children (in order of nodes closest to original index) and find a tag that matches
+				const nodeMatchesTagName = node => node.tagName === removedElementWithFocusData.tagName
+				if (!newElementAtIndexMatches) {
+					elementToGiveFocus = elementAndChildren
+						.map(toIndicies)
+						.sort(byDistanceFromIndex(removedElementWithFocusData.index))
+						.map(toNodes(elementAndChildren))
+						.find(nodeMatchesTagName)
+				}
+
+				// if the element / child exists, focus it
+				if (elementToGiveFocus !== undefined) {
+					elementToGiveFocus.focus()
+
+					// also try to set the selection, if there is a selection for this element
+					const hasSelectionStart = removedElementWithFocusData.selectionStart !== null && removedElementWithFocusData.selectionStart !== undefined
+					if (hasSelectionStart) {
+						elementToGiveFocus.setSelectionRange(
+							removedElementWithFocusData.selectionStart,
+							removedElementWithFocusData.selectionEnd,
+							removedElementWithFocusData.selectionDirection
+						)
+					}
 				}
 			}
 

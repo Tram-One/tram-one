@@ -3,7 +3,6 @@ const { default: userEvent } = require('@testing-library/user-event')
 const { startApp } = require('./test-app')
 
 describe('Tram-One - regressions', () => {
-
 	it('should not call cleanups that are not functions', async () => {
 		// start the app
 		const { container } = startApp()

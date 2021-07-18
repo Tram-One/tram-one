@@ -30,8 +30,7 @@ const app = () => {
 	`
 }
 
-const startApp = (container) => {
-
+const startApp = container => {
 	let appContainer = container
 	if (!appContainer) {
 		// before we setup the app, cleanup the document state if this was called before

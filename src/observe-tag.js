@@ -10,7 +10,7 @@ const toNodes = allNodes => index => allNodes[index]
 const byDistanceFromIndex = targetIndex => (indexA, indexB) => {
 	const diffFromTargetA = Math.abs(indexA - targetIndex)
 	const diffFromTargetB = Math.abs(indexB - targetIndex)
-	return diffFromTargetA < diffFromTargetB ? -1 : 1
+	return diffFromTargetA - diffFromTargetB
 }
 
 // get an array including the element and all it's children

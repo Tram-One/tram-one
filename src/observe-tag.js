@@ -10,6 +10,11 @@ const byDistanceFromIndex = targetIndex => (indexA, indexB) => {
 	return diffFromTargetA < diffFromTargetB ? -1 : 1
 }
 
+const parentAndChildrenElements = node => {
+	const children = node.querySelectorAll('*')
+	return [node, ...children]
+}
+
 /**
  * This is a helper function for the dom creation.
  * This function observes any state values used when making the tag, and allow it to update
@@ -27,23 +32,27 @@ module.exports = tagFunction => {
 			tagName: null,
 			selectionStart: null,
 			selectionEnd: null,
-			selectionDirection: null
+			selectionDirection: null,
+			scrollLeft: null
 		}
 
 		// remove oldTag first so that we unobserve before we re-observe
 		if (oldTag) {
 			// if there was focus, we need to figure out what element has it
-			const children = oldTag.querySelectorAll('*')
-			const parentAndChildrenNodes = [oldTag, ...children]
-			removedElementWithFocusData.index = parentAndChildrenNodes.findIndex(element => element === document.activeElement)
+			const allElements = parentAndChildrenElements(oldTag)
+			removedElementWithFocusData.index = allElements.findIndex(element => element === document.activeElement)
 
 			// if an element had focus, copy over all the selection data (so we can copy it back later)
 			if (removedElementWithFocusData.index >= 0) {
-				const removedElementWithFocus = parentAndChildrenNodes[removedElementWithFocusData.index]
+				// get the actual element
+				const removedElementWithFocus = allElements[removedElementWithFocusData.index]
+
+				// copy over the data
 				removedElementWithFocusData.tagName = removedElementWithFocus.tagName
 				removedElementWithFocusData.selectionStart = removedElementWithFocus.selectionStart
 				removedElementWithFocusData.selectionEnd = removedElementWithFocus.selectionEnd
 				removedElementWithFocusData.selectionDirection = removedElementWithFocus.selectionDirection
+				removedElementWithFocusData.scrollLeft = removedElementWithFocus.scrollLeft
 			}
 
 			const emptyDiv = document.createElement('div')
@@ -67,29 +76,17 @@ module.exports = tagFunction => {
 
 			// if an element had focus, reapply it
 			if (removedElementWithFocusData.index >= 0) {
-				const children = tagResult.querySelectorAll('*')
-				const elementAndChildren = [tagResult, ...children]
+				const allElements = parentAndChildrenElements(tagResult)
 
-				const newElementAtIndex = elementAndChildren[removedElementWithFocusData.index]
-				const newElementAtIndexMatches = newElementAtIndex && (elementAndChildren[removedElementWithFocusData.index].tagName === removedElementWithFocusData.tagName)
-
-				let elementToGiveFocus
-
-				// if the elementAtIndex matches, set that to be the element to give focus
-				if (newElementAtIndexMatches) {
-					elementToGiveFocus = newElementAtIndex
-				}
-
-				// if the tagName doesn't match (or exist), it means the number of children probably changed...
-				// we can still try to find it though, we'll look through the children (in order of nodes closest to original index) and find a tag that matches
+				// we'll look through the elements (in order of nodes closest to original index) and find a tag that matches.
+				// this means if it didn't move, we'll get it right away,
+				// if it did, we'll look at the elements closest to the original position
 				const nodeMatchesTagName = node => node.tagName === removedElementWithFocusData.tagName
-				if (!newElementAtIndexMatches) {
-					elementToGiveFocus = elementAndChildren
-						.map(toIndicies)
-						.sort(byDistanceFromIndex(removedElementWithFocusData.index))
-						.map(toNodes(elementAndChildren))
-						.find(nodeMatchesTagName)
-				}
+				const elementToGiveFocus = allElements
+					.map(toIndicies)
+					.sort(byDistanceFromIndex(removedElementWithFocusData.index))
+					.map(toNodes(allElements))
+					.find(nodeMatchesTagName)
 
 				// if the element / child exists, focus it
 				if (elementToGiveFocus !== undefined) {
@@ -104,6 +101,9 @@ module.exports = tagFunction => {
 							removedElementWithFocusData.selectionDirection
 						)
 					}
+
+					// also set the scrollLeft (since this is reset to 0 by default)
+					elementToGiveFocus.scrollLeft = removedElementWithFocusData.scrollLeft
 				}
 			}
 

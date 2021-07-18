@@ -1,4 +1,4 @@
-const { getByText, fireEvent, waitFor, getByLabelText } = require('@testing-library/dom')
+const { getByText, queryAllByText, fireEvent, waitFor, getByLabelText } = require('@testing-library/dom')
 const { default: userEvent } = require('@testing-library/user-event')
 const { startApp } = require('./test-app')
 
@@ -216,6 +216,46 @@ describe('Tram-One - regressions', () => {
 			expect(getByLabelText(appContainer, 'Sub Mirror Input')).toHaveFocus()
 			expect(getByLabelText(appContainer, 'Mirror Input')).toHaveValue('Test Again')
 			expect(getByLabelText(appContainer, 'Sub Mirror Input')).toHaveValue('Test Again')
+		})
+
+		// cleanup - remove app
+		appContainer.remove()
+	})
+
+	it('should not error when reseting focus if the number of elements changed', async () => {
+		// for focus to work correctly, the element needs to be attached to the document
+		const appContainer = document.createElement('div')
+		appContainer.id = 'app'
+		window.document.body.appendChild(appContainer)
+
+		// start the app using a css selector
+		startApp('#app')
+
+		// previously when interacting with an input, if the number of elements decreased
+		// an error was thrown because the element to focus on no longer existed
+
+		// focus on the child input
+		userEvent.click(getByLabelText(appContainer, 'Sub Mirror Input'))
+
+		// verify that the element has focus (before we start changing text)
+		await waitFor(() => {
+			expect(getByLabelText(appContainer, 'Sub Mirror Input')).toHaveFocus()
+		})
+
+		// update the state by typing
+		userEvent.type(getByLabelText(appContainer, 'Sub Mirror Input'), 'Test')
+
+		// verify the element has the new value
+		expect(getByLabelText(appContainer, 'Sub Mirror Input')).toHaveValue('Test')
+
+		// verify the element and it's parent have the new value
+		// also verify that the elements were added above it too (previously this would have failed)
+		// the element should still have focus
+		await waitFor(() => {
+			expect(getByLabelText(appContainer, 'Sub Mirror Input')).toHaveFocus()
+			expect(queryAllByText(appContainer, '-')).toHaveLength(4)
+			expect(getByLabelText(appContainer, 'Mirror Input')).toHaveValue('Test')
+			expect(getByLabelText(appContainer, 'Sub Mirror Input')).toHaveValue('Test')
 		})
 
 		// cleanup - remove app

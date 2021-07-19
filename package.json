@@ -20,9 +20,11 @@
     "watch:lint": "watch \"npm run lint\" src",
     "watch:build": "watch \"npm run build\" src",
     "clean": "git clean -Xdf",
-    "test": "jest --watch",
-    "test:ci": "jest --coverage",
+    "test": "jest integration-tests --watch",
+    "test:ci": "jest integration-tests --coverage",
     "test:app": "parcel integration-tests/test-app/index.html",
+    "test:performance": "jest performance-tests --watch --update-snapshot",
+    "test:performance:app": "parcel performance-tests/test-app/index.html",
     "start": "npm i && npm run build",
     "restart": "npm run clean && npm start"
   },

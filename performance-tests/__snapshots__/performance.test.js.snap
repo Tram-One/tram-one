@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tram-One - Performance Tests should render lots of elements quickly 1`] = `
+Object {
+  "0010": Object {
+    "averageTime": 1.0707592200000091,
+    "maxTime": 2.0995399999999336,
+    "medianTime": 0.9903519999998025,
+  },
+  "0050": Object {
+    "averageTime": 1.9795256599999538,
+    "maxTime": 3.184698999999455,
+    "medianTime": 1.8801470000003064,
+  },
+  "0100": Object {
+    "averageTime": 3.245847500000145,
+    "maxTime": 9.136802999999418,
+    "medianTime": 2.981826000000183,
+  },
+  "0500": Object {
+    "averageTime": 12.792782179999922,
+    "maxTime": 17.862021000000823,
+    "medianTime": 12.381100000000515,
+  },
+  "1000": Object {
+    "averageTime": 27.069117659999684,
+    "maxTime": 36.891797000000224,
+    "medianTime": 27.212838999999803,
+  },
+  "5000": Object {
+    "averageTime": 129.28729511999975,
+    "maxTime": 147.75103099999978,
+    "medianTime": 126.62713900000381,
+  },
+}
+`;

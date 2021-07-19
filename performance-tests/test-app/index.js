@@ -2,7 +2,7 @@ const useUrlParams = require('use-url-params')
 const { registerHtml, start } = require('../../src/tram-one')
 
 const html = registerHtml({
-	'element-rendering': require('./element-rendering'),
+	'element-rendering': require('./element-rendering')
 })
 
 /**

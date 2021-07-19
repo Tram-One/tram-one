@@ -1,4 +1,7 @@
-const { getByText, getByLabelText, fireEvent, waitFor } = require('@testing-library/dom')
+/* eslint-disable no-await-in-loop */
+// ^ disabled because interactions with the page can't be done in parallel
+
+const { getByText, getByLabelText, waitFor } = require('@testing-library/dom')
 const { default: userEvent } = require('@testing-library/user-event')
 const { startApp } = require('./test-app')
 
@@ -32,14 +35,14 @@ const testElementRenderer = async (container, count, renders) => {
  * Takes in an object of performance metrics,
  * and returns max times, median times, and average times
  */
-const getMeaningfulStats = (performanceObject) => {
+const getMeaningfulStats = performanceObject => {
 	return Object.fromEntries(
 		Object.entries(performanceObject).map(([count, times]) => {
 			times.sort()
 
 			const maxTime = times.slice(-1)[0]
-			const medianTime = times[Math.floor(times.length/2)]
-			const averageTime = (times.reduce((sum, time) => sum + time))/(times.length)
+			const medianTime = times[Math.floor(times.length / 2)]
+			const averageTime = (times.reduce((sum, time) => sum + time)) / (times.length)
 
 			return [count, { medianTime, averageTime, maxTime }]
 		})
@@ -51,7 +54,7 @@ describe('Tram-One - Performance Tests', () => {
 		// set the test to be element-rendering
 		window.history.pushState({}, '', '/element-rendering')
 
-		const {container} = startApp()
+		const { container } = startApp()
 
 		// verify that the element-rendering test is up
 		expect(container).toHaveTextContent('Element Rendering Example')
@@ -62,15 +65,20 @@ describe('Tram-One - Performance Tests', () => {
 		const performanceResults = {}
 
 		let renderCount = 1
-		for(counts of elementCounts) {
+		for (const counts of elementCounts) {
 			// initial render, to remove any lag associated with starting the app
 			await testElementRenderer(container, counts, renderCount)
+
 			performanceResults[counts] = []
-			const initialRenderCount = renderCount+1
-			const maxRenderCount = renderCount+50
-			for(renderCount = initialRenderCount; renderCount <= maxRenderCount; renderCount++) {
+
+			const initialRenderCount = renderCount + 1
+			const maxRenderCount = renderCount + 50
+			for (renderCount = initialRenderCount; renderCount <= maxRenderCount; renderCount++) {
+				// we need to run each test one at a time
 				const result = await testElementRenderer(container, counts, renderCount)
-				performanceResults[counts].push(parseFloat(result))
+
+				// push the results to the performanceResults
+				performanceResults[counts].push(Number.parseFloat(result))
 			}
 		}
 

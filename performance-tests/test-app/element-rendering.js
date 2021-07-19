@@ -1,4 +1,4 @@
-const { registerHtml, useStore, useEffect } = require('../../src/tram-one')
+const { registerHtml, useStore } = require('../../src/tram-one')
 
 const html = registerHtml()
 
@@ -19,8 +19,8 @@ module.exports = () => {
 		pageStore.endTimer = performance.now()
 	}
 
-	const numberOfElements = parseInt(pageStore.elements)
-	const elements = [...new Array(isNaN(numberOfElements) ? 0 : numberOfElements)].map(() => html`<span>-</span>`)
+	const numberOfElements = Number.parseInt(pageStore.elements, 10)
+	const elements = [...new Array(Number.isNaN(numberOfElements) ? 0 : numberOfElements)].map(() => html`<span>-</span>`)
 
 	return html`
 		<section>

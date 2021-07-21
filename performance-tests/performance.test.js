@@ -27,7 +27,7 @@ const testElementRenderer = async (container, count, renders) => {
 		expect(getByText(container, 'Render')).toHaveAttribute('renders', `${renders}`)
 	})
 
-	// will be "Wait: NN.NNNNNNNN"
+	// will be a string like "Wait: 12.3456789", and we just take the number
 	return getByText(container, /Wait/).innerHTML.split(' ')[1]
 }
 
@@ -59,11 +59,13 @@ describe('Tram-One - Performance Tests', () => {
 		// verify that the element-rendering test is up
 		expect(container).toHaveTextContent('Element Rendering Example')
 
+		// the number of elements that we will try to render
 		const elementCounts = ['0010', '0050', '0100', '0500', '1000', '5000']
 
-		// loop and log all the results
+		// store all the results in this object
 		const performanceResults = {}
 
+		// loop through all the number of elements that we want to test
 		let renderCount = 1
 		for (const counts of elementCounts) {
 			// initial render, to remove any lag associated with starting the app

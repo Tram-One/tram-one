@@ -64,9 +64,10 @@ const clearNode = node => {
 }
 
 const isTramOneComponent = node => {
-	if (node.getAttribute('tram') !== null) {
+	if (node[TRAM_TAG_NEW_EFFECTS] !== undefined) {
 		return NodeFilter.FILTER_ACCEPT
 	}
+
 	return NodeFilter.FILTER_SKIP
 }
 
@@ -78,6 +79,7 @@ const childrenComponents = node => {
 	while (componentWalker.nextNode()) {
 		children.push(componentWalker.currentNode)
 	}
+
 	return children
 }
 

@@ -1,6 +1,5 @@
 const { observe } = require('@nx-js/observer-util')
 const { TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } = require('./node-names')
-const useEffect = require('./use-effect')
 
 // functions to go to nodes or indicies (made for .map)
 const toIndicies = (node, index) => index
@@ -17,6 +16,7 @@ const hasMatchingTagName = tagName => node => {
 	if (node.tagName === tagName) {
 		return NodeFilter.FILTER_ACCEPT
 	}
+
 	return NodeFilter.FILTER_SKIP
 }
 
@@ -27,6 +27,7 @@ const parentAndChildrenElements = (node, tagName) => {
 	while (componentWalker.nextNode()) {
 		parentAndChildren.push(componentWalker.currentNode)
 	}
+
 	return parentAndChildren
 }
 
@@ -128,6 +129,7 @@ module.exports = tagFunction => {
 			if (elementToGiveFocus) elementToGiveFocus.focus()
 		}
 	}
+
 	const tagReaction = observe(buildAndReplaceTag)
 
 	// save the reaction to the node, so that the mutation-observer can unobserve it later

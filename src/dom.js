@@ -51,10 +51,6 @@ const registerDom = (namespace, registry = {}) => {
 			// pop the branch off (since we are done rendering this component)
 			popWorkingKeyBranch(TRAM_HOOK_KEY)
 
-			// before we return the result, we need to add an attribute that will allow us to query the element
-			// this is the only visual side-effect we'll have on the DOM, all other data is on the Node
-			tagResult.setAttribute('tram', '')
-
 			return tagResult
 		}
 

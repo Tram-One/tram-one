@@ -7,7 +7,7 @@
  */
 
 const { observe, unobserve } = require('@nx-js/observer-util')
-const { TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } = require('./node-names')
+const { TRAM_TAG, TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } = require('./node-names')
 const { setup, get } = require('./namespace')
 
 // process new effects for new nodes
@@ -64,11 +64,10 @@ const clearNode = node => {
 }
 
 const isTramOneComponent = node => {
-	if (node[TRAM_TAG_NEW_EFFECTS] !== undefined) {
-		return NodeFilter.FILTER_ACCEPT
-	}
-
-	return NodeFilter.FILTER_SKIP
+	// a node is a component if it has `TRAM_TAG` key on it
+	const nodeIsATramOneComponent = node[TRAM_TAG] === true
+	// if it is a tram-one component, we want to process it, otherwise skip it
+	return nodeIsATramOneComponent ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP
 }
 
 // function to get the children (as a list) of the node passed in

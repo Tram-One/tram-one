@@ -13,11 +13,8 @@ const byDistanceFromIndex = targetIndex => (indexA, indexB) => {
 }
 
 const hasMatchingTagName = tagName => node => {
-	if (node.tagName === tagName) {
-		return NodeFilter.FILTER_ACCEPT
-	}
-
-	return NodeFilter.FILTER_SKIP
+	// if the tagName matches, we want to process the node, otherwise skip it
+	return node.tagName === tagName ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP
 }
 
 // get an array including the element and all it's children

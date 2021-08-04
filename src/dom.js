@@ -45,10 +45,15 @@ const registerDom = (namespace, registry = {}) => {
 			}
 
 			// observe store usage and process any new effects that were called when building the component
-			const tagResult = observeTag(() => processEffects(populatedTagFunction))
+			const processEffectsAndBuildTagResult = () => processEffects(populatedTagFunction)
+			const tagResult = observeTag(processEffectsAndBuildTagResult)
 
 			// pop the branch off (since we are done rendering this component)
 			popWorkingKeyBranch(TRAM_HOOK_KEY)
+
+			// before we return the result, we need to add an attribute that will allow us to query the element
+			// this is the only visual side-effect we'll have on the DOM, all other data is on the Node
+			tagResult.setAttribute('tram', '')
 
 			return tagResult
 		}

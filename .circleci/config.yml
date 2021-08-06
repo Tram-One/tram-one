@@ -26,6 +26,11 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           # - v1-dependencies-
 
+      # Add ssh key so we can publish build assets to the repo
+      - add_ssh_keys:
+          fingerprints:
+            - "64:3e:d4:d8:4b:95:68:79:d3:3b:ab:b1:5c:fa:2d:3d"
+
       - run: npm install
 
       - save_cache:
@@ -40,7 +45,27 @@ jobs:
       - store_artifacts:
           path: coverage/lcov-report/
 
+      - run: npm run test:performance:ci
+
+      - store_artifacts:
+          path: performance-tests/__snapshots__
+
       - run: npm run build
 
       - store_artifacts:
           path: dist
+
+      - run:
+          name: Commit Assets
+          command: |
+            if [[ -z "${CIRCLE_PULL_REQUEST}" ]]
+            then
+              echo "Master Build, not committing to GitHub"
+            else
+              echo "PR Build, Committing to GitHub"
+              git config user.email "j.r.jurman@gmail.com"
+              git config user.name "CircleCI Job"
+              git checkout
+              git commit --allow-empty -am "Update Snapshots & Badges [skip ci]"
+              git push -u origin HEAD
+            fi

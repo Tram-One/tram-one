@@ -24,6 +24,7 @@
     "test:ci": "jest integration-tests --coverage",
     "test:app": "parcel integration-tests/test-app/index.html",
     "test:performance": "jest performance-tests --watch --update-snapshot",
+    "test:performance:ci": "jest performance-tests --update-snapshot",
     "test:performance:app": "parcel performance-tests/test-app/index.html",
     "start": "npm i && npm run build",
     "restart": "npm run clean && npm start"

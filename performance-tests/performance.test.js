@@ -5,6 +5,10 @@ const { getByText, getByLabelText, waitFor } = require('@testing-library/dom')
 const { default: userEvent } = require('@testing-library/user-event')
 const { startApp } = require('./test-app')
 
+// number of times to run the test
+const NUMBER_OF_RUNS = 30
+const BUFFER = 5
+
 /**
  * This function helps test the element-renderer page, by setting the count, and hitting the render button
  * @returns how long it took to render the elements
@@ -40,9 +44,15 @@ const getMeaningfulStats = performanceObject => {
 		Object.entries(performanceObject).map(([count, times]) => {
 			times.sort()
 
-			const maxTime = times.slice(-1)[0]
-			const medianTime = times[Math.floor(times.length / 2)]
-			const averageTime = (times.reduce((sum, time) => sum + time)) / (times.length)
+			// we remove the fastest few, and the slowest few, to get the least error prone results
+			const meaningfulTimes = times.slice(BUFFER, -BUFFER)
+
+			// get the slowest time (of the meaningfulTimes)
+			const maxTime = meaningfulTimes.slice(-1)[0]
+			// get the median (aka 50 percentile, aka the middle one)
+			const medianTime = meaningfulTimes[Math.floor(meaningfulTimes.length / 2)]
+			// get the average time (not a real time that showed up, but the average among times)
+			const averageTime = (meaningfulTimes.reduce((sum, time) => sum + time)) / (meaningfulTimes.length)
 
 			return [count, { medianTime, averageTime, maxTime }]
 		})
@@ -74,7 +84,7 @@ describe('Tram-One - Performance Tests', () => {
 			performanceResults[counts] = []
 
 			const initialRenderCount = renderCount + 1
-			const maxRenderCount = renderCount + 50
+			const maxRenderCount = renderCount + NUMBER_OF_RUNS
 			for (renderCount = initialRenderCount; renderCount <= maxRenderCount; renderCount++) {
 				// we need to run each test one at a time
 				const result = await testElementRenderer(container, counts, renderCount)

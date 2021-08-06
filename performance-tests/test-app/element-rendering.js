@@ -20,7 +20,8 @@ module.exports = () => {
 	}
 
 	const numberOfElements = Number.parseInt(pageStore.elements, 10)
-	const elements = [...new Array(Number.isNaN(numberOfElements) ? 0 : numberOfElements)].map(() => html`<span>-</span>`)
+	const newSpan = () => html`<span>-</span>`
+	const elements = [...new Array(Number.isNaN(numberOfElements) ? 0 : numberOfElements)].map(newSpan)
 
 	return html`
 		<section>

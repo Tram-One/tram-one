@@ -8,6 +8,7 @@ const { TRAM_HOOK_KEY } = require('./engine-names')
 const { pushWorkingKeyBranch, popWorkingKeyBranch, incrementWorkingKeyBranch, copyWorkingKey, restoreWorkingKey } = require('./working-key')
 const observeTag = require('./observe-tag')
 const processEffects = require('./process-effects')
+const { TRAM_TAG } = require('./node-names')
 
 /**
  * This function takes in a namespace and registry of custom components,
@@ -45,10 +46,14 @@ const registerDom = (namespace, registry = {}) => {
 			}
 
 			// observe store usage and process any new effects that were called when building the component
-			const tagResult = observeTag(() => processEffects(populatedTagFunction))
+			const processEffectsAndBuildTagResult = () => processEffects(populatedTagFunction)
+			const tagResult = observeTag(processEffectsAndBuildTagResult)
 
 			// pop the branch off (since we are done rendering this component)
 			popWorkingKeyBranch(TRAM_HOOK_KEY)
+
+			// mark this node as a tram-one component (so we can filter on it later)
+			tagResult[TRAM_TAG] = true
 
 			return tagResult
 		}

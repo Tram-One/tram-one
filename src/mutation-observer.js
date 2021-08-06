@@ -7,7 +7,7 @@
  */
 
 const { observe, unobserve } = require('@nx-js/observer-util')
-const { TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } = require('./node-names')
+const { TRAM_TAG, TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } = require('./node-names')
 const { setup, get } = require('./namespace')
 
 // process new effects for new nodes
@@ -63,24 +63,37 @@ const clearNode = node => {
 	}
 }
 
+const isTramOneComponent = node => {
+	// a node is a component if it has `TRAM_TAG` key on it
+	const nodeIsATramOneComponent = node[TRAM_TAG] === true
+	// if it is a tram-one component, we want to process it, otherwise skip it
+	return nodeIsATramOneComponent ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP
+}
+
 // function to get the children (as a list) of the node passed in
-const childrenNodes = node => {
-	const children = node.querySelectorAll ? node.querySelectorAll('*') : []
-	return [...children]
+// this only needs to query tram-one components, so we can use the attribute `tram`
+const childrenComponents = node => {
+	const componentWalker = document.createTreeWalker(node, NodeFilter.SHOW_ELEMENT, isTramOneComponent)
+	const children = []
+	while (componentWalker.nextNode()) {
+		children.push(componentWalker.currentNode)
+	}
+
+	return children
 }
 
 const setupMutationObserver = setup(() => new MutationObserver(mutationList => {
 	// cleanup orphaned nodes that are no longer on the DOM
 	const removedNodes = mutationList
 		.flatMap(mutation => [...mutation.removedNodes])
-		.flatMap(childrenNodes)
+		.flatMap(childrenComponents)
 
 	removedNodes.forEach(clearNode)
 
 	// call new effects on any new nodes
 	const newNodes = mutationList
 		.flatMap(mutation => [...mutation.addedNodes])
-		.flatMap(childrenNodes)
+		.flatMap(childrenComponents)
 
 	newNodes.forEach(processEffects)
 }))

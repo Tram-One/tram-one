@@ -3,7 +3,6 @@ const { TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } = re
 
 // functions to go to nodes or indicies (made for .map)
 const toIndicies = (node, index) => index
-const toNodes = allNodes => index => allNodes[index]
 
 // sorting function that prioritizes indicies that are closest to a target
 // e.g. target = 3, [1, 2, 3, 4, 5] => [3, 2, 4, 1, 5]
@@ -13,10 +12,20 @@ const byDistanceFromIndex = targetIndex => (indexA, indexB) => {
 	return diffFromTargetA - diffFromTargetB
 }
 
+const hasMatchingTagName = tagName => node => {
+	// if the tagName matches, we want to process the node, otherwise skip it
+	return node.tagName === tagName ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP
+}
+
 // get an array including the element and all it's children
-const parentAndChildrenElements = node => {
-	const children = node.querySelectorAll('*')
-	return [node, ...children]
+const parentAndChildrenElements = (node, tagName) => {
+	const componentWalker = document.createTreeWalker(node, NodeFilter.SHOW_ELEMENT, hasMatchingTagName(tagName))
+	const parentAndChildren = [componentWalker.currentNode]
+	while (componentWalker.nextNode()) {
+		parentAndChildren.push(componentWalker.currentNode)
+	}
+
+	return parentAndChildren
 }
 
 /**
@@ -28,37 +37,33 @@ const parentAndChildrenElements = node => {
  */
 module.exports = tagFunction => {
 	let tagResult
-	const tagReaction = observe(() => {
+	const buildAndReplaceTag = () => {
 		// if there is an existing tagResult, it is the last rendering, and so we want to re-render over it
 		let oldTag = tagResult
-		const removedElementWithFocusData = {
-			index: null,
-			tagName: null,
-			selectionStart: null,
-			selectionEnd: null,
-			selectionDirection: null,
-			scrollLeft: null,
-			scrollTop: null
-		}
+		let removedElementWithFocusData = {}
 
 		// remove oldTag first so that we unobserve before we re-observe
 		if (oldTag) {
-			// if there was focus, we need to figure out what element has it
-			const allElements = parentAndChildrenElements(oldTag)
-			removedElementWithFocusData.index = allElements.findIndex(element => element === document.activeElement)
+			// we need to blow away any old focus data we had
+			removedElementWithFocusData = {}
+
+			// determine if this element (or any element under it) had focus
+			const oldTagHasFocusedElement = oldTag.contains(document.activeElement)
 
 			// if an element had focus, copy over all the selection data (so we can copy it back later)
-			if (removedElementWithFocusData.index >= 0) {
-				// get the actual element
-				const removedElementWithFocus = allElements[removedElementWithFocusData.index]
+			if (oldTagHasFocusedElement) {
+				// first, we need to get all the elements that are similar (we'll use tagName)
+				// this way, when we rerender, we can search for those tagNames, and just use the index we got here
+				const allActiveLikeElements = parentAndChildrenElements(oldTag, document.activeElement.tagName)
+				removedElementWithFocusData.index = allActiveLikeElements.findIndex(element => element === document.activeElement)
 
 				// copy over the data
-				removedElementWithFocusData.tagName = removedElementWithFocus.tagName
-				removedElementWithFocusData.selectionStart = removedElementWithFocus.selectionStart
-				removedElementWithFocusData.selectionEnd = removedElementWithFocus.selectionEnd
-				removedElementWithFocusData.selectionDirection = removedElementWithFocus.selectionDirection
-				removedElementWithFocusData.scrollLeft = removedElementWithFocus.scrollLeft
-				removedElementWithFocusData.scrollTop = removedElementWithFocus.scrollTop
+				removedElementWithFocusData.tagName = document.activeElement.tagName
+				removedElementWithFocusData.selectionStart = document.activeElement.selectionStart
+				removedElementWithFocusData.selectionEnd = document.activeElement.selectionEnd
+				removedElementWithFocusData.selectionDirection = document.activeElement.selectionDirection
+				removedElementWithFocusData.scrollLeft = document.activeElement.scrollLeft
+				removedElementWithFocusData.scrollTop = document.activeElement.scrollTop
 			}
 
 			const emptyDiv = document.createElement('div')
@@ -78,26 +83,21 @@ module.exports = tagFunction => {
 
 		// if oldTag was defined, then we need to replace it with the new result
 		if (oldTag) {
-			oldTag.replaceWith(tagResult)
-
 			// if an element had focus, reapply it
+			let elementToGiveFocus
 			if (removedElementWithFocusData.index >= 0) {
-				const allElements = parentAndChildrenElements(tagResult)
+				const allActiveLikeElements = parentAndChildrenElements(tagResult, removedElementWithFocusData.tagName)
 
 				// we'll look through the elements (in order of nodes closest to original index) and find a tag that matches.
 				// this means if it didn't move, we'll get it right away,
 				// if it did, we'll look at the elements closest to the original position
-				const nodeMatchesTagName = node => node.tagName === removedElementWithFocusData.tagName
-				const elementToGiveFocus = allElements
+				const elementIndexToGiveFocus = allActiveLikeElements
 					.map(toIndicies)
-					.sort(byDistanceFromIndex(removedElementWithFocusData.index))
-					.map(toNodes(allElements))
-					.find(nodeMatchesTagName)
+					.sort(byDistanceFromIndex(removedElementWithFocusData.index))[0]
 
 				// if the element / child exists, focus it
+				elementToGiveFocus = allActiveLikeElements[elementIndexToGiveFocus]
 				if (elementToGiveFocus !== undefined) {
-					elementToGiveFocus.focus()
-
 					// also try to set the selection, if there is a selection for this element
 					const hasSelectionStart = removedElementWithFocusData.selectionStart !== null && removedElementWithFocusData.selectionStart !== undefined
 					if (hasSelectionStart) {
@@ -109,8 +109,10 @@ module.exports = tagFunction => {
 					}
 
 					// also set the scrollLeft and scrollTop (since this is reset to 0 by default)
-					elementToGiveFocus.scrollLeft = removedElementWithFocusData.scrollLeft
-					elementToGiveFocus.scrollTop = removedElementWithFocusData.scrollTop
+					if (removedElementWithFocusData.scrollLeft || removedElementWithFocusData.scrollTop) {
+						elementToGiveFocus.scrollLeft = removedElementWithFocusData.scrollLeft
+						elementToGiveFocus.scrollTop = removedElementWithFocusData.scrollTop
+					}
 				}
 			}
 
@@ -118,8 +120,14 @@ module.exports = tagFunction => {
 			tagResult[TRAM_TAG_REACTION] = oldTag[TRAM_TAG_REACTION]
 			tagResult[TRAM_TAG_NEW_EFFECTS] = oldTag[TRAM_TAG_NEW_EFFECTS]
 			tagResult[TRAM_TAG_CLEANUP_EFFECTS] = oldTag[TRAM_TAG_CLEANUP_EFFECTS]
+
+			// both these actions cause forced reflow, and can be performance issues
+			oldTag.replaceWith(tagResult)
+			if (elementToGiveFocus) elementToGiveFocus.focus()
 		}
-	})
+	}
+
+	const tagReaction = observe(buildAndReplaceTag)
 
 	// save the reaction to the node, so that the mutation-observer can unobserve it later
 	tagResult[TRAM_TAG_REACTION] = tagReaction

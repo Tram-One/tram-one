@@ -71,4 +71,4 @@ jobs:
               git checkout -b ${CIRCLE_BRANCH}-artifacts
             fi
             git commit --allow-empty -am "Update Snapshots & Badges [skip ci]"
-            git push -u origin HEAD
+            git push -fu origin HEAD

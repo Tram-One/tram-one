@@ -58,14 +58,17 @@ jobs:
       - run:
           name: Commit Assets
           command: |
+            # configuring user
+            git config user.email "j.r.jurman@gmail.com"
+            git config user.name "CircleCI Job"
+
             if [[ -z "${CIRCLE_PULL_REQUEST}" ]]
             then
-              echo "Master Build, not committing to GitHub"
-            else
-              echo "PR Build, Committing to GitHub"
-              git config user.email "j.r.jurman@gmail.com"
-              git config user.name "CircleCI Job"
+              echo "Master Build, checkout to master"
               git checkout
-              git commit --allow-empty -am "Update Snapshots & Badges [skip ci]"
-              git push -u origin HEAD
+            else
+              echo "PR Build, checkout to new branch"
+              git checkout -b ${CIRCLE_BRANCH}-artifacts
             fi
+            git commit --allow-empty -am "Update Snapshots & Badges [skip ci]"
+            git push -u origin HEAD

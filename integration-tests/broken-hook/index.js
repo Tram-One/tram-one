@@ -1,7 +1,7 @@
 const { registerHtml, start } = require('../../src/tram-one')
 
 const html = registerHtml({
-	'title': require('./title'),
+	title: require('./title')
 })
 
 /**

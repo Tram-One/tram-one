@@ -1,7 +1,13 @@
 const { getByText, fireEvent, waitFor } = require('@testing-library/dom')
 const { startApp } = require('./test-app')
+const { startApp: startBrokenApp } = require('./broken-app')
 
 describe('Tram-One', () => {
+	beforeEach(() => {
+		// clean up any tram-one properties between tests
+		window['tram-space'] = undefined
+	})
+
 	it('should render on a Node', () => {
 		// mount the app on the container
 		const container = document.createElement('div')
@@ -28,7 +34,7 @@ describe('Tram-One', () => {
 	})
 
 	it('should warn if selector is not found', () => {
-		expect(() => startApp('#app')).toThrow()
+		expect(() => startApp('#app')).toThrowError('Tram-One: could not find target, is the element on the page yet?')
 	})
 
 	it('should render html from registry', () => {
@@ -48,6 +54,10 @@ describe('Tram-One', () => {
 
 		// verify that app processes props correctly
 		expect(getByText(container, 'Sub Title Prop')).toBeVisible()
+	})
+
+	it('should warn if a component does not return anything', () => {
+		expect(() => startBrokenApp()).toThrowError('Tram-One: no element returned from tag, is anything being returned?')
 	})
 
 	it('should render svg graphics', () => {
@@ -126,6 +136,13 @@ describe('Tram-One', () => {
 
 		// verify that effect update was triggered
 		expect(getByText(container, 'Updated: true')).toBeVisible()
+	})
+
+	it('should warn if a hook is called outside of a component context', () => {
+		expect(() => {
+			const { startApp: startBrokenHook } = require('./broken-hook')
+			startBrokenHook()
+		}).toThrowError('Tram-One: app has not started yet, but hook was called. Is it being invoked outside a component function?')
 	})
 
 	it('should re-render components dependent on url params', () => {

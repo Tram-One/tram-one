@@ -15,6 +15,14 @@ const setup = constructor => {
 }
 
 const get = namespace => {
+	// if tram-one is setup, this will be defined
+	const tramOneIsSetup = window['tram-space']
+
+	// otherwise, we should warn
+	if (!tramOneIsSetup) {
+		throw new Error('Tram-One: app has not started yet, but hook was called. Is it being invoked outside a component function?')
+	}
+
 	return window['tram-space'][namespace]
 }
 

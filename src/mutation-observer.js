@@ -107,4 +107,4 @@ const startWatcher = (observerName, node) => {
 	observerStore.observe(node, { childList: true, subtree: true })
 }
 
-module.exports = { setupMutationObserver, getMutationObserver, startWatcher }
+module.exports = { setupMutationObserver, startWatcher }

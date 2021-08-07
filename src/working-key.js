@@ -93,8 +93,6 @@ module.exports = {
 	pushWorkingKeyBranch,
 	popWorkingKeyBranch,
 	incrementWorkingKeyBranch,
-	getWorkingKey,
-	getWorkingBranch,
 	getWorkingKeyValue,
 	copyWorkingKey,
 	restoreWorkingKey

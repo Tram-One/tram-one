@@ -103,7 +103,7 @@ describe('Tram-One - Performance Tests', () => {
 		expect(stats).toMatchSnapshot()
 
 		// what does quickly mean? 5x elements should not be more than 5x slower
-		// we'll use the median, since that is the least prone to error from outliers
+		// we'll use the average, since that should be the least error prone (with the outliers removed)
 		// we'll also add a buffer to the right, to account for fragility
 		const buffer = 1 // 1 seconds, which will map to 5 seconds on the left
 		expect(stats['0050'].averageTime / 5).not.toBeGreaterThan(stats['0010'].averageTime + buffer)

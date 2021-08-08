@@ -2,6 +2,8 @@ const { registerHtml, useEffect } = require('../../src/tram-one')
 
 const html = registerHtml()
 
+// other hooks also generate the same error
+// so we don't need to check those, just useEffect is fine
 useEffect(() => {})
 
 /**

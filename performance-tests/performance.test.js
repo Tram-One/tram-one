@@ -5,6 +5,11 @@ const { getByText, getByLabelText, waitFor } = require('@testing-library/dom')
 const { default: userEvent } = require('@testing-library/user-event')
 const { startApp } = require('./test-app')
 
+// number of times to run the test
+const NUMBER_OF_RUNS = 50
+// the number of tests to toss (slowest and fastest)
+const BUFFER = 10
+
 /**
  * This function helps test the element-renderer page, by setting the count, and hitting the render button
  * @returns how long it took to render the elements
@@ -40,11 +45,19 @@ const getMeaningfulStats = performanceObject => {
 		Object.entries(performanceObject).map(([count, times]) => {
 			times.sort()
 
-			const maxTime = times.slice(-1)[0]
-			const medianTime = times[Math.floor(times.length / 2)]
-			const averageTime = (times.reduce((sum, time) => sum + time)) / (times.length)
+			// we remove the fastest few, and the slowest few, to get the least error prone results
+			const meaningfulTimes = times.slice(BUFFER, -BUFFER)
 
-			return [count, { medianTime, averageTime, maxTime }]
+			// get the fastest time
+			const fastestTime = meaningfulTimes[0]
+			// get the slowest time
+			const slowestTime = meaningfulTimes.slice(-1)[0]
+			// get the median (aka 50 percentile, aka the middle one)
+			const medianTime = meaningfulTimes[Math.floor(meaningfulTimes.length / 2)]
+			// get the average time (not a real time that showed up, but the average among times)
+			const averageTime = (meaningfulTimes.reduce((sum, time) => sum + time)) / (meaningfulTimes.length)
+
+			return [count, { medianTime, averageTime, slowestTime, fastestTime }]
 		})
 	)
 }
@@ -74,7 +87,7 @@ describe('Tram-One - Performance Tests', () => {
 			performanceResults[counts] = []
 
 			const initialRenderCount = renderCount + 1
-			const maxRenderCount = renderCount + 50
+			const maxRenderCount = renderCount + NUMBER_OF_RUNS
 			for (renderCount = initialRenderCount; renderCount <= maxRenderCount; renderCount++) {
 				// we need to run each test one at a time
 				const result = await testElementRenderer(container, counts, renderCount)
@@ -90,11 +103,11 @@ describe('Tram-One - Performance Tests', () => {
 		expect(stats).toMatchSnapshot()
 
 		// what does quickly mean? 5x elements should not be more than 5x slower
-		// we'll use the median, since that is the least prone to error from outliers
+		// we'll use the average, since that should be the least error prone (with the outliers removed)
 		// we'll also add a buffer to the right, to account for fragility
 		const buffer = 1 // 1 seconds, which will map to 5 seconds on the left
-		expect(stats['0050'].medianTime / 5).not.toBeGreaterThan(stats['0010'].medianTime + buffer)
-		expect(stats['0500'].medianTime / 5).not.toBeGreaterThan(stats['0100'].medianTime + buffer)
-		expect(stats['5000'].medianTime / 5).not.toBeGreaterThan(stats['1000'].medianTime + buffer)
+		expect(stats['0050'].averageTime / 5).not.toBeGreaterThan(stats['0010'].averageTime + buffer)
+		expect(stats['0500'].averageTime / 5).not.toBeGreaterThan(stats['0100'].averageTime + buffer)
+		expect(stats['5000'].averageTime / 5).not.toBeGreaterThan(stats['1000'].averageTime + buffer)
 	})
 })

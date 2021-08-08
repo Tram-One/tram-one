@@ -10,7 +10,7 @@ const start = require('./start')
  * @package
  * @public
  * @description
- * Tram-One is a light View Framework that comes with all the dependencies you need to start developing on the web.
+ * Tram-One is a Modern View Framework that has advance features like hooks, observables, and JSX-like template components, all in plain vanilla javascript.
  * This framework exposes several functions and hooks to help you start developing.
  *
  * To learn more, checkout the api and guides on https://tram-one.io

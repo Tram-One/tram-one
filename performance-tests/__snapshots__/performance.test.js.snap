@@ -3,34 +3,40 @@
 exports[`Tram-One - Performance Tests should render lots of elements quickly 1`] = `
 Object {
   "0010": Object {
-    "averageTime": 1.1156340000000227,
-    "maxTime": 1.4809179999997468,
-    "medianTime": 1.1073379999997996,
+    "averageTime": 0.9516620333333398,
+    "fastestTime": 0.9037150000003749,
+    "medianTime": 0.9215529999996761,
+    "slowestTime": 1.0828809999998157,
   },
   "0050": Object {
-    "averageTime": 1.9890537000000676,
-    "maxTime": 2.9298969999999827,
-    "medianTime": 1.8459589999993113,
+    "averageTime": 1.699407533333321,
+    "fastestTime": 1.66351399999985,
+    "medianTime": 1.7052809999995588,
+    "slowestTime": 1.743308999999499,
   },
   "0100": Object {
-    "averageTime": 2.9625013999999283,
-    "maxTime": 4.33251300000029,
-    "medianTime": 2.8637989999997444,
+    "averageTime": 2.6770084333333517,
+    "fastestTime": 2.6289689999994152,
+    "medianTime": 2.6796269999995275,
+    "slowestTime": 2.7887809999992896,
   },
   "0500": Object {
-    "averageTime": 13.673339450000048,
-    "maxTime": 16.521974000001137,
-    "medianTime": 13.5630170000004,
+    "averageTime": 11.761249933333481,
+    "fastestTime": 10.726630000001023,
+    "medianTime": 12.18350400000054,
+    "slowestTime": 12.850361999999222,
   },
   "1000": Object {
-    "averageTime": 26.839909399999943,
-    "maxTime": 32.31925299999966,
-    "medianTime": 26.39946500000042,
+    "averageTime": 24.464915066666315,
+    "fastestTime": 23.570772999999463,
+    "medianTime": 24.517947000000277,
+    "slowestTime": 25.224985999997443,
   },
   "5000": Object {
-    "averageTime": 139.76669339999916,
-    "maxTime": 164.6552210000009,
-    "medianTime": 136.71933200000058,
+    "averageTime": 115.48004893333321,
+    "fastestTime": 112.64445100000012,
+    "medianTime": 115.55091199999879,
+    "slowestTime": 119.40099199999531,
   },
 }
 `;

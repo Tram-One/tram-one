@@ -1,42 +1,42 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Tram-One - Performance Tests should render lots of elements quickly 1`] = `
+exports[`Tram-One should render lots of elements quickly 1`] = `
 Object {
   "0010": Object {
-    "averageTime": 0.9516620333333398,
-    "fastestTime": 0.9037150000003749,
-    "medianTime": 0.9215529999996761,
-    "slowestTime": 1.0828809999998157,
+    "averageTime": 0.9822408999999577,
+    "fastestTime": 0.9258159999999407,
+    "medianTime": 0.959128999999848,
+    "slowestTime": 1.1244899999999234,
   },
   "0050": Object {
-    "averageTime": 1.699407533333321,
-    "fastestTime": 1.66351399999985,
-    "medianTime": 1.7052809999995588,
-    "slowestTime": 1.743308999999499,
+    "averageTime": 1.724283433333221,
+    "fastestTime": 1.6943870000004608,
+    "medianTime": 1.7247869999991963,
+    "slowestTime": 1.7731939999998758,
   },
   "0100": Object {
-    "averageTime": 2.6770084333333517,
-    "fastestTime": 2.6289689999994152,
-    "medianTime": 2.6796269999995275,
-    "slowestTime": 2.7887809999992896,
+    "averageTime": 2.731246366666801,
+    "fastestTime": 2.684755999999652,
+    "medianTime": 2.7297550000002957,
+    "slowestTime": 2.801093000000037,
   },
   "0500": Object {
-    "averageTime": 11.761249933333481,
-    "fastestTime": 10.726630000001023,
-    "medianTime": 12.18350400000054,
-    "slowestTime": 12.850361999999222,
+    "averageTime": 12.216659400000086,
+    "fastestTime": 11.000367999999071,
+    "medianTime": 12.626970000001165,
+    "slowestTime": 13.551142000000254,
   },
   "1000": Object {
-    "averageTime": 24.464915066666315,
-    "fastestTime": 23.570772999999463,
-    "medianTime": 24.517947000000277,
-    "slowestTime": 25.224985999997443,
+    "averageTime": 25.30891736666684,
+    "fastestTime": 24.193072000001848,
+    "medianTime": 25.116981999999552,
+    "slowestTime": 28.09403899999961,
   },
   "5000": Object {
-    "averageTime": 115.48004893333321,
-    "fastestTime": 112.64445100000012,
-    "medianTime": 115.55091199999879,
-    "slowestTime": 119.40099199999531,
+    "averageTime": 116.79790743333312,
+    "fastestTime": 113.82632400000148,
+    "medianTime": 116.50222499998927,
+    "slowestTime": 122.8488459999935,
   },
 }
 `;

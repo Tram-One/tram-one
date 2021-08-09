@@ -62,7 +62,7 @@ const getMeaningfulStats = performanceObject => {
 	)
 }
 
-describe('Tram-One - Performance Tests', () => {
+describe('Tram-One', () => {
 	it('should render lots of elements quickly', async () => {
 		// set the test to be element-rendering
 		window.history.pushState({}, '', '/element-rendering')

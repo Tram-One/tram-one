@@ -1,7 +1,7 @@
 const { startApp } = require('./test-app')
 const { startApp: startBrokenApp } = require('./broken-app')
 
-describe('Tram-One Warnings', () => {
+describe('Tram-One', () => {
 	beforeEach(() => {
 		// clean up any tram-one properties between tests
 		window['tram-space'] = undefined

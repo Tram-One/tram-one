@@ -2,6 +2,11 @@ const { getByText, fireEvent, waitFor } = require('@testing-library/dom')
 const { startApp } = require('./test-app')
 
 describe('Tram-One', () => {
+	beforeEach(() => {
+		// clean up any tram-one properties between tests
+		window['tram-space'] = undefined
+	})
+
 	it('should render on a Node', () => {
 		// mount the app on the container
 		const container = document.createElement('div')
@@ -25,10 +30,6 @@ describe('Tram-One', () => {
 
 		// cleanup - remove app
 		appContainer.remove()
-	})
-
-	it('should warn if selector is not found', () => {
-		expect(() => startApp('#app')).toThrow()
 	})
 
 	it('should render html from registry', () => {

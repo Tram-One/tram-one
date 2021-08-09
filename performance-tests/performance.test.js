@@ -62,7 +62,7 @@ const getMeaningfulStats = performanceObject => {
 	)
 }
 
-describe('Tram-One - Performance Tests', () => {
+describe('Tram-One', () => {
 	it('should render lots of elements quickly', async () => {
 		// set the test to be element-rendering
 		window.history.pushState({}, '', '/element-rendering')
@@ -105,7 +105,7 @@ describe('Tram-One - Performance Tests', () => {
 		// what does quickly mean? 5x elements should not be more than 5x slower
 		// we'll use the average, since that should be the least error prone (with the outliers removed)
 		// we'll also add a buffer to the right, to account for fragility
-		const buffer = 1 // 1 seconds, which will map to 5 seconds on the left
+		const buffer = 2 // 2 seconds, which will map to 10 seconds on the left
 		expect(stats['0050'].averageTime / 5).not.toBeGreaterThan(stats['0010'].averageTime + buffer)
 		expect(stats['0500'].averageTime / 5).not.toBeGreaterThan(stats['0100'].averageTime + buffer)
 		expect(stats['5000'].averageTime / 5).not.toBeGreaterThan(stats['1000'].averageTime + buffer)

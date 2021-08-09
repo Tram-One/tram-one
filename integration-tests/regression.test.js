@@ -2,7 +2,7 @@ const { getByText, queryAllByText, fireEvent, waitFor, getByLabelText } = requir
 const { default: userEvent } = require('@testing-library/user-event')
 const { startApp } = require('./test-app')
 
-describe('Tram-One - regressions', () => {
+describe('Tram-One', () => {
 	it('should not call cleanups that are not functions', async () => {
 		// start the app
 		const { container } = startApp()

@@ -18,6 +18,15 @@ module.exports = tagFunction => {
 	// create the component, which will save new effects to the effect queue
 	const tagResult = tagFunction()
 
+	if (Array.isArray(tagResult)) {
+		throw new TypeError('Tram-One: Sorry, Tram-One does not currently support array returns. Wrap components in an element before returning.')
+	}
+
+	// verify that the tagResult is an element (if it's not, we won't be able to run effects or do anything useful)
+	if (!(tagResult instanceof Element)) {
+		throw new TypeError(`Tram-One: expected component to return an Element, instead got ${typeof tagResult}. Verify the component is a function that returns DOM.`)
+	}
+
 	// see if there are any brand new effects
 	const existingEffects = getEffectStore(TRAM_EFFECT_STORE)
 	const queuedEffects = getEffectStore(TRAM_EFFECT_QUEUE)

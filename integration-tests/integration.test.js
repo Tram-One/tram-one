@@ -1,6 +1,5 @@
 const { getByText, fireEvent, waitFor } = require('@testing-library/dom')
 const { startApp } = require('./test-app')
-const { startApp: startBrokenApp } = require('./broken-app')
 
 describe('Tram-One', () => {
 	beforeEach(() => {
@@ -33,10 +32,6 @@ describe('Tram-One', () => {
 		appContainer.remove()
 	})
 
-	it('should warn if selector is not found', () => {
-		expect(() => startApp('#app')).toThrowError('Tram-One: could not find target, is the element on the page yet?')
-	})
-
 	it('should render html from registry', () => {
 		// start the app
 		const { container } = startApp()
@@ -54,18 +49,6 @@ describe('Tram-One', () => {
 
 		// verify that app processes props correctly
 		expect(getByText(container, 'Sub Title Prop')).toBeVisible()
-	})
-
-	it('should warn if a component does not return anything', () => {
-		expect(() => startBrokenApp('empty')()).toThrowError('Tram-One: expected component to return an Element, instead got undefined. Verify the component is a function that returns DOM.')
-	})
-
-	it('should warn if a component does not return an element', () => {
-		expect(() => startBrokenApp('non-dom')()).toThrowError('Tram-One: expected component to return an Element, instead got string. Verify the component is a function that returns DOM.')
-	})
-
-	it('should warn if a component returns an array', () => {
-		expect(() => startBrokenApp('array')()).toThrowError('Tram-One: Sorry, Tram-One does not currently support array returns. Wrap components in an element before returning.')
 	})
 
 	it('should render svg graphics', () => {
@@ -144,10 +127,6 @@ describe('Tram-One', () => {
 
 		// verify that effect update was triggered
 		expect(getByText(container, 'Updated: true')).toBeVisible()
-	})
-
-	it('should warn if a hook is called outside of a component context', () => {
-		expect(() => startBrokenApp('hook')()).toThrowError('Tram-One: app has not started yet, but hook was called. Is it being invoked outside a component function?')
 	})
 
 	it('should re-render components dependent on url params', () => {

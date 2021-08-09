@@ -57,11 +57,11 @@ describe('Tram-One', () => {
 	})
 
 	it('should warn if a component does not return anything', () => {
-		expect(() => startBrokenApp('empty')()).toThrowError('Tram-One: component did not return anything. Verify there is a return function that returns DOM.')
+		expect(() => startBrokenApp('empty')()).toThrowError('Tram-One: expected component to return an Element, instead got undefined. Verify the component is a function that returns DOM.')
 	})
 
 	it('should warn if a component does not return an element', () => {
-		expect(() => startBrokenApp('non-dom')()).toThrowError('Tram-One: component did not return an Element. Verify the return function returns DOM.')
+		expect(() => startBrokenApp('non-dom')()).toThrowError('Tram-One: expected component to return an Element, instead got string. Verify the component is a function that returns DOM.')
 	})
 
 	it('should warn if a component returns an array', () => {

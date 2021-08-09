@@ -24,11 +24,7 @@ module.exports = tagFunction => {
 
 	// verify that the tagResult is an element (if it's not, we won't be able to run effects or do anything useful)
 	if (!(tagResult instanceof Element)) {
-		if (tagResult === undefined) {
-			throw new Error('Tram-One: component did not return anything. Verify there is a return function that returns DOM.')
-		} else {
-			throw new Error('Tram-One: component did not return an Element. Verify the return function returns DOM.')
-		}
+		throw new Error(`Tram-One: expected component to return an Element, instead got ${typeof tagResult}. Verify the component is a function that returns DOM.`)
 	}
 
 	// see if there are any brand new effects

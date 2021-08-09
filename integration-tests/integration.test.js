@@ -57,7 +57,15 @@ describe('Tram-One', () => {
 	})
 
 	it('should warn if a component does not return anything', () => {
-		expect(() => startBrokenApp()).toThrowError('Tram-One: no element returned from tag, is anything being returned?')
+		expect(() => startBrokenApp('empty')()).toThrowError('Tram-One: component did not return anything. Verify there is a return function that returns DOM.')
+	})
+
+	it('should warn if a component does not return an element', () => {
+		expect(() => startBrokenApp('non-dom')()).toThrowError('Tram-One: component did not return an Element. Verify the return function returns DOM.')
+	})
+
+	it('should warn if a component returns an array', () => {
+		expect(() => startBrokenApp('array')()).toThrowError('Tram-One: Sorry, Tram-One does not currently support array returns. Wrap components in an element before returning.')
 	})
 
 	it('should render svg graphics', () => {
@@ -139,10 +147,7 @@ describe('Tram-One', () => {
 	})
 
 	it('should warn if a hook is called outside of a component context', () => {
-		expect(() => {
-			const { startApp: startBrokenHook } = require('./broken-hook')
-			startBrokenHook()
-		}).toThrowError('Tram-One: app has not started yet, but hook was called. Is it being invoked outside a component function?')
+		expect(() => startBrokenApp('hook')()).toThrowError('Tram-One: app has not started yet, but hook was called. Is it being invoked outside a component function?')
 	})
 
 	it('should re-render components dependent on url params', () => {

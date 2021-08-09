@@ -1,37 +1,35 @@
 const { registerHtml, start } = require('../../src/tram-one')
 
-const html = registerHtml({
-	title: require('./title')
-})
+const buildApp = test => {
+	// build the html function on the spot
+	// we have to do this because some components cause the page to break on import
+	const html = registerHtml({
+		'test-component': require(`./broken-${test}`)
+	})
 
-/**
- * main app to power integration tests
- */
-const app = () => {
-	return html`
+	/**
+	 * main app to power integration tests
+	 */
+	return () => html`
 		<main>
-			<title />
+			<test-component />
 		</main>
 	`
 }
 
-const startApp = container => {
+const startApp = test => container => {
 	if (container === undefined) {
 		container = document.createElement('div')
 		container.id = 'app'
 	}
 
-	start(app, container)
+	start(buildApp(test), container)
 
 	return {
 		container
 	}
 }
 
-if (document.querySelector('#parcel-page')) {
-	startApp('#parcel-page')
-}
-
 module.exports = {
-	app, startApp
+	startApp
 }

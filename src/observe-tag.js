@@ -66,16 +66,26 @@ module.exports = tagFunction => {
 				removedElementWithFocusData.scrollTop = document.activeElement.scrollTop
 			}
 
-			const emptyDiv = document.createElement('div')
-			oldTag.replaceWith(emptyDiv)
+			// if the old tag was an element, replace with an empty div
+			let emptyContainer
+			if (oldTag instanceof Element) {
+				emptyContainer = document.createElement('div')
+				oldTag.replaceWith(emptyContainer)
+			}
+
+			// if the old tag was a document fragment, replace all the children
+			if (oldTag instanceof DocumentFragment) {
+				// oldTag.replaceChildren()
+				emptyContainer = oldTag
+			}
 
 			// copy the reaction and effects from the old tag to the empty div so we don't lose them
-			emptyDiv[TRAM_TAG_REACTION] = oldTag[TRAM_TAG_REACTION]
-			emptyDiv[TRAM_TAG_NEW_EFFECTS] = oldTag[TRAM_TAG_NEW_EFFECTS]
-			emptyDiv[TRAM_TAG_CLEANUP_EFFECTS] = oldTag[TRAM_TAG_CLEANUP_EFFECTS]
+			emptyContainer[TRAM_TAG_REACTION] = oldTag[TRAM_TAG_REACTION]
+			emptyContainer[TRAM_TAG_NEW_EFFECTS] = oldTag[TRAM_TAG_NEW_EFFECTS]
+			emptyContainer[TRAM_TAG_CLEANUP_EFFECTS] = oldTag[TRAM_TAG_CLEANUP_EFFECTS]
 
-			// set oldTag to emptyDiv, so we can replace it later
-			oldTag = emptyDiv
+			// set oldTag to emptyContainer, so we can replace it later
+			oldTag = emptyContainer
 		}
 
 		// build the component
@@ -121,8 +131,12 @@ module.exports = tagFunction => {
 			tagResult[TRAM_TAG_NEW_EFFECTS] = oldTag[TRAM_TAG_NEW_EFFECTS]
 			tagResult[TRAM_TAG_CLEANUP_EFFECTS] = oldTag[TRAM_TAG_CLEANUP_EFFECTS]
 
-			// both these actions cause forced reflow, and can be performance issues
-			oldTag.replaceWith(tagResult)
+			// both replacing and focusing can cause forced reflow, and can be performance bottlenecks
+
+			// if the old tag was an element, replaceWith
+			if (oldTag instanceof Element) oldTag.replaceWith(tagResult)
+			// if the old tag was a document fragment, replace all the children
+			if (oldTag instanceof DocumentFragment) Array.from(tagResult.children).forEach(child => oldTag.append(child))
 			if (elementToGiveFocus) elementToGiveFocus.focus()
 		}
 	}

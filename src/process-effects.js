@@ -22,8 +22,11 @@ module.exports = tagFunction => {
 		throw new TypeError('Tram-One: Sorry, Tram-One does not currently support array returns. Wrap components in an element before returning.')
 	}
 
-	// verify that the tagResult is an element (if it's not, we won't be able to run effects or do anything useful)
-	if (!(tagResult instanceof Element)) {
+	// verify that the tagResult is an element or document fragment
+	// (if it's not, we won't be able to run effects or do anything useful)
+	const isElement = tagResult instanceof Element
+	const isDocumentFragment = tagResult instanceof DocumentFragment
+	if (!isElement && !isDocumentFragment) {
 		throw new TypeError(`Tram-One: expected component to return an Element, instead got ${typeof tagResult}. Verify the component is a function that returns DOM.`)
 	}
 

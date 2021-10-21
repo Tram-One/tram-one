@@ -4,11 +4,13 @@ const filesize = require('rollup-plugin-filesize')
 const globals = require('rollup-plugin-node-globals')
 const resolve = require('rollup-plugin-node-resolve')
 const { terser } = require('rollup-plugin-terser')
+const typescript = require('@rollup/plugin-typescript')
 // const sizes = require('rollup-plugin-sizes')
 
 const pkg = require('../package.json')
 
 const plugins = [
+	typescript(),
 	resolve({
 		preferBuiltins: true,
 		browser: true
@@ -25,7 +27,7 @@ const plugins = [
 // domino is a package used by belit to support server side rendering,
 // it does not need to be included in browser builds, which will have document
 export default {
-	input: 'src/tram-one',
+	input: 'src/tram-one.ts',
 	external: ['domino'],
 	output: {
 		name: 'tram-one',

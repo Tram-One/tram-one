@@ -1,5 +1,6 @@
 const { observe } = require('@nx-js/observer-util')
-const { TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } = require('./node-names')
+
+import { TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } from './node-names'
 
 // functions to go to nodes or indicies (made for .map)
 const toIndicies = (node, index) => index
@@ -12,14 +13,16 @@ const byDistanceFromIndex = targetIndex => (indexA, indexB) => {
 	return diffFromTargetA - diffFromTargetB
 }
 
-const hasMatchingTagName = tagName => node => {
+const hasMatchingTagName = (tagName : String) => (node : Element) => {
 	// if the tagName matches, we want to process the node, otherwise skip it
 	return node.tagName === tagName ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP
 }
 
 // get an array including the element and all it's children
-const parentAndChildrenElements = (node, tagName) => {
-	const componentWalker = document.createTreeWalker(node, NodeFilter.SHOW_ELEMENT, hasMatchingTagName(tagName))
+const parentAndChildrenElements = (node : Element, tagName : String) => {
+	const matchesTagName = hasMatchingTagName(tagName)
+	const nodeFilterForTagName = { acceptNode: matchesTagName }
+	const componentWalker = document.createTreeWalker(node, NodeFilter.SHOW_ELEMENT, nodeFilterForTagName )
 	const parentAndChildren = [componentWalker.currentNode]
 	while (componentWalker.nextNode()) {
 		parentAndChildren.push(componentWalker.currentNode)
@@ -29,18 +32,31 @@ const parentAndChildrenElements = (node, tagName) => {
 }
 
 /**
+ * Type for saving properties of an element that we are removing / replacing
+ */
+type RemovedElementDataStore = {
+	index?: number,
+	tagName?: string,
+	scrollLeft?: number,
+	scrollTop?: number,
+	selectionStart?: number | null,
+	selectionEnd?: number | null,
+	selectionDirection?: string
+}
+
+/**
  * This is a helper function for the dom creation.
  * This function observes any state values used when making the tag, and allow it to update
  * independently when one of those state values updates.
  *
  * The mutation-observer will unobserve any reactions here when the node is removed.
  */
-module.exports = tagFunction => {
+export default tagFunction => {
 	let tagResult
 	const buildAndReplaceTag = () => {
 		// if there is an existing tagResult, it is the last rendering, and so we want to re-render over it
 		let oldTag = tagResult
-		let removedElementWithFocusData = {}
+		let removedElementWithFocusData : RemovedElementDataStore = {}
 
 		// remove oldTag first so that we unobserve before we re-observe
 		if (oldTag) {
@@ -52,18 +68,23 @@ module.exports = tagFunction => {
 
 			// if an element had focus, copy over all the selection data (so we can copy it back later)
 			if (oldTagHasFocusedElement) {
+
+				// we'll assume that the element is an HTMLInputElement, in reality other kinds of elements will be caught here,
+				// but that's fine, since they have null as selection attributes, and setting them to null is fine
+				const activeElement = document.activeElement as HTMLInputElement
+
 				// first, we need to get all the elements that are similar (we'll use tagName)
 				// this way, when we rerender, we can search for those tagNames, and just use the index we got here
-				const allActiveLikeElements = parentAndChildrenElements(oldTag, document.activeElement.tagName)
-				removedElementWithFocusData.index = allActiveLikeElements.findIndex(element => element === document.activeElement)
+				const allActiveLikeElements = parentAndChildrenElements(oldTag, activeElement.tagName)
+				removedElementWithFocusData.index = allActiveLikeElements.findIndex(element => element === activeElement)
 
 				// copy over the data
-				removedElementWithFocusData.tagName = document.activeElement.tagName
-				removedElementWithFocusData.selectionStart = document.activeElement.selectionStart
-				removedElementWithFocusData.selectionEnd = document.activeElement.selectionEnd
-				removedElementWithFocusData.selectionDirection = document.activeElement.selectionDirection
-				removedElementWithFocusData.scrollLeft = document.activeElement.scrollLeft
-				removedElementWithFocusData.scrollTop = document.activeElement.scrollTop
+				removedElementWithFocusData.tagName = activeElement.tagName
+				removedElementWithFocusData.scrollLeft = activeElement.scrollLeft
+				removedElementWithFocusData.scrollTop = activeElement.scrollTop
+				removedElementWithFocusData.selectionStart = activeElement.selectionStart
+				removedElementWithFocusData.selectionEnd = activeElement.selectionEnd
+				removedElementWithFocusData.selectionDirection = activeElement.selectionDirection
 			}
 
 			const emptyDiv = document.createElement('div')

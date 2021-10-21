@@ -11,7 +11,6 @@
     "docs/runkit_example.js"
   ],
   "scripts": {
-    "lint": "xo",
     "build": "npm run build:cjs && npm run build:umd",
     "postbuild": "npm run build:badges",
     "build:cjs": "rollup -c configs/rollup.config.cjs.js",
@@ -26,7 +25,7 @@
     "test:performance": "jest performance-tests --watch --update-snapshot",
     "test:performance:ci": "jest performance-tests --update-snapshot",
     "test:performance:app": "parcel performance-tests/test-app/index.html",
-    "start": "npm i && npm run build",
+    "start": "npm ci && npm run build",
     "restart": "npm run clean && npm start"
   },
   "runkitExampleFilename": "docs/runkit_example.js",
@@ -60,6 +59,7 @@
     "use-url-params": "^3.0.0"
   },
   "devDependencies": {
+    "@rollup/plugin-typescript": "^8.3.0",
     "@testing-library/dom": "^8.1.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/user-event": "^13.2.0",
@@ -74,26 +74,9 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-sizes": "^1.0.4",
     "rollup-plugin-terser": "^7.0.2",
-    "watch": "^1.0.2",
-    "xo": "^0.32.1"
-  },
-  "xo": {
-    "extends": [
-      "tram-one"
-    ],
-    "ignores": [
-      "docs/"
-    ],
-    "rules": {
-      "valid-jsdoc": 0,
-      "capitalized-comments": 0,
-      "new-cap": 0,
-      "unicorn/no-process-exit": 0,
-      "unicorn/no-unreadable-array-destructuring": 0,
-      "unicorn/prevent-abbreviations": 0,
-      "unicorn/no-fn-reference-in-iterator": 0,
-      "unicorn/no-reduce": 0,
-      "import/no-anonymous-default-export": 0
-    }
+    "ts-jest": "^27.0.7",
+    "tslib": "^1.14.1",
+    "typescript": "^3.9.10",
+    "watch": "^1.0.2"
   }
 }

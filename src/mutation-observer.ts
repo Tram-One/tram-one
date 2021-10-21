@@ -1,4 +1,4 @@
-/**
+/*
  * The mutation-observer is a global instance of browsers MutationObserver
  * which tracks when nodes are added or removed.
  *
@@ -7,8 +7,9 @@
  */
 
 const { observe, unobserve } = require('@nx-js/observer-util')
-const { TRAM_TAG, TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } = require('./node-names')
-const { setup, get } = require('./namespace')
+
+import { TRAM_TAG, TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } from './node-names'
+import { setup, get } from './namespace'
 
 // process new effects for new nodes
 const processEffects = node => {
@@ -63,7 +64,7 @@ const clearNode = node => {
 	}
 }
 
-const isTramOneComponent = node => {
+const isTramOneComponent = (node : Element) => {
 	// a node is a component if it has `TRAM_TAG` key on it
 	const nodeIsATramOneComponent = node[TRAM_TAG] === true
 	// if it is a tram-one component, we want to process it, otherwise skip it
@@ -73,7 +74,8 @@ const isTramOneComponent = node => {
 // function to get the children (as a list) of the node passed in
 // this only needs to query tram-one components, so we can use the attribute `tram`
 const childrenComponents = node => {
-	const componentWalker = document.createTreeWalker(node, NodeFilter.SHOW_ELEMENT, isTramOneComponent)
+	const nodeFilterForTramOneComponent = { acceptNode: isTramOneComponent }
+	const componentWalker = document.createTreeWalker(node, NodeFilter.SHOW_ELEMENT, nodeFilterForTramOneComponent)
 	const children = []
 	while (componentWalker.nextNode()) {
 		children.push(componentWalker.currentNode)
@@ -82,7 +84,7 @@ const childrenComponents = node => {
 	return children
 }
 
-const setupMutationObserver = setup(() => new MutationObserver(mutationList => {
+export const setupMutationObserver = setup(() => new MutationObserver(mutationList => {
 	// cleanup orphaned nodes that are no longer on the DOM
 	const removedNodes = mutationList
 		.flatMap(mutation => [...mutation.removedNodes])
@@ -101,10 +103,8 @@ const setupMutationObserver = setup(() => new MutationObserver(mutationList => {
 const getMutationObserver = get
 
 // tell the mutation observer to watch the given node for changes
-const startWatcher = (observerName, node) => {
+export const startWatcher = (observerName, node) => {
 	const observerStore = getMutationObserver(observerName)
 
 	observerStore.observe(node, { childList: true, subtree: true })
 }
-
-module.exports = { setupMutationObserver, startWatcher }

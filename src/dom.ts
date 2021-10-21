@@ -4,11 +4,11 @@ const hyperx = require('@tram-one/hyperx')
 const ensureIsObject = require('type/object/ensure')
 const ensureIsString = require('type/string/ensure')
 
-const { TRAM_HOOK_KEY } = require('./engine-names')
-const { pushWorkingKeyBranch, popWorkingKeyBranch, incrementWorkingKeyBranch, copyWorkingKey, restoreWorkingKey } = require('./working-key')
-const observeTag = require('./observe-tag')
-const processEffects = require('./process-effects')
-const { TRAM_TAG } = require('./node-names')
+import { TRAM_HOOK_KEY } from './engine-names'
+import { pushWorkingKeyBranch, popWorkingKeyBranch, incrementWorkingKeyBranch, copyWorkingKey, restoreWorkingKey } from './working-key'
+import observeTag from './observe-tag'
+import processEffects from './process-effects'
+import { TRAM_TAG } from './node-names'
 
 /**
  * This function takes in a namespace and registry of custom components,
@@ -19,7 +19,7 @@ const { TRAM_TAG } = require('./node-names')
  * @param {string} namespace namespace to create nodes in (by default XHTML namespace)
  * @param {object} registry mapping of tag names to component functions
  */
-const registerDom = (namespace, registry = {}) => {
+export const registerDom = (namespace, registry = {}) => {
 	ensureIsString(namespace, { isOptional: true, errorMessage: `Tram-One: namespace should be a string, recieved ${typeof namespace}, ${namespace}` })
 	ensureIsObject(registry, { errorMessage: `Tram-One: registry should be an object, recieved ${typeof registry}, ${registry}` })
 
@@ -63,5 +63,3 @@ const registerDom = (namespace, registry = {}) => {
 
 	return rbel(hyperx, nanohtml(namespace), hookedRegistry)
 }
-
-module.exports = { registerDom }

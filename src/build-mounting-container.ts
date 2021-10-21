@@ -4,7 +4,7 @@ const ensureObject = require('type/plain-object/is')
  * Function to determine (or create) the element that we will mount our tram-one app onto
  * @param {string|Node} target either a CSS selector, or Node to attach the component to
  */
-module.exports = target => {
+export default target => {
 	ensureObject(target, { errorMessage: `Tram-One: container should be defined as a CSS Selector or DOM Node, recieved ${typeof target}, ${target}` })
 
 	// if the selector is a string, try to find the element,

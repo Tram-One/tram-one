@@ -1,6 +1,6 @@
-const { TRAM_EFFECT_STORE, TRAM_EFFECT_QUEUE } = require('./engine-names')
-const { TRAM_TAG_NEW_EFFECTS } = require('./node-names')
-const { getEffectStore, clearEffectStore, restoreEffectStore } = require('./effect-store')
+import { TRAM_EFFECT_STORE, TRAM_EFFECT_QUEUE } from './engine-names'
+import { TRAM_TAG_NEW_EFFECTS } from './node-names'
+import { getEffectStore, clearEffectStore, restoreEffectStore } from './effect-store'
 
 /**
  * This is a helper function for the dom creation.
@@ -8,7 +8,7 @@ const { getEffectStore, clearEffectStore, restoreEffectStore } = require('./effe
  *
  * These are later processed by the mutation-observer, and cleaned up when the node is removed by the mutation-observer.
  */
-module.exports = tagFunction => {
+export default tagFunction => {
 	// save the existing effect queue for any components we are in the middle of building
 	const existingQueuedEffects = { ...getEffectStore(TRAM_EFFECT_QUEUE) }
 

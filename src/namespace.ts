@@ -1,20 +1,20 @@
-/**
+/*
  * namespace is a generic interface for global tram-one state that needs
  * to be persisted in the app container. It exposes a setup and get function.
  */
 
-const setupTramOneSpace = () => {
+export const setupTramOneSpace = () => {
 	window['tram-space'] = {}
 }
 
-const setup = constructor => {
+export const setup = constructor => {
 	return namespace => {
 		window['tram-space'][namespace] = constructor()
 		return window['tram-space'][namespace]
 	}
 }
 
-const get = namespace => {
+export const get = namespace => {
 	// if tram-one is setup, this will be defined
 	const tramOneIsSetup = window['tram-space']
 
@@ -26,8 +26,6 @@ const get = namespace => {
 	return window['tram-space'][namespace]
 }
 
-const set = (namespace, value) => {
+export const set = (namespace, value) => {
 	window['tram-space'][namespace] = value
 }
-
-module.exports = { setup, get, set, setupTramOneSpace }

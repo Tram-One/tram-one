@@ -1,4 +1,4 @@
-const { registerDom } = require('./dom')
+import { registerDom } from './dom'
 
 /**
  * @name registerHtml
@@ -10,7 +10,7 @@ const { registerDom } = require('./dom')
  * @param {object} [registry={}] map of tag names to functions, use this to use custom elements built in tram-one
  * @return {function} tagged template function that builds HTML components
  */
-const registerHtml = registry => {
+export const registerHtml = registry => {
 	return registerDom(null, registry)
 }
 
@@ -23,8 +23,6 @@ const registerHtml = registry => {
  * @param {object} [registry={}] map of tag names to functions, use this to use custom elements built in tram-one
  * @return {function} tagged template function that builds SVG components
  */
-const registerSvg = registry => {
+export const registerSvg = registry => {
 	return registerDom('http://www.w3.org/2000/svg', registry)
 }
-
-module.exports = { registerHtml, registerSvg }

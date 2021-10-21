@@ -1,8 +1,8 @@
 const ensureFunction = require('type/function/ensure')
 
-const { TRAM_HOOK_KEY, TRAM_EFFECT_QUEUE } = require('./engine-names')
-const { getEffectStore } = require('./effect-store')
-const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('./working-key')
+import { TRAM_HOOK_KEY, TRAM_EFFECT_QUEUE } from './engine-names'
+import { getEffectStore } from './effect-store'
+import { getWorkingKeyValue, incrementWorkingKeyBranch } from './working-key'
 
 /**
  * @name useEffect
@@ -14,7 +14,7 @@ const { getWorkingKeyValue, incrementWorkingKeyBranch } = require('./working-key
  *
  * @param {function} effect function to run on component mount
  */
-module.exports = effect => {
+export default effect => {
 	// effects must be functions
 	ensureFunction(effect, { errorMessage: `Tram-One: effect should be a function, recieved ${typeof effect}, ${effect}` })
 

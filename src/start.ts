@@ -1,11 +1,11 @@
-const mount = require('./mount')
-const buildContainer = require('./build-mounting-container')
-const { TRAM_EFFECT_STORE, TRAM_HOOK_KEY, TRAM_EFFECT_QUEUE, TRAM_OBSERVABLE_STORE, TRAM_MUTATION_OBSERVER } = require('./engine-names')
-const { setupTramOneSpace } = require('./namespace')
-const { setupEffectStore } = require('./effect-store')
-const { setupWorkingKey } = require('./working-key')
-const { setupObservableStore } = require('./observable-store')
-const { setupMutationObserver, startWatcher } = require('./mutation-observer')
+import mount from './mount'
+import buildContainer from './build-mounting-container'
+import { TRAM_EFFECT_STORE, TRAM_HOOK_KEY, TRAM_EFFECT_QUEUE, TRAM_OBSERVABLE_STORE, TRAM_MUTATION_OBSERVER } from './engine-names'
+import { setupTramOneSpace } from './namespace'
+import { setupEffectStore } from './effect-store'
+import { setupWorkingKey } from './working-key'
+import { setupObservableStore } from './observable-store'
+import { setupMutationObserver, startWatcher } from './mutation-observer'
 
 /**
  * @name start
@@ -19,7 +19,7 @@ const { setupMutationObserver, startWatcher } = require('./mutation-observer')
  * @param {function} component top-level component to attach to the page.
  * @param {string|Node} target either a CSS selector, or Node to attach the component to
  */
-module.exports = (component, target) => {
+export default (component, target) => {
 	/* setup all the internal engines required for tram-one to work */
 
 	// get the container to mount the app on

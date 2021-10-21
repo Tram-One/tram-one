@@ -1,6 +1,7 @@
 const urlListener = require('url-listener')
 const useUrlParams = require('use-url-params')
-const useStore = require('./use-store')
+
+import useStore from './use-store'
 
 /**
  * @typedef {Object} UrlObject
@@ -19,7 +20,7 @@ const useStore = require('./use-store')
  *
  * @returns {UrlObject} object with a `matches` key, and (if it matched) path and query parameters
  */
-module.exports = pattern => {
+export default pattern => {
 	// save and update results in an observable, so that we can update
 	// components and effects in a reactive way
 	const initialParams = useUrlParams(pattern)

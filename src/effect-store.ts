@@ -1,4 +1,4 @@
-/**
+/*
  * EffectStores in Tram-One are used for basic key-value object mappings that need
  * to be persisted in the globalSpace.
  *
@@ -8,9 +8,9 @@
 
 const { setup, get, set } = require('./namespace')
 
-const setupEffectStore = setup(() => ({}))
+export const setupEffectStore = setup(() => ({}))
 
-const getEffectStore = get
+export const getEffectStore = get
 
 const setEffectStore = set
 
@@ -18,7 +18,7 @@ const setEffectStore = set
  * clear the effect store
  * usually called when we want to empty the effect store
  */
-const clearEffectStore = effectName => {
+export const clearEffectStore = effectName => {
 	const effectStore = getEffectStore(effectName)
 
 	Object.keys(effectStore).forEach(key => delete effectStore[key])
@@ -28,6 +28,4 @@ const clearEffectStore = effectName => {
  * restore the effect store to a previous value
  * usually used when we had to interrupt the processing of effects
  */
-const restoreEffectStore = setEffectStore
-
-module.exports = { setupEffectStore, getEffectStore, clearEffectStore, restoreEffectStore }
+export const restoreEffectStore = setEffectStore

@@ -1,4 +1,4 @@
-const observableHook = require('./observable-hook')
+import observableHook from './observable-hook'
 
 /**
  * @name useGlobalObservable
@@ -14,4 +14,4 @@ const observableHook = require('./observable-hook')
  *
  * @returns {Object|Array} the store to interact with.
  */
-module.exports = (key, defaultValue) => observableHook(key, defaultValue)
+export default (key, defaultValue) => observableHook(key, defaultValue)

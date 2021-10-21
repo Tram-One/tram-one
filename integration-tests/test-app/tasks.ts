@@ -1,11 +1,11 @@
-const { registerHtml, useStore } = require('../../src/tram-one')
+import { registerHtml, useStore } from '../../src/tram-one'
 
 const html = registerHtml()
 
 /**
  * component to test url parameters
  */
-module.exports = () => {
+export default () => {
 	const tasks = useStore([])
 	const newTask = useStore({ label: `Task Number ${tasks.length}`, type: 'Projects' })
 

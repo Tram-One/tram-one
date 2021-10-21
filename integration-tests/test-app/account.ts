@@ -1,11 +1,11 @@
-const { registerHtml, useUrlParams } = require('../../src/tram-one')
+import { registerHtml, useUrlParams } from '../../src/tram-one'
 
 const html = registerHtml()
 
 /**
  * component to test url parameters
  */
-module.exports = () => {
+export default () => {
 	const { account, loggedIn = 'No' } = useUrlParams('/:account')
 	return html`
 		<div>

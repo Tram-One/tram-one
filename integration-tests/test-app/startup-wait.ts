@@ -1,11 +1,11 @@
-const { registerHtml, useStore, useEffect } = require('../../src/tram-one')
+import { registerHtml, useStore, useEffect } from '../../src/tram-one'
 
 const html = registerHtml()
 
 /**
  * component to test effects on mount
  */
-module.exports = () => {
+export default () => {
 	const initialWait = useStore({ isDone: false })
 
 	// after the element first renders, run effect to set isDone to true

@@ -1,4 +1,4 @@
-const { registerHtml } = require('../../src/tram-one')
+import { registerHtml } from '../../src/tram-one'
 
 const html = registerHtml({
 	// sub-title to test multiple instances of the same tag
@@ -8,7 +8,7 @@ const html = registerHtml({
 /**
  * component to test basic rendering
  */
-module.exports = (props, children) => {
+export default (props, children) => {
 	const { subtitle = '' } = props
 	return html`
 		<header>

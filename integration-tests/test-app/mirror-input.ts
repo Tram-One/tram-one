@@ -1,13 +1,14 @@
-const { registerHtml, useGlobalStore } = require('../../src/tram-one')
+import { registerHtml, useGlobalStore } from '../../src/tram-one'
+import submirrorinput from './sub-mirror-input'
 
 const html = registerHtml({
-	'sub-mirror-input': require('./sub-mirror-input')
+	'sub-mirror-input': submirrorinput
 })
 
 /**
  * component to test url parameters
  */
-module.exports = () => {
+export default () => {
 	const mirrorable = useGlobalStore('mirrorable-input', { value: '' })
 
 	const onEvent = event => {

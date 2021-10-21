@@ -14,4 +14,4 @@ import observableHook from './observable-hook'
  *
  * @returns {Object|Array} the store to interact with.
  */
-export default (key, defaultValue) => observableHook(key, defaultValue)
+export default (key, defaultValue?) => observableHook(key, defaultValue)

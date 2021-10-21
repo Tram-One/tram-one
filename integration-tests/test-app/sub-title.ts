@@ -1,4 +1,4 @@
-const { registerHtml } = require('../../src/tram-one')
+import { registerHtml } from '../../src/tram-one'
 
 const html = registerHtml()
 

@@ -1,14 +1,22 @@
-const { registerHtml, start } = require('../../src/tram-one')
+import { registerHtml, start } from '../../src/tram-one'
+import title from './title'
+import logo from './logo'
+import clicktracker from './click-tracker'
+import startupwait from './startup-wait'
+import tab from './tab'
+import account from './account'
+import tasks from './tasks'
+import mirrorinput from './mirror-input'
 
 const html = registerHtml({
-	'title': require('./title'),
-	'logo': require('./logo'),
-	'click-tracker': require('./click-tracker'),
-	'startup-wait': require('./startup-wait'),
-	'tab': require('./tab'),
-	'account': require('./account'),
-	'tasks': require('./tasks'),
-	'mirror-input': require('./mirror-input')
+	'title': title,
+	'logo': logo,
+	'click-tracker': clicktracker,
+	'startup-wait': startupwait,
+	'tab': tab,
+	'account': account,
+	'tasks': tasks,
+	'mirror-input': mirrorinput
 })
 
 /**

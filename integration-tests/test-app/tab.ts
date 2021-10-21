@@ -1,4 +1,4 @@
-const { registerHtml, useGlobalStore, useEffect } = require('../../src/tram-one')
+import { registerHtml, useGlobalStore, useEffect } from '../../src/tram-one'
 
 const html = registerHtml({
 	'sub-tab': require('./sub-tab')
@@ -15,7 +15,7 @@ const defaultTabState = {
 /**
  * component to test global state and control sub-tab (which has cleanup effects)
  */
-module.exports = () => {
+export default () => {
 	const tabState = useGlobalStore('tab-state', defaultTabState)
 
 	// immediately update the state (verifies effects on mount)

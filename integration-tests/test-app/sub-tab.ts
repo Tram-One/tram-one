@@ -1,4 +1,4 @@
-const { registerHtml, useEffect, useGlobalStore, useStore } = require('../../src/tram-one')
+import { registerHtml, useEffect, useGlobalStore, useStore } from '../../src/tram-one'
 
 const html = registerHtml()
 

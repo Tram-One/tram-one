@@ -11,6 +11,7 @@
     "docs/runkit_example.js"
   ],
   "scripts": {
+    "lint": "echo 'need to add lint back in later'",
     "build": "npm run build:cjs && npm run build:umd",
     "postbuild": "npm run build:badges",
     "build:cjs": "rollup -c configs/rollup.config.cjs.js",

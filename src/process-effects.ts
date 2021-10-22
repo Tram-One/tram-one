@@ -1,6 +1,7 @@
 import { TRAM_EFFECT_STORE, TRAM_EFFECT_QUEUE } from './engine-names'
 import { TRAM_TAG_NEW_EFFECTS } from './node-names'
 import { getEffectStore, clearEffectStore, restoreEffectStore } from './effect-store'
+import { TramOneComponent } from './types'
 
 /**
  * This is a helper function for the dom creation.
@@ -8,7 +9,7 @@ import { getEffectStore, clearEffectStore, restoreEffectStore } from './effect-s
  *
  * These are later processed by the mutation-observer, and cleaned up when the node is removed by the mutation-observer.
  */
-export default tagFunction => {
+export default (tagFunction: TramOneComponent) => {
 	// save the existing effect queue for any components we are in the middle of building
 	const existingQueuedEffects = { ...getEffectStore(TRAM_EFFECT_QUEUE) }
 
@@ -17,15 +18,6 @@ export default tagFunction => {
 
 	// create the component, which will save new effects to the effect queue
 	const tagResult = tagFunction()
-
-	if (Array.isArray(tagResult)) {
-		throw new TypeError('Tram-One: Sorry, Tram-One does not currently support array returns. Wrap components in an element before returning.')
-	}
-
-	// verify that the tagResult is an element (if it's not, we won't be able to run effects or do anything useful)
-	if (!(tagResult instanceof Element)) {
-		throw new TypeError(`Tram-One: expected component to return an Element, instead got ${typeof tagResult}. Verify the component is a function that returns DOM.`)
-	}
 
 	// see if there are any brand new effects
 	const existingEffects = getEffectStore(TRAM_EFFECT_STORE)

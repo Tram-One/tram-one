@@ -55,7 +55,6 @@
     "@tram-one/hyperx": "^4.0.3",
     "@tram-one/nanohtml": "^4.1.8",
     "@tram-one/rbel": "^2.0.1",
-    "type": "^2.5.0",
     "url-listener": "^2.0.0",
     "use-url-params": "^3.0.0"
   },

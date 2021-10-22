@@ -1,7 +1,7 @@
-const filesize = require('rollup-plugin-filesize')
-const commonjs = require('rollup-plugin-commonjs')
-const pkg = require('../package.json')
-const typescript = require('@rollup/plugin-typescript')
+import filesize from 'rollup-plugin-filesize'
+import commonjs from 'rollup-plugin-commonjs'
+import pkg from '../package.json'
+import typescript from '@rollup/plugin-typescript'
 
 const external = Object.keys(pkg.dependencies)
 	.concat([

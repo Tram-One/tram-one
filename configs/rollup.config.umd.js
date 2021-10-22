@@ -1,13 +1,13 @@
-const builtins = require('rollup-plugin-node-builtins')
-const commonjs = require('rollup-plugin-commonjs')
-const filesize = require('rollup-plugin-filesize')
-const globals = require('rollup-plugin-node-globals')
-const resolve = require('rollup-plugin-node-resolve')
-const { terser } = require('rollup-plugin-terser')
-const typescript = require('@rollup/plugin-typescript')
-// const sizes = require('rollup-plugin-sizes')
+import builtins from 'rollup-plugin-node-builtins'
+import commonjs from 'rollup-plugin-commonjs'
+import filesize from 'rollup-plugin-filesize'
+import globals from 'rollup-plugin-node-globals'
+import resolve from 'rollup-plugin-node-resolve'
+import { terser } from 'rollup-plugin-terser'
+import typescript from '@rollup/plugin-typescript'
+// import sizes from 'rollup-plugin-sizes'
 
-const pkg = require('../package.json')
+import pkg from '../package.json'
 
 const plugins = [
 	typescript(),

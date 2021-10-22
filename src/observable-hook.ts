@@ -1,9 +1,8 @@
-const ensureObject = require('type/object/ensure')
-const ensureString = require('type/string/ensure')
-
 import { TRAM_OBSERVABLE_STORE, TRAM_HOOK_KEY } from './engine-names'
 import { getObservableStore } from './observable-store'
 import { getWorkingKeyValue, incrementWorkingKeyBranch } from './working-key'
+
+import { StoreObject } from './types'
 
 /**
  * Source code for both observable hooks, useStore, and useGlobalStore.
@@ -12,13 +11,7 @@ import { getWorkingKeyValue, incrementWorkingKeyBranch } from './working-key'
  *
  * It has a similar interface to React's useState
  */
-export default (key, value) => {
-	// keys must be strings (if defined)
-	ensureString(key, { isOptional: true, errorMessage: `Tram-One: key should be a String (if defined), recieved ${typeof key}, ${key}` })
-
-	// values must be objects (if defined)
-	ensureObject(value, { isOptional: true, errorMessage: `Tram-One: value should be an object (if defined), recieved ${typeof value}, ${value}` })
-
+export default <Store extends StoreObject>(key?: string, value?: Store) : Store => {
 	// get the store of effects
 	const observableStore = getObservableStore(TRAM_OBSERVABLE_STORE)
 

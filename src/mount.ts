@@ -1,11 +1,12 @@
 const ensureFunction = require('type/function/ensure')
 
 import { registerHtml } from './dom-wrappers'
+import { TramOneComponent } from './types'
 
 /**
  * Updates a container with an initial component for the first render.
  */
-export default (component, container) => {
+export default (component: TramOneComponent, container: HTMLElement) => {
 	ensureFunction(component, { errorMessage: `Tram-One: component should be a function, recieved ${typeof component}, ${component}` })
 
 	const html = registerHtml({

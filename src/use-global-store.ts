@@ -1,5 +1,7 @@
 import observableHook from './observable-hook'
 
+import { StoreObject } from './types'
+
 /**
  * @name useGlobalObservable
  * @link https://tram-one.io/#use-global-observable
@@ -14,4 +16,10 @@ import observableHook from './observable-hook'
  *
  * @returns {Object|Array} the store to interact with.
  */
-export default (key, defaultValue?) => observableHook(key, defaultValue)
+function useGlobalStore<Store extends StoreObject>(key: string, defaultValue: Store) : Store;
+function useGlobalStore(key: string, defaultValue?) : unknown;
+function useGlobalStore(key: string, defaultValue?) : any {
+	return observableHook(key, defaultValue)
+}
+
+export default useGlobalStore

@@ -18,7 +18,7 @@ const setEffectStore = set
  * clear the effect store
  * usually called when we want to empty the effect store
  */
-export const clearEffectStore = effectName => {
+export const clearEffectStore = (effectName: string) => {
 	const effectStore = getEffectStore(effectName)
 
 	Object.keys(effectStore).forEach(key => delete effectStore[key])

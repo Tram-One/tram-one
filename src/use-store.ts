@@ -1,5 +1,7 @@
 import observableHook from './observable-hook'
 
+import { StoreObject } from './types'
+
 /**
  * @name useStore
  * @link https://tram-one.io/#use-store
@@ -13,4 +15,4 @@ import observableHook from './observable-hook'
  *
  * @returns {Object|Array} the store to interact with.
  */
-export default defaultValue => observableHook(undefined, defaultValue)
+export default <Store extends StoreObject>(defaultValue: Store) => observableHook(undefined, defaultValue)

@@ -12,7 +12,7 @@ import { TRAM_TAG, TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFF
 import { setup, get } from './namespace'
 
 // process new effects for new nodes
-const processEffects = node => {
+const processEffects = (node: Element) => {
 	const hasNewEffects = node[TRAM_TAG_NEW_EFFECTS]
 
 	if (hasNewEffects) {

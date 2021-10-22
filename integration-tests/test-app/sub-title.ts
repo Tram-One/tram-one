@@ -5,7 +5,7 @@ const html = registerHtml()
 /**
  * component to test basic rendering
  */
-module.exports = (props, children) => {
+export default (props, children) => {
 	return html`
 		<h2>${children}</h2>
 	`

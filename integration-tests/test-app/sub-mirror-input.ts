@@ -4,11 +4,13 @@ const html = registerHtml({
 	'sub-mirrorable-input': require('./sub-mirror-input')
 })
 
+type InputObject = { value: string }
+
 /**
  * component to test url parameters
  */
 export default () => {
-	const mirrorable = useGlobalStore('mirrorable-input')
+	const mirrorable = useGlobalStore('mirrorable-input') as InputObject
 
 	const onEvent = event => {
 		mirrorable.value = event.target.value

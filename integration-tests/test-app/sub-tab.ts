@@ -2,6 +2,14 @@ import { registerHtml, useEffect, useGlobalStore, useStore } from '../../src/tra
 
 const html = registerHtml()
 
+type TabState = {
+	tabWasUpdated: boolean,
+	tabWasDismissed: boolean,
+	shouldDisplayTab: boolean,
+	isTabLocked: boolean,
+	loading: boolean
+}
+
 /**
  * Component for testing effects and global state
  * It can be removed by clicking "Dismiss".
@@ -9,7 +17,7 @@ const html = registerHtml()
  */
 module.exports = () => {
 	// global state that controls if the tab is shown and what it shows
-	const tabState = useGlobalStore('tab-state')
+	const tabState = useGlobalStore('tab-state') as TabState
 
 	// local tab state for testing local effect changes
 	const previousLockState = useStore({ locked: false })

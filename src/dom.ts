@@ -1,14 +1,14 @@
 const nanohtml = require('@tram-one/nanohtml')
 const rbel = require('@tram-one/rbel')
 const hyperx = require('@tram-one/hyperx')
-const ensureIsObject = require('type/object/ensure')
-const ensureIsString = require('type/string/ensure')
 
 import { TRAM_HOOK_KEY } from './engine-names'
 import { pushWorkingKeyBranch, popWorkingKeyBranch, incrementWorkingKeyBranch, copyWorkingKey, restoreWorkingKey } from './working-key'
 import observeTag from './observe-tag'
 import processEffects from './process-effects'
 import { TRAM_TAG } from './node-names'
+
+import { Registry, Props, Children, DOMTaggedTemplateFunction } from './types'
 
 /**
  * This function takes in a namespace and registry of custom components,
@@ -19,18 +19,16 @@ import { TRAM_TAG } from './node-names'
  * @param {string} namespace namespace to create nodes in (by default XHTML namespace)
  * @param {object} registry mapping of tag names to component functions
  */
-export const registerDom = (namespace, registry = {}) => {
-	ensureIsString(namespace, { isOptional: true, errorMessage: `Tram-One: namespace should be a string, recieved ${typeof namespace}, ${namespace}` })
-	ensureIsObject(registry, { errorMessage: `Tram-One: registry should be an object, recieved ${typeof registry}, ${registry}` })
+export const registerDom = (namespace: string, registry: Registry = {}) : DOMTaggedTemplateFunction => {
 
 	// modify the registry so that each component function updates the hook working key
 	const hookedRegistry = Object.keys(registry).reduce((newRegistry, tagName) => {
 		const tagFunction = registry[tagName]
-		const hookedTagFunction = (...args) => {
+		const hookedTagFunction = (props: Props, children: Children) => {
 			// push a new branch onto the working key so any values that need to be unique among components
 			// but consistent across renders can be read
-			const props = JSON.stringify(args[0])
-			const newBranch = `${tagName}[${props}]`
+			const stringifiedProps = JSON.stringify(props)
+			const newBranch = `${tagName}[${stringifiedProps}]`
 			pushWorkingKeyBranch(TRAM_HOOK_KEY, newBranch)
 
 			// increment branch so that we have a unique value (in case we are rendering a list of components)
@@ -42,7 +40,7 @@ export const registerDom = (namespace, registry = {}) => {
 				// reset working key so we have the correct place when starting a new component
 				restoreWorkingKey(TRAM_HOOK_KEY, uniqueBranch)
 
-				return tagFunction(...args)
+				return tagFunction(props, children)
 			}
 
 			// observe store usage and process any new effects that were called when building the component

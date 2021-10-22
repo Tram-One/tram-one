@@ -2,11 +2,8 @@ const urlListener = require('url-listener')
 const useUrlParams = require('use-url-params')
 
 import useStore from './use-store'
+import { UrlMatchResults } from './types'
 
-/**
- * @typedef {Object} UrlObject
- * @property {boolean} matches if the url matched or not
- */
 /**
  * @name useUrlParams
  * @link https://tram-one.io/#use-url-params
@@ -18,12 +15,12 @@ import useStore from './use-store'
  *
  * @param {String} [pattern] path to match on (can include path variables)
  *
- * @returns {UrlObject} object with a `matches` key, and (if it matched) path and query parameters
+ * @returns {UrlMatchResults} object with a `matches` key, and (if it matched) path and query parameters
  */
-export default pattern => {
+export default (pattern: string) : UrlMatchResults => {
 	// save and update results in an observable, so that we can update
 	// components and effects in a reactive way
-	const initialParams = useUrlParams(pattern)
+	const initialParams = useUrlParams(pattern) as UrlMatchResults
 	const observedUrlParams = useStore(initialParams)
 
 	// urlListener can re-read the route and save the new results to the observable

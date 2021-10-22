@@ -1,8 +1,9 @@
 import { registerHtml } from '../../src/tram-one'
+import subtitle from './sub-title'
 
 const html = registerHtml({
 	// sub-title to test multiple instances of the same tag
-	'sub-title': require('./sub-title')
+	'sub-title': subtitle
 })
 
 /**

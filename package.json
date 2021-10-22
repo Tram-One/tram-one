@@ -1,6 +1,6 @@
 {
   "name": "tram-one",
-  "version": "10.1.11",
+  "version": "11.0.0",
   "description": "🚋 Modern View Framework for Vanilla Javascript",
   "main": "dist/tram-one.cjs.js",
   "commonjs": "dist/tram-one.cjs.js",

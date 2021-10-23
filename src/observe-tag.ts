@@ -13,13 +13,13 @@ const byDistanceFromIndex = targetIndex => (indexA, indexB) => {
 	return diffFromTargetA - diffFromTargetB
 }
 
-const hasMatchingTagName = (tagName : String) => (node : Element) => {
+const hasMatchingTagName = (tagName : string) => (node : Element) => {
 	// if the tagName matches, we want to process the node, otherwise skip it
 	return node.tagName === tagName ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP
 }
 
 // get an array including the element and all it's children
-const parentAndChildrenElements = (node : Element, tagName : String) => {
+const parentAndChildrenElements = (node : Element, tagName : string) => {
 	const matchesTagName = hasMatchingTagName(tagName)
 	const nodeFilterForTagName = { acceptNode: matchesTagName }
 	const componentWalker = document.createTreeWalker(node, NodeFilter.SHOW_ELEMENT, nodeFilterForTagName )

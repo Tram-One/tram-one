@@ -5,7 +5,7 @@ const html = registerHtml()
 /**
  * This page has an input that changes the total number of elements on the page
  */
-module.exports = () => {
+export default () => {
 	const pageStore = useStore({ queue: '1000', elements: '1000', startTimer: 0, endTimer: 0, renders: 0 })
 
 	const updateCount = event => {

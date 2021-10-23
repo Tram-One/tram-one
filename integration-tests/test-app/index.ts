@@ -22,7 +22,7 @@ const html = registerHtml({
 /**
  * main app to power integration tests
  */
-const app = () => {
+export const app = () => {
 	return html`
 		<main>
 			<title subtitle="Sub Title Prop">Sub Title Child</title>
@@ -38,7 +38,7 @@ const app = () => {
 	`
 }
 
-const startApp = container => {
+export const startApp = container => {
 	let appContainer = container
 	if (!appContainer) {
 		// before we setup the app, cleanup the document state if this was called before
@@ -63,8 +63,4 @@ const startApp = container => {
 
 if (document.querySelector('#parcel-page')) {
 	startApp('#parcel-page')
-}
-
-module.exports = {
-	app, startApp
 }

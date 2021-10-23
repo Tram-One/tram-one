@@ -1,14 +1,16 @@
 const useUrlParams = require('use-url-params')
-const { registerHtml, start } = require('../../src/tram-one')
+import { registerHtml, start } from '../../src/tram-one'
+
+import elementRendering from './element-rendering'
 
 const html = registerHtml({
-	'element-rendering': require('./element-rendering')
+	'element-rendering': elementRendering
 })
 
 /**
  * main app to power integration tests
  */
-const app = () => {
+export const app = () => {
 	if (useUrlParams('/element-rendering').matches) return html`<div><element-rendering /></div>`
 	return html`
 		<main>
@@ -17,7 +19,7 @@ const app = () => {
 	`
 }
 
-const startApp = container => {
+export const startApp = container => {
 	let appContainer = container
 	if (!appContainer) {
 		// before we setup the app, cleanup the document state if this was called before
@@ -42,8 +44,4 @@ const startApp = container => {
 
 if (document.querySelector('#parcel-page')) {
 	startApp('#parcel-page')
-}
-
-module.exports = {
-	app, startApp
 }

@@ -1,7 +1,7 @@
 module.exports = (label, value) => {
-	const labelWidth = label.length * 11
-	const valueWidth = 58 + (value.length * 4)
-	const labelOffset = 16.5
+	const labelWidth = label.length * 11;
+	const valueWidth = 58 + value.length * 4;
+	const labelOffset = 16.5;
 	return `<svg xmlns="http://www.w3.org/2000/svg" width="${valueWidth}" height="20">
   <linearGradient id="b" x2="0" y2="100%">
     <stop offset="0" stop-color="#bbb" stop-opacity=".1"/>
@@ -22,5 +22,5 @@ module.exports = (label, value) => {
     <text x="59" y="14">${value}</text>
   </g>
 </svg>
-`
-}
+`;
+};

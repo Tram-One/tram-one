@@ -1,6 +1,6 @@
-import { registerDom } from './dom'
+import { registerDom } from './dom';
 
-import { Registry } from './types'
+import { Registry } from './types';
 
 /**
  * @name registerHtml
@@ -12,9 +12,9 @@ import { Registry } from './types'
  * @param registry map of tag names to functions, use this to use custom elements built in tram-one
  * @return tagged template function that builds HTML components
  */
-export const registerHtml = (registry? : Registry) => {
-	return registerDom(null, registry)
-}
+export const registerHtml = (registry?: Registry) => {
+	return registerDom(null, registry);
+};
 
 /**
  * @name registerSvg
@@ -25,6 +25,6 @@ export const registerHtml = (registry? : Registry) => {
  * @param registry map of tag names to functions, use this to use custom elements built in tram-one
  * @return tagged template function that builds SVG components
  */
-export const registerSvg = (registry? : Registry) => {
-	return registerDom('http://www.w3.org/2000/svg', registry)
-}
+export const registerSvg = (registry?: Registry) => {
+	return registerDom('http://www.w3.org/2000/svg', registry);
+};

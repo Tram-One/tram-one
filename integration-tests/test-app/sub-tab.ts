@@ -1,14 +1,14 @@
-import { registerHtml, useEffect, useGlobalStore, useStore } from '../../src/tram-one'
+import { registerHtml, useEffect, useGlobalStore, useStore } from '../../src/tram-one';
 
-const html = registerHtml()
+const html = registerHtml();
 
 type TabState = {
-	tabWasUpdated: boolean,
-	tabWasDismissed: boolean,
-	shouldDisplayTab: boolean,
-	isTabLocked: boolean,
-	loading: boolean
-}
+	tabWasUpdated: boolean;
+	tabWasDismissed: boolean;
+	shouldDisplayTab: boolean;
+	isTabLocked: boolean;
+	loading: boolean;
+};
 
 /**
  * Component for testing effects and global state
@@ -17,58 +17,60 @@ type TabState = {
  */
 module.exports = () => {
 	// global state that controls if the tab is shown and what it shows
-	const tabState = useGlobalStore('tab-state') as TabState
+	const tabState = useGlobalStore('tab-state') as TabState;
 
 	// local tab state for testing local effect changes
-	const previousLockState = useStore({ locked: false })
+	const previousLockState = useStore({ locked: false });
 
 	// cleanup function that indicates that the effect was cleaned up (by state update)
 	const onTabUpdated = () => {
-		tabState.tabWasUpdated = true
-	}
+		tabState.tabWasUpdated = true;
+	};
 
 	// effect to verify that non-function cleanups are ignored
 	useEffect(() => {
-		return 5
-	})
+		return 5;
+	});
 
 	// effect to test state triggers on effects
 	useEffect(() => {
 		if (!tabState.shouldDisplayTab) {
-			tabState.tabWasDismissed = true
+			tabState.tabWasDismissed = true;
 		}
-	})
+	});
 
 	// effect to test cleanups on state change
 	useEffect(() => {
-		if (tabState.isTabLocked) { /* trigger effect update */ }
+		if (tabState.isTabLocked) {
+			/* trigger effect update */
+		}
 
-		return onTabUpdated
-	})
+		return onTabUpdated;
+	});
 
 	// effect to test updated cleanups on state change
-	const setPreviousLockState = prevState => () => {
-		previousLockState.locked = prevState
-	}
+	const setPreviousLockState = (prevState) => () => {
+		previousLockState.locked = prevState;
+	};
 
 	useEffect(() => {
-		return setPreviousLockState(tabState.isTabLocked)
-	})
+		return setPreviousLockState(tabState.isTabLocked);
+	});
 
 	// trigger parent component to remove this one
 	const onDismiss = () => {
-		tabState.shouldDisplayTab = false
-	}
+		tabState.shouldDisplayTab = false;
+	};
 
 	// trigger effect cleanup
 	const onLockTab = () => {
-		tabState.isTabLocked = true
-	}
+		tabState.isTabLocked = true;
+	};
 
 	// change lock state (for updated cleanup effects)
 	const onUnlockTab = () => {
-		tabState.isTabLocked = false
-	}
+		tabState.isTabLocked = false;
+	};
 
 	return html`
 		<section class="sub-tab">
@@ -78,5 +80,5 @@ module.exports = () => {
 			<button role="unlock-button" onclick=${onUnlockTab}>Unlock Tab</button>
 			<button role="dismiss-button" onclick=${onDismiss}>Dismiss</button>
 		</section>
-	`
-}
+	`;
+};

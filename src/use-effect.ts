@@ -1,8 +1,8 @@
-import { TRAM_HOOK_KEY, TRAM_EFFECT_QUEUE } from './engine-names'
-import { getEffectStore } from './effect-store'
-import { getWorkingKeyValue, incrementWorkingKeyBranch } from './working-key'
+import { TRAM_HOOK_KEY, TRAM_EFFECT_QUEUE } from './engine-names';
+import { getEffectStore } from './effect-store';
+import { getWorkingKeyValue, incrementWorkingKeyBranch } from './working-key';
 
-import { Effect } from './types'
+import { Effect } from './types';
 
 /**
  * @name useEffect
@@ -14,20 +14,20 @@ import { Effect } from './types'
  *
  * @param effect function to run on component mount
  */
-export default (effect: Effect) : void => {
+export default (effect: Effect): void => {
 	// get the store of effects
-	const effectQueue = getEffectStore(TRAM_EFFECT_QUEUE)
+	const effectQueue = getEffectStore(TRAM_EFFECT_QUEUE);
 
 	// get the key value from working-key
-	const key = getWorkingKeyValue(TRAM_HOOK_KEY)
+	const key = getWorkingKeyValue(TRAM_HOOK_KEY);
 
 	// increment the working key branch value
 	// this makes successive useEffects calls unique (until we reset the key)
-	incrementWorkingKeyBranch(TRAM_HOOK_KEY)
+	incrementWorkingKeyBranch(TRAM_HOOK_KEY);
 
 	// append () so that it's easier to debug effects from components
-	const callLikeKey = `${key}()`
+	const callLikeKey = `${key}()`;
 
 	// add the effect to the effect queue, so it can be processed later
-	effectQueue[callLikeKey] = effect
-}
+	effectQueue[callLikeKey] = effect;
+};

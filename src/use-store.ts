@@ -1,6 +1,6 @@
-import observableHook from './observable-hook'
+import observableHook from './observable-hook';
 
-import { StoreObject } from './types'
+import { StoreObject } from './types';
 
 /**
  * @name useStore
@@ -15,4 +15,4 @@ import { StoreObject } from './types'
  *
  * @returns the store to interact with.
  */
-export default <Store extends StoreObject>(defaultValue: Store) => observableHook(undefined, defaultValue)
+export default <Store extends StoreObject>(defaultValue: Store) => observableHook(undefined, defaultValue);

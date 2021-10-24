@@ -11,7 +11,7 @@
     "docs/runkit_example.js"
   ],
   "scripts": {
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore",
     "build": "npm run build:cjs && npm run build:umd",
     "postbuild": "npm run build:badges",
     "build:cjs": "rollup -c configs/rollup.config.cjs.js",
@@ -66,11 +66,14 @@
     "@typescript-eslint/eslint-plugin": "^5.1.0",
     "@typescript-eslint/parser": "^5.1.0",
     "eslint": "^8.0.1",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-config-tram-one": "^4.0.0",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-jest": "^25.2.2",
+    "eslint-plugin-prettier": "^4.0.0",
     "jest": "^27.0.6",
     "parcel": "^2.0.0-beta.2",
+    "prettier": "^2.4.1",
     "rollup": "^2.53.2",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-filesize": "^9.1.1",

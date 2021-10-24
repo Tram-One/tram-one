@@ -6,22 +6,22 @@
  * new effects should be triggered or cleaned up
  */
 
-import { buildNamespace } from './namespace'
+import { buildNamespace } from './namespace';
 
-export const { setup: setupEffectStore, get: getEffectStore, set: setEffectStore } = buildNamespace(() => ({}))
+export const { setup: setupEffectStore, get: getEffectStore, set: setEffectStore } = buildNamespace(() => ({}));
 
 /**
  * clear the effect store
  * usually called when we want to empty the effect store
  */
 export const clearEffectStore = (effectName: string) => {
-	const effectStore = getEffectStore(effectName)
+	const effectStore = getEffectStore(effectName);
 
-	Object.keys(effectStore).forEach(key => delete effectStore[key])
-}
+	Object.keys(effectStore).forEach((key) => delete effectStore[key]);
+};
 
 /**
  * restore the effect store to a previous value
  * usually used when we had to interrupt the processing of effects
  */
-export const restoreEffectStore = setEffectStore
+export const restoreEffectStore = setEffectStore;

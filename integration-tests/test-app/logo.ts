@@ -1,6 +1,6 @@
-import { registerSvg } from '../../src/tram-one'
+import { registerSvg } from '../../src/tram-one';
 
-const svg = registerSvg()
+const svg = registerSvg();
 
 /**
  * component to test svg functionality
@@ -12,5 +12,5 @@ export default () => {
         <title>Test SVG</title>
       </circle>
     </svg>
-  `
-}
+  `;
+};

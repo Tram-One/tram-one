@@ -4,36 +4,34 @@
  */
 
 export const setupTramOneSpace = () => {
-	window['tram-space'] = {}
-}
+	window['tram-space'] = {};
+};
 
 export const buildNamespace = <NamespaceStore>(constructor: () => NamespaceStore) => {
-	const setup = (namespace: string) : NamespaceStore => {
-		window['tram-space'][namespace] = constructor()
-		return window['tram-space'][namespace]
-	}
+	const setup = (namespace: string): NamespaceStore => {
+		window['tram-space'][namespace] = constructor();
+		return window['tram-space'][namespace];
+	};
 
-	const get = (namespace: string) : NamespaceStore => {
+	const get = (namespace: string): NamespaceStore => {
 		// if tram-one is setup, this will be defined
-		const tramOneIsSetup = window['tram-space']
+		const tramOneIsSetup = window['tram-space'];
 
 		// otherwise, we should warn
 		// this usually happens when calling a hook outside of a component function
 		// but this could be potentially triggered other ways - if we find those, we should broaden the message then
 		if (!tramOneIsSetup) {
-			throw new Error('Tram-One: app has not started yet, but hook was called. Is it being invoked outside a component function?')
+			throw new Error(
+				'Tram-One: app has not started yet, but hook was called. Is it being invoked outside a component function?'
+			);
 		}
 
-		return window['tram-space'][namespace]
-	}
+		return window['tram-space'][namespace];
+	};
 
 	const set = (namespace: string, value: NamespaceStore) => {
-		window['tram-space'][namespace] = value
-	}
+		window['tram-space'][namespace] = value;
+	};
 
-	return {
-		setup,
-		get,
-		set
-	}
-}
+	return { setup, get, set };
+};

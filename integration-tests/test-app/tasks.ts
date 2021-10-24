@@ -1,27 +1,27 @@
-import { registerHtml, useStore } from '../../src/tram-one'
+import { registerHtml, useStore } from '../../src/tram-one';
 
-const html = registerHtml()
+const html = registerHtml();
 
 /**
  * component to test url parameters
  */
 export default () => {
-	const tasks = useStore([])
-	const newTask = useStore({ label: `Task Number ${tasks.length}`, type: 'Projects' })
+	const tasks = useStore([]);
+	const newTask = useStore({ label: `Task Number ${tasks.length}`, type: 'Projects' });
 
 	const addTask = () => {
-		tasks.push(newTask.label)
-	}
+		tasks.push(newTask.label);
+	};
 
-	const updateNewTask = event => {
-		newTask.label = event.target.value
-	}
+	const updateNewTask = (event) => {
+		newTask.label = event.target.value;
+	};
 
-	const updateNewTaskType = event => {
-		newTask.type = event.target.value
-	}
+	const updateNewTaskType = (event) => {
+		newTask.type = event.target.value;
+	};
 
-	const taskList = tasks.map(task => html`<li>${task}</li>`)
+	const taskList = tasks.map((task) => html`<li>${task}</li>`);
 	return html`
 		<div>
 			<label for="new-task-label">New Task Label</label>
@@ -35,5 +35,5 @@ export default () => {
 				${taskList}
 			</ul>
 		</div>
-	`
-}
+	`;
+};

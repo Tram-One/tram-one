@@ -1,10 +1,10 @@
-const { registerHtml, useEffect } = require('../../src/tram-one')
+const { registerHtml, useEffect } = require('../../src/tram-one');
 
-const html = registerHtml()
+const html = registerHtml();
 
 // other hooks also generate the same error
 // so we don't need to check those, just useEffect is fine
-useEffect(() => {})
+useEffect(() => {});
 
 /**
  * broken component misplaced hook
@@ -14,5 +14,5 @@ module.exports = () => {
 		<header>
 			<h1 class="title">Home Page</h1>
 		</header>
-	`
-}
+	`;
+};

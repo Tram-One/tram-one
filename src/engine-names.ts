@@ -6,8 +6,8 @@
  * e.g. `window['tram-space']['tram-hook-key']`
  */
 
-export const TRAM_HOOK_KEY = 'tram-hook-key'
-export const TRAM_EFFECT_STORE = 'tram-effect-store'
-export const TRAM_EFFECT_QUEUE = 'tram-effect-queue'
-export const TRAM_OBSERVABLE_STORE = 'tram-observable-store'
-export const TRAM_MUTATION_OBSERVER = 'tram-mutation-observer'
+export const TRAM_HOOK_KEY = 'tram-hook-key';
+export const TRAM_EFFECT_STORE = 'tram-effect-store';
+export const TRAM_EFFECT_QUEUE = 'tram-effect-queue';
+export const TRAM_OBSERVABLE_STORE = 'tram-observable-store';
+export const TRAM_MUTATION_OBSERVER = 'tram-mutation-observer';

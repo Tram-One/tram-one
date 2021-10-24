@@ -6,7 +6,7 @@
  * e.g. `$0['tram-hook-key']`
  */
 
-export const TRAM_TAG = 'tram-tag'
-export const TRAM_TAG_REACTION = 'tram-tag-reaction'
-export const TRAM_TAG_NEW_EFFECTS = 'tram-tag-new-effects'
-export const TRAM_TAG_CLEANUP_EFFECTS = 'tram-tag-cleanup-effects'
+export const TRAM_TAG = 'tram-tag';
+export const TRAM_TAG_REACTION = 'tram-tag-reaction';
+export const TRAM_TAG_NEW_EFFECTS = 'tram-tag-new-effects';
+export const TRAM_TAG_CLEANUP_EFFECTS = 'tram-tag-cleanup-effects';

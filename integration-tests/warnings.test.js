@@ -1,5 +1,5 @@
-const { startApp } = require('./test-app')
-const { startApp: startBrokenApp } = require('./broken-app')
+const { startApp } = require('./test-app');
+const { startApp: startBrokenApp } = require('./broken-app');
 
 /*
  * These tests represent runtime errors that can't be type checked
@@ -10,14 +10,16 @@ const { startApp: startBrokenApp } = require('./broken-app')
 describe('Tram-One', () => {
 	beforeEach(() => {
 		// clean up any tram-one properties between tests
-		window['tram-space'] = undefined
-	})
+		window['tram-space'] = undefined;
+	});
 
 	it('should warn if selector is not found', () => {
-		expect(() => startApp('#app')).toThrowError('Tram-One: could not find target, is the element on the page yet?')
-	})
+		expect(() => startApp('#app')).toThrowError('Tram-One: could not find target, is the element on the page yet?');
+	});
 
 	it('should warn if a hook is called outside of a component context', () => {
-		expect(() => startBrokenApp('hook')()).toThrowError('Tram-One: app has not started yet, but hook was called. Is it being invoked outside a component function?')
-	})
-})
+		expect(() => startBrokenApp('hook')()).toThrowError(
+			'Tram-One: app has not started yet, but hook was called. Is it being invoked outside a component function?'
+		);
+	});
+});

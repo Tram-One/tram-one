@@ -1,48 +1,48 @@
-const { observe } = require('@nx-js/observer-util')
+const { observe } = require('@nx-js/observer-util');
 
-import { TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } from './node-names'
+import { TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } from './node-names';
 
 // functions to go to nodes or indicies (made for .map)
-const toIndicies = (node, index) => index
+const toIndicies = (node, index) => index;
 
 // sorting function that prioritizes indicies that are closest to a target
 // e.g. target = 3, [1, 2, 3, 4, 5] => [3, 2, 4, 1, 5]
-const byDistanceFromIndex = targetIndex => (indexA, indexB) => {
-	const diffFromTargetA = Math.abs(indexA - targetIndex)
-	const diffFromTargetB = Math.abs(indexB - targetIndex)
-	return diffFromTargetA - diffFromTargetB
-}
+const byDistanceFromIndex = (targetIndex) => (indexA, indexB) => {
+	const diffFromTargetA = Math.abs(indexA - targetIndex);
+	const diffFromTargetB = Math.abs(indexB - targetIndex);
+	return diffFromTargetA - diffFromTargetB;
+};
 
-const hasMatchingTagName = (tagName : string) => (node : Element) => {
+const hasMatchingTagName = (tagName: string) => (node: Element) => {
 	// if the tagName matches, we want to process the node, otherwise skip it
-	return node.tagName === tagName ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP
-}
+	return node.tagName === tagName ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+};
 
 // get an array including the element and all it's children
-const parentAndChildrenElements = (node : Element, tagName : string) => {
-	const matchesTagName = hasMatchingTagName(tagName)
-	const nodeFilterForTagName = { acceptNode: matchesTagName }
-	const componentWalker = document.createTreeWalker(node, NodeFilter.SHOW_ELEMENT, nodeFilterForTagName )
-	const parentAndChildren = [componentWalker.currentNode]
+const parentAndChildrenElements = (node: Element, tagName: string) => {
+	const matchesTagName = hasMatchingTagName(tagName);
+	const nodeFilterForTagName = { acceptNode: matchesTagName };
+	const componentWalker = document.createTreeWalker(node, NodeFilter.SHOW_ELEMENT, nodeFilterForTagName);
+	const parentAndChildren = [componentWalker.currentNode];
 	while (componentWalker.nextNode()) {
-		parentAndChildren.push(componentWalker.currentNode)
+		parentAndChildren.push(componentWalker.currentNode);
 	}
 
-	return parentAndChildren
-}
+	return parentAndChildren;
+};
 
 /**
  * Type for saving properties of an element that we are removing / replacing
  */
 type RemovedElementDataStore = {
-	index?: number,
-	tagName?: string,
-	scrollLeft?: number,
-	scrollTop?: number,
-	selectionStart?: number | null,
-	selectionEnd?: number | null,
-	selectionDirection?: string
-}
+	index?: number;
+	tagName?: string;
+	scrollLeft?: number;
+	scrollTop?: number;
+	selectionStart?: number | null;
+	selectionEnd?: number | null;
+	selectionDirection?: string;
+};
 
 /**
  * This is a helper function for the dom creation.
@@ -51,107 +51,108 @@ type RemovedElementDataStore = {
  *
  * The mutation-observer will unobserve any reactions here when the node is removed.
  */
-export default tagFunction => {
-	let tagResult
+export default (tagFunction) => {
+	let tagResult;
 	const buildAndReplaceTag = () => {
 		// if there is an existing tagResult, it is the last rendering, and so we want to re-render over it
-		let oldTag = tagResult
-		let removedElementWithFocusData : RemovedElementDataStore = {}
+		let oldTag = tagResult;
+		let removedElementWithFocusData: RemovedElementDataStore = {};
 
 		// remove oldTag first so that we unobserve before we re-observe
 		if (oldTag) {
 			// we need to blow away any old focus data we had
-			removedElementWithFocusData = {}
+			removedElementWithFocusData = {};
 
 			// determine if this element (or any element under it) had focus
-			const oldTagHasFocusedElement = oldTag.contains(document.activeElement)
+			const oldTagHasFocusedElement = oldTag.contains(document.activeElement);
 
 			// if an element had focus, copy over all the selection data (so we can copy it back later)
 			if (oldTagHasFocusedElement) {
-
 				// we'll assume that the element is an HTMLInputElement, in reality other kinds of elements will be caught here,
 				// but that's fine, since they have null as selection attributes, and setting them to null is fine
-				const activeElement = document.activeElement as HTMLInputElement
+				const activeElement = document.activeElement as HTMLInputElement;
 
 				// first, we need to get all the elements that are similar (we'll use tagName)
 				// this way, when we rerender, we can search for those tagNames, and just use the index we got here
-				const allActiveLikeElements = parentAndChildrenElements(oldTag, activeElement.tagName)
-				removedElementWithFocusData.index = allActiveLikeElements.findIndex(element => element === activeElement)
+				const allActiveLikeElements = parentAndChildrenElements(oldTag, activeElement.tagName);
+				removedElementWithFocusData.index = allActiveLikeElements.findIndex((element) => element === activeElement);
 
 				// copy over the data
-				removedElementWithFocusData.tagName = activeElement.tagName
-				removedElementWithFocusData.scrollLeft = activeElement.scrollLeft
-				removedElementWithFocusData.scrollTop = activeElement.scrollTop
-				removedElementWithFocusData.selectionStart = activeElement.selectionStart
-				removedElementWithFocusData.selectionEnd = activeElement.selectionEnd
-				removedElementWithFocusData.selectionDirection = activeElement.selectionDirection
+				removedElementWithFocusData.tagName = activeElement.tagName;
+				removedElementWithFocusData.scrollLeft = activeElement.scrollLeft;
+				removedElementWithFocusData.scrollTop = activeElement.scrollTop;
+				removedElementWithFocusData.selectionStart = activeElement.selectionStart;
+				removedElementWithFocusData.selectionEnd = activeElement.selectionEnd;
+				removedElementWithFocusData.selectionDirection = activeElement.selectionDirection;
 			}
 
-			const emptyDiv = document.createElement('div')
-			oldTag.replaceWith(emptyDiv)
+			const emptyDiv = document.createElement('div');
+			oldTag.replaceWith(emptyDiv);
 
 			// copy the reaction and effects from the old tag to the empty div so we don't lose them
-			emptyDiv[TRAM_TAG_REACTION] = oldTag[TRAM_TAG_REACTION]
-			emptyDiv[TRAM_TAG_NEW_EFFECTS] = oldTag[TRAM_TAG_NEW_EFFECTS]
-			emptyDiv[TRAM_TAG_CLEANUP_EFFECTS] = oldTag[TRAM_TAG_CLEANUP_EFFECTS]
+			emptyDiv[TRAM_TAG_REACTION] = oldTag[TRAM_TAG_REACTION];
+			emptyDiv[TRAM_TAG_NEW_EFFECTS] = oldTag[TRAM_TAG_NEW_EFFECTS];
+			emptyDiv[TRAM_TAG_CLEANUP_EFFECTS] = oldTag[TRAM_TAG_CLEANUP_EFFECTS];
 
 			// set oldTag to emptyDiv, so we can replace it later
-			oldTag = emptyDiv
+			oldTag = emptyDiv;
 		}
 
 		// build the component
-		tagResult = tagFunction()
+		tagResult = tagFunction();
 
 		// if oldTag was defined, then we need to replace it with the new result
 		if (oldTag) {
 			// if an element had focus, reapply it
-			let elementToGiveFocus
+			let elementToGiveFocus;
 			if (removedElementWithFocusData.index >= 0) {
-				const allActiveLikeElements = parentAndChildrenElements(tagResult, removedElementWithFocusData.tagName)
+				const allActiveLikeElements = parentAndChildrenElements(tagResult, removedElementWithFocusData.tagName);
 
 				// we'll look through the elements (in order of nodes closest to original index) and find a tag that matches.
 				// this means if it didn't move, we'll get it right away,
 				// if it did, we'll look at the elements closest to the original position
 				const elementIndexToGiveFocus = allActiveLikeElements
 					.map(toIndicies)
-					.sort(byDistanceFromIndex(removedElementWithFocusData.index))[0]
+					.sort(byDistanceFromIndex(removedElementWithFocusData.index))[0];
 
 				// if the element / child exists, focus it
-				elementToGiveFocus = allActiveLikeElements[elementIndexToGiveFocus]
+				elementToGiveFocus = allActiveLikeElements[elementIndexToGiveFocus];
 				if (elementToGiveFocus !== undefined) {
 					// also try to set the selection, if there is a selection for this element
-					const hasSelectionStart = removedElementWithFocusData.selectionStart !== null && removedElementWithFocusData.selectionStart !== undefined
+					const hasSelectionStart =
+						removedElementWithFocusData.selectionStart !== null &&
+						removedElementWithFocusData.selectionStart !== undefined;
 					if (hasSelectionStart) {
 						elementToGiveFocus.setSelectionRange(
 							removedElementWithFocusData.selectionStart,
 							removedElementWithFocusData.selectionEnd,
 							removedElementWithFocusData.selectionDirection
-						)
+						);
 					}
 
 					// also set the scrollLeft and scrollTop (since this is reset to 0 by default)
 					if (removedElementWithFocusData.scrollLeft || removedElementWithFocusData.scrollTop) {
-						elementToGiveFocus.scrollLeft = removedElementWithFocusData.scrollLeft
-						elementToGiveFocus.scrollTop = removedElementWithFocusData.scrollTop
+						elementToGiveFocus.scrollLeft = removedElementWithFocusData.scrollLeft;
+						elementToGiveFocus.scrollTop = removedElementWithFocusData.scrollTop;
 					}
 				}
 			}
 
 			// copy the reaction and effects from the old tag to the new one
-			tagResult[TRAM_TAG_REACTION] = oldTag[TRAM_TAG_REACTION]
-			tagResult[TRAM_TAG_NEW_EFFECTS] = oldTag[TRAM_TAG_NEW_EFFECTS]
-			tagResult[TRAM_TAG_CLEANUP_EFFECTS] = oldTag[TRAM_TAG_CLEANUP_EFFECTS]
+			tagResult[TRAM_TAG_REACTION] = oldTag[TRAM_TAG_REACTION];
+			tagResult[TRAM_TAG_NEW_EFFECTS] = oldTag[TRAM_TAG_NEW_EFFECTS];
+			tagResult[TRAM_TAG_CLEANUP_EFFECTS] = oldTag[TRAM_TAG_CLEANUP_EFFECTS];
 
 			// both these actions cause forced reflow, and can be performance issues
-			oldTag.replaceWith(tagResult)
-			if (elementToGiveFocus) elementToGiveFocus.focus()
+			oldTag.replaceWith(tagResult);
+			if (elementToGiveFocus) elementToGiveFocus.focus();
 		}
-	}
+	};
 
-	const tagReaction = observe(buildAndReplaceTag)
+	const tagReaction = observe(buildAndReplaceTag);
 
 	// save the reaction to the node, so that the mutation-observer can unobserve it later
-	tagResult[TRAM_TAG_REACTION] = tagReaction
+	tagResult[TRAM_TAG_REACTION] = tagReaction;
 
-	return tagResult
-}
+	return tagResult;
+};

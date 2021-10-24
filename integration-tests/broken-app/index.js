@@ -1,11 +1,11 @@
-const { registerHtml, start } = require('../../src/tram-one')
+const { registerHtml, start } = require('../../src/tram-one');
 
-const buildApp = test => {
+const buildApp = (test) => {
 	// build the html function on the spot
 	// we have to do this because some components cause the page to break on import
 	const html = registerHtml({
-		'test-component': require(`./broken-${test}`)
-	})
+		'test-component': require(`./broken-${test}`),
+	});
 
 	/**
 	 * main app to power integration tests
@@ -14,22 +14,22 @@ const buildApp = test => {
 		<main>
 			<test-component />
 		</main>
-	`
-}
+	`;
+};
 
-const startApp = test => container => {
+const startApp = (test) => (container) => {
 	if (container === undefined) {
-		container = document.createElement('div')
-		container.id = 'app'
+		container = document.createElement('div');
+		container.id = 'app';
 	}
 
-	start(buildApp(test), container)
+	start(buildApp(test), container);
 
 	return {
-		container
-	}
-}
+		container,
+	};
+};
 
 module.exports = {
-	startApp
-}
+	startApp,
+};

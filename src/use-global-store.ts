@@ -1,6 +1,6 @@
-import observableHook from './observable-hook'
+import observableHook from './observable-hook';
 
-import { StoreObject } from './types'
+import { StoreObject } from './types';
 
 /**
  * @name useGlobalObservable
@@ -16,10 +16,10 @@ import { StoreObject } from './types'
  *
  * @returns the store to interact with.
  */
-function useGlobalStore<Store extends StoreObject>(key: string, defaultValue: Store) : Store;
-function useGlobalStore(key: string, defaultValue?) : unknown;
-function useGlobalStore(key: string, defaultValue?) : any {
-	return observableHook(key, defaultValue)
+function useGlobalStore<Store extends StoreObject>(key: string, defaultValue: Store): Store;
+function useGlobalStore(key: string, defaultValue?): unknown;
+function useGlobalStore(key: string, defaultValue?): any {
+	return observableHook(key, defaultValue);
 }
 
-export default useGlobalStore
+export default useGlobalStore;

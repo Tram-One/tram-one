@@ -1,6 +1,6 @@
-const { observable } = require('@nx-js/observer-util')
+const { observable } = require('@nx-js/observer-util');
 
-import { buildNamespace } from './namespace'
+import { buildNamespace } from './namespace';
 
 /*
  * Observable Stores in Tram-One are used for objects whose properties need to be observed.
@@ -8,4 +8,4 @@ import { buildNamespace } from './namespace'
  * them as proxies, and making observed functions respond to their changes.
  */
 
-export const { setup: setupObservableStore, get: getObservableStore } = buildNamespace(() => observable({}))
+export const { setup: setupObservableStore, get: getObservableStore } = buildNamespace(() => observable({}));

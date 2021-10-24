@@ -16,8 +16,8 @@ import { Registry, Props, Children, DOMTaggedTemplateFunction } from './types'
  *
  * This function shouldn't need to be called directly, instead, you can use `registerHtml` or `registerSvg`
  *
- * @param {string} namespace namespace to create nodes in (by default XHTML namespace)
- * @param {object} registry mapping of tag names to component functions
+ * @param namespace namespace to create nodes in (by default XHTML namespace)
+ * @param registry mapping of tag names to component functions
  */
 export const registerDom = (namespace: string, registry: Registry = {}) : DOMTaggedTemplateFunction => {
 

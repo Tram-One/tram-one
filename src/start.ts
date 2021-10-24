@@ -17,8 +17,8 @@ import { ElementOrSelector, TramOneComponent } from './types'
  *
  * This should only be called for the initial render / building of the app.
  *
- * @param {function} component top-level component to attach to the page.
- * @param {string|Node} target either a CSS selector, or Node to attach the component to
+ * @param component top-level component to attach to the page.
+ * @param target either a CSS selector, or Node to attach the component to
  */
 export default (component: TramOneComponent, target: ElementOrSelector) => {
 	/* setup all the internal engines required for tram-one to work */

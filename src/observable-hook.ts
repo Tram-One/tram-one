@@ -5,7 +5,7 @@ import { getWorkingKeyValue, incrementWorkingKeyBranch } from './working-key'
 import { StoreObject } from './types'
 
 /**
- * Source code for both observable hooks, useStore, and useGlobalStore.
+ * Shared source code for both observable hooks, useStore, and useGlobalStore.
  * This hook exposes a globally stored value (in either case), that can cause the component
  * to update when a subfield of that value is updated.
  *

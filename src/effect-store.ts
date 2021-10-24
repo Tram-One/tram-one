@@ -6,13 +6,9 @@
  * new effects should be triggered or cleaned up
  */
 
-const { setup, get, set } = require('./namespace')
+import { buildNamespace } from './namespace'
 
-export const setupEffectStore = setup(() => ({}))
-
-export const getEffectStore = get
-
-const setEffectStore = set
+export const { setup: setupEffectStore, get: getEffectStore, set: setEffectStore } = buildNamespace(() => ({}))
 
 /**
  * clear the effect store

@@ -87,6 +87,17 @@ describe('Tram-One', () => {
 		expect(getByText(container, 'The page is done.')).toBeVisible()
 	})
 
+	it('should process effects on the root node', async () => {
+		// start the app
+		const { container } = startApp()
+
+		// verify that it (eventually) has loaded: true
+		await waitFor(() => {
+			expect(getByText(container, 'Root Loaded: true')).toBeVisible()
+		})
+
+	})
+
 	it('should process cleanup effects', async () => {
 		// start the app
 		const { container } = startApp()
@@ -101,11 +112,11 @@ describe('Tram-One', () => {
 		// dismiss tab to trigger cleanup effect
 		fireEvent.click(getByText(container, 'Dismiss'))
 
-		// wait for mutation observer to pick up removed elements
-		await waitFor(() => {})
-
 		// verify that effect cleanup was triggered
-		expect(getByText(container, 'Tab Dismissed')).toBeVisible()
+		await waitFor(() => {
+			expect(getByText(container, 'Tab Dismissed')).toBeVisible()
+		})
+
 	})
 
 	it('should process updated effects', async () => {
@@ -122,11 +133,10 @@ describe('Tram-One', () => {
 		// dismiss tab to trigger cleanup effect
 		fireEvent.click(getByText(container, 'Lock Tab'))
 
-		// wait for mutation observer to pick up removed elements
-		await waitFor(() => {})
-
 		// verify that effect update was triggered
-		expect(getByText(container, 'Updated: true')).toBeVisible()
+		await waitFor(() => {
+			expect(getByText(container, 'Updated: true')).toBeVisible()
+		})
 	})
 
 	it('should re-render components dependent on url params', () => {

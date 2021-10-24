@@ -11,8 +11,8 @@ import { StoreObject } from './types'
  * If the subfield of an object, or element of an array is updated
  * it will cause only the components that are dependent on that value to update.
  *
- * @param {Object|Array} defaultValue the default value to start the store at
+ * @param defaultValue the default value to start the store at
  *
- * @returns {Object|Array} the store to interact with.
+ * @returns the store to interact with.
  */
 export default <Store extends StoreObject>(defaultValue: Store) => observableHook(undefined, defaultValue)

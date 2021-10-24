@@ -13,9 +13,9 @@ import { UrlMatchResults } from './types'
  * It's internal functionality is powered by the package
  * {@link https://www.npmjs.com/package/rlite-router rlite}
  *
- * @param {String} [pattern] path to match on (can include path variables)
+ * @param pattern path to match on (can include path variables)
  *
- * @returns {UrlMatchResults} object with a `matches` key, and (if it matched) path and query parameters
+ * @returns object with a `matches` key, and (if it matched) path and query parameters
  */
 export default (pattern: string) : UrlMatchResults => {
 	// save and update results in an observable, so that we can update

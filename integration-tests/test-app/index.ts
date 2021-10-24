@@ -1,4 +1,4 @@
-import { registerHtml, start } from '../../src/tram-one'
+import { registerHtml, start, useEffect, useStore } from '../../src/tram-one'
 import title from './title'
 import logo from './logo'
 import clicktracker from './click-tracker'
@@ -23,9 +23,17 @@ const html = registerHtml({
  * main app to power integration tests
  */
 export const app = () => {
+	const rootStore = useStore({ loaded: false })
+
+	/* root component effects */
+	useEffect(() => {
+		rootStore.loaded = true
+	})
+
 	return html`
 		<main>
 			<title subtitle="Sub Title Prop">Sub Title Child</title>
+			<p>Root Loaded: ${rootStore.loaded}</p>
 			<logo />
 			<account />
 			<p>Test Page Content</p>

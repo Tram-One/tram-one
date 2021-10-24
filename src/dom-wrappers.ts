@@ -9,8 +9,8 @@ import { Registry } from './types'
  * Function to generate a tagged template function for XHTML / HTML.
  * Takes in a registry that allows you to import other tag functions and use them in your template string.
  *
- * @param {object} [registry={}] map of tag names to functions, use this to use custom elements built in tram-one
- * @return {function} tagged template function that builds HTML components
+ * @param registry map of tag names to functions, use this to use custom elements built in tram-one
+ * @return tagged template function that builds HTML components
  */
 export const registerHtml = (registry? : Registry) => {
 	return registerDom(null, registry)
@@ -22,8 +22,8 @@ export const registerHtml = (registry? : Registry) => {
  * @description
  * Function to generate a tagged template function for SVG.
  *
- * @param {object} [registry={}] map of tag names to functions, use this to use custom elements built in tram-one
- * @return {function} tagged template function that builds SVG components
+ * @param registry map of tag names to functions, use this to use custom elements built in tram-one
+ * @return tagged template function that builds SVG components
  */
 export const registerSvg = (registry? : Registry) => {
 	return registerDom('http://www.w3.org/2000/svg', registry)

@@ -1,4 +1,4 @@
-import { setup, get } from './namespace'
+import { buildNamespace } from './namespace'
 
 /*
  * This file defines all the functions required to interact with
@@ -7,7 +7,7 @@ import { setup, get } from './namespace'
  * values or effects to pull / trigger.
  */
 
-export const setupWorkingKey = setup(() => ({
+export const { setup: setupWorkingKey, get: getWorkingKey } = buildNamespace(() => ({
 	// list of custom tags that we've stepped into
 	branch: [],
 	// map of branches to index value (used as a cursor for hooks)
@@ -16,17 +16,16 @@ export const setupWorkingKey = setup(() => ({
 	}
 }))
 
-const getWorkingKey = get
-
-const getWorkingBranch = keyName => {
-	return getWorkingKey(keyName).branch.join('/')
+const getWorkingBranch = (keyName: string) => {
+	const workingkeyObject = getWorkingKey(keyName)
+	return workingkeyObject.branch.join('/')
 }
 
 /**
  * push a new branch value, usually when we step into a new
  * custom component when mounting.
  */
-export const pushWorkingKeyBranch = (keyName, branch) => {
+export const pushWorkingKeyBranch = (keyName: string, branch) => {
 	const workingKey = getWorkingKey(keyName)
 	workingKey.branch.push(branch)
 	if (!workingKey.branchIndices[getWorkingBranch(keyName)]) {
@@ -81,8 +80,8 @@ export const copyWorkingKey = keyName => {
 export const restoreWorkingKey = (keyName, restoreKey) => {
 	const key = getWorkingKey(keyName)
 	const branches = key.branchIndices
-	getWorkingKey(keyName).branch = [...restoreKey.branch]
-	Object.keys(getWorkingKey(keyName).branchIndices)
+	key.branch = [...restoreKey.branch]
+	Object.keys(key.branchIndices)
 		.forEach(branch => {
 			branches[branch] = restoreKey.branchIndices[branch] || 0
 		})

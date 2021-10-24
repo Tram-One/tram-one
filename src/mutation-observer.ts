@@ -9,7 +9,7 @@
 const { observe, unobserve } = require('@nx-js/observer-util')
 
 import { TRAM_TAG, TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } from './node-names'
-import { setup, get } from './namespace'
+import { buildNamespace } from './namespace'
 
 // process new effects for new nodes
 const processEffects = (node: Element) => {
@@ -84,7 +84,7 @@ const childrenComponents = node => {
 	return children
 }
 
-export const setupMutationObserver = setup(() => new MutationObserver(mutationList => {
+const mutationObserverNamespaceConstructor = () => new MutationObserver(mutationList => {
 	// cleanup orphaned nodes that are no longer on the DOM
 	const removedNodes = mutationList
 		.flatMap(mutation => [...mutation.removedNodes])
@@ -98,9 +98,9 @@ export const setupMutationObserver = setup(() => new MutationObserver(mutationLi
 		.flatMap(childrenComponents)
 
 	newNodes.forEach(processEffects)
-}))
+})
 
-const getMutationObserver = get
+export const { setup: setupMutationObserver, get: getMutationObserver } = buildNamespace(mutationObserverNamespaceConstructor)
 
 // tell the mutation observer to watch the given node for changes
 export const startWatcher = (observerName, node) => {

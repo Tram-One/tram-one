@@ -11,10 +11,10 @@ import { StoreObject } from './types'
  * If the subfield of an object, or element of an array is updated
  * it will cause only the components that are dependent on that value to update.
  *
- * @param {string} key a unique string to write and read the global value
- * @param {Object|Array} defaultValue the default value to start the store at
+ * @param key a unique string to write and read the global value
+ * @param defaultValue the default value to start the store at
  *
- * @returns {Object|Array} the store to interact with.
+ * @returns the store to interact with.
  */
 function useGlobalStore<Store extends StoreObject>(key: string, defaultValue: Store) : Store;
 function useGlobalStore(key: string, defaultValue?) : unknown;

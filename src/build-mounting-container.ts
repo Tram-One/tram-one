@@ -3,7 +3,7 @@ import { ElementOrSelector } from './types'
 /**
  * Helper function for getting an element when given a string or element
  * @param target a selector or the container
- * @returns
+ * @returns the container that we can mount on
  */
 const getContainer = (target : ElementOrSelector) : HTMLElement => {
 	// if the selector is a string, try to find the element,
@@ -21,7 +21,10 @@ const getContainer = (target : ElementOrSelector) : HTMLElement => {
 
 /**
  * Function to determine (or create) the element that we will mount our tram-one app onto
- * @param target either a CSS selector, or HTMLElement to attach the component to
+ * @param target either a CSS selector, or HTMLElement to attach the component to.
+ * This elememnt should be initially empty.
+ *
+ * @returns the container, now with a div that tram-one can manage
  */
 export default (target : ElementOrSelector) : HTMLElement => {
 

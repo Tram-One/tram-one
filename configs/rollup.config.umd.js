@@ -24,7 +24,7 @@ const plugins = [
 	filesize(),
 ];
 
-// domino is a package used by belit to support server side rendering,
+// domino is a package used by @tram-one/nanohtml to support server side rendering,
 // it does not need to be included in browser builds, which will have document
 export default {
 	input: 'src/tram-one.ts',

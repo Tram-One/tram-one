@@ -17,7 +17,21 @@ import { StoreObject } from './types';
  * @returns the store to interact with.
  */
 function useGlobalStore<Store extends StoreObject>(key: string, defaultValue: Store): Store;
-function useGlobalStore(key: string, defaultValue?): unknown;
+/**
+ * @name useGlobalObservable
+ * @link https://tram-one.io/#use-global-observable
+ * @description
+ * Hook that stores global state and makes it accessible in the entire app.
+ *
+ * If the subfield of an object, or element of an array is updated
+ * it will cause only the components that are dependent on that value to update.
+ *
+ * @param key a unique string to write and read the global value
+ *
+ * @returns the store to interact with.
+ */
+function useGlobalStore(key: string): unknown;
+/** Implementation of the two function definitions */
 function useGlobalStore(key: string, defaultValue?): any {
 	return observableHook(key, defaultValue);
 }

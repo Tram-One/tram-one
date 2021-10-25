@@ -74,8 +74,8 @@ module.exports = () => {
 
 	return html`
 		<section class="sub-tab">
-			<p>Updated: ${tabState.tabWasUpdated}</p>
-			<p>Was Locked: ${previousLockState.locked}</p>
+			<span>Updated: ${tabState.tabWasUpdated}</span><br />
+			<span>Was Locked: ${previousLockState.locked}</span><br />
 			<button role="lock-button" onclick=${onLockTab}>Lock Tab</button>
 			<button role="unlock-button" onclick=${onUnlockTab}>Unlock Tab</button>
 			<button role="dismiss-button" onclick=${onDismiss}>Dismiss</button>

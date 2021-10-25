@@ -11,8 +11,8 @@ const html = registerHtml({
 export default () => {
 	const mirrorable = useGlobalStore('mirrorable-input', { value: '' });
 
-	const onEvent = (event) => {
-		mirrorable.value = event.target.value;
+	const onEvent = (event: Event) => {
+		mirrorable.value = (event.target as HTMLInputElement).value;
 	};
 
 	return html`

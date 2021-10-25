@@ -1,3 +1,5 @@
+import { TRAM_TAG, TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } from './node-names';
+
 /**
  * Type for when we can take a CSS Selector, or an HTML Element (mostly mounting).
  */
@@ -12,21 +14,18 @@ export type Props = {
 };
 
 /**
- * The Children interface for custom Tram One Components.
- * These can be a combination of strings and DOM Elements
- */
-export type Children = (string | Element)[];
-
-/**
  * Type for our template renderers (either html or svg).
  */
-export type DOMTaggedTemplateFunction = (strings: TemplateStringsArray, ...elementsAndAttributes: any[]) => Element;
+export type DOMTaggedTemplateFunction = (
+	strings: TemplateStringsArray,
+	...elementsAndAttributes: any[]
+) => TramOneElement;
 
 /**
  * Type for custom Tram One Components.
  * They can take in props and children, and return some rendered Element.
  */
-export type TramOneComponent = (props?: Props, children?: Children) => Element;
+export type TramOneComponent = (props?: Props, children?: Element) => TramOneElement;
 
 /**
  * Type for registering Tram One Components in the template interface.
@@ -55,14 +54,63 @@ export type UrlMatchResults = {
 export type StoreObject = { [key: string]: any } | any[];
 
 /**
- * Type for the return of effects.
- * They can either be nothing (void), a function that returns nothing, or a Promise.
- * Anything else should really be avoided if possible
+ * Type to describe the output of Effect.
+ * Really this is just an annotation to make TramOneElement easier to understand.
+ * In reality, this can be a function (to run on removal), or could be nothing.
  */
-export type EffectReturn = void | (() => void) | Promise<unknown> | unknown;
+type CleanupEffect = () => unknown;
 
 /**
  * Type for the effect function.
  * This is passed into the useEffect hook
  */
-export type Effect = () => EffectReturn;
+export type Effect = () => unknown;
+
+/**
+ * Type for internally tracking where we our in the render tree.
+ */
+export type WorkingkeyObject = {
+	branch: string[];
+	branchIndices: {
+		[branch: string]: number;
+	};
+};
+
+/**
+ * Type for nx-js's observer-util.
+ * This is really just an annotation to make TramOneElement easier to understand
+ */
+type Reaction = () => void;
+
+/**
+ * Type for an element that has Tram-One attributes.
+ * See `./node-names.ts` for more details
+ */
+export interface TramOneElement extends Element {
+	[TRAM_TAG]?: boolean;
+	[TRAM_TAG_REACTION]?: Reaction;
+	[TRAM_TAG_NEW_EFFECTS]?: Effect[];
+	[TRAM_TAG_CLEANUP_EFFECTS]?: CleanupEffect[];
+}
+
+/**
+ * Type for saving properties of an element that we are removing / replacing
+ */
+export type RemovedElementDataStore = {
+	index?: number;
+	tagName?: string;
+	scrollLeft?: number;
+	scrollTop?: number;
+	selectionStart?: number | null;
+	selectionEnd?: number | null;
+	selectionDirection?: 'forward' | 'backward' | 'none';
+};
+
+/**
+ * Type for top-level window state that Tram-One uses
+ */
+export interface TramWindow extends Window {
+	'tram-space'?: {
+		[namespace: string]: any;
+	};
+}

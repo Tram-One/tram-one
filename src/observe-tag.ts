@@ -1,13 +1,14 @@
 const { observe } = require('@nx-js/observer-util');
 
 import { TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } from './node-names';
+import { TramOneComponent, TramOneElement, RemovedElementDataStore } from './types';
 
-// functions to go to nodes or indicies (made for .map)
-const toIndicies = (node, index) => index;
+// functions to go to nodes or indices (made for .map)
+const toIndices = (node: Element, index: number) => index;
 
-// sorting function that prioritizes indicies that are closest to a target
+// sorting function that prioritizes indices that are closest to a target
 // e.g. target = 3, [1, 2, 3, 4, 5] => [3, 2, 4, 1, 5]
-const byDistanceFromIndex = (targetIndex) => (indexA, indexB) => {
+const byDistanceFromIndex = (targetIndex: number) => (indexA: number, indexB: number) => {
 	const diffFromTargetA = Math.abs(indexA - targetIndex);
 	const diffFromTargetB = Math.abs(indexB - targetIndex);
 	return diffFromTargetA - diffFromTargetB;
@@ -32,27 +33,14 @@ const parentAndChildrenElements = (node: Element, tagName: string) => {
 };
 
 /**
- * Type for saving properties of an element that we are removing / replacing
- */
-type RemovedElementDataStore = {
-	index?: number;
-	tagName?: string;
-	scrollLeft?: number;
-	scrollTop?: number;
-	selectionStart?: number | null;
-	selectionEnd?: number | null;
-	selectionDirection?: string;
-};
-
-/**
  * This is a helper function for the dom creation.
  * This function observes any state values used when making the tag, and allow it to update
  * independently when one of those state values updates.
  *
  * The mutation-observer will unobserve any reactions here when the node is removed.
  */
-export default (tagFunction) => {
-	let tagResult;
+export default (tagFunction: TramOneComponent) => {
+	let tagResult: TramOneElement;
 	const buildAndReplaceTag = () => {
 		// if there is an existing tagResult, it is the last rendering, and so we want to re-render over it
 		let oldTag = tagResult;
@@ -86,7 +74,7 @@ export default (tagFunction) => {
 				removedElementWithFocusData.selectionDirection = activeElement.selectionDirection;
 			}
 
-			const emptyDiv = document.createElement('div');
+			const emptyDiv = document.createElement('div') as unknown as TramOneElement;
 			oldTag.replaceWith(emptyDiv);
 
 			// copy the reaction and effects from the old tag to the empty div so we don't lose them
@@ -112,11 +100,11 @@ export default (tagFunction) => {
 				// this means if it didn't move, we'll get it right away,
 				// if it did, we'll look at the elements closest to the original position
 				const elementIndexToGiveFocus = allActiveLikeElements
-					.map(toIndicies)
+					.map(toIndices)
 					.sort(byDistanceFromIndex(removedElementWithFocusData.index))[0];
 
 				// if the element / child exists, focus it
-				elementToGiveFocus = allActiveLikeElements[elementIndexToGiveFocus];
+				elementToGiveFocus = allActiveLikeElements[elementIndexToGiveFocus] as HTMLInputElement;
 				if (elementToGiveFocus !== undefined) {
 					// also try to set the selection, if there is a selection for this element
 					const hasSelectionStart =

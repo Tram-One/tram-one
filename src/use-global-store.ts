@@ -32,7 +32,7 @@ function useGlobalStore<Store extends StoreObject>(key: string, defaultValue: St
  */
 function useGlobalStore(key: string): unknown;
 /** Implementation of the two function definitions */
-function useGlobalStore(key: string, defaultValue?): any {
+function useGlobalStore(key: string, defaultValue?: StoreObject): any {
 	return observableHook(key, defaultValue);
 }
 

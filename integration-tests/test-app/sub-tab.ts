@@ -49,7 +49,7 @@ module.exports = () => {
 	});
 
 	// effect to test updated cleanups on state change
-	const setPreviousLockState = (prevState) => () => {
+	const setPreviousLockState = (prevState: boolean) => () => {
 		previousLockState.locked = prevState;
 	};
 

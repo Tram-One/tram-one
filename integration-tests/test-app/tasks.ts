@@ -13,12 +13,12 @@ export default () => {
 		tasks.push(newTask.label);
 	};
 
-	const updateNewTask = (event) => {
-		newTask.label = event.target.value;
+	const updateNewTask = (event: Event) => {
+		newTask.label = (event.target as HTMLInputElement).value;
 	};
 
-	const updateNewTaskType = (event) => {
-		newTask.type = event.target.value;
+	const updateNewTaskType = (event: Event) => {
+		newTask.type = (event.target as HTMLInputElement).value;
 	};
 
 	const taskList = tasks.map((task) => html`<li>${task}</li>`);

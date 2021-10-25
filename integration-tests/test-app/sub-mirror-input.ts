@@ -12,8 +12,8 @@ type InputObject = { value: string };
 export default () => {
 	const mirrorable = useGlobalStore('mirrorable-input') as InputObject;
 
-	const onEvent = (event) => {
-		mirrorable.value = event.target.value;
+	const onEvent = (event: Event) => {
+		mirrorable.value = (event.target as HTMLInputElement).value;
 	};
 
 	const letterSpans = [...new Array(mirrorable.value.length)].map(() => html`<span class="letter-span">-</span>`);

@@ -10,9 +10,10 @@ const { observe, unobserve } = require('@nx-js/observer-util');
 
 import { TRAM_TAG, TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } from './node-names';
 import { buildNamespace } from './namespace';
+import { TramOneElement } from './types';
 
 // process new effects for new nodes
-const processEffects = (node: Element) => {
+const processEffects = (node: TramOneElement) => {
 	const hasNewEffects = node[TRAM_TAG_NEW_EFFECTS];
 
 	if (hasNewEffects) {
@@ -21,7 +22,7 @@ const processEffects = (node: Element) => {
 
 		// run all the effects, saving any cleanup functions to the node
 		node[TRAM_TAG_NEW_EFFECTS].forEach((effect) => {
-			let cleanup;
+			let cleanup: unknown;
 
 			// this is called when an effect is re-triggered
 			const effectReaction = observe(() => {
@@ -46,12 +47,12 @@ const processEffects = (node: Element) => {
 };
 
 // call all cleanup effects on the node
-const cleanupEffects = (cleanupEffects) => {
+const cleanupEffects = (cleanupEffects: (() => void)[]) => {
 	cleanupEffects.forEach((cleanup) => cleanup());
 };
 
 // unobserve the reaction tied to the node, and run all cleanup effects for the node
-const clearNode = (node) => {
+const clearNode = (node: TramOneElement) => {
 	const hasReaction = node[TRAM_TAG_REACTION];
 	const hasEffects = node[TRAM_TAG_CLEANUP_EFFECTS];
 
@@ -64,16 +65,16 @@ const clearNode = (node) => {
 	}
 };
 
-const isTramOneComponent = (node: Element) => {
+const isTramOneComponent = (node: TramOneElement) => {
 	// a node is a component if it has `TRAM_TAG` key on it
-	const nodeIsATramOneComponent = node[TRAM_TAG] === true;
+	const nodeIsATramOneComponent = node[TRAM_TAG];
 	// if it is a tram-one component, we want to process it, otherwise skip it
 	return nodeIsATramOneComponent ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
 };
 
 // function to get the children (as a list) of the node passed in
 // this only needs to query tram-one components, so we can use the attribute `tram`
-const childrenComponents = (node) => {
+const childrenComponents = (node: TramOneElement | Element) => {
 	const nodeFilterForTramOneComponent = { acceptNode: isTramOneComponent };
 	const componentWalker = document.createTreeWalker(node, NodeFilter.SHOW_ELEMENT, nodeFilterForTramOneComponent);
 	const children = [];
@@ -87,13 +88,13 @@ const childrenComponents = (node) => {
 const mutationObserverNamespaceConstructor = () =>
 	new MutationObserver((mutationList) => {
 		// cleanup orphaned nodes that are no longer on the DOM
-		const removedNodesInMutation = (mutation) => [...mutation.removedNodes];
+		const removedNodesInMutation = (mutation: MutationRecord) => [...mutation.removedNodes];
 		const removedNodes = mutationList.flatMap(removedNodesInMutation).flatMap(childrenComponents);
 
 		removedNodes.forEach(clearNode);
 
 		// call new effects on any new nodes
-		const addedNodesInMutation = (mutation) => [...mutation.addedNodes];
+		const addedNodesInMutation = (mutation: MutationRecord) => [...mutation.addedNodes];
 		const newNodes = mutationList.flatMap(addedNodesInMutation).flatMap(childrenComponents);
 
 		newNodes.forEach(processEffects);
@@ -104,7 +105,7 @@ export const { setup: setupMutationObserver, get: getMutationObserver } = buildN
 );
 
 // tell the mutation observer to watch the given node for changes
-export const startWatcher = (observerName, node) => {
+export const startWatcher = (observerName: string, node: HTMLElement) => {
 	const observerStore = getMutationObserver(observerName);
 
 	observerStore.observe(node, { childList: true, subtree: true });

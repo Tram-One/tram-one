@@ -9,8 +9,7 @@ const html = registerHtml({
 /**
  * component to test basic rendering
  */
-export default (props, children) => {
-	const { subtitle = '' } = props;
+export default ({ subtitle = '' }, children: Element) => {
 	return html`
 		<header>
 			<h1 class="title">Home Page</h1>

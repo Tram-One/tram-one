@@ -19,7 +19,7 @@ export const app = () => {
 	`;
 };
 
-export const startApp = (container) => {
+export const startApp = (container: any) => {
 	let appContainer = container;
 	if (!appContainer) {
 		// before we setup the app, cleanup the document state if this was called before

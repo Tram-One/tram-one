@@ -74,6 +74,7 @@ module.exports = () => {
 
 	return html`
 		<section class="sub-tab">
+			<span>Loading: ${tabState.loading}</span><br />
 			<span>Updated: ${tabState.tabWasUpdated}</span><br />
 			<span>Was Locked: ${previousLockState.locked}</span><br />
 			<button role="lock-button" onclick=${onLockTab}>Lock Tab</button>

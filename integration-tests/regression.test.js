@@ -198,7 +198,7 @@ describe('Tram-One', () => {
 		});
 	});
 
-	it('should not error when reseting focus if the number of elements changed', async () => {
+	it('should not error when resetting focus if the number of elements changed', async () => {
 		// start the app
 		const { container } = startApp();
 

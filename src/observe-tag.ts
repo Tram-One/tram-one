@@ -22,8 +22,7 @@ const hasMatchingTagName = (tagName: string) => (node: Element) => {
 // get an array including the element and all it's children
 const parentAndChildrenElements = (node: Element, tagName: string) => {
 	const matchesTagName = hasMatchingTagName(tagName);
-	const nodeFilterForTagName = { acceptNode: matchesTagName };
-	const componentWalker = document.createTreeWalker(node, NodeFilter.SHOW_ELEMENT, nodeFilterForTagName);
+	const componentWalker = document.createTreeWalker(node, NodeFilter.SHOW_ELEMENT, matchesTagName);
 	const parentAndChildren = [componentWalker.currentNode];
 	while (componentWalker.nextNode()) {
 		parentAndChildren.push(componentWalker.currentNode);
@@ -104,6 +103,7 @@ export default (tagFunction: TramOneComponent) => {
 					.sort(byDistanceFromIndex(removedElementWithFocusData.index))[0];
 
 				// if the element / child exists, focus it
+				// TODO check if there is an interface we can extend here instead
 				elementToGiveFocus = allActiveLikeElements[elementIndexToGiveFocus] as HTMLInputElement;
 				if (elementToGiveFocus !== undefined) {
 					// also try to set the selection, if there is a selection for this element

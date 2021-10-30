@@ -75,8 +75,7 @@ const isTramOneComponent = (node: TramOneElement) => {
 // function to get the children (as a list) of the node passed in
 // this only needs to query tram-one components, so we can use the attribute `tram`
 const childrenComponents = (node: TramOneElement | Element) => {
-	const nodeFilterForTramOneComponent = { acceptNode: isTramOneComponent };
-	const componentWalker = document.createTreeWalker(node, NodeFilter.SHOW_ELEMENT, nodeFilterForTramOneComponent);
+	const componentWalker = document.createTreeWalker(node, NodeFilter.SHOW_ELEMENT, isTramOneComponent);
 	const children = [];
 	while (componentWalker.nextNode()) {
 		children.push(componentWalker.currentNode);

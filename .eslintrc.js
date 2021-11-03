@@ -17,6 +17,7 @@ module.exports = {
 		// allow module.exports for config, testing, and docs
 		{
 			files: [
+				'**/*.cjs', // any file with the cjs extension
 				'./*.js', // top level config
 				'./docs/runkit_example.js', // runkit example
 				'./integration-tests/broken-app/**.js', // tests that still need runtime import/export

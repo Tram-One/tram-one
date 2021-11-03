@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const badge = require('./badge');
+const badge = require('./badge.js');
 
 const buildPath = 'dist';
 const destPath = 'docs/badges';
@@ -15,12 +15,13 @@ const getSize = (fileName) => {
 };
 
 // generate an SVG string and write it to dest
-const generateBadge = (label) => {
-	const value = getSize(`tram-one.${label}.js`);
+const generateBadge = (label, fileName) => {
+	const value = getSize(fileName);
 	const svg = badge(label, value);
 	const dest = path.resolve(destPath, `${label}.svg`);
 	fs.writeFile(dest, svg, (err) => err && process.stdout.write(err));
 };
 
-generateBadge('cjs');
-generateBadge('umd');
+generateBadge('cjs', 'tram-one.cjs');
+generateBadge('umd', 'tram-one.js');
+generateBadge('mjs', 'tram-one.mjs');

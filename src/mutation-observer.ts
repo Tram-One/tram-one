@@ -13,10 +13,15 @@ import { buildNamespace } from './namespace';
 import { TramOneElement } from './types';
 
 // process new effects for new nodes
-const processEffects = (node: TramOneElement) => {
-	const hasNewEffects = node[TRAM_TAG_NEW_EFFECTS];
+const processEffects = (node: Element | TramOneElement) => {
+	// if this element doesn't have new effects, it is not be a Tram-One Element
+	if (!(TRAM_TAG_NEW_EFFECTS in node)) {
+		return;
+	}
 
-	if (hasNewEffects) {
+	const hasEffects = node[TRAM_TAG_NEW_EFFECTS];
+
+	if (hasEffects) {
 		// create an array for the cleanup effects
 		node[TRAM_TAG_CLEANUP_EFFECTS] = [];
 
@@ -52,17 +57,18 @@ const cleanupEffects = (cleanupEffects: (() => void)[]) => {
 };
 
 // unobserve the reaction tied to the node, and run all cleanup effects for the node
-const clearNode = (node: TramOneElement) => {
-	const hasReaction = node[TRAM_TAG_REACTION];
-	const hasEffects = node[TRAM_TAG_CLEANUP_EFFECTS];
-
-	if (hasReaction) {
-		unobserve(node[TRAM_TAG_REACTION]);
+const clearNode = (node: Element | TramOneElement) => {
+	// if this element doesn't have a Reaction, it is not be a Tram-One Element
+	if (!(TRAM_TAG_REACTION in node)) {
+		return;
 	}
 
-	if (hasEffects) {
-		cleanupEffects(node[TRAM_TAG_CLEANUP_EFFECTS]);
+	if (node[TRAM_TAG_CLEANUP_EFFECTS] === undefined) {
+		console.log('TRAM_TAG_CLEANUP_EFFECTS', node[TRAM_TAG_CLEANUP_EFFECTS], node);
 	}
+
+	unobserve(node[TRAM_TAG_REACTION]);
+	cleanupEffects(node[TRAM_TAG_CLEANUP_EFFECTS]);
 };
 
 const isTramOneComponent = (node: TramOneElement) => {
@@ -104,7 +110,7 @@ export const { setup: setupMutationObserver, get: getMutationObserver } = buildN
 );
 
 // tell the mutation observer to watch the given node for changes
-export const startWatcher = (observerName: string, node: HTMLElement) => {
+export const startWatcher = (observerName: string, node: Element) => {
 	const observerStore = getMutationObserver(observerName);
 
 	observerStore.observe(node, { childList: true, subtree: true });

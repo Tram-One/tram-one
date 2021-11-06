@@ -2,11 +2,13 @@ import { registerHtml, useStore } from '../../src/tram-one';
 
 const html = registerHtml();
 
+type Tasks = string[];
+
 /**
  * component to test url parameters
  */
 export default () => {
-	const tasks = useStore([]);
+	const tasks = useStore([] as Tasks);
 	const newTask = useStore({ label: `Task Number ${tasks.length}`, type: 'Projects' });
 
 	const addTask = () => {

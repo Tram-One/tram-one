@@ -1,7 +1,13 @@
 const { observe } = require('@nx-js/observer-util');
 
 import { TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } from './node-names';
-import { TramOneComponent, TramOneElement, RemovedElementDataStore } from './types';
+import {
+	TramOneComponent,
+	TramOneElement,
+	RemovedElementDataStore,
+	Reaction,
+	ElementPotentiallyWithSelectionAndFocus,
+} from './types';
 
 // functions to go to nodes or indices (made for .map)
 const toIndices = (node: Element, index: number) => index;
@@ -28,7 +34,19 @@ const parentAndChildrenElements = (node: Element, tagName: string) => {
 		parentAndChildren.push(componentWalker.currentNode);
 	}
 
-	return parentAndChildren;
+	// since we are looking for elements (things with tagNames)
+	// we can safely declare this as an array of Elements
+	return parentAndChildren as Element[];
+};
+
+const defaultRemovedElementWithFocusData: RemovedElementDataStore = {
+	index: -1,
+	tagName: '',
+	scrollLeft: 0,
+	scrollTop: 0,
+	selectionStart: null,
+	selectionEnd: null,
+	selectionDirection: undefined,
 };
 
 /**
@@ -38,17 +56,17 @@ const parentAndChildrenElements = (node: Element, tagName: string) => {
  *
  * The mutation-observer will unobserve any reactions here when the node is removed.
  */
-export default (tagFunction: TramOneComponent) => {
-	let tagResult: TramOneElement;
+export default (tagFunction: TramOneComponent): TramOneElement => {
+	let tagResult: TramOneElement | undefined;
 	const buildAndReplaceTag = () => {
 		// if there is an existing tagResult, it is the last rendering, and so we want to re-render over it
 		let oldTag = tagResult;
-		let removedElementWithFocusData: RemovedElementDataStore = {};
+		let removedElementWithFocusData = defaultRemovedElementWithFocusData;
 
 		// remove oldTag first so that we unobserve before we re-observe
 		if (oldTag) {
 			// we need to blow away any old focus data we had
-			removedElementWithFocusData = {};
+			removedElementWithFocusData = defaultRemovedElementWithFocusData;
 
 			// determine if this element (or any element under it) had focus
 			const oldTagHasFocusedElement = oldTag.contains(document.activeElement);
@@ -70,7 +88,7 @@ export default (tagFunction: TramOneComponent) => {
 				removedElementWithFocusData.scrollTop = activeElement.scrollTop;
 				removedElementWithFocusData.selectionStart = activeElement.selectionStart;
 				removedElementWithFocusData.selectionEnd = activeElement.selectionEnd;
-				removedElementWithFocusData.selectionDirection = activeElement.selectionDirection;
+				removedElementWithFocusData.selectionDirection = activeElement.selectionDirection || undefined;
 			}
 
 			const emptyDiv = document.createElement('div') as unknown as TramOneElement;
@@ -102,28 +120,18 @@ export default (tagFunction: TramOneComponent) => {
 					.map(toIndices)
 					.sort(byDistanceFromIndex(removedElementWithFocusData.index))[0];
 
-				// if the element / child exists, focus it
-				// TODO check if there is an interface we can extend here instead
-				elementToGiveFocus = allActiveLikeElements[elementIndexToGiveFocus] as HTMLInputElement;
-				if (elementToGiveFocus !== undefined) {
-					// also try to set the selection, if there is a selection for this element
-					const hasSelectionStart =
-						removedElementWithFocusData.selectionStart !== null &&
-						removedElementWithFocusData.selectionStart !== undefined;
-					if (hasSelectionStart) {
-						elementToGiveFocus.setSelectionRange(
-							removedElementWithFocusData.selectionStart,
-							removedElementWithFocusData.selectionEnd,
-							removedElementWithFocusData.selectionDirection
-						);
-					}
-
-					// also set the scrollLeft and scrollTop (since this is reset to 0 by default)
-					if (removedElementWithFocusData.scrollLeft || removedElementWithFocusData.scrollTop) {
-						elementToGiveFocus.scrollLeft = removedElementWithFocusData.scrollLeft;
-						elementToGiveFocus.scrollTop = removedElementWithFocusData.scrollTop;
-					}
+				elementToGiveFocus = allActiveLikeElements[elementIndexToGiveFocus] as ElementPotentiallyWithSelectionAndFocus;
+				// also try to set the selection, if there is a selection for this element
+				if (elementToGiveFocus.setSelectionRange !== undefined) {
+					elementToGiveFocus.setSelectionRange(
+						removedElementWithFocusData.selectionStart,
+						removedElementWithFocusData.selectionEnd,
+						removedElementWithFocusData.selectionDirection
+					);
 				}
+
+				elementToGiveFocus.scrollLeft = removedElementWithFocusData.scrollLeft;
+				elementToGiveFocus.scrollTop = removedElementWithFocusData.scrollTop;
 			}
 
 			// copy the reaction and effects from the old tag to the new one
@@ -133,11 +141,20 @@ export default (tagFunction: TramOneComponent) => {
 
 			// both these actions cause forced reflow, and can be performance issues
 			oldTag.replaceWith(tagResult);
-			if (elementToGiveFocus) elementToGiveFocus.focus();
+			if (elementToGiveFocus && elementToGiveFocus.focus) elementToGiveFocus.focus();
 		}
 	};
 
-	const tagReaction = observe(buildAndReplaceTag);
+	const tagReaction = observe(buildAndReplaceTag) as Reaction;
+
+	// tagResult is always assigned as an artifact of the observe() call above
+	// if it isn't, we want to know about it
+	if (tagResult === undefined) {
+		throw new Error(`
+			Tram-One: tagResult was not defined after building the tag.
+			https://github.com/Tram-One/tram-one/issues/177
+		`);
+	}
 
 	// save the reaction to the node, so that the mutation-observer can unobserve it later
 	tagResult[TRAM_TAG_REACTION] = tagReaction;

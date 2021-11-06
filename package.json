@@ -7,10 +7,14 @@
 	"umd": "dist/tram-one.js",
 	"module": "dist/tram-one.mjs",
 	"types": "dist/tram-one.d.ts",
-	"type": "commonjs",
+	"exports": {
+		".": {
+			"import": "./dist/tram-one.mjs",
+			"require": "./dist/tram-one.cjs"
+		}
+	},
 	"files": [
-		"dist/tram-one.cjs",
-		"dist/tram-one.js",
+		"dist/*",
 		"docs/runkit_example.js"
 	],
 	"scripts": {
@@ -26,7 +30,7 @@
 		"clean": "git clean -Xdf",
 		"test": "jest integration-tests --watch",
 		"test:ci": "jest integration-tests --coverage",
-		"test:app": "parcel integration-tests/test-app/index.html",
+		"test:app": "parcel integration-tests/test-app/index.html --dist-dir .parcel-dist",
 		"test:performance": "jest performance-tests --watch --update-snapshot",
 		"test:performance:ci": "jest performance-tests --update-snapshot",
 		"test:performance:app": "parcel performance-tests/test-app/index.html",
@@ -57,7 +61,7 @@
 	"dependencies": {
 		"@nx-js/observer-util": "^4.2.2",
 		"@tram-one/hyperx": "^4.0.3",
-		"@tram-one/nanohtml": "^4.1.8",
+		"@tram-one/nanohtml": "^5.0.0",
 		"@tram-one/rbel": "^2.0.1",
 		"url-listener": "^2.0.0",
 		"use-url-params": "^3.0.0"

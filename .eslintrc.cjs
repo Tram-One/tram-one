@@ -10,7 +10,7 @@ module.exports = {
 	rules: {
 		// some of the dependencies do not support module imports... yet
 		'@typescript-eslint/no-var-requires': 'off',
-		// as a library, we have to sometimes just expect anything
+		// as a framework, we have to sometimes just expect anything
 		'@typescript-eslint/no-explicit-any': 'off',
 	},
 	overrides: [

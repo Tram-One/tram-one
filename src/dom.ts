@@ -12,7 +12,7 @@ import {
 } from './working-key';
 import observeTag from './observe-tag';
 import processEffects from './process-effects';
-import { TRAM_TAG } from './node-names';
+import { TRAM_TAG, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } from './node-names';
 
 import { Registry, Props, DOMTaggedTemplateFunction } from './types';
 
@@ -22,10 +22,10 @@ import { Registry, Props, DOMTaggedTemplateFunction } from './types';
  *
  * This function shouldn't need to be called directly, instead, you can use `registerHtml` or `registerSvg`
  *
- * @param namespace namespace to create nodes in (by default XHTML namespace)
  * @param registry mapping of tag names to component functions
+ * @param namespace namespace to create nodes in (by default XHTML namespace)
  */
-export const registerDom = (namespace: string, registry: Registry = {}): DOMTaggedTemplateFunction => {
+export const registerDom = (namespace: string | null, registry: Registry = {}): DOMTaggedTemplateFunction => {
 	// modify the registry so that each component function updates the hook working key
 	const hookedRegistry = Object.keys(registry).reduce((newRegistry, tagName) => {
 		const tagFunction = registry[tagName];
@@ -55,8 +55,11 @@ export const registerDom = (namespace: string, registry: Registry = {}): DOMTagg
 			// pop the branch off (since we are done rendering this component)
 			popWorkingKeyBranch(TRAM_HOOK_KEY);
 
-			// mark this node as a tram-one component (so we can filter on it later)
+			// decorate the properties expected on TramOneElements (see node-names.ts)
 			tagResult[TRAM_TAG] = true;
+			// we won't decorate TRAM_TAG_REACTION, that needs to be done later when we observe the tag
+			tagResult[TRAM_TAG_NEW_EFFECTS] = tagResult[TRAM_TAG_NEW_EFFECTS] || [];
+			tagResult[TRAM_TAG_CLEANUP_EFFECTS] = tagResult[TRAM_TAG_NEW_EFFECTS] || [];
 
 			return tagResult;
 		};

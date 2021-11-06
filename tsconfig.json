@@ -1,9 +1,11 @@
 {
   "include": ["./src/**/*"],
   "compilerOptions": {
+    "module":"esnext",
     "allowJs": true,
     "target": "esnext",
     "esModuleInterop": true,
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "strictNullChecks": true
   }
 }

@@ -9,3 +9,4 @@ node_modules
 
 # parcel test app files
 .parcel-cache
+.parcel-dist

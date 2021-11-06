@@ -3,7 +3,14 @@ import { TRAM_TAG, TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFF
 /**
  * Type for when we can take a CSS Selector, or an HTML Element (mostly mounting).
  */
-export type ElementOrSelector = keyof HTMLElementTagNameMap | HTMLElement;
+export type ElementOrSelector = string | HTMLElement;
+
+/**
+ * Type for the container, which always has a first child to render the app on
+ */
+export interface Container extends Element {
+	firstElementChild: Element;
+}
 
 /**
  * The Props interface for custom Tram One Components.
@@ -80,37 +87,49 @@ export type WorkingkeyObject = {
  * Type for nx-js's observer-util.
  * This is really just an annotation to make TramOneElement easier to understand
  */
-type Reaction = () => void;
+export type Reaction = () => void;
 
 /**
  * Type for an element that has Tram-One attributes.
  * See `./node-names.ts` for more details
  */
 export interface TramOneElement extends Element {
-	[TRAM_TAG]?: boolean;
-	[TRAM_TAG_REACTION]?: Reaction;
-	[TRAM_TAG_NEW_EFFECTS]?: Effect[];
-	[TRAM_TAG_CLEANUP_EFFECTS]?: CleanupEffect[];
+	[TRAM_TAG]: boolean;
+	[TRAM_TAG_REACTION]: Reaction;
+	[TRAM_TAG_NEW_EFFECTS]: Effect[];
+	[TRAM_TAG_CLEANUP_EFFECTS]: CleanupEffect[];
 }
 
 /**
  * Type for saving properties of an element that we are removing / replacing
  */
 export type RemovedElementDataStore = {
-	index?: number;
-	tagName?: string;
-	scrollLeft?: number;
-	scrollTop?: number;
-	selectionStart?: number | null;
-	selectionEnd?: number | null;
-	selectionDirection?: 'forward' | 'backward' | 'none';
+	index: number;
+	tagName: string;
+	scrollLeft: number;
+	scrollTop: number;
+	selectionStart: number | null;
+	selectionEnd: number | null;
+	selectionDirection: 'forward' | 'backward' | 'none' | undefined;
 };
 
 /**
  * Type for top-level window state that Tram-One uses
  */
 export interface TramWindow extends Window {
-	'tram-space'?: {
+	'tram-space': {
 		[namespace: string]: any;
 	};
+}
+
+/**
+ * Type for Element that could _potentially_ have selection range
+ */
+export interface ElementPotentiallyWithSelectionAndFocus extends Element {
+	setSelectionRange?: (
+		selectionStart: number | null | undefined,
+		selectionEnd: number | null | undefined,
+		selectionDirection?: 'forward' | 'backward' | 'none'
+	) => void;
+	focus?: () => void;
 }

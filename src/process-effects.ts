@@ -1,7 +1,7 @@
 import { TRAM_EFFECT_STORE, TRAM_EFFECT_QUEUE } from './engine-names';
 import { TRAM_TAG_NEW_EFFECTS } from './node-names';
 import { getEffectStore, clearEffectStore, restoreEffectStore } from './effect-store';
-import { TramOneComponent } from './types';
+import { TramOneElement } from './types';
 
 /**
  * This is a helper function for the dom creation.
@@ -9,7 +9,7 @@ import { TramOneComponent } from './types';
  *
  * These are later processed by the mutation-observer, and cleaned up when the node is removed by the mutation-observer.
  */
-export default (tagFunction: TramOneComponent) => {
+export default (tagFunction: () => TramOneElement) => {
 	// save the existing effect queue for any components we are in the middle of building
 	const existingQueuedEffects = { ...getEffectStore(TRAM_EFFECT_QUEUE) };
 

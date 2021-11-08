@@ -24,7 +24,7 @@ export type DOMTaggedTemplateFunction = (
  * Type for custom Tram One Components.
  * They can take in props and children, and return some rendered Element.
  */
-export type TramOneComponent = [(props?: Props, children?: Element) => TramOneElement][0];
+export type TramOneComponent = [(props: Props, children: Element) => TramOneElement][0];
 
 /**
  * Type for useStore and useGlobalStore hooks.

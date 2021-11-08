@@ -4,8 +4,10 @@
     "module":"esnext",
     "allowJs": true,
     "target": "esnext",
+    "strict": true,
     "esModuleInterop": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true
   }
 }

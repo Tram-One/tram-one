@@ -1,16 +1,10 @@
 const { observe } = require('@nx-js/observer-util');
 
 import { TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } from './node-names';
-import {
-	TramOneComponent,
-	TramOneElement,
-	RemovedElementDataStore,
-	Reaction,
-	ElementPotentiallyWithSelectionAndFocus,
-} from './types';
+import { TramOneElement, RemovedElementDataStore, Reaction, ElementPotentiallyWithSelectionAndFocus } from './types';
 
 // functions to go to nodes or indices (made for .map)
-const toIndices = (node: Element, index: number) => index;
+const toIndices = (node: Node, index: number) => index;
 
 // sorting function that prioritizes indices that are closest to a target
 // e.g. target = 3, [1, 2, 3, 4, 5] => [3, 2, 4, 1, 5]
@@ -20,9 +14,10 @@ const byDistanceFromIndex = (targetIndex: number) => (indexA: number, indexB: nu
 	return diffFromTargetA - diffFromTargetB;
 };
 
-const hasMatchingTagName = (tagName: string) => (node: Element) => {
+const hasMatchingTagName = (tagName: string) => (node: Node | Element) => {
+	const nodeHasMatchingTagName = 'tagName' in node && node.tagName === tagName;
 	// if the tagName matches, we want to process the node, otherwise skip it
-	return node.tagName === tagName ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
+	return nodeHasMatchingTagName ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
 };
 
 // get an array including the element and all it's children
@@ -55,8 +50,11 @@ const defaultRemovedElementWithFocusData: RemovedElementDataStore = {
  * independently when one of those state values updates.
  *
  * The mutation-observer will unobserve any reactions here when the node is removed.
+ *
+ * The parameter tagFunction is almost a TramOneComponent, but it already has the props and children prepopulated,
+ * and so has no parameters, but returns a TramOneElement
  */
-export default (tagFunction: TramOneComponent): TramOneElement => {
+export default (tagFunction: () => TramOneElement): TramOneElement => {
 	let tagResult: TramOneElement | undefined;
 	const buildAndReplaceTag = () => {
 		// if there is an existing tagResult, it is the last rendering, and so we want to re-render over it

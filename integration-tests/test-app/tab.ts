@@ -1,7 +1,8 @@
-import { registerHtml, useGlobalStore, useEffect } from '../../src/tram-one';
+import { registerHtml, useGlobalStore, useEffect, TramOneComponent } from '../../src/tram-one';
+import subTab from './sub-tab';
 
 const html = registerHtml({
-	'sub-tab': require('./sub-tab'),
+	'sub-tab': subTab,
 });
 
 const defaultTabState = {
@@ -15,7 +16,7 @@ const defaultTabState = {
 /**
  * component to test global state and control sub-tab (which has cleanup effects)
  */
-export default () => {
+const tab: TramOneComponent = () => {
 	const tabState = useGlobalStore('tab-state', defaultTabState);
 
 	// immediately update the state (verifies effects on mount)
@@ -31,3 +32,5 @@ export default () => {
 
 	return html` <section class="tab" role="tab-section">${tabBody}</section> `;
 };
+
+export default tab;

@@ -1,11 +1,11 @@
-import { registerHtml, useUrlParams } from '../../src/tram-one';
+import { registerHtml, useUrlParams, TramOneComponent } from '../../src/tram-one';
 
 const html = registerHtml();
 
 /**
  * component to test url parameters
  */
-export default () => {
+const account: TramOneComponent = () => {
 	const { account, loggedIn = 'No' } = useUrlParams('/:account');
 	return html`
 		<div>
@@ -14,3 +14,5 @@ export default () => {
 		</div>
 	`;
 };
+
+export default account;

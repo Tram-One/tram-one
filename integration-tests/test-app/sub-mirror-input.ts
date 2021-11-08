@@ -1,4 +1,4 @@
-import { registerHtml, useGlobalStore } from '../../src/tram-one';
+import { registerHtml, useGlobalStore, TramOneComponent } from '../../src/tram-one';
 
 const html = registerHtml({
 	'sub-mirrorable-input': require('./sub-mirror-input'),
@@ -9,7 +9,7 @@ type InputObject = { value: string };
 /**
  * component to test url parameters
  */
-export default () => {
+const subMirrorInput: TramOneComponent = () => {
 	const mirrorable = useGlobalStore('mirrorable-input') as InputObject;
 
 	const onEvent = (event: Event) => {
@@ -32,3 +32,5 @@ export default () => {
 		</div>
 	`;
 };
+
+export default subMirrorInput;

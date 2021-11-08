@@ -1,4 +1,4 @@
-import { registerHtml, useStore } from '../../src/tram-one';
+import { registerHtml, useStore, TramOneComponent } from '../../src/tram-one';
 
 const html = registerHtml();
 
@@ -7,7 +7,7 @@ type Tasks = string[];
 /**
  * component to test url parameters
  */
-export default () => {
+const tasks: TramOneComponent = () => {
 	const tasks = useStore([] as Tasks);
 	const newTask = useStore({ label: `Task Number ${tasks.length}`, type: 'Projects' });
 
@@ -51,3 +51,5 @@ export default () => {
 		</div>
 	`;
 };
+
+export default tasks;

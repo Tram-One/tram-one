@@ -1,4 +1,4 @@
-import { registerHtml, useEffect, useGlobalStore, useStore } from '../../src/tram-one';
+import { registerHtml, useEffect, useGlobalStore, useStore, TramOneComponent } from '../../src/tram-one';
 
 const html = registerHtml();
 
@@ -15,7 +15,7 @@ type TabState = {
  * It can be removed by clicking "Dismiss".
  * Its effects can be refreshed (cleaned up) by clicking "Lock Tab"
  */
-module.exports = () => {
+const subTab: TramOneComponent = () => {
 	// global state that controls if the tab is shown and what it shows
 	const tabState = useGlobalStore('tab-state') as TabState;
 
@@ -83,3 +83,5 @@ module.exports = () => {
 		</section>
 	`;
 };
+
+export default subTab;

@@ -13,7 +13,7 @@ import { buildNamespace } from './namespace';
 import { TramOneElement } from './types';
 
 // process new effects for new nodes
-const processEffects = (node: Element | TramOneElement) => {
+const processEffects = (node: Node | TramOneElement) => {
 	// if this element doesn't have new effects, it is not be a Tram-One Element
 	if (!(TRAM_TAG_NEW_EFFECTS in node)) {
 		return;
@@ -57,9 +57,9 @@ const cleanupEffects = (cleanupEffects: (() => void)[]) => {
 };
 
 // unobserve the reaction tied to the node, and run all cleanup effects for the node
-const clearNode = (node: Element | TramOneElement) => {
+const clearNode = (node: Node | TramOneElement) => {
 	// if this element doesn't have a Reaction, it is not be a Tram-One Element
-	if (!(TRAM_TAG_REACTION in node)) {
+	if (!(TRAM_TAG in node)) {
 		return;
 	}
 
@@ -71,16 +71,16 @@ const clearNode = (node: Element | TramOneElement) => {
 	cleanupEffects(node[TRAM_TAG_CLEANUP_EFFECTS]);
 };
 
-const isTramOneComponent = (node: TramOneElement) => {
+const isTramOneComponent = (node: Node | TramOneElement) => {
 	// a node is a component if it has `TRAM_TAG` key on it
-	const nodeIsATramOneComponent = node[TRAM_TAG];
+	const nodeIsATramOneComponent = TRAM_TAG in node;
 	// if it is a tram-one component, we want to process it, otherwise skip it
 	return nodeIsATramOneComponent ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
 };
 
 // function to get the children (as a list) of the node passed in
 // this only needs to query tram-one components, so we can use the attribute `tram`
-const childrenComponents = (node: TramOneElement | Element) => {
+const childrenComponents = (node: Node | TramOneElement) => {
 	const componentWalker = document.createTreeWalker(node, NodeFilter.SHOW_ELEMENT, isTramOneComponent);
 	const children = [];
 	while (componentWalker.nextNode()) {

@@ -7,6 +7,7 @@
 	"umd": "dist/tram-one.js",
 	"module": "dist/tram-one.mjs",
 	"types": "dist/tram-one.d.ts",
+	"type": "module",
 	"exports": {
 		".": {
 			"import": "./dist/tram-one.mjs",
@@ -24,7 +25,7 @@
 		"build:cjs": "rollup -c configs/rollup.config.cjs.js",
 		"build:umd": "rollup -c configs/rollup.config.umd.js",
 		"build:mjs": "rollup -c configs/rollup.config.mjs",
-		"build:badges": "node dev-scripts/build-size-badges.js",
+		"build:badges": "node dev-scripts/build-size-badges.cjs",
 		"watch:lint": "watch \"npm run lint\" src",
 		"watch:build": "watch \"npm run build\" src",
 		"clean": "git clean -Xdf",

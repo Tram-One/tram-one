@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const badge = require('./badge.js');
+const badge = require('./badge.cjs');
 
 const buildPath = 'dist';
 const destPath = 'docs/badges';

@@ -1,6 +1,5 @@
 import filesize from 'rollup-plugin-filesize';
 import dts from 'rollup-plugin-dts';
-// import esbuild from 'rollup-plugin-esbuild';
 
 import pkg from '../load-package.cjs';
 import typescript from '@rollup/plugin-typescript';

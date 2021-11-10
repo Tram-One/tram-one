@@ -31,7 +31,7 @@ jobs:
           fingerprints:
             - "64:3e:d4:d8:4b:95:68:79:d3:3b:ab:b1:5c:fa:2d:3d"
 
-      - run: npm install
+      - run: npm ci
 
       - save_cache:
           paths:

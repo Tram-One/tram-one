@@ -1,10 +1,14 @@
-const { registerHtml, useEffect } = require('../../src/tram-one')
+/* istanbul ignore file */
+// this file should be ignored for code coverage
+// since most of the file will just fail on load
 
-const html = registerHtml()
+const { registerHtml, useEffect } = require('../../src/tram-one');
+
+const html = registerHtml();
 
 // other hooks also generate the same error
 // so we don't need to check those, just useEffect is fine
-useEffect(() => {})
+useEffect(() => {});
 
 /**
  * broken component misplaced hook
@@ -14,5 +18,5 @@ module.exports = () => {
 		<header>
 			<h1 class="title">Home Page</h1>
 		</header>
-	`
-}
+	`;
+};

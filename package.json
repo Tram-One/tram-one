@@ -1,99 +1,100 @@
 {
-  "name": "tram-one",
-  "version": "10.1.11",
-  "description": "🚋 Modern View Framework for Vanilla Javascript",
-  "main": "dist/tram-one.cjs.js",
-  "commonjs": "dist/tram-one.cjs.js",
-  "umd": "dist/tram-one.umd.js",
-  "files": [
-    "dist/tram-one.cjs.js",
-    "dist/tram-one.umd.js",
-    "docs/runkit_example.js"
-  ],
-  "scripts": {
-    "lint": "xo",
-    "build": "npm run build:cjs && npm run build:umd",
-    "postbuild": "npm run build:badges",
-    "build:cjs": "rollup -c configs/rollup.config.cjs.js",
-    "build:umd": "rollup -c configs/rollup.config.umd.js",
-    "build:badges": "node dev-scripts/build-size-badges.js",
-    "watch:lint": "watch \"npm run lint\" src",
-    "watch:build": "watch \"npm run build\" src",
-    "clean": "git clean -Xdf",
-    "test": "jest integration-tests --watch",
-    "test:ci": "jest integration-tests --coverage",
-    "test:app": "parcel integration-tests/test-app/index.html",
-    "test:performance": "jest performance-tests --watch --update-snapshot",
-    "test:performance:ci": "jest performance-tests --update-snapshot",
-    "test:performance:app": "parcel performance-tests/test-app/index.html",
-    "start": "npm i && npm run build",
-    "restart": "npm run clean && npm start"
-  },
-  "runkitExampleFilename": "docs/runkit_example.js",
-  "author": {
-    "name": "Jesse Jurman",
-    "email": "j.r.jurman@gmail.com",
-    "url": "https://jrjurman.com"
-  },
-  "keywords": [
-    "frontend",
-    "framework",
-    "client",
-    "browser",
-    "web-app",
-    "tram-one",
-    "observables",
-    "hooks",
-    "vanilla",
-    "tram",
-    "one"
-  ],
-  "repository": "https://github.com/Tram-One/tram-one",
-  "license": "MIT",
-  "dependencies": {
-    "@nx-js/observer-util": "^4.2.2",
-    "@tram-one/hyperx": "^4.0.3",
-    "@tram-one/nanohtml": "^4.1.8",
-    "@tram-one/rbel": "^2.0.1",
-    "type": "^2.5.0",
-    "url-listener": "^2.0.0",
-    "use-url-params": "^3.0.0"
-  },
-  "devDependencies": {
-    "@testing-library/dom": "^8.1.0",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/user-event": "^13.2.0",
-    "eslint-config-tram-one": "^4.0.0",
-    "jest": "^27.0.6",
-    "parcel": "^2.0.0-beta.2",
-    "rollup": "^2.53.2",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-filesize": "^9.1.1",
-    "rollup-plugin-node-builtins": "^2.1.2",
-    "rollup-plugin-node-globals": "^1.4.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-sizes": "^1.0.4",
-    "rollup-plugin-terser": "^7.0.2",
-    "watch": "^1.0.2",
-    "xo": "^0.32.1"
-  },
-  "xo": {
-    "extends": [
-      "tram-one"
-    ],
-    "ignores": [
-      "docs/"
-    ],
-    "rules": {
-      "valid-jsdoc": 0,
-      "capitalized-comments": 0,
-      "new-cap": 0,
-      "unicorn/no-process-exit": 0,
-      "unicorn/no-unreadable-array-destructuring": 0,
-      "unicorn/prevent-abbreviations": 0,
-      "unicorn/no-fn-reference-in-iterator": 0,
-      "unicorn/no-reduce": 0,
-      "import/no-anonymous-default-export": 0
-    }
-  }
+	"name": "tram-one",
+	"version": "11.0.0",
+	"description": "🚋 Modern View Framework for Vanilla Javascript",
+	"main": "dist/tram-one.cjs",
+	"commonjs": "dist/tram-one.cjs",
+	"umd": "dist/tram-one.js",
+	"module": "dist/tram-one.mjs",
+	"types": "dist/tram-one.d.ts",
+	"type": "module",
+	"exports": {
+		".": {
+			"import": "./dist/tram-one.mjs",
+			"require": "./dist/tram-one.cjs"
+		}
+	},
+	"files": [
+		"dist/*",
+		"docs/runkit_example.js"
+	],
+	"scripts": {
+		"lint": "eslint . --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore",
+		"build": "npm run build:cjs && npm run build:umd && npm run build:mjs",
+		"postbuild": "npm run build:badges",
+		"build:cjs": "rollup -c configs/rollup.config.cjs.js",
+		"build:umd": "rollup -c configs/rollup.config.umd.js",
+		"build:mjs": "rollup -c configs/rollup.config.mjs",
+		"build:badges": "node dev-scripts/build-size-badges.cjs",
+		"watch:lint": "watch \"npm run lint\" src",
+		"watch:build": "watch \"npm run build\" src",
+		"clean": "git clean -Xdf",
+		"test": "jest integration-tests --watch",
+		"test:ci": "jest integration-tests --coverage",
+		"test:app": "parcel integration-tests/test-app/index.html --dist-dir .parcel-dist",
+		"test:performance": "jest performance-tests --watch --update-snapshot",
+		"test:performance:ci": "jest performance-tests --update-snapshot",
+		"test:performance:app": "parcel performance-tests/test-app/index.html",
+		"start": "npm ci && npm run build",
+		"restart": "npm run clean && npm start"
+	},
+	"runkitExampleFilename": "docs/runkit_example.js",
+	"author": {
+		"name": "Jesse Jurman",
+		"email": "j.r.jurman@gmail.com",
+		"url": "https://jrjurman.com"
+	},
+	"keywords": [
+		"frontend",
+		"framework",
+		"client",
+		"browser",
+		"web-app",
+		"tram-one",
+		"observables",
+		"hooks",
+		"vanilla",
+		"tram",
+		"one"
+	],
+	"repository": "https://github.com/Tram-One/tram-one",
+	"license": "MIT",
+	"dependencies": {
+		"@nx-js/observer-util": "^4.2.2",
+		"@tram-one/hyperx": "^4.0.3",
+		"@tram-one/nanohtml": "^5.0.0",
+		"@tram-one/rbel": "^2.0.1",
+		"url-listener": "^2.0.0",
+		"use-url-params": "^3.0.0"
+	},
+	"devDependencies": {
+		"@rollup/plugin-typescript": "^8.3.0",
+		"@testing-library/dom": "^8.1.0",
+		"@testing-library/jest-dom": "^5.14.1",
+		"@testing-library/user-event": "^13.2.0",
+		"@typescript-eslint/eslint-plugin": "^5.1.0",
+		"@typescript-eslint/parser": "^5.1.0",
+		"eslint": "^8.0.1",
+		"eslint-config-prettier": "^8.3.0",
+		"eslint-config-tram-one": "^4.0.0",
+		"eslint-plugin-import": "^2.25.2",
+		"eslint-plugin-jest": "^25.2.2",
+		"eslint-plugin-prettier": "^4.0.0",
+		"jest": "^27.0.6",
+		"parcel": "^2.0.0",
+		"prettier": "^2.4.1",
+		"rollup": "^2.53.2",
+		"rollup-plugin-commonjs": "^10.1.0",
+		"rollup-plugin-dts": "^4.0.0",
+		"rollup-plugin-filesize": "^9.1.1",
+		"rollup-plugin-node-builtins": "^2.1.2",
+		"rollup-plugin-node-globals": "^1.4.0",
+		"rollup-plugin-node-resolve": "^5.2.0",
+		"rollup-plugin-sizes": "^1.0.4",
+		"rollup-plugin-terser": "^7.0.2",
+		"ts-jest": "^27.0.7",
+		"tslib": "^2.3.1",
+		"typescript": "^4.4.4",
+		"watch": "^1.0.2"
+	}
 }

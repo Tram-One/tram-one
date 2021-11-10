@@ -4,20 +4,9 @@ dist
 # Coverage Report
 coverage
 
-# docma docs
-docs/website
-
-# Logs
-logs
-*.log
-*.log.*
-
 # Dependency directory
 node_modules
 
-# SSL certificates
-.ssl
-
 # parcel test app files
-dist
 .parcel-cache
+.parcel-dist

@@ -1,3 +1,7 @@
+/* istanbul ignore file */
+// this file should be ignored for code coverage
+// since most of the file will just fail on load
+
 const { registerHtml, useEffect } = require('../../src/tram-one');
 
 const html = registerHtml();

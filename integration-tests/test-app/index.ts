@@ -69,6 +69,8 @@ export const startApp = (container: any) => {
 	};
 };
 
+// next block is only used when running the app with `npm run test:app`
+/* istanbul ignore next */
 if (document.querySelector('#parcel-page')) {
 	startApp('#parcel-page');
 }

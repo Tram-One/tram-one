@@ -79,6 +79,17 @@ export type UrlMatchResults = [
 	}
 ][0];
 
+/**
+ * Type for an element that has Tram-One attributes.
+ * See `./node-names.ts` for more details
+ */
+export interface TramOneElement extends Element {
+	[TRAM_TAG]: boolean;
+	[TRAM_TAG_REACTION]: Reaction;
+	[TRAM_TAG_NEW_EFFECTS]: Effect[];
+	[TRAM_TAG_CLEANUP_EFFECTS]: CleanupEffect[];
+}
+
 /* ============= INTERNAL TYPES ========================================
  * These won't be exposed or really visible to end users.
  * =====================================================================
@@ -106,17 +117,6 @@ export type WorkingkeyObject = {
  * This is really just an annotation to make TramOneElement easier to understand
  */
 export type Reaction = () => void;
-
-/**
- * Type for an element that has Tram-One attributes.
- * See `./node-names.ts` for more details
- */
-export interface TramOneElement extends Element {
-	[TRAM_TAG]: boolean;
-	[TRAM_TAG_REACTION]: Reaction;
-	[TRAM_TAG_NEW_EFFECTS]: Effect[];
-	[TRAM_TAG_CLEANUP_EFFECTS]: CleanupEffect[];
-}
 
 /**
  * Type for saving properties of an element that we are removing / replacing

@@ -14,4 +14,5 @@ export {
 	Props,
 	Registry,
 	UrlMatchResults,
+	TramOneElement,
 } from './types';

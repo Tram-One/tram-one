@@ -63,10 +63,6 @@ const clearNode = (node: Node | TramOneElement) => {
 		return;
 	}
 
-	if (node[TRAM_TAG_CLEANUP_EFFECTS] === undefined) {
-		console.log('TRAM_TAG_CLEANUP_EFFECTS', node[TRAM_TAG_CLEANUP_EFFECTS], node);
-	}
-
 	unobserve(node[TRAM_TAG_REACTION]);
 	cleanupEffects(node[TRAM_TAG_CLEANUP_EFFECTS]);
 };

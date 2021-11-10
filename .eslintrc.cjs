@@ -12,6 +12,8 @@ module.exports = {
 		'@typescript-eslint/no-var-requires': 'off',
 		// as a framework, we have to sometimes just expect anything
 		'@typescript-eslint/no-explicit-any': 'off',
+		// we shouldn't have console logs in our project
+		'no-console': 'error',
 	},
 	overrides: [
 		// allow module.exports for config, testing, and docs

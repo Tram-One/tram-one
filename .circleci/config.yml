@@ -22,14 +22,14 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-{{ checksum "package.json" }}
           # fallback to using the latest cache if no exact match is found
           # - v1-dependencies-
 
       # Add ssh key so we can publish build assets to the repo
       - add_ssh_keys:
           fingerprints:
-            - "64:3e:d4:d8:4b:95:68:79:d3:3b:ab:b1:5c:fa:2d:3d"
+            - '64:3e:d4:d8:4b:95:68:79:d3:3b:ab:b1:5c:fa:2d:3d'
 
       - run: npm ci
 
@@ -62,7 +62,7 @@ jobs:
             git config user.email "j.r.jurman@gmail.com"
             git config user.name "CircleCI Job"
 
-            if [[ -z "${CIRCLE_PULL_REQUEST}" ]]
+            if [ $CIRCLE_BRANCH == "master" ]
             then
               echo "Master Build, checkout to master"
               git checkout

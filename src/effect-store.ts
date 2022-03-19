@@ -7,16 +7,17 @@
  */
 
 import { buildNamespace } from './namespace';
-import { Effect } from './types';
+import { EffectStore } from './types';
 
-const defaultEffectStore = {} as {
-	[callLikeKey: string]: Effect;
+const newDefaultEffectStore = () => {
+	return {} as EffectStore;
 };
+
 export const {
 	setup: setupEffectStore,
 	get: getEffectStore,
 	set: setEffectStore,
-} = buildNamespace(() => defaultEffectStore);
+} = buildNamespace(newDefaultEffectStore);
 
 /**
  * clear the effect store

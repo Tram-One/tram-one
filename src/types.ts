@@ -151,3 +151,10 @@ export interface ElementPotentiallyWithSelectionAndFocus extends Element {
 	) => void;
 	focus?: () => void;
 }
+
+/**
+ * Type for internal storage of effects
+ */
+export interface EffectStore {
+	[callLikeKey: string]: Effect;
+}

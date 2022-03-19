@@ -7,6 +7,7 @@ import tab from './tab';
 import account from './account';
 import tasks from './tasks';
 import mirrorinput from './mirror-input';
+import documentTitleSetter from './document-title-setter';
 
 const html = registerHtml({
 	title: title,
@@ -17,6 +18,7 @@ const html = registerHtml({
 	account: account,
 	tasks: tasks,
 	'mirror-input': mirrorinput,
+	'document-title-setter': documentTitleSetter,
 });
 
 /**
@@ -32,6 +34,9 @@ export const app = () => {
 
 	return html`
 		<main>
+			<!-- for regression testing, it is important that document-title-setter is the first element -->
+			<document-title-setter />
+
 			<title subtitle="Sub Title Prop">Sub Title Child</title>
 			<p>Root Loaded: ${rootStore.loaded}</p>
 			<logo />

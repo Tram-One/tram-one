@@ -229,4 +229,14 @@ describe('Tram-One', () => {
 			expect(getByLabelText(container, 'Sub Mirror Input')).toHaveValue('Test');
 		});
 	});
+
+	it('should trigger use-effects of the first resolved element', async () => {
+		// start the app
+		startApp();
+
+		// previously, useEffects on the first resolved element would not trigger
+		// because the effect queue and effect store were pointed to the same object instance
+
+		expect(document.title).toEqual('Tram-One Testing App');
+	});
 });

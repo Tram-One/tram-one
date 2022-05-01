@@ -2,9 +2,11 @@ const useUrlParams = require('use-url-params');
 import { registerHtml, start } from '../../src/tram-one';
 
 import elementRendering from './element-rendering';
+import elementSwitcher from './element-switcher';
 
 const html = registerHtml({
 	'element-rendering': elementRendering,
+	'element-switcher': elementSwitcher,
 });
 
 /**
@@ -12,6 +14,7 @@ const html = registerHtml({
  */
 export const app = () => {
 	if (useUrlParams('/element-rendering').matches) return html`<div><element-rendering /></div>`;
+	if (useUrlParams('/element-switcher').matches) return html`<div><element-switcher /></div>`;
 	return html`
 		<main>
 			<h1>Performance Test App</h1>

@@ -58,7 +58,7 @@ const cleanupEffects = (cleanupEffects: (() => void)[]) => {
 
 // unobserve the reaction tied to the node, and run all cleanup effects for the node
 const clearNode = (node: Node | TramOneElement) => {
-	// if this element doesn't have a Reaction, it is not be a Tram-One Element
+	// if this element doesn't have a Reaction, it is not a Tram-One Element
 	if (!(TRAM_TAG in node)) {
 		return;
 	}

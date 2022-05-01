@@ -120,12 +120,18 @@ export default (tagFunction: () => TramOneElement): TramOneElement => {
 
 				elementToGiveFocus = allActiveLikeElements[elementIndexToGiveFocus] as ElementPotentiallyWithSelectionAndFocus;
 				// also try to set the selection, if there is a selection for this element
-				if (elementToGiveFocus.setSelectionRange !== undefined) {
-					elementToGiveFocus.setSelectionRange(
-						removedElementWithFocusData.selectionStart,
-						removedElementWithFocusData.selectionEnd,
-						removedElementWithFocusData.selectionDirection
-					);
+				try {
+					if (elementToGiveFocus.setSelectionRange !== undefined) {
+						elementToGiveFocus.setSelectionRange(
+							removedElementWithFocusData.selectionStart,
+							removedElementWithFocusData.selectionEnd,
+							removedElementWithFocusData.selectionDirection
+						);
+					}
+				} catch (exception) {
+					// don't worry if we fail
+					// this can happen if the element has a `setSelectionRange` but it isn't supported
+					// e.g. input with type="range"
 				}
 
 				elementToGiveFocus.scrollLeft = removedElementWithFocusData.scrollLeft;

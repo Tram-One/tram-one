@@ -8,6 +8,7 @@ import account from './account';
 import tasks from './tasks';
 import mirrorinput from './mirror-input';
 import documentTitleSetter from './document-title-setter';
+import elementstoregenerator from './element-store-generator';
 
 const html = registerHtml({
 	title: title,
@@ -19,6 +20,7 @@ const html = registerHtml({
 	tasks: tasks,
 	'mirror-input': mirrorinput,
 	'document-title-setter': documentTitleSetter,
+	'element-store-generator': elementstoregenerator,
 });
 
 /**
@@ -47,6 +49,7 @@ export const app = () => {
 			<tab />
 			<tasks />
 			<mirror-input />
+			<element-store-generator />
 		</main>
 	`;
 };

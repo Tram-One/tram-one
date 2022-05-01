@@ -239,4 +239,45 @@ describe('Tram-One', () => {
 
 		expect(document.title).toEqual('Tram-One Testing App');
 	});
+
+	it('should keep focus on inputs without a start and end selection', async () => {
+		// start the app
+		const { container } = startApp();
+
+		// previously when interacting with an input of a different type (e.g. range)
+		// when reapplying focus Tram-One would throw an error because while the
+		// function for setting selection range exists, it does not work
+
+		// focus on the input (the range input defaults to 0)
+		userEvent.click(getByLabelText(container, 'Store Generator'));
+
+		// verify that the element has focus (before we start changing text)
+		await waitFor(() => {
+			expect(getByLabelText(container, 'Store Generator')).toHaveFocus();
+		});
+
+		// hit the right arrow key to increment the value
+		fireEvent.change(getByLabelText(container, 'Store Generator'), { target: { value: 1 } });
+		// userEvent.type(getByLabelText(container, 'Store Generator'), '{arrowright}');
+
+		// verify the element has the new value
+		expect(getByLabelText(container, 'Store Generator')).toHaveValue('1');
+
+		// wait for mutation observer to re-attach focus
+		// expect the input to keep focus after the change event
+		await waitFor(() => {
+			expect(getByLabelText(container, 'Store Generator')).toHaveFocus();
+		});
+	});
+
+	it('should clean up stores for elements that are no longer rendered', async () => {
+		// start the app
+		const { container } = startApp();
+
+		// previously stores made for elements that had been removed stayed in the tram-observable-store
+
+		// FOR JESSE, DEBUGGING NOTES:
+		// window['tram-space']['tram-observable-store']
+		// look at target, notice that it grows, even when the stores should have been removed
+	});
 });

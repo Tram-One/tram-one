@@ -54,6 +54,7 @@ describe('Tram-One', () => {
 		await startAppAndWait();
 
 		// previously the working branch indices would have long recursive chains of branches
+
 		const workingKeyBranches = Object.keys(window['tram-space']['tram-hook-key'].branchIndices);
 
 		// verify that top-level elements exist

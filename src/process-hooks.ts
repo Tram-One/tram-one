@@ -32,7 +32,6 @@ export default (tagFunction: () => TramOneElement) => {
 	const newKeys = getKeyQueue(TRAM_KEY_QUEUE);
 
 	// store new effects in the node we just built
-	// TODO investigate if there are ever existing effects?
 	const newEffects = Object.keys(queuedEffects).filter((effect) => !(effect in existingEffects));
 	tagResult[TRAM_TAG_NEW_EFFECTS] = newEffects.map((newEffectKey) => queuedEffects[newEffectKey]);
 

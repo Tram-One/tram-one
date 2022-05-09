@@ -87,7 +87,6 @@ export const restoreWorkingKey = (keyName: string, restoreKey: WorkingkeyObject)
 
 	key.branch = [...restoreKey.branch];
 
-	// TODO investigate if this is doing what we need it to do
 	const resetBranchValue = (branch: string) => {
 		branches[branch] = restoreKey.branchIndices[branch] || 0;
 	};

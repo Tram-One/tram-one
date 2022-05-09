@@ -72,7 +72,6 @@ export const startApp = (container: any) => {
 	}
 
 	// remove all existing state in the tram-space (since the app does not run in an isolated way)
-	// TODO we may need to carry this logic over to prevent issues in Hot-Reloading
 	Object.keys((window as unknown as TramWindow)['tram-space'] || {}).forEach((globalStore) => {
 		delete (window as unknown as TramWindow)['tram-space'][globalStore];
 	});

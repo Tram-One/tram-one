@@ -14,14 +14,15 @@ export default () => {
 	const pageStore = useGlobalStore('STORE', { selected: 1 });
 	const switchStore = useStore({ id: 0 });
 
-	const changeSelection = (newSelection) => () => {
+	const changeSelection = (newSelection: number) => () => {
 		pageStore.selected = newSelection;
 	};
 
 	const startAutoSwitch = () => {
 		switchStore.id = setInterval(() => {
 			(
-				document.querySelector('nav button[selected] + button') || document.querySelector('nav button:first-of-type')
+				(document.querySelector('nav button[selected] + button') as HTMLButtonElement) ||
+				(document.querySelector('nav button:first-of-type') as HTMLButtonElement)
 			).click();
 		}, 500);
 	};

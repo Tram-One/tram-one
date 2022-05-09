@@ -167,7 +167,7 @@ export interface EffectStore {
 }
 
 /**
- * Type for keeping track of the number of usages of a key
+ * Type for keeping track of the number of observers for a store
  */
 export type KeyObservers = {
 	[key: string]: number;

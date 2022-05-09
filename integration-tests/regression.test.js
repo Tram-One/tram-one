@@ -278,7 +278,7 @@ describe('Tram-One', () => {
 		// start the app
 		const { container } = await startAppAndWait();
 
-		// previously state would be blown away if a parent element changed state multiple
+		// previously state would be blown away if a parent element changed state multiple times
 
 		// focus on the input (the range input defaults to 0)
 		userEvent.click(getByLabelText(container, 'Store Generator'));
@@ -317,7 +317,7 @@ describe('Tram-One', () => {
 		// start the app
 		const { container } = await startAppAndWait();
 
-		// previously state would be blown away if a parent element changed state multiple
+		// previously we would hold on to the local state of elements even if they had been removed
 
 		// focus on the input (the range input defaults to 0)
 		userEvent.click(getByLabelText(container, 'Store Generator'));

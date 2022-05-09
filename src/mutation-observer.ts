@@ -22,9 +22,10 @@ import { TRAM_OBSERVABLE_STORE, TRAM_KEY_STORE } from './engine-names';
 import { decrementKeyStoreValue, getKeyStore, incrementKeyStoreValue } from './key-store';
 
 /**
- * process new effects for new nodes
+ * process side-effects for new tram-one nodes
+ * (this includes calling useEffects, and keeping track of stores)
  */
-const processHooks = (node: Node | TramOneElement) => {
+const processTramTags = (node: Node | TramOneElement) => {
 	// if this element doesn't have a TRAM_TAG, it's not a Tram-One Element
 	if (!(TRAM_TAG in node)) {
 		return;
@@ -149,7 +150,7 @@ const mutationObserverNamespaceConstructor = () =>
 		const newNodes = mutationList.flatMap(addedNodesInMutation);
 		const newChildNodes = newNodes.flatMap(childrenComponents);
 
-		newChildNodes.forEach(processHooks);
+		newChildNodes.forEach(processTramTags);
 
 		// clean up all local observable stores that have no observers
 		cleanUpObservableStores();

@@ -99,6 +99,7 @@ const cleanUpObservableStores = () => {
 	Object.entries(keyStore).forEach(([key, observers]) => {
 		if (observers === 0) {
 			delete observableStore[key];
+			delete keyStore[key];
 		}
 	});
 };

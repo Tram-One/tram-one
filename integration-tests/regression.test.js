@@ -10,7 +10,7 @@ const { startAppAndWait } = require('./test-helpers');
 describe('Tram-One', () => {
 	it('should not call cleanups that are not functions', async () => {
 		// start the app
-		const { container } = await await startAppAndWait();
+		const { container } = await startAppAndWait();
 
 		// previously this would fail because the cleanup was called,
 		// even though it was not a function, and instead was a promise (the result of an async function)

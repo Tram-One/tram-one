@@ -5,9 +5,10 @@ const html = registerHtml();
 /**
  * Dynamicly generated component that could possibly cause memory leaks
  */
-const elementwithstore: TramOneComponent = ({ value }) => {
-	const subElementStore = useStore({ active: value });
-	return html` <span>${subElementStore.active},</span> `;
+const elementwithstore: TramOneComponent = ({ index }) => {
+	const subElementStore = useStore({ count: 0 });
+	const onIncrement = () => subElementStore.count++;
+	return html` <button onclick=${onIncrement}>[${index}: ${subElementStore.count}]</button> `;
 };
 
 export default elementwithstore;

@@ -1,6 +1,6 @@
 const { observe } = require('@nx-js/observer-util');
 
-import { TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } from './node-names';
+import { TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS, TRAM_TAG } from './node-names';
 import { TramOneElement, RemovedElementDataStore, Reaction, ElementPotentiallyWithSelectionAndFocus } from './types';
 
 // functions to go to nodes or indices (made for .map)
@@ -137,6 +137,9 @@ export default (tagFunction: () => TramOneElement): TramOneElement => {
 				elementToGiveFocus.scrollLeft = removedElementWithFocusData.scrollLeft;
 				elementToGiveFocus.scrollTop = removedElementWithFocusData.scrollTop;
 			}
+
+			// don't lose track that this is still a tram-one element
+			tagResult[TRAM_TAG] = true;
 
 			// copy the reaction and effects from the old tag to the new one
 			tagResult[TRAM_TAG_REACTION] = oldTag[TRAM_TAG_REACTION];

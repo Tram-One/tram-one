@@ -1,11 +1,16 @@
-const { getByText, queryAllByText, fireEvent, waitFor, getByLabelText } = require('@testing-library/dom');
+const { getByText, queryAllByText, fireEvent, waitFor, getByLabelText, queryByText } = require('@testing-library/dom');
 const { default: userEvent } = require('@testing-library/user-event');
-const { startApp } = require('./test-app');
+const { startAppAndWait } = require('./test-helpers');
+
+/**
+ * The following suite of tests are made retroactively for unexpected behaviors.
+ * They are not for any direct feature, but rather validate the behavior of framework as a whole.
+ */
 
 describe('Tram-One', () => {
 	it('should not call cleanups that are not functions', async () => {
 		// start the app
-		const { container } = startApp();
+		const { container } = await await startAppAndWait();
 
 		// previously this would fail because the cleanup was called,
 		// even though it was not a function, and instead was a promise (the result of an async function)
@@ -18,7 +23,7 @@ describe('Tram-One', () => {
 
 	it('should call updated cleanups', async () => {
 		// start the app
-		const { container } = startApp();
+		const { container } = await startAppAndWait();
 
 		// verify that the tab is rendered and the lock button is there
 		expect(getByText(container, 'Was Locked: false')).toBeVisible();
@@ -48,7 +53,7 @@ describe('Tram-One', () => {
 
 	it('should process state as an array', async () => {
 		// start the app
-		const { container } = startApp();
+		const { container } = await startAppAndWait();
 
 		// previously when state was being processed, it would be converted to an object
 		// this test adds an element to a store to verify array methods work
@@ -67,7 +72,7 @@ describe('Tram-One', () => {
 		window.history.pushState({}, '', '/test_account');
 
 		// start the app
-		const { container } = startApp();
+		const { container } = await startAppAndWait();
 
 		// verify the account info is read correctly at startup
 		expect(getByText(container, 'Account: test_account')).toBeVisible();
@@ -75,7 +80,7 @@ describe('Tram-One', () => {
 
 	it('should keep focus on inputs when components would rerender', async () => {
 		// start the app
-		const { container } = startApp();
+		const { container } = await startAppAndWait();
 
 		// previously when interacting with an input, if the component would rerender
 		// focus would be removed from the component and put on the body of the page
@@ -89,7 +94,7 @@ describe('Tram-One', () => {
 		});
 
 		// clear the input
-		userEvent.type(getByLabelText(container, 'New Task Label'), '{selectall}{backspace}');
+		userEvent.clear(getByLabelText(container, 'New Task Label'));
 
 		// wait for mutation observer to reapply focus
 		await waitFor(() => {
@@ -111,7 +116,7 @@ describe('Tram-One', () => {
 
 	it('should keep focus on the most recent input when components rerender', async () => {
 		// start the app
-		const { container } = startApp();
+		const { container } = await startAppAndWait();
 
 		// previously when interacting with an input, if the component would rerender
 		// focus would be removed from the component and put on the body of the page
@@ -150,7 +155,7 @@ describe('Tram-One', () => {
 
 	it('should keep focus when both the parent and child element would update', async () => {
 		// start the app
-		const { container } = startApp();
+		const { container } = await startAppAndWait();
 
 		// previously when interacting with an input, if both a parent and child element
 		// would update, then focus would not reattach, and/or the value would not update correctly
@@ -200,7 +205,7 @@ describe('Tram-One', () => {
 
 	it('should not error when resetting focus if the number of elements changed', async () => {
 		// start the app
-		const { container } = startApp();
+		const { container } = await startAppAndWait();
 
 		// previously when interacting with an input, if the number of elements decreased
 		// an error was thrown because the element to focus on no longer existed
@@ -232,7 +237,7 @@ describe('Tram-One', () => {
 
 	it('should trigger use-effects of the first resolved element', async () => {
 		// start the app
-		startApp();
+		await startAppAndWait();
 
 		// previously, useEffects on the first resolved element would not trigger
 		// because the effect queue and effect store were pointed to the same object instance
@@ -242,7 +247,7 @@ describe('Tram-One', () => {
 
 	it('should keep focus on inputs without a start and end selection', async () => {
 		// start the app
-		const { container } = startApp();
+		const { container } = await startAppAndWait();
 
 		// previously when interacting with an input of a different type (e.g. range)
 		// when reapplying focus Tram-One would throw an error because while the
@@ -251,14 +256,13 @@ describe('Tram-One', () => {
 		// focus on the input (the range input defaults to 0)
 		userEvent.click(getByLabelText(container, 'Store Generator'));
 
-		// verify that the element has focus (before we start changing text)
+		// verify that the element has focus (before changing the value)
 		await waitFor(() => {
 			expect(getByLabelText(container, 'Store Generator')).toHaveFocus();
 		});
 
-		// hit the right arrow key to increment the value
+		// change the value of the input
 		fireEvent.change(getByLabelText(container, 'Store Generator'), { target: { value: 1 } });
-		// userEvent.type(getByLabelText(container, 'Store Generator'), '{arrowright}');
 
 		// verify the element has the new value
 		expect(getByLabelText(container, 'Store Generator')).toHaveValue('1');
@@ -270,14 +274,103 @@ describe('Tram-One', () => {
 		});
 	});
 
-	it('should clean up stores for elements that are no longer rendered', async () => {
+	it('should not reset stores for elements that are still rendered', async () => {
 		// start the app
-		const { container } = startApp();
+		const { container } = await startAppAndWait();
 
-		// previously stores made for elements that had been removed stayed in the tram-observable-store
+		// previously state would be blown away if a parent element changed state multiple
 
-		// FOR JESSE, DEBUGGING NOTES:
-		// window['tram-space']['tram-observable-store']
-		// look at target, notice that it grows, even when the stores should have been removed
+		// focus on the input (the range input defaults to 0)
+		userEvent.click(getByLabelText(container, 'Store Generator'));
+
+		// change the value of the input
+		fireEvent.change(getByLabelText(container, 'Store Generator'), { target: { value: 1 } });
+
+		// click on one of the new stores several times
+		userEvent.click(getByText(container, '[0: 0]'));
+		userEvent.click(getByText(container, '[0: 1]'));
+		userEvent.click(getByText(container, '[0: 2]'));
+		userEvent.click(getByText(container, '[0: 3]'));
+		// the button should now say "[0: 4]"
+		expect(getByText(container, '[0: 4]')).toBeVisible();
+
+		// update the number of stores (the parent store element)
+		fireEvent.change(getByLabelText(container, 'Store Generator'), { target: { value: 2 } });
+
+		// wait for mutation observer clean up removed stores
+		await waitFor(() => {
+			// we should see the new buttons
+			expect(getByText(container, '[1: 0]')).toBeVisible();
+		});
+		fireEvent.change(getByLabelText(container, 'Store Generator'), { target: { value: 3 } });
+		// wait for mutation observer clean up removed stores
+		await waitFor(() => {
+			// we should see the new buttons
+			expect(getByText(container, '[2: 0]')).toBeVisible();
+		});
+
+		// we should still see the button with "4,"
+		expect(getByText(container, '[0: 4]')).toBeVisible();
+	});
+
+	it('should reset stores for elements that have been removed', async () => {
+		// start the app
+		const { container } = await startAppAndWait();
+
+		// previously state would be blown away if a parent element changed state multiple
+
+		// focus on the input (the range input defaults to 0)
+		userEvent.click(getByLabelText(container, 'Store Generator'));
+
+		// change the value of the input
+		fireEvent.change(getByLabelText(container, 'Store Generator'), { target: { value: 5 } });
+
+		// expect to see all the stores with their initial values
+		await waitFor(() => {
+			expect(getByText(container, '[0: 0]')).toBeVisible();
+			expect(getByText(container, '[1: 0]')).toBeVisible();
+			expect(getByText(container, '[2: 0]')).toBeVisible();
+			expect(getByText(container, '[3: 0]')).toBeVisible();
+			expect(getByText(container, '[4: 0]')).toBeVisible();
+		});
+
+		// click on each of the new stores
+		userEvent.click(getByText(container, '[0: 0]'));
+		userEvent.click(getByText(container, '[1: 0]'));
+		userEvent.click(getByText(container, '[2: 0]'));
+		userEvent.click(getByText(container, '[3: 0]'));
+		userEvent.click(getByText(container, '[4: 0]'));
+
+		// expect to see all the stores with the new values
+		await waitFor(() => {
+			expect(getByText(container, '[0: 1]')).toBeVisible();
+			expect(getByText(container, '[1: 1]')).toBeVisible();
+			expect(getByText(container, '[2: 1]')).toBeVisible();
+			expect(getByText(container, '[3: 1]')).toBeVisible();
+			expect(getByText(container, '[4: 1]')).toBeVisible();
+		});
+
+		// remove all of the stores by setting the value to 0
+		fireEvent.change(getByLabelText(container, 'Store Generator'), { target: { value: 0 } });
+
+		await waitFor(() => {
+			expect(queryByText(container, '[0: 1]')).toBe(null);
+			expect(queryByText(container, '[1: 1]')).toBe(null);
+			expect(queryByText(container, '[2: 1]')).toBe(null);
+			expect(queryByText(container, '[3: 1]')).toBe(null);
+			expect(queryByText(container, '[4: 1]')).toBe(null);
+		});
+
+		// re-add the stores by setting the value to 5
+		fireEvent.change(getByLabelText(container, 'Store Generator'), { target: { value: 5 } });
+
+		// expect to see all the stores with their initial values
+		await waitFor(() => {
+			expect(getByText(container, '[0: 0]')).toBeVisible();
+			expect(getByText(container, '[1: 0]')).toBeVisible();
+			expect(getByText(container, '[2: 0]')).toBeVisible();
+			expect(getByText(container, '[3: 0]')).toBeVisible();
+			expect(getByText(container, '[4: 0]')).toBeVisible();
+		});
 	});
 });

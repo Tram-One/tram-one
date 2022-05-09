@@ -1,4 +1,10 @@
-import { TRAM_TAG, TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } from './node-names';
+import {
+	TRAM_TAG,
+	TRAM_TAG_REACTION,
+	TRAM_TAG_NEW_EFFECTS,
+	TRAM_TAG_CLEANUP_EFFECTS,
+	TRAM_TAG_STORE_KEYS,
+} from './node-names';
 
 /* ============= PUBLIC TYPES ========================================
  * A lot of the types here are wrapped using an array / index of 0.
@@ -88,6 +94,7 @@ export interface TramOneElement extends Element {
 	[TRAM_TAG_REACTION]: Reaction;
 	[TRAM_TAG_NEW_EFFECTS]: Effect[];
 	[TRAM_TAG_CLEANUP_EFFECTS]: CleanupEffect[];
+	[TRAM_TAG_STORE_KEYS]: string[];
 }
 
 /* ============= INTERNAL TYPES ========================================
@@ -158,3 +165,10 @@ export interface ElementPotentiallyWithSelectionAndFocus extends Element {
 export interface EffectStore {
 	[callLikeKey: string]: Effect;
 }
+
+/**
+ * Type for keeping track of the number of usages of a key
+ */
+export type KeyObservers = {
+	[key: string]: number;
+};

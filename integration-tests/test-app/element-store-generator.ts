@@ -15,7 +15,7 @@ const elementstoregenerator: TramOneComponent = () => {
 		storeGeneratorStore.count = parseInt(inputElement.value);
 	};
 	const storeElements = [...new Array(storeGeneratorStore.count)].map((_, index) => {
-		return html`<elementwithstore value=${index} />`;
+		return html`<elementwithstore index=${index} />`;
 	});
 	return html`<section>
 		<label for="store-generator">Store Generator</label>

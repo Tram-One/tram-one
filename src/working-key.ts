@@ -8,16 +8,17 @@ import { WorkingkeyObject } from './types';
  * values or effects to pull / trigger.
  */
 
-const defaultWorkingKey = {
-	// list of custom tags that we've stepped into
-	branch: [],
-	// map of branches to index value (used as a cursor for hooks)
-	branchIndices: {
-		'': 0,
-	},
-} as WorkingkeyObject;
+const defaultWorkingKey = () =>
+	({
+		// list of custom tags that we've stepped into
+		branch: [],
+		// map of branches to index value (used as a cursor for hooks)
+		branchIndices: {
+			'': 0,
+		},
+	} as WorkingkeyObject);
 
-export const { setup: setupWorkingKey, get: getWorkingKey } = buildNamespace(() => defaultWorkingKey);
+export const { setup: setupWorkingKey, get: getWorkingKey } = buildNamespace(defaultWorkingKey);
 
 const getWorkingBranch = (keyName: string) => {
 	const workingkeyObject = getWorkingKey(keyName);
@@ -86,6 +87,7 @@ export const restoreWorkingKey = (keyName: string, restoreKey: WorkingkeyObject)
 
 	key.branch = [...restoreKey.branch];
 
+	// TODO investigate if this is doing what we need it to do
 	const resetBranchValue = (branch: string) => {
 		branches[branch] = restoreKey.branchIndices[branch] || 0;
 	};

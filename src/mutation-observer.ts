@@ -8,15 +8,35 @@
 
 const { observe, unobserve } = require('@nx-js/observer-util');
 
-import { TRAM_TAG, TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } from './node-names';
+import {
+	TRAM_TAG,
+	TRAM_TAG_REACTION,
+	TRAM_TAG_NEW_EFFECTS,
+	TRAM_TAG_CLEANUP_EFFECTS,
+	TRAM_TAG_STORE_KEYS,
+} from './node-names';
 import { buildNamespace } from './namespace';
 import { TramOneElement } from './types';
+import { getObservableStore } from './observable-store';
+import { TRAM_OBSERVABLE_STORE, TRAM_KEY_STORE } from './engine-names';
+import { decrementKeyStoreValue, getKeyStore, incrementKeyStoreValue } from './key-store';
 
-// process new effects for new nodes
-const processEffects = (node: Node | TramOneElement) => {
-	// if this element doesn't have new effects, it is not be a Tram-One Element
-	if (!(TRAM_TAG_NEW_EFFECTS in node)) {
+/**
+ * process new effects for new nodes
+ */
+const processHooks = (node: Node | TramOneElement) => {
+	// if this element doesn't have a TRAM_TAG, it's not a Tram-One Element
+	if (!(TRAM_TAG in node)) {
 		return;
+	}
+
+	const hasStoreKeys = node[TRAM_TAG_STORE_KEYS];
+
+	if (hasStoreKeys) {
+		// increment the usage of store keys in the key store (so we know an element is observing it)
+		node[TRAM_TAG_STORE_KEYS].forEach((key) => {
+			incrementKeyStoreValue(TRAM_KEY_STORE, key);
+		});
 	}
 
 	const hasEffects = node[TRAM_TAG_NEW_EFFECTS];
@@ -51,20 +71,48 @@ const processEffects = (node: Node | TramOneElement) => {
 	}
 };
 
-// call all cleanup effects on the node
+/**
+ * call all cleanup effects on the node
+ */
 const cleanupEffects = (cleanupEffects: (() => void)[]) => {
 	cleanupEffects.forEach((cleanup) => cleanup());
 };
 
-// unobserve the reaction tied to the node, and run all cleanup effects for the node
+/**
+ * remove the association of the store with this specific element
+ */
+const removeStoreKeyAssociation = (storeKeys: string[]) => {
+	storeKeys.forEach((storeKey) => {
+		decrementKeyStoreValue(TRAM_KEY_STORE, storeKey);
+	});
+};
+
+/**
+ * remove any stores that no longer have any elements associated with them
+ * see removeStoreKeyAssociation above
+ */
+const cleanUpObservableStores = () => {
+	const observableStore = getObservableStore(TRAM_OBSERVABLE_STORE);
+	const keyStore = getKeyStore(TRAM_KEY_STORE);
+	Object.entries(keyStore).forEach(([key, observers]) => {
+		if (observers === 0) {
+			delete observableStore[key];
+		}
+	});
+};
+
+/**
+ * unobserve the reaction tied to the node, and run all cleanup effects for the node
+ */
 const clearNode = (node: Node | TramOneElement) => {
-	// if this element doesn't have a Reaction, it is not a Tram-One Element
+	// if this element doesn't have a TRAM_TAG, it's not a Tram-One Element
 	if (!(TRAM_TAG in node)) {
 		return;
 	}
 
 	unobserve(node[TRAM_TAG_REACTION]);
 	cleanupEffects(node[TRAM_TAG_CLEANUP_EFFECTS]);
+	removeStoreKeyAssociation(node[TRAM_TAG_STORE_KEYS]);
 };
 
 const isTramOneComponent = (node: Node | TramOneElement) => {
@@ -74,8 +122,9 @@ const isTramOneComponent = (node: Node | TramOneElement) => {
 	return nodeIsATramOneComponent ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
 };
 
-// function to get the children (as a list) of the node passed in
-// this only needs to query tram-one components, so we can use the attribute `tram`
+/**
+ * function to get the children (as a list) of the node passed in
+ */
 const childrenComponents = (node: Node | TramOneElement) => {
 	const componentWalker = document.createTreeWalker(node, NodeFilter.SHOW_ELEMENT, isTramOneComponent);
 	const children = [];
@@ -90,15 +139,20 @@ const mutationObserverNamespaceConstructor = () =>
 	new MutationObserver((mutationList) => {
 		// cleanup orphaned nodes that are no longer on the DOM
 		const removedNodesInMutation = (mutation: MutationRecord) => [...mutation.removedNodes];
-		const removedNodes = mutationList.flatMap(removedNodesInMutation).flatMap(childrenComponents);
+		const removedNodes = mutationList.flatMap(removedNodesInMutation);
+		const removedChildNodes = removedNodes.flatMap(childrenComponents);
 
-		removedNodes.forEach(clearNode);
+		removedChildNodes.forEach(clearNode);
 
 		// call new effects on any new nodes
 		const addedNodesInMutation = (mutation: MutationRecord) => [...mutation.addedNodes];
-		const newNodes = mutationList.flatMap(addedNodesInMutation).flatMap(childrenComponents);
+		const newNodes = mutationList.flatMap(addedNodesInMutation);
+		const newChildNodes = newNodes.flatMap(childrenComponents);
 
-		newNodes.forEach(processEffects);
+		newChildNodes.forEach(processHooks);
+
+		// clean up all local observable stores that have no observers
+		cleanUpObservableStores();
 	});
 
 export const { setup: setupMutationObserver, get: getMutationObserver } = buildNamespace(

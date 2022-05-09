@@ -9,6 +9,7 @@ import tasks from './tasks';
 import mirrorinput from './mirror-input';
 import documentTitleSetter from './document-title-setter';
 import elementstoregenerator from './element-store-generator';
+import { TramWindow } from '../../src/types';
 
 const html = registerHtml({
 	title: title,
@@ -69,6 +70,12 @@ export const startApp = (container: any) => {
 		// this is required, since focus and visibility checks depend on being in the document
 		window.document.body.appendChild(appContainer);
 	}
+
+	// remove all existing state in the tram-space (since the app does not run in an isolated way)
+	// TODO we may need to carry this logic over to prevent issues in Hot-Reloading
+	Object.keys((window as unknown as TramWindow)['tram-space'] || {}).forEach((globalStore) => {
+		delete (window as unknown as TramWindow)['tram-space'][globalStore];
+	});
 
 	start(app, appContainer);
 

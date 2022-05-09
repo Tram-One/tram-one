@@ -11,7 +11,7 @@ import {
 	restoreWorkingKey,
 } from './working-key';
 import observeTag from './observe-tag';
-import processEffects from './process-effects';
+import processHooks from './process-hooks';
 import { TRAM_TAG, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } from './node-names';
 
 import { Registry, Props, DOMTaggedTemplateFunction } from './types';
@@ -49,8 +49,8 @@ export const registerDom = (namespace: string | null, registry: Registry = {}): 
 			};
 
 			// observe store usage and process any new effects that were called when building the component
-			const processEffectsAndBuildTagResult = () => processEffects(populatedTagFunction);
-			const tagResult = observeTag(processEffectsAndBuildTagResult);
+			const processHooksAndBuildTagResult = () => processHooks(populatedTagFunction);
+			const tagResult = observeTag(processHooksAndBuildTagResult);
 
 			// pop the branch off (since we are done rendering this component)
 			popWorkingKeyBranch(TRAM_HOOK_KEY);

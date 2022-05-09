@@ -34,7 +34,8 @@ const processTramTags = (node: Node | TramOneElement) => {
 	const hasStoreKeys = node[TRAM_TAG_STORE_KEYS];
 
 	if (hasStoreKeys) {
-		// increment the usage of store keys in the key store (so we know an element is observing it)
+		// for every store associated with this element, increment the count
+		// - this ensures that it doesn't get blown away when we clean up old stores
 		node[TRAM_TAG_STORE_KEYS].forEach((key) => {
 			incrementKeyStoreValue(TRAM_KEY_STORE, key);
 		});

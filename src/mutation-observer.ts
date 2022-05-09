@@ -23,7 +23,7 @@ import { decrementKeyStoreValue, getKeyStore, incrementKeyStoreValue } from './k
 
 /**
  * process side-effects for new tram-one nodes
- * (this includes calling useEffects, and keeping track of stores)
+ * (this includes calling effects, and keeping track of stores)
  */
 const processTramTags = (node: Node | TramOneElement) => {
 	// if this element doesn't have a TRAM_TAG, it's not a Tram-One Element

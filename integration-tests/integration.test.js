@@ -1,12 +1,11 @@
 const { getByText, fireEvent, waitFor } = require('@testing-library/dom');
 const { startApp } = require('./test-app');
 
-describe('Tram-One', () => {
-	beforeEach(() => {
-		// clean up any tram-one properties between tests
-		window['tram-space'] = undefined;
-	});
+/**
+ * The following tests are intentional test that validate the behavior of new features.
+ */
 
+describe('Tram-One', () => {
 	it('should render on a Node', () => {
 		// mount the app on the container
 		const container = document.createElement('div');

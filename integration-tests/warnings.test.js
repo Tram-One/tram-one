@@ -8,11 +8,6 @@ const { startApp: startBrokenApp } = require('./broken-app');
  */
 
 describe('Tram-One', () => {
-	beforeEach(() => {
-		// clean up any tram-one properties between tests
-		window['tram-space'] = undefined;
-	});
-
 	it('should warn if selector is not found', () => {
 		expect(() => startApp('#app')).toThrowError('Tram-One: could not find target, is the element on the page yet?');
 	});

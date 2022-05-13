@@ -8,5 +8,6 @@
 
 export const TRAM_TAG = 'tram-tag';
 export const TRAM_TAG_REACTION = 'tram-tag-reaction';
+export const TRAM_TAG_STORE_KEYS = 'tram-tag-store-keys';
 export const TRAM_TAG_NEW_EFFECTS = 'tram-tag-new-effects';
 export const TRAM_TAG_CLEANUP_EFFECTS = 'tram-tag-cleanup-effects';

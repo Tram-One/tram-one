@@ -1,8 +1,9 @@
-import { TRAM_OBSERVABLE_STORE, TRAM_HOOK_KEY } from './engine-names';
+import { TRAM_OBSERVABLE_STORE, TRAM_HOOK_KEY, TRAM_KEY_QUEUE } from './engine-names';
 import { getObservableStore } from './observable-store';
 import { getWorkingKeyValue, incrementWorkingKeyBranch } from './working-key';
 
 import { StoreObject } from './types';
+import { getKeyQueue } from './key-queue';
 
 /**
  * Shared source code for both observable hooks, useStore, and useGlobalStore.
@@ -16,7 +17,7 @@ export default <Store extends StoreObject>(key?: string, value?: Store): Store =
 	const observableStore = getObservableStore(TRAM_OBSERVABLE_STORE);
 
 	// increment the working key branch value
-	// this makes successive useEffects calls unique (until we reset the key)
+	// this makes successive hooks unique (until we reset the key)
 	incrementWorkingKeyBranch(TRAM_HOOK_KEY);
 
 	// if a key was passed in, use that, otherwise, generate a key
@@ -31,6 +32,13 @@ export default <Store extends StoreObject>(key?: string, value?: Store): Store =
 
 	// get value for key
 	const keyValue = observableStore[resolvedKey];
+
+	// if we weren't passed in a key, this is a local obserable (not global),
+	const isLocalStore = !key;
+	if (isLocalStore) {
+		// if this is local, we should associate it with the element by putting it in the keyQueue
+		getKeyQueue(TRAM_KEY_QUEUE).push(resolvedKey);
+	}
 
 	// return value
 	return keyValue;

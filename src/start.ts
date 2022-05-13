@@ -6,6 +6,8 @@ import {
 	TRAM_EFFECT_QUEUE,
 	TRAM_OBSERVABLE_STORE,
 	TRAM_MUTATION_OBSERVER,
+	TRAM_KEY_QUEUE,
+	TRAM_KEY_STORE,
 } from './engine-names';
 import { setupTramOneSpace } from './namespace';
 import { setupEffectStore } from './effect-store';
@@ -13,6 +15,8 @@ import { setupWorkingKey } from './working-key';
 import { setupObservableStore } from './observable-store';
 import { setupMutationObserver, startWatcher } from './mutation-observer';
 import { ElementOrSelector, TramOneComponent } from './types';
+import { setupKeyQueue } from './key-queue';
+import { setupKeyStore } from './key-store';
 
 /**
  * @name start
@@ -32,6 +36,9 @@ export default (component: TramOneComponent, target: ElementOrSelector) => {
 	// get the container to mount the app on
 	const container = buildContainer(target);
 
+	// setup the window object to hold stores and queues
+	// in the future, we may allow this to be customized
+	// for multiple, sandboxed, instances of Tram-One
 	setupTramOneSpace();
 
 	// setup store for effects
@@ -45,6 +52,12 @@ export default (component: TramOneComponent, target: ElementOrSelector) => {
 
 	// setup observable store for the useStore and useGlobalStore hooks
 	setupObservableStore(TRAM_OBSERVABLE_STORE);
+
+	// setup key store for keeping track of stores to clean up
+	setupKeyStore(TRAM_KEY_STORE);
+
+	// setup key queue for new observable stores when resolving mounts
+	setupKeyQueue(TRAM_KEY_QUEUE);
 
 	// setup a mutation observer for cleaning up removed elements and triggering effects
 	setupMutationObserver(TRAM_MUTATION_OBSERVER);

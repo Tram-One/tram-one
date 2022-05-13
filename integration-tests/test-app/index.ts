@@ -8,6 +8,8 @@ import account from './account';
 import tasks from './tasks';
 import mirrorinput from './mirror-input';
 import documentTitleSetter from './document-title-setter';
+import elementstoregenerator from './element-store-generator';
+import { TramWindow } from '../../src/types';
 
 const html = registerHtml({
 	title: title,
@@ -19,6 +21,7 @@ const html = registerHtml({
 	tasks: tasks,
 	'mirror-input': mirrorinput,
 	'document-title-setter': documentTitleSetter,
+	'element-store-generator': elementstoregenerator,
 });
 
 /**
@@ -47,6 +50,7 @@ export const app = () => {
 			<tab />
 			<tasks />
 			<mirror-input />
+			<element-store-generator />
 		</main>
 	`;
 };
@@ -66,6 +70,11 @@ export const startApp = (container: any) => {
 		// this is required, since focus and visibility checks depend on being in the document
 		window.document.body.appendChild(appContainer);
 	}
+
+	// remove all existing state in the tram-space (since the app does not run in an isolated way)
+	Object.keys((window as unknown as TramWindow)['tram-space'] || {}).forEach((globalStore) => {
+		delete (window as unknown as TramWindow)['tram-space'][globalStore];
+	});
 
 	start(app, appContainer);
 

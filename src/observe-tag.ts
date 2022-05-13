@@ -1,6 +1,6 @@
 const { observe } = require('@nx-js/observer-util');
 
-import { TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } from './node-names';
+import { TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS, TRAM_TAG } from './node-names';
 import { TramOneElement, RemovedElementDataStore, Reaction, ElementPotentiallyWithSelectionAndFocus } from './types';
 
 // functions to go to nodes or indices (made for .map)
@@ -120,17 +120,26 @@ export default (tagFunction: () => TramOneElement): TramOneElement => {
 
 				elementToGiveFocus = allActiveLikeElements[elementIndexToGiveFocus] as ElementPotentiallyWithSelectionAndFocus;
 				// also try to set the selection, if there is a selection for this element
-				if (elementToGiveFocus.setSelectionRange !== undefined) {
-					elementToGiveFocus.setSelectionRange(
-						removedElementWithFocusData.selectionStart,
-						removedElementWithFocusData.selectionEnd,
-						removedElementWithFocusData.selectionDirection
-					);
+				try {
+					if (elementToGiveFocus.setSelectionRange !== undefined) {
+						elementToGiveFocus.setSelectionRange(
+							removedElementWithFocusData.selectionStart,
+							removedElementWithFocusData.selectionEnd,
+							removedElementWithFocusData.selectionDirection
+						);
+					}
+				} catch (exception) {
+					// don't worry if we fail
+					// this can happen if the element has a `setSelectionRange` but it isn't supported
+					// e.g. input with type="range"
 				}
 
 				elementToGiveFocus.scrollLeft = removedElementWithFocusData.scrollLeft;
 				elementToGiveFocus.scrollTop = removedElementWithFocusData.scrollTop;
 			}
+
+			// don't lose track that this is still a tram-one element
+			tagResult[TRAM_TAG] = true;
 
 			// copy the reaction and effects from the old tag to the new one
 			tagResult[TRAM_TAG_REACTION] = oldTag[TRAM_TAG_REACTION];

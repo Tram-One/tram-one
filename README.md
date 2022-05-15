@@ -19,10 +19,10 @@
     <img src="https://github.com/Tram-One/tram-one/raw/master/docs/badges/umd.svg?sanitize=true" alt="UMD build">
   </a>
   <a href="https://unpkg.com/tram-one/dist/tram-one.mjs">
-    <img src="https://github.com/Tram-One/tram-one/raw/master/docs/badges/umd.svg?sanitize=true" alt="ES Module build">
+    <img src="https://github.com/Tram-One/tram-one/raw/master/docs/badges/mjs.svg?sanitize=true" alt="ES Module build">
   </a>
   <a href="https://discord.gg/dpBXAQC">
-    <img src="https://img.shields.io/badge/discord-join-83ded3.svg?style=flat" alt="Join Discord">
+    <img src="https://img.shields.io/badge/discord-join-5865F2.svg?style=flat" alt="Join Discord">
   </a>
 </div>
 

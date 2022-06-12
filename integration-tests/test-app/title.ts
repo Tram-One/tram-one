@@ -1,4 +1,4 @@
-import { registerHtml, TramOneComponent, Props } from '../../src/tram-one';
+import { registerHtml, TramOneComponent } from '../../src/tram-one';
 import subtitle from './sub-title';
 
 const html = registerHtml({
@@ -9,7 +9,7 @@ const html = registerHtml({
 /**
  * component to test basic rendering
  */
-const title: TramOneComponent = ({ subtitle }: Props, children: Element) => {
+const title: TramOneComponent = ({ subtitle }, children) => {
 	return html`
 		<header>
 			<h1 class="title">Home Page</h1>

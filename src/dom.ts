@@ -14,7 +14,7 @@ import observeTag from './observe-tag';
 import processHooks from './process-hooks';
 import { TRAM_TAG, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } from './node-names';
 
-import { Registry, Props, DOMTaggedTemplateFunction } from './types';
+import { Registry, Props, DOMTaggedTemplateFunction, Children } from './types';
 
 /**
  * This function takes in a namespace and registry of custom components,
@@ -29,7 +29,7 @@ export const registerDom = (namespace: string | null, registry: Registry = {}): 
 	// modify the registry so that each component function updates the hook working key
 	const hookedRegistry = Object.keys(registry).reduce((newRegistry, tagName) => {
 		const tagFunction = registry[tagName];
-		const hookedTagFunction = (props: Props, children: Element) => {
+		const hookedTagFunction = (props: Props, children?: Children) => {
 			// push a new branch onto the working key so any values that need to be unique among components
 			// but consistent across renders can be read
 			const stringifiedProps = JSON.stringify(props);

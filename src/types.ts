@@ -30,7 +30,9 @@ export type DOMTaggedTemplateFunction = (
  * Type for custom Tram One Components.
  * They can take in props and children, and return some rendered Element.
  */
-export type TramOneComponent = [(props: Props, children: Element) => TramOneElement][0];
+export type TramOneComponent<PropsInterface extends Props = Props, ChildrenInterface extends Children = Children> = [
+	(props: PropsInterface, children: ChildrenInterface) => TramOneElement
+][0];
 
 /**
  * Type for useStore and useGlobalStore hooks.
@@ -65,12 +67,21 @@ export type Props = [
 ][0];
 
 /**
+ * The Children interface for custom Tram One Components.
+ * If the tag is self-closing, it will be `undefined`, otherwise it will
+ * be a list of strings and DOM Elements
+ */
+export type Children = [(Element | string)[] | undefined][0];
+
+/**
  * Type for registering Tram One Components in the template interface.
  * This is used in registerHtml and registerSvg.
  */
 export type Registry = [
 	{
-		[tag: string]: TramOneComponent;
+		// we use <any, any> here since in the Registry we can't be as explicit about the types being provided
+		// - for now lean on the end-user to know what types are required and passing them in
+		[tag: string]: TramOneComponent<any, any>;
 	}
 ][0];
 
@@ -96,6 +107,12 @@ export interface TramOneElement extends Element {
 	[TRAM_TAG_CLEANUP_EFFECTS]: CleanupEffect[];
 	[TRAM_TAG_STORE_KEYS]: string[];
 }
+
+/**
+ * Type for the Root TramOneComponent,
+ * it can have no props or children, since it is the root element
+ */
+export type RootTramOneComponent = TramOneComponent<{ [attribute: string]: never }, undefined>;
 
 /* ============= INTERNAL TYPES ========================================
  * These won't be exposed or really visible to end users.

@@ -14,7 +14,7 @@ import { setupEffectStore } from './effect-store';
 import { setupWorkingKey } from './working-key';
 import { setupObservableStore } from './observable-store';
 import { setupMutationObserver, startWatcher } from './mutation-observer';
-import { ElementOrSelector, TramOneComponent } from './types';
+import { ElementOrSelector, RootTramOneComponent } from './types';
 import { setupKeyQueue } from './key-queue';
 import { setupKeyStore } from './key-store';
 
@@ -30,7 +30,7 @@ import { setupKeyStore } from './key-store';
  * @param component top-level component to attach to the page.
  * @param target either a CSS selector, or Node to attach the component to
  */
-export default (component: TramOneComponent, target: ElementOrSelector) => {
+export default (component: RootTramOneComponent, target: ElementOrSelector) => {
 	/* setup all the internal engines required for tram-one to work */
 
 	// get the container to mount the app on

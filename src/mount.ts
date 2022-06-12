@@ -1,12 +1,12 @@
 import { registerHtml } from './dom-wrappers';
-import { Container, TramOneComponent } from './types';
+import { Container, RootTramOneComponent } from './types';
 
 /**
  * Updates a container with an initial component for the first render.
  * @param component the tram-one component to render
  * @param container an element to render the component on
  */
-export default (component: TramOneComponent, container: Container) => {
+export default (component: RootTramOneComponent, container: Container) => {
 	const html = registerHtml({
 		app: component,
 	});

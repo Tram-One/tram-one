@@ -9,6 +9,10 @@ const { startApp } = require('./test-app');
 const NUMBER_OF_RUNS = 50;
 // the number of tests to toss (slowest and fastest)
 const BUFFER = 10;
+// set a high threshold for the timeout
+const TIMEOUT = 1000 * 60 * 5;
+
+jest.setTimeout(TIMEOUT);
 
 /**
  * This function helps test the element-renderer page, by setting the count, and hitting the render button
@@ -16,8 +20,8 @@ const BUFFER = 10;
  */
 const testElementRenderer = async (container, count, renders) => {
 	// setup {count} elements
-	userEvent.type(getByLabelText(container, 'Element Count'), '{selectall}{backspace}');
-	userEvent.type(getByLabelText(container, 'Element Count'), `${count}`);
+	await userEvent.clear(getByLabelText(container, 'Element Count'));
+	await userEvent.type(getByLabelText(container, 'Element Count'), `${count}`);
 
 	// verify the count is {count}
 	await waitFor(() => {
@@ -25,7 +29,7 @@ const testElementRenderer = async (container, count, renders) => {
 	});
 
 	// click to trigger the render
-	userEvent.click(getByText(container, 'Render'));
+	await userEvent.click(getByText(container, 'Render'));
 
 	// wait for the render button data to udpate
 	await waitFor(() => {

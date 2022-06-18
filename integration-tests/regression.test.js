@@ -89,17 +89,13 @@ describe('Tram-One', () => {
 		await userEvent.click(getByLabelText(container, 'New Task Label'));
 
 		// verify that the element has focus (before we start changing text)
-		await waitFor(() => {
-			expect(getByLabelText(container, 'New Task Label')).toHaveFocus();
-		});
+		expect(getByLabelText(container, 'New Task Label')).toHaveFocus();
 
 		// clear the input
 		await userEvent.clear(getByLabelText(container, 'New Task Label'));
 
-		// wait for mutation observer to reapply focus
-		await waitFor(() => {
-			expect(getByLabelText(container, 'New Task Label')).toHaveFocus();
-		});
+		// verify the element still has focus (before typing)
+		expect(getByLabelText(container, 'New Task Label')).toHaveFocus();
 
 		// update the state by typing
 		await userEvent.type(getByLabelText(container, 'New Task Label'), '0');
@@ -107,11 +103,8 @@ describe('Tram-One', () => {
 		// verify the element has the new value
 		expect(getByLabelText(container, 'New Task Label')).toHaveValue('0');
 
-		// wait for mutation observer to re-attach focus
 		// expect the input to keep focus after the change event
-		await waitFor(() => {
-			expect(getByLabelText(container, 'New Task Label')).toHaveFocus();
-		});
+		expect(getByLabelText(container, 'New Task Label')).toHaveFocus();
 	});
 
 	it('should keep focus on the most recent input when components rerender', async () => {
@@ -128,17 +121,13 @@ describe('Tram-One', () => {
 		await userEvent.click(getByLabelText(container, 'New Task Type'));
 
 		// verify that the element has focus (before we start changing text)
-		await waitFor(() => {
-			expect(getByLabelText(container, 'New Task Type')).toHaveFocus();
-		});
+		expect(getByLabelText(container, 'New Task Type')).toHaveFocus();
 
 		// clear the input
 		await userEvent.clear(getByLabelText(container, 'New Task Type'));
 
-		// wait for mutation observer to reapply focus
-		await waitFor(() => {
-			expect(getByLabelText(container, 'New Task Type')).toHaveFocus();
-		});
+		// verify we didn't lose
+		expect(getByLabelText(container, 'New Task Type')).toHaveFocus();
 
 		// update the state by typing
 		await userEvent.type(getByLabelText(container, 'New Task Type'), '0');
@@ -146,11 +135,8 @@ describe('Tram-One', () => {
 		// verify the element has the new value
 		expect(getByLabelText(container, 'New Task Type')).toHaveValue('0');
 
-		// wait for mutation observer to re-attach focus
 		// expect the input to keep focus after the change event
-		await waitFor(() => {
-			expect(getByLabelText(container, 'New Task Type')).toHaveFocus();
-		});
+		expect(getByLabelText(container, 'New Task Type')).toHaveFocus();
 	});
 
 	it('should keep focus when both the parent and child element would update', async () => {
@@ -164,29 +150,23 @@ describe('Tram-One', () => {
 		await userEvent.click(getByLabelText(container, 'Mirror Input'));
 
 		// verify that the element has focus (before we start changing text)
-		await waitFor(() => {
-			expect(getByLabelText(container, 'Mirror Input')).toHaveFocus();
-		});
+		expect(getByLabelText(container, 'Mirror Input')).toHaveFocus();
 
 		// update the state by typing
 		await userEvent.type(getByLabelText(container, 'Mirror Input'), 'Test');
 
 		// verify the element and it's child have the new value
 		// the element should still have focus
-		await waitFor(() => {
-			expect(getByLabelText(container, 'Mirror Input')).toHaveFocus();
-			expect(getByLabelText(container, 'Mirror Input')).toHaveValue('Test');
-			expect(getByLabelText(container, 'Sub Mirror Input')).toHaveValue('Test');
-		});
+		expect(getByLabelText(container, 'Mirror Input')).toHaveFocus();
+		expect(getByLabelText(container, 'Mirror Input')).toHaveValue('Test');
+		expect(getByLabelText(container, 'Sub Mirror Input')).toHaveValue('Test');
 
 		// repeat the test with the child element
 		// focus on the child input
 		await userEvent.click(getByLabelText(container, 'Sub Mirror Input'));
 
 		// verify that the element has focus (before we start changing text)
-		await waitFor(() => {
-			expect(getByLabelText(container, 'Sub Mirror Input')).toHaveFocus();
-		});
+		expect(getByLabelText(container, 'Sub Mirror Input')).toHaveFocus();
 
 		// update the state by typing
 		await userEvent.type(getByLabelText(container, 'Sub Mirror Input'), ' Again');
@@ -196,11 +176,9 @@ describe('Tram-One', () => {
 
 		// verify the element and it's parent have the new value
 		// the element should still have focus
-		await waitFor(() => {
-			expect(getByLabelText(container, 'Sub Mirror Input')).toHaveFocus();
-			expect(getByLabelText(container, 'Mirror Input')).toHaveValue('Test Again');
-			expect(getByLabelText(container, 'Sub Mirror Input')).toHaveValue('Test Again');
-		});
+		expect(getByLabelText(container, 'Sub Mirror Input')).toHaveFocus();
+		expect(getByLabelText(container, 'Mirror Input')).toHaveValue('Test Again');
+		expect(getByLabelText(container, 'Sub Mirror Input')).toHaveValue('Test Again');
 	});
 
 	it('should not error when resetting focus if the number of elements changed', async () => {
@@ -214,9 +192,7 @@ describe('Tram-One', () => {
 		await userEvent.click(getByLabelText(container, 'Sub Mirror Input'));
 
 		// verify that the element has focus (before we start changing text)
-		await waitFor(() => {
-			expect(getByLabelText(container, 'Sub Mirror Input')).toHaveFocus();
-		});
+		expect(getByLabelText(container, 'Sub Mirror Input')).toHaveFocus();
 
 		// update the state by typing
 		await userEvent.type(getByLabelText(container, 'Sub Mirror Input'), 'Test');
@@ -227,12 +203,10 @@ describe('Tram-One', () => {
 		// verify the element and it's parent have the new value
 		// also verify that the elements were added above it too (previously this would have failed)
 		// the element should still have focus
-		await waitFor(() => {
-			expect(getByLabelText(container, 'Sub Mirror Input')).toHaveFocus();
-			expect(queryAllByText(container, '-')).toHaveLength(4);
-			expect(getByLabelText(container, 'Mirror Input')).toHaveValue('Test');
-			expect(getByLabelText(container, 'Sub Mirror Input')).toHaveValue('Test');
-		});
+		expect(getByLabelText(container, 'Sub Mirror Input')).toHaveFocus();
+		expect(queryAllByText(container, '-')).toHaveLength(4);
+		expect(getByLabelText(container, 'Mirror Input')).toHaveValue('Test');
+		expect(getByLabelText(container, 'Sub Mirror Input')).toHaveValue('Test');
 	});
 
 	it('should trigger use-effects of the first resolved element', async () => {
@@ -257,9 +231,7 @@ describe('Tram-One', () => {
 		await userEvent.click(getByLabelText(container, 'Store Generator'));
 
 		// verify that the element has focus (before changing the value)
-		await waitFor(() => {
-			expect(getByLabelText(container, 'Store Generator')).toHaveFocus();
-		});
+		expect(getByLabelText(container, 'Store Generator')).toHaveFocus();
 
 		// change the value of the input
 		fireEvent.change(getByLabelText(container, 'Store Generator'), { target: { value: 1 } });
@@ -342,13 +314,11 @@ describe('Tram-One', () => {
 		await userEvent.click(getByText(container, '[4: 0]'));
 
 		// expect to see all the stores with the new values
-		await waitFor(() => {
-			expect(getByText(container, '[0: 1]')).toBeVisible();
-			expect(getByText(container, '[1: 1]')).toBeVisible();
-			expect(getByText(container, '[2: 1]')).toBeVisible();
-			expect(getByText(container, '[3: 1]')).toBeVisible();
-			expect(getByText(container, '[4: 1]')).toBeVisible();
-		});
+		expect(getByText(container, '[0: 1]')).toBeVisible();
+		expect(getByText(container, '[1: 1]')).toBeVisible();
+		expect(getByText(container, '[2: 1]')).toBeVisible();
+		expect(getByText(container, '[3: 1]')).toBeVisible();
+		expect(getByText(container, '[4: 1]')).toBeVisible();
 
 		// remove all of the stores by setting the value to 0
 		fireEvent.change(getByLabelText(container, 'Store Generator'), { target: { value: 0 } });

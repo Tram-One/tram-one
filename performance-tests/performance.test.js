@@ -24,17 +24,13 @@ const testElementRenderer = async (container, count, renders) => {
 	await userEvent.type(getByLabelText(container, 'Element Count'), `${count}`);
 
 	// verify the count is {count}
-	await waitFor(() => {
-		expect(getByLabelText(container, 'Element Count')).toHaveValue(`${count}`);
-	});
+	expect(getByLabelText(container, 'Element Count')).toHaveValue(`${count}`);
 
 	// click to trigger the render
 	await userEvent.click(getByText(container, 'Render'));
 
-	// wait for the render button data to udpate
-	await waitFor(() => {
-		expect(getByText(container, 'Render')).toHaveAttribute('renders', `${renders}`);
-	});
+	// verify the attributes have updated
+	expect(getByText(container, 'Render')).toHaveAttribute('renders', `${renders}`);
 
 	// will be a string like "Wait: 12.3456789", and we just take the number
 	return getByText(container, /Wait/).innerHTML.split(' ')[1];

@@ -16,7 +16,7 @@ import {
 	TRAM_TAG_STORE_KEYS,
 } from './node-names';
 import { buildNamespace } from './namespace';
-import { TramOneElement } from './types';
+import { CleanupEffect, TramOneElement } from './types';
 import { getObservableStore } from './observable-store';
 import { TRAM_OBSERVABLE_STORE, TRAM_KEY_STORE } from './engine-names';
 import { decrementKeyStoreValue, getKeyStore, incrementKeyStoreValue } from './key-store';
@@ -54,7 +54,7 @@ const processTramTags = (node: Node | TramOneElement) => {
 			// this is called when an effect is re-triggered
 			const effectReaction = observe(() => {
 				// verify that cleanup is a function before calling it (in case it was a promise)
-				if (typeof cleanup === 'function') cleanup(node);
+				if (typeof cleanup === 'function') cleanup();
 				cleanup = effect(node);
 			});
 
@@ -76,9 +76,8 @@ const processTramTags = (node: Node | TramOneElement) => {
 /**
  * call all cleanup effects on the node
  */
-const cleanupEffects = (node: TramOneElement) => {
-	const cleanupEffects = node[TRAM_TAG_CLEANUP_EFFECTS];
-	cleanupEffects.forEach((cleanup) => cleanup(node));
+const cleanupEffects = (cleanupEffects: CleanupEffect[]) => {
+	cleanupEffects.forEach((cleanup) => cleanup());
 };
 
 /**
@@ -115,7 +114,7 @@ const clearNode = (node: Node | TramOneElement) => {
 	}
 
 	unobserve(node[TRAM_TAG_REACTION]);
-	cleanupEffects(node);
+	cleanupEffects(node[TRAM_TAG_CLEANUP_EFFECTS]);
 	removeStoreKeyAssociation(node[TRAM_TAG_STORE_KEYS]);
 };
 

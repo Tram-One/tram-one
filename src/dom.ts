@@ -59,7 +59,8 @@ export const registerDom = (namespace: string | null, registry: Registry = {}): 
 			tagResult[TRAM_TAG] = true;
 			// we won't decorate TRAM_TAG_REACTION, that needs to be done later when we observe the tag
 			tagResult[TRAM_TAG_NEW_EFFECTS] = tagResult[TRAM_TAG_NEW_EFFECTS] || [];
-			tagResult[TRAM_TAG_CLEANUP_EFFECTS] = tagResult[TRAM_TAG_NEW_EFFECTS] || [];
+			// cleanup effects will be populated when new effects are processed
+			tagResult[TRAM_TAG_CLEANUP_EFFECTS] = [];
 
 			return tagResult;
 		};

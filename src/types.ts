@@ -48,7 +48,7 @@ export type StoreObject = [{ [key: string]: any } | any[]][0];
  * Really this is just an annotation to make TramOneElement easier to understand.
  * In reality, this can be a function (to run on removal), or could be nothing.
  */
-export type CleanupEffect = [(ref: TramOneElement) => unknown][0];
+export type CleanupEffect = [() => unknown][0];
 
 /**
  * Type for the effect function.

@@ -10,8 +10,8 @@ import mirrorinput from './mirror-input';
 import documentTitleSetter from './document-title-setter';
 import elementstoregenerator from './element-store-generator';
 import { TramWindow } from '../../src/types';
-import fragmentList from './fragment-list';
 import anchors from './anchors';
+import listContainers from './list-containers';
 
 const html = registerHtml({
 	title: title,
@@ -25,7 +25,7 @@ const html = registerHtml({
 	'document-title-setter': documentTitleSetter,
 	'element-store-generator': elementstoregenerator,
 	anchors: anchors,
-	'fragment-list': fragmentList,
+	'list-containers': listContainers,
 });
 
 /**
@@ -56,9 +56,7 @@ export const app = () => {
 			<mirror-input />
 			<element-store-generator />
 			<anchors />
-			<!-- <ol>
-				<fragment-list />
-			</ol> -->
+			<list-containers />
 		</main>
 	`;
 };

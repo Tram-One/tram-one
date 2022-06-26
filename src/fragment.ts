@@ -8,9 +8,8 @@ const fragment: TramOneComponent = (props, children) => {
 	useEffect((ref) => {
 		const parent = ref.parentElement;
 		const fragmentChildren = ref.childNodes;
-		fragmentChildren.forEach((child) => {
-			parent?.appendChild(child);
-		});
+		const childCopies = [...fragmentChildren];
+		parent?.append(...childCopies);
 	});
 	return html`<tram-fragment>${children}</tram-fragment>`;
 };

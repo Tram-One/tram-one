@@ -12,7 +12,6 @@ import elementstoregenerator from './element-store-generator';
 import { TramWindow } from '../../src/types';
 import anchors from './anchors';
 import focusInput from './focus-input';
-import clickListenerContainer from './click-listener-container';
 
 const html = registerHtml({
 	title: title,

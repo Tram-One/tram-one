@@ -1,5 +1,6 @@
 const { getByText, fireEvent, waitFor, getByPlaceholderText } = require('@testing-library/dom');
 const { startApp } = require('./test-app');
+const { startAppAndWait } = require('./test-helpers');
 
 /**
  * The following tests are intentional test that validate the behavior of new features.
@@ -157,21 +158,11 @@ describe('Tram-One', () => {
 		expect(getByText(container, 'Is Account Logged In: Yes')).toBeVisible();
 	});
 
-	it('should process effects of components that return other components at root', () => {
-		// start the app
-		startApp();
-
-		// verify that effects were trigged
-		expect(window.location.hash).toBe('#testing');
-	});
-
 	it('should process effects on the element passed through use-effect', async () => {
 		// start the app
-		const { container } = startApp();
+		const { container } = await startAppAndWait();
 
 		// verify the effect properly focused the input element
-		await waitFor(() => {
-			expect(getByPlaceholderText(container, 'Input for automatic focus')).toHaveFocus();
-		});
+		expect(getByPlaceholderText(container, 'Input for automatic focus')).toHaveFocus();
 	});
 });

@@ -1,4 +1,4 @@
-const { getByText, fireEvent, waitFor } = require('@testing-library/dom');
+const { getByText, fireEvent, waitFor, getByPlaceholderText } = require('@testing-library/dom');
 const { startApp } = require('./test-app');
 
 /**
@@ -163,5 +163,15 @@ describe('Tram-One', () => {
 
 		// verify that effects were trigged
 		expect(window.location.hash).toBe('#testing');
+	});
+
+	it('should process calculate the ref of elements in use-effects correctly', async () => {
+		// start the app
+		const { container } = startApp();
+
+		// verify the effect properly focused the input element
+		await waitFor(() => {
+			expect(getByPlaceholderText(container, 'Input for automatic focus')).toHaveFocus();
+		});
 	});
 });

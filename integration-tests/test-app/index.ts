@@ -11,6 +11,7 @@ import documentTitleSetter from './document-title-setter';
 import elementstoregenerator from './element-store-generator';
 import { TramWindow } from '../../src/types';
 import anchors from './anchors';
+import tramInput from './tram-input';
 
 const html = registerHtml({
 	title: title,
@@ -24,6 +25,7 @@ const html = registerHtml({
 	'document-title-setter': documentTitleSetter,
 	'element-store-generator': elementstoregenerator,
 	anchors: anchors,
+	'tram-input': tramInput,
 });
 
 /**
@@ -43,6 +45,7 @@ export const app = () => {
 			<document-title-setter />
 
 			<title subtitle="Sub Title Prop">Sub Title Child</title>
+			<tram-input />
 			<p>Root Loaded: ${rootStore.loaded}</p>
 			<logo />
 			<account />

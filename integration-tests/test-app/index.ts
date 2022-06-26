@@ -11,7 +11,8 @@ import documentTitleSetter from './document-title-setter';
 import elementstoregenerator from './element-store-generator';
 import { TramWindow } from '../../src/types';
 import anchors from './anchors';
-import tramInput from './tram-input';
+import focusInput from './focus-input';
+import clickListenerContainer from './click-listener-container';
 
 const html = registerHtml({
 	title: title,
@@ -25,7 +26,7 @@ const html = registerHtml({
 	'document-title-setter': documentTitleSetter,
 	'element-store-generator': elementstoregenerator,
 	anchors: anchors,
-	'tram-input': tramInput,
+	'focus-input': focusInput,
 });
 
 /**
@@ -45,7 +46,7 @@ export const app = () => {
 			<document-title-setter />
 
 			<title subtitle="Sub Title Prop">Sub Title Child</title>
-			<tram-input />
+			<focus-input />
 			<p>Root Loaded: ${rootStore.loaded}</p>
 			<logo />
 			<account />

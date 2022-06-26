@@ -5,11 +5,11 @@ const html = registerHtml();
 /**
  * Element to test useEffect reference point
  */
-const tramInput: TramOneComponent = () => {
+const focusInput: TramOneComponent = () => {
 	useEffect((ref) => {
 		(ref as unknown as HTMLElement).focus();
 	});
 	return html`<input placeholder="Input for automatic focus" />`;
 };
 
-export default tramInput;
+export default focusInput;

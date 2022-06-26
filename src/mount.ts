@@ -13,6 +13,6 @@ export default (component: RootTramOneComponent, container: Container) => {
 
 	// this sadly needs to be wrapped in some element so we can process effects
 	// otherwise the root node will not have effects applied on it
-	const renderedApp = html`<div><app /></div>`;
+	const renderedApp = html`<tram-one><app /></tram-one>`;
 	container.replaceChild(renderedApp, container.firstElementChild);
 };

@@ -1,6 +1,6 @@
 import { registerDom } from './dom';
 
-import { Registry } from './types';
+import { Registry, TramOneHTMLElement, TramOneSVGElement } from './types';
 
 /**
  * @name registerHtml
@@ -13,7 +13,7 @@ import { Registry } from './types';
  * @return tagged template function that builds HTML components
  */
 export const registerHtml = (registry?: Registry) => {
-	return registerDom(null, registry);
+	return registerDom<TramOneHTMLElement>(null, registry);
 };
 
 /**
@@ -26,5 +26,5 @@ export const registerHtml = (registry?: Registry) => {
  * @return tagged template function that builds SVG components
  */
 export const registerSvg = (registry?: Registry) => {
-	return registerDom('http://www.w3.org/2000/svg', registry);
+	return registerDom<TramOneSVGElement>('http://www.w3.org/2000/svg', registry);
 };

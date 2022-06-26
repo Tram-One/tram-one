@@ -7,7 +7,7 @@ const html = registerHtml();
  */
 const focusInput: TramOneComponent = () => {
 	useEffect((ref) => {
-		(ref as unknown as HTMLElement).focus();
+		ref.focus();
 	});
 	return html`<input placeholder="Input for automatic focus" />`;
 };

@@ -54,8 +54,8 @@ const processTramTags = (node: Node | TramOneElement) => {
 			// this is called when an effect is re-triggered
 			const effectReaction = observe(() => {
 				// verify that cleanup is a function before calling it (in case it was a promise)
-				if (typeof cleanup === 'function') cleanup();
-				cleanup = effect();
+				if (typeof cleanup === 'function') cleanup(node);
+				cleanup = effect(node);
 			});
 
 			// this is called when a component with an effect is removed
@@ -76,8 +76,9 @@ const processTramTags = (node: Node | TramOneElement) => {
 /**
  * call all cleanup effects on the node
  */
-const cleanupEffects = (cleanupEffects: (() => void)[]) => {
-	cleanupEffects.forEach((cleanup) => cleanup());
+const cleanupEffects = (node: TramOneElement) => {
+	const cleanupEffects = node[TRAM_TAG_CLEANUP_EFFECTS];
+	cleanupEffects.forEach((cleanup) => cleanup(node));
 };
 
 /**
@@ -114,7 +115,7 @@ const clearNode = (node: Node | TramOneElement) => {
 	}
 
 	unobserve(node[TRAM_TAG_REACTION]);
-	cleanupEffects(node[TRAM_TAG_CLEANUP_EFFECTS]);
+	cleanupEffects(node);
 	removeStoreKeyAssociation(node[TRAM_TAG_STORE_KEYS]);
 };
 

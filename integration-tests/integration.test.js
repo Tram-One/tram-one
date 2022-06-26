@@ -156,4 +156,12 @@ describe('Tram-One', () => {
 		// verify the account info updated
 		expect(getByText(container, 'Is Account Logged In: Yes')).toBeVisible();
 	});
+
+	it('should process effects of components that are exclusive return of other components happen', () => {
+		// start the app
+		startApp();
+
+		// verify that effects were trigged
+		expect(window.location.hash).toBe('#testing');
+	});
 });

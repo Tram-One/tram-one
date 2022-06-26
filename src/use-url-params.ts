@@ -17,7 +17,7 @@ import { UrlMatchResults } from './types';
  *
  * @returns object with a `matches` key, and (if it matched) path and query parameters
  */
-export default (pattern: string): UrlMatchResults => {
+export default (pattern?: string): UrlMatchResults => {
 	// save and update results in an observable, so that we can update
 	// components and effects in a reactive way
 	const initialParams = useUrlParams(pattern) as UrlMatchResults;

@@ -9,8 +9,7 @@ const html = registerHtml({
  * Element to test behavior or wrapping a single component
  */
 const anchors: TramOneComponent = () => {
-	const params = useUrlParams('');
-	if (params.hash !== 'testing') return html`<anchor-set />`;
+	if (useUrlParams().hash !== 'testing') return html`<anchor-set />`;
 	return html`<section>Anchor Set</section>`;
 };
 

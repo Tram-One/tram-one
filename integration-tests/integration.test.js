@@ -165,7 +165,7 @@ describe('Tram-One', () => {
 		expect(window.location.hash).toBe('#testing');
 	});
 
-	it('should process calculate the ref of elements in use-effects correctly', async () => {
+	it('should process effects on the element passed through use-effect', async () => {
 		// start the app
 		const { container } = startApp();
 

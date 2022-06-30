@@ -21,10 +21,10 @@ export type ElementOrSelector = [string | HTMLElement][0];
  * Type for our template renderers (either html or svg).
  * This is not wrapped in an indexed alias, because everything should be provided automatically.
  */
-export type DOMTaggedTemplateFunction = (
+export type DOMTaggedTemplateFunction<TramOneElementType extends TramOneElement> = (
 	strings: TemplateStringsArray,
 	...elementsAndAttributes: any[]
-) => TramOneElement;
+) => TramOneElementType;
 
 /**
  * Type for custom Tram One Components.
@@ -54,7 +54,7 @@ export type CleanupEffect = [() => unknown][0];
  * Type for the effect function.
  * This is passed into the useEffect hook
  */
-export type Effect = [() => unknown][0];
+export type Effect = [(ref: TramOneHTMLElement | TramOneSVGElement) => unknown][0];
 
 /**
  * The Props interface for custom Tram One Components.
@@ -107,6 +107,9 @@ export interface TramOneElement extends Element {
 	[TRAM_TAG_CLEANUP_EFFECTS]: CleanupEffect[];
 	[TRAM_TAG_STORE_KEYS]: string[];
 }
+
+export type TramOneHTMLElement = TramOneElement & HTMLElement;
+export type TramOneSVGElement = TramOneElement & SVGElement;
 
 /**
  * Type for the Root TramOneComponent,

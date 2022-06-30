@@ -14,7 +14,7 @@ import observeTag from './observe-tag';
 import processHooks from './process-hooks';
 import { TRAM_TAG, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } from './node-names';
 
-import { Registry, Props, DOMTaggedTemplateFunction, Children } from './types';
+import { Registry, Props, DOMTaggedTemplateFunction, Children, TramOneHTMLElement, TramOneSVGElement } from './types';
 
 /**
  * This function takes in a namespace and registry of custom components,
@@ -25,7 +25,10 @@ import { Registry, Props, DOMTaggedTemplateFunction, Children } from './types';
  * @param registry mapping of tag names to component functions
  * @param namespace namespace to create nodes in (by default XHTML namespace)
  */
-export const registerDom = (namespace: string | null, registry: Registry = {}): DOMTaggedTemplateFunction => {
+export const registerDom = <ElementType extends TramOneHTMLElement | TramOneSVGElement>(
+	namespace: string | null,
+	registry: Registry = {}
+) => {
 	// modify the registry so that each component function updates the hook working key
 	const hookedRegistry = Object.keys(registry).reduce((newRegistry, tagName) => {
 		const tagFunction = registry[tagName];
@@ -59,7 +62,8 @@ export const registerDom = (namespace: string | null, registry: Registry = {}): 
 			tagResult[TRAM_TAG] = true;
 			// we won't decorate TRAM_TAG_REACTION, that needs to be done later when we observe the tag
 			tagResult[TRAM_TAG_NEW_EFFECTS] = tagResult[TRAM_TAG_NEW_EFFECTS] || [];
-			tagResult[TRAM_TAG_CLEANUP_EFFECTS] = tagResult[TRAM_TAG_NEW_EFFECTS] || [];
+			// cleanup effects will be populated when new effects are processed
+			tagResult[TRAM_TAG_CLEANUP_EFFECTS] = [];
 
 			return tagResult;
 		};
@@ -67,5 +71,5 @@ export const registerDom = (namespace: string | null, registry: Registry = {}): 
 		return { ...newRegistry, [tagName]: hookedTagFunction };
 	}, {});
 
-	return rbel(hyperx, nanohtml(namespace), hookedRegistry);
+	return rbel(hyperx, nanohtml(namespace), hookedRegistry) as DOMTaggedTemplateFunction<ElementType>;
 };

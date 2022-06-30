@@ -10,6 +10,8 @@ import mirrorinput from './mirror-input';
 import documentTitleSetter from './document-title-setter';
 import elementstoregenerator from './element-store-generator';
 import { TramWindow } from '../../src/types';
+import anchors from './anchors';
+import focusInput from './focus-input';
 
 const html = registerHtml({
 	title: title,
@@ -22,6 +24,8 @@ const html = registerHtml({
 	'mirror-input': mirrorinput,
 	'document-title-setter': documentTitleSetter,
 	'element-store-generator': elementstoregenerator,
+	anchors: anchors,
+	'focus-input': focusInput,
 });
 
 /**
@@ -41,6 +45,7 @@ export const app = () => {
 			<document-title-setter />
 
 			<title subtitle="Sub Title Prop">Sub Title Child</title>
+			<focus-input />
 			<p>Root Loaded: ${rootStore.loaded}</p>
 			<logo />
 			<account />
@@ -51,6 +56,7 @@ export const app = () => {
 			<tasks />
 			<mirror-input />
 			<element-store-generator />
+			<anchors />
 		</main>
 	`;
 };

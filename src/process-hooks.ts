@@ -28,15 +28,25 @@ export default (tagFunction: () => TramOneElement) => {
 	const existingEffects = getEffectStore(TRAM_EFFECT_STORE);
 	const queuedEffects = getEffectStore(TRAM_EFFECT_QUEUE);
 
+	// pull new effects that have yet to be processed from the tag
+	// these can appear when a component re-exposes another component at its root
+	const existingNewEffects = tagResult[TRAM_TAG_NEW_EFFECTS] || [];
+
+	// store new effects (and the existing new effects) in the node we just built
+	const newEffects = Object.keys(queuedEffects).filter((effect) => !(effect in existingEffects));
+	const newEffectFunctions = newEffects.map((newEffectKey) => queuedEffects[newEffectKey]);
+	const existingNewAndBrandNewEffects = existingNewEffects.concat(newEffectFunctions);
+	tagResult[TRAM_TAG_NEW_EFFECTS] = existingNewAndBrandNewEffects;
+
+	// same as the existingNewEffects, but for state values
+	const existingNewKeys = tagResult[TRAM_TAG_STORE_KEYS] || [];
+
 	// get all new keys
 	const newKeys = getKeyQueue(TRAM_KEY_QUEUE);
 
-	// store new effects in the node we just built
-	const newEffects = Object.keys(queuedEffects).filter((effect) => !(effect in existingEffects));
-	tagResult[TRAM_TAG_NEW_EFFECTS] = newEffects.map((newEffectKey) => queuedEffects[newEffectKey]);
-
 	// store keys in the node we just built
-	tagResult[TRAM_TAG_STORE_KEYS] = newKeys;
+	const existingNewAndBrandNewKeys = existingNewKeys.concat(newKeys);
+	tagResult[TRAM_TAG_STORE_KEYS] = existingNewAndBrandNewKeys;
 
 	// restore the effect and key queues to what they were before we started
 	restoreEffectStore(TRAM_EFFECT_QUEUE, existingQueuedEffects);

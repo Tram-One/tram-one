@@ -346,12 +346,13 @@ describe('Tram-One', () => {
 
 	it('should process effects of components that return other components at root', async () => {
 		// start the app
-		await startAppAndWait();
+		const { container } = await startAppAndWait();
 
 		// previously if an element immediately returned another component,
 		// the effects of the child component would be lost
 
 		// verify that effects were trigged
 		expect(window.location.hash).toBe('#testing');
+		expect(getByText(container, 'Anchor Set - effect triggered: true')).toBeVisible();
 	});
 });

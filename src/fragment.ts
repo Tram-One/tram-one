@@ -6,10 +6,14 @@ const html = registerHtml();
 
 const fragment: TramOneComponent = (props, children) => {
 	useEffect((ref) => {
-		const parent = ref.parentElement;
-		const fragmentChildren = ref.childNodes;
-		const childCopies = [...fragmentChildren];
-		parent?.append(...childCopies);
+		(children || []).forEach((child) => {
+			if (typeof child === 'string') {
+				ref.insertAdjacentText('beforebegin', child);
+			} else {
+				ref.insertAdjacentElement('beforebegin', child);
+			}
+		});
+		ref.remove();
 	});
 	return html`<tram-fragment>${children}</tram-fragment>`;
 };

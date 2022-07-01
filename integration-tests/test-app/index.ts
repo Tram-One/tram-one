@@ -12,7 +12,7 @@ import elementstoregenerator from './element-store-generator';
 import { TramWindow } from '../../src/types';
 import anchors from './anchors';
 import focusInput from './focus-input';
-import details from './details';
+import composite from './composite';
 
 const html = registerHtml({
 	title: title,
@@ -27,7 +27,7 @@ const html = registerHtml({
 	'element-store-generator': elementstoregenerator,
 	anchors: anchors,
 	'focus-input': focusInput,
-	details: details,
+	composite: composite,
 });
 
 /**
@@ -59,7 +59,7 @@ export const app = () => {
 			<mirror-input />
 			<element-store-generator />
 			<anchors />
-			<details />
+			<composite />
 		</main>
 	`;
 };

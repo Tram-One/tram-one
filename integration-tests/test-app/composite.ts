@@ -1,15 +1,15 @@
-import { registerHtml, useStore, TramOneComponent } from '../../src/tram-one';
-import fragment from '../../src/fragment';
+import { registerHtml, useStore, useEffect, TramOneComponent } from '../../src/tram-one';
 
-const html = registerHtml({
-	'': fragment,
-});
+const html = registerHtml();
 
 /**
  * Element to test fragments
  */
-const details: TramOneComponent = () => {
+const composite: TramOneComponent = () => {
 	const store = useStore({ count: 0 });
+	useEffect(() => {
+		store.count++;
+	});
 
 	const incrementCounter = () => store.count++;
 	const header = html`
@@ -34,4 +34,4 @@ const details: TramOneComponent = () => {
 	`;
 };
 
-export default details;
+export default composite;

@@ -1,8 +1,8 @@
 import { TramOneComponent } from './types';
-import { registerHtml } from './dom-wrappers';
+import { registerDom } from './dom';
 import useEffect from './use-effect';
 
-const html = registerHtml();
+const xml = registerDom(null);
 
 const fragment: TramOneComponent = (props, children) => {
 	useEffect((ref) => {
@@ -15,7 +15,7 @@ const fragment: TramOneComponent = (props, children) => {
 		});
 		ref.remove();
 	});
-	return html`<tram-fragment>${children}</tram-fragment>`;
+	return xml`<tram-fragment>${children}</tram-fragment>`;
 };
 
 export default fragment;

@@ -6,9 +6,9 @@ const html = registerHtml();
  * Element to test fragments
  */
 const composite: TramOneComponent = () => {
-	const store = useStore({ count: 0 });
+	const store = useStore({ count: 0, effectTriggered: false });
 	useEffect(() => {
-		store.count++;
+		store.effectTriggered = true;
 	});
 
 	const incrementCounter = () => store.count++;
@@ -20,16 +20,16 @@ const composite: TramOneComponent = () => {
 	`;
 	const body = html`
 		<>
-			Some Details
+			Some Details, Effect Triggered? ${store.effectTriggered}
 			<button onclick=${incrementCounter}>Details Counter: ${store.count}</button>
 		</>
 	`;
 
 	return html`
 		<section>
-			<button onclick=${incrementCounter}>Click to Increment: ${store.count}</button>
 			${header}<br />
 			${body}
+			<button onclick=${incrementCounter}>Click to Increment: ${store.count}</button>
 		</section>
 	`;
 };

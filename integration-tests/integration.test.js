@@ -171,9 +171,11 @@ describe('Tram-One', () => {
 		// start the app
 		const { container } = await startAppAndWait();
 
-		// verify text and elements are visible
+		// verify elements are rendered
 		expect(getByText(container, 'Top of Description')).toBeVisible();
-		expect(getByText(container, 'Some Details')).toBeVisible();
+
+		// verify text render and use-effects are processed
+		expect(getByText(container, 'Some Details, Effect Triggered? true')).toBeVisible();
 
 		// verify the parent of those elements is the section (and not tram-fragment)
 		expect(getByText(container, 'Top of Description').parentElement.tagName).toBe('SECTION');
@@ -184,19 +186,19 @@ describe('Tram-One', () => {
 		const { container } = await startAppAndWait();
 
 		// click on fragment button
-		await userEvent.click(getByText(container, 'Title Counter: 1'));
+		await userEvent.click(getByText(container, 'Title Counter: 0'));
+
+		// verify the state updates in all places
+		expect(getByText(container, 'Click to Increment: 1')).toBeVisible();
+		expect(getByText(container, 'Title Counter: 1')).toBeVisible();
+		expect(getByText(container, 'Details Counter: 1')).toBeVisible();
+
+		// click on button outside the fragment
+		await userEvent.click(getByText(container, 'Click to Increment: 1'));
 
 		// verify the state updates in all places
 		expect(getByText(container, 'Click to Increment: 2')).toBeVisible();
 		expect(getByText(container, 'Title Counter: 2')).toBeVisible();
 		expect(getByText(container, 'Details Counter: 2')).toBeVisible();
-
-		// click on button outside the fragment
-		await userEvent.click(getByText(container, 'Click to Increment: 2'));
-
-		// verify the state updates in all places
-		expect(getByText(container, 'Click to Increment: 3')).toBeVisible();
-		expect(getByText(container, 'Title Counter: 3')).toBeVisible();
-		expect(getByText(container, 'Details Counter: 3')).toBeVisible();
 	});
 });

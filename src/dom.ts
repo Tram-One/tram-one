@@ -48,7 +48,11 @@ export const registerDom = <ElementType extends TramOneHTMLElement | TramOneSVGE
 				// reset working key so we have the correct place when starting a new component
 				restoreWorkingKey(TRAM_HOOK_KEY, uniqueBranch);
 
-				return tagFunction(props, children);
+				const processedChildren: Children = children?.map((child: unknown | Element) => {
+					if (child instanceof Element) return child;
+					return `${child}`;
+				});
+				return tagFunction(props, processedChildren);
 			};
 
 			// observe store usage and process any new effects that were called when building the component

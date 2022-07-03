@@ -1,4 +1,5 @@
 const { getByText, fireEvent, waitFor, getByPlaceholderText } = require('@testing-library/dom');
+const { default: userEvent } = require('@testing-library/user-event');
 const { startApp } = require('./test-app');
 const { startAppAndWait } = require('./test-helpers');
 
@@ -164,5 +165,40 @@ describe('Tram-One', () => {
 
 		// verify the effect properly focused the input element
 		expect(getByPlaceholderText(container, 'Input for automatic focus')).toHaveFocus();
+	});
+
+	it('should render fragments with elements and text', async () => {
+		// start the app
+		const { container } = await startAppAndWait();
+
+		// verify elements are rendered
+		expect(getByText(container, 'Top of Description')).toBeVisible();
+
+		// verify text render and use-effects are processed
+		expect(getByText(container, 'Some Details, Effect Triggered? true')).toBeVisible();
+
+		// verify the parent of those elements is the section (and not tram-fragment)
+		expect(getByText(container, 'Top of Description').parentElement.tagName).toBe('SECTION');
+	});
+
+	it('should update state in fragments', async () => {
+		// start the app
+		const { container } = await startAppAndWait();
+
+		// click on fragment button
+		await userEvent.click(getByText(container, 'Title Counter: 0'));
+
+		// verify the state updates in all places
+		expect(getByText(container, 'Click to Increment: 1')).toBeVisible();
+		expect(getByText(container, 'Title Counter: 1')).toBeVisible();
+		expect(getByText(container, 'Details Counter: 1')).toBeVisible();
+
+		// click on button outside the fragment
+		await userEvent.click(getByText(container, 'Click to Increment: 1'));
+
+		// verify the state updates in all places
+		expect(getByText(container, 'Click to Increment: 2')).toBeVisible();
+		expect(getByText(container, 'Title Counter: 2')).toBeVisible();
+		expect(getByText(container, 'Details Counter: 2')).toBeVisible();
 	});
 });

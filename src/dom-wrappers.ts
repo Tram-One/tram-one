@@ -1,5 +1,5 @@
 import { registerDom } from './dom';
-
+import fragment from './fragment';
 import { Registry, TramOneHTMLElement, TramOneSVGElement } from './types';
 
 /**
@@ -13,7 +13,7 @@ import { Registry, TramOneHTMLElement, TramOneSVGElement } from './types';
  * @return tagged template function that builds HTML components
  */
 export const registerHtml = (registry?: Registry) => {
-	return registerDom<TramOneHTMLElement>(null, registry);
+	return registerDom<TramOneHTMLElement>(null, { '': fragment, ...registry });
 };
 
 /**
@@ -26,5 +26,5 @@ export const registerHtml = (registry?: Registry) => {
  * @return tagged template function that builds SVG components
  */
 export const registerSvg = (registry?: Registry) => {
-	return registerDom<TramOneSVGElement>('http://www.w3.org/2000/svg', registry);
+	return registerDom<TramOneSVGElement>('http://www.w3.org/2000/svg', { '': fragment, ...registry });
 };

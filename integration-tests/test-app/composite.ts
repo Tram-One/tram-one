@@ -1,9 +1,6 @@
-import { registerHtml, fragment, useStore, useEffect, TramOneComponent } from '../../src/tram-one';
+import { registerHtml, useStore, useEffect, TramOneComponent } from '../../src/tram-one';
 
-const html = registerHtml({
-    '': fragment,
-    'fr': framgent
-});
+const html = registerHtml();
 
 /**
  * Element to test fragments

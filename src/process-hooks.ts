@@ -1,5 +1,5 @@
-import { TRAM_EFFECT_STORE, TRAM_EFFECT_QUEUE, TRAM_KEY_QUEUE } from './engine-names';
-import { TRAM_TAG_NEW_EFFECTS, TRAM_TAG_STORE_KEYS } from './node-names';
+import { TRAM_EFFECT_STORE, TRAM_EFFECT_QUEUE, TRAM_KEY_QUEUE, TRAM_GLOBAL_KEY_QUEUE } from './engine-names';
+import { TRAM_TAG_GLOBAL_STORE_KEYS, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_STORE_KEYS } from './node-names';
 import { getEffectStore, clearEffectStore, restoreEffectStore } from './effect-store';
 import { TramOneElement } from './types';
 import { clearKeyQueue, getKeyQueue, restoreKeyQueue } from './key-queue';
@@ -20,6 +20,7 @@ export default (tagFunction: () => TramOneElement) => {
 	// clear the queues (so we can get just new effects and keys)
 	clearEffectStore(TRAM_EFFECT_QUEUE);
 	clearKeyQueue(TRAM_KEY_QUEUE);
+	clearKeyQueue(TRAM_GLOBAL_KEY_QUEUE);
 
 	// create the component, which will save new effects to the effect queue
 	const tagResult = tagFunction();
@@ -47,6 +48,16 @@ export default (tagFunction: () => TramOneElement) => {
 	// store keys in the node we just built
 	const existingNewAndBrandNewKeys = existingNewKeys.concat(newKeys);
 	tagResult[TRAM_TAG_STORE_KEYS] = existingNewAndBrandNewKeys;
+
+	// if this is development environment, save global store keys to the element
+	if (process.env.NODE_ENV === 'development') {
+		const existingNewGlobalKeys = tagResult[TRAM_TAG_GLOBAL_STORE_KEYS] || [];
+		const newGlobalKeys = getKeyQueue(TRAM_GLOBAL_KEY_QUEUE);
+
+		// store global store keys in the node we just built
+		const existingNewAndBrandNewGlobalKeys = existingNewGlobalKeys.concat(newGlobalKeys);
+		tagResult[TRAM_TAG_GLOBAL_STORE_KEYS] = existingNewAndBrandNewGlobalKeys;
+	}
 
 	// restore the effect and key queues to what they were before we started
 	restoreEffectStore(TRAM_EFFECT_QUEUE, existingQueuedEffects);

@@ -12,7 +12,7 @@ import {
 } from './working-key';
 import observeTag from './observe-tag';
 import processHooks from './process-hooks';
-import { TRAM_TAG, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS } from './node-names';
+import { TRAM_TAG, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS, TRAM_TAG_NAME, TRAM_TAG_PROPS } from './node-names';
 
 import { Registry, Props, DOMTaggedTemplateFunction, Children, TramOneHTMLElement, TramOneSVGElement } from './types';
 
@@ -68,6 +68,11 @@ export const registerDom = <ElementType extends TramOneHTMLElement | TramOneSVGE
 			tagResult[TRAM_TAG_NEW_EFFECTS] = tagResult[TRAM_TAG_NEW_EFFECTS] || [];
 			// cleanup effects will be populated when new effects are processed
 			tagResult[TRAM_TAG_CLEANUP_EFFECTS] = [];
+
+			if (process.env.NODE_ENV === 'development') {
+				tagResult[TRAM_TAG_NAME] = tagName;
+				tagResult[TRAM_TAG_PROPS] = props;
+			}
 
 			return tagResult;
 		};

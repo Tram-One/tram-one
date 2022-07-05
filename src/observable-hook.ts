@@ -1,4 +1,4 @@
-import { TRAM_OBSERVABLE_STORE, TRAM_HOOK_KEY, TRAM_KEY_QUEUE } from './engine-names';
+import { TRAM_OBSERVABLE_STORE, TRAM_HOOK_KEY, TRAM_KEY_QUEUE, TRAM_GLOBAL_KEY_QUEUE } from './engine-names';
 import { getObservableStore } from './observable-store';
 import { getWorkingKeyValue, incrementWorkingKeyBranch } from './working-key';
 
@@ -38,6 +38,11 @@ export default <Store extends StoreObject>(key?: string, value?: Store): Store =
 	if (isLocalStore) {
 		// if this is local, we should associate it with the element by putting it in the keyQueue
 		getKeyQueue(TRAM_KEY_QUEUE).push(resolvedKey);
+	}
+
+	// if this is a development envrionment, save the global store key to the element
+	if (!isLocalStore && process.env.NODE_ENV === 'development') {
+		getKeyQueue(TRAM_GLOBAL_KEY_QUEUE).push(resolvedKey);
 	}
 
 	// return value

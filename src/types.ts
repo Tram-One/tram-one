@@ -4,6 +4,9 @@ import {
 	TRAM_TAG_NEW_EFFECTS,
 	TRAM_TAG_CLEANUP_EFFECTS,
 	TRAM_TAG_STORE_KEYS,
+	TRAM_TAG_NAME,
+	TRAM_TAG_PROPS,
+	TRAM_TAG_GLOBAL_STORE_KEYS,
 } from './node-names';
 
 /* ============= PUBLIC TYPES ========================================
@@ -106,6 +109,9 @@ export interface TramOneElement extends Element {
 	[TRAM_TAG_NEW_EFFECTS]: Effect[];
 	[TRAM_TAG_CLEANUP_EFFECTS]: CleanupEffect[];
 	[TRAM_TAG_STORE_KEYS]: string[];
+	[TRAM_TAG_NAME]?: string;
+	[TRAM_TAG_PROPS]?: Props;
+	[TRAM_TAG_GLOBAL_STORE_KEYS]?: string[];
 }
 
 export type TramOneHTMLElement = TramOneElement & HTMLElement;

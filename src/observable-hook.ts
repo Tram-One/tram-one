@@ -40,7 +40,7 @@ export default <Store extends StoreObject>(key?: string, value?: Store): Store =
 		getKeyQueue(TRAM_KEY_QUEUE).push(resolvedKey);
 	}
 
-	// if this is a development envrionment, save the global store key to the element
+	// if this is a development environment, save the global store key to the element
 	if (!isLocalStore && process.env.NODE_ENV === 'development') {
 		getKeyQueue(TRAM_GLOBAL_KEY_QUEUE).push(resolvedKey);
 	}

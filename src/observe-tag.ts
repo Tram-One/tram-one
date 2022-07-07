@@ -1,6 +1,14 @@
 const { observe } = require('@nx-js/observer-util');
 
-import { TRAM_TAG_REACTION, TRAM_TAG_NEW_EFFECTS, TRAM_TAG_CLEANUP_EFFECTS, TRAM_TAG } from './node-names';
+import {
+	TRAM_TAG_REACTION,
+	TRAM_TAG_NEW_EFFECTS,
+	TRAM_TAG_CLEANUP_EFFECTS,
+	TRAM_TAG,
+	TRAM_TAG_NAME,
+	TRAM_TAG_PROPS,
+	TRAM_TAG_GLOBAL_STORE_KEYS,
+} from './node-names';
 import { TramOneElement, RemovedElementDataStore, Reaction, ElementPotentiallyWithSelectionAndFocus } from './types';
 
 // functions to go to nodes or indices (made for .map)
@@ -97,6 +105,13 @@ export default (tagFunction: () => TramOneElement): TramOneElement => {
 			emptyDiv[TRAM_TAG_NEW_EFFECTS] = oldTag[TRAM_TAG_NEW_EFFECTS];
 			emptyDiv[TRAM_TAG_CLEANUP_EFFECTS] = oldTag[TRAM_TAG_CLEANUP_EFFECTS];
 
+			// copy over development props
+			if (process.env.NODE_ENV === 'development') {
+				emptyDiv[TRAM_TAG_NAME] = oldTag[TRAM_TAG_NAME];
+				emptyDiv[TRAM_TAG_PROPS] = oldTag[TRAM_TAG_PROPS];
+				emptyDiv[TRAM_TAG_GLOBAL_STORE_KEYS] = oldTag[TRAM_TAG_GLOBAL_STORE_KEYS];
+			}
+
 			// set oldTag to emptyDiv, so we can replace it later
 			oldTag = emptyDiv;
 		}
@@ -145,6 +160,13 @@ export default (tagFunction: () => TramOneElement): TramOneElement => {
 			tagResult[TRAM_TAG_REACTION] = oldTag[TRAM_TAG_REACTION];
 			tagResult[TRAM_TAG_NEW_EFFECTS] = oldTag[TRAM_TAG_NEW_EFFECTS];
 			tagResult[TRAM_TAG_CLEANUP_EFFECTS] = oldTag[TRAM_TAG_CLEANUP_EFFECTS];
+
+			// copy over development props
+			if (process.env.NODE_ENV === 'development') {
+				tagResult[TRAM_TAG_NAME] = oldTag[TRAM_TAG_NAME];
+				tagResult[TRAM_TAG_PROPS] = oldTag[TRAM_TAG_PROPS];
+				tagResult[TRAM_TAG_GLOBAL_STORE_KEYS] = oldTag[TRAM_TAG_GLOBAL_STORE_KEYS];
+			}
 
 			// both these actions cause forced reflow, and can be performance issues
 			oldTag.replaceWith(tagResult);

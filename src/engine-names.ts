@@ -11,5 +11,6 @@ export const TRAM_EFFECT_STORE = 'tram-effect-store';
 export const TRAM_EFFECT_QUEUE = 'tram-effect-queue';
 export const TRAM_KEY_STORE = 'tram-key-store';
 export const TRAM_KEY_QUEUE = 'tram-key-queue';
+export const TRAM_GLOBAL_KEY_QUEUE = 'tram-global-key-queue';
 export const TRAM_OBSERVABLE_STORE = 'tram-observable-store';
 export const TRAM_MUTATION_OBSERVER = 'tram-mutation-observer';

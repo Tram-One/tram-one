@@ -8,6 +8,7 @@ import {
 	TRAM_MUTATION_OBSERVER,
 	TRAM_KEY_QUEUE,
 	TRAM_KEY_STORE,
+	TRAM_GLOBAL_KEY_QUEUE,
 } from './engine-names';
 import { setupTramOneSpace } from './namespace';
 import { setupEffectStore } from './effect-store';
@@ -58,6 +59,9 @@ export default (component: RootTramOneComponent, target: ElementOrSelector) => {
 
 	// setup key queue for new observable stores when resolving mounts
 	setupKeyQueue(TRAM_KEY_QUEUE);
+
+	// setup key queue for global observable stores when resolving mounts
+	setupKeyQueue(TRAM_GLOBAL_KEY_QUEUE);
 
 	// setup a mutation observer for cleaning up removed elements and triggering effects
 	setupMutationObserver(TRAM_MUTATION_OBSERVER);

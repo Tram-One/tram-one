@@ -16,13 +16,31 @@ export const registerDom = (registry = {}) => {
 	const hookedRegistry = Object.keys(registry).reduce((newRegistry, tagName) => {
 		const tagFunction = registry[tagName];
 
+		// when we export tag functions, we wrap them with
+		// a function to give them special observed props
 		const observedTagFunction = (props, children) => {
-			// make a proxy object to update props with
+			// make a proxy props object that when updated
+			// will set attributes on elements
 			const observedProps = new Proxy(props, {
 				set(obj, prop, value) {
-					[...document.querySelectorAll(`[${String(prop)}]`)].forEach((element) => {
-						element.setAttribute(String(prop), value);
-					});
+					// special attribute 'tram-element' to set what the dom that this proxy mutates
+					if (prop === 'tram-element') {
+						// no changes required... for now...
+					} else {
+						if (obj['tram-element'] === undefined) {
+							console.warn('element does not exist yet');
+						} else {
+							// -- for all other props, look for the attributes in this tram-element --
+							const attributeSelector = `[${String(prop)}]`;
+							// check if we need to include this element
+							const doesTramElementMatch = obj['tram-element'].matches(attributeSelector);
+							const tramElementChildren = obj['tram-element'].querySelectorAll(attributeSelector);
+							[...(doesTramElementMatch ? [obj['tram-element']] : []), ...tramElementChildren].forEach((element) => {
+								element.setAttribute(String(prop), value);
+							});
+						}
+					}
+
 					return Reflect.set(...arguments);
 				},
 			});
@@ -30,6 +48,7 @@ export const registerDom = (registry = {}) => {
 			// create the resulting dom
 			// (pass in observedProps, so that mutations trigger proxy-effects)
 			const result = tagFunction(observedProps, children);
+			observedProps['tram-element'] = result;
 
 			// read through all props
 			[...result.querySelectorAll('*')].forEach((element) => {

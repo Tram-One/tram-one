@@ -1,16 +1,14 @@
-import { registerDom } from './dom';
-import mount from './mount';
+import { registerDom } from '../dom';
+import mount from '../mount';
 
-const html = registerDom();
+import { listItem } from './list-item';
+import { counter } from './counter';
+
+const html = registerDom({
+	'list-item': listItem,
+	counter: counter,
+});
 const app = (props) => {
-	const incrementCounter = () => {
-		props.count = parseInt(props.count || '0') + 1;
-	};
-
-	const onUpdateCounter = (event) => {
-		event.target.innerHTML = event.target.getAttribute('count');
-	};
-
 	const updateList = (keyEvent) => {
 		if (keyEvent.charCode === 13) {
 			const newElement = keyEvent.target.value;
@@ -26,8 +24,9 @@ const app = (props) => {
 		const elements = elementsAttr.split(' | ').filter((element) => element);
 		elements.forEach((element) => {
 			const elementId = element.replaceAll(/[^A-Za-z1-9 -]/g, '').replaceAll(/\s/g, '-');
+			const onRemove = props.elements.split(' | ').filter((curElement) => curElement != element);
 			if (!event.target.querySelector(`#${elementId}`)) {
-				const liElement = html`<li id=${elementId}>${element}</li>`;
+				const liElement = html`<list-item id=${elementId} onremove=${onRemove}>${element}</list-item>`;
 				event.target.appendChild(liElement);
 			}
 		});
@@ -36,9 +35,10 @@ const app = (props) => {
 	return html`
 		<main>
 			<h1>To Do List!</h1>
-			<button count="0" onclick=${incrementCounter} onupdate=${onUpdateCounter}></button>
+			<counter />
+			<counter />
 			<input onkeypress=${updateList} />
-			<ol elements="" onupdate=${onUpdateList}></ol>
+			<ol elements="Test Application" onupdate=${onUpdateList}></ol>
 		</main>
 	`;
 };

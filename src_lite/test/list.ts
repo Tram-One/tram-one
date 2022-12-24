@@ -12,10 +12,10 @@ export const list = (props) => {
 			const newElement = keyEvent.target.value;
 
 			// get the current elements, split and rejoin
-			const elementsJSON = JSON.parse(props.elements);
-			const newElements = elementsJSON.concat({ id: `li-${parseInt(props.total) + 1}`, name: newElement });
-			props.elements = JSON.stringify(newElements);
-			props.total = `${parseInt(props.total) + 1}`;
+			const elementsJSON = props.elements;
+			const newElements = elementsJSON.concat({ id: `li-${props.total + 1}`, name: newElement });
+			props.elements = newElements;
+			props.total = `${props.total + 1}`;
 
 			// clear input
 			keyEvent.target.value = '';
@@ -23,15 +23,15 @@ export const list = (props) => {
 	};
 
 	const onUpdateList = (event) => {
-		const elements = JSON.parse(props.elements);
+		const elements = props.elements;
 
 		elements.forEach((element) => {
 			// if the element doesn't already exist, create it, and append it to the dom
 			if (!event.target.querySelector(`#${element.id}`)) {
 				const onRemove = () => {
-					const listElements = JSON.parse(props.elements);
+					const listElements = props.elements;
 					const filteredElements = listElements.filter((listElement) => listElement.id !== element.id);
-					props.elements = JSON.stringify(filteredElements);
+					props.elements = filteredElements;
 				};
 				const liElement = html`<list-item id=${element.id} onremove=${onRemove}>${element.name}</list-item>`;
 				event.target.appendChild(liElement);

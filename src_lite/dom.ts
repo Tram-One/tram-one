@@ -19,6 +19,15 @@ export const registerDom = (registry = {}) => {
 			// make a proxy props object that when updated
 			// will set attributes on elements
 			const observedProps = new Proxy(props, {
+				get(obj, prop) {
+					try {
+						// try to parse as an object or number
+						return JSON.parse(obj[prop]);
+					} catch {
+						// if it's actually a string, return that
+						return Reflect.get(...arguments);
+					}
+				},
 				set(obj, prop, value) {
 					// special attribute 'tram-element' to set what the dom that this proxy mutates
 					if (prop === 'tram-element') {
@@ -33,7 +42,8 @@ export const registerDom = (registry = {}) => {
 							const doesTramElementMatch = obj['tram-element'].matches(attributeSelector);
 							const tramElementChildren = obj['tram-element'].querySelectorAll(attributeSelector);
 							[...(doesTramElementMatch ? [obj['tram-element']] : []), ...tramElementChildren].forEach((element) => {
-								element.setAttribute(String(prop), value);
+								const needsStringification = typeof value !== 'string';
+								element.setAttribute(String(prop), needsStringification ? JSON.stringify(value) : value);
 							});
 						}
 					}

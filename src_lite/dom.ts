@@ -3,13 +3,10 @@ const rbel = require('@tram-one/rbel');
 const hyperx = require('@tram-one/hyperx');
 
 /**
- * This function takes in a namespace and registry of custom components,
+ * This function takes in a registry of custom components,
  * and builds a `dom` template tag function that can take in a template XML string.
  *
- * This function shouldn't need to be called directly, instead, you can use `registerHtml` or `registerSvg`
- *
  * @param registry mapping of tag names to component functions
- * @param namespace namespace to create nodes in (by default XHTML namespace)
  */
 export const registerDom = (registry = {}) => {
 	// modify the registry so that each component function updates the hook working key
@@ -50,8 +47,8 @@ export const registerDom = (registry = {}) => {
 			const result = tagFunction(observedProps, children);
 			observedProps['tram-element'] = result;
 
-			// read through all props
-			[...result.querySelectorAll('*')].forEach((element) => {
+			// read through all props for this element and its childrent
+			[result, ...result.querySelectorAll('*')].forEach((element) => {
 				[...element.attributes].forEach((attribute) => {
 					// populate props object with attributes from the elements
 					observedProps[attribute.name] = attribute.value;

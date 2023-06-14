@@ -38,7 +38,7 @@ Tram-One is a Modern View Framework that has advance features like hooks, observ
 
 Tram-One takes inspiration from frameworks like Choo, React, and Svelte, and provides a rich feature set without additional libraries.
 
-[Visit the website for a complete one-stop-shop with everything you need to know about Tram-One.](http://tram-one.io/)
+[View the docs for a complete one-stop-shop with everything you need to know about Tram-One.](/documentation.md)
 
 [If you have any questions from this page or about Tram-One, or just want to say hi, join our Discord!](https://discord.gg/dpBXAQC)
 

@@ -32,6 +32,14 @@ Modern View Framework for Vanilla Javascript
 <br>
 <br>
 
+
+-----
+
+**Note this specific project in the Tram-One org is no longer under development. While it is the original project for the Tram-One org, other projects in the Tram-One org are being explored and developed (namely, [Tram-Lite](https://github.com/Tram-One/tram-lite)).**
+
+-----
+
+
 ## Summary
 
 Tram-One is a Modern View Framework that has advance features like hooks, observables, and JSX-like template components, all in plain vanilla javascript.

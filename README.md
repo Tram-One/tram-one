@@ -1,3 +1,6 @@
+> [!warning]
+> this specific project in the Tram-One org is no longer under active development. We recommend checking out our other projects for web-development, namely [Tram-Deco](https://github.com/Tram-One/tram-deco)
+
 <p align="center"><a href="http://tram-one.io/" target="_blank"><img src="https://unpkg.com/@tram-one/tram-logo@4" width="128"></a></p>
 
 <div align="center">
@@ -29,16 +32,6 @@
 # Tram-One
 
 Modern View Framework for Vanilla Javascript
-<br>
-<br>
-
-
------
-
-**Note this specific project in the Tram-One org is no longer under development. While it is the original project for the Tram-One org, other projects in the Tram-One org are being explored and developed (namely, [Tram-Lite](https://github.com/Tram-One/tram-lite)).**
-
------
-
 
 ## Summary
 
